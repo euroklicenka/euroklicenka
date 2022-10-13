@@ -4,5 +4,5 @@ Cílem tohoto projektu je vytvořit mobilní aplikaci, umožňující držitelů
 Její hlavní výhodou oproti konkurenci bude schopnost dynamické aktualizace jednotlivých lokací dle jejich existence v reálném světě.
 
 ## Odkazy
-- Euroklíč: http://www.eurokeycz.com/1_info.html
 - Jira projekt: https://osukip.atlassian.net/jira/software/projects/EUR2/boards/10
+- Euroklíč: http://www.eurokeycz.com/1_info.html
