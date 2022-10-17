@@ -1,0 +1,15 @@
+EUklicenka/*.iml
+EUklicenka/.gradle
+EUklicenka//local.properties
+EUklicenka/.idea/caches
+EUklicenka/.idea/libraries
+EUklicenka/.idea/modules.xml
+EUklicenka/.idea/workspace.xml
+EUklicenka/.idea/navEditor.xml
+EUklicenka/.idea/assetWizardSettings.xml
+EUklicenka/.DS_Store
+EUklicenka/build
+EUklicenka/captures
+EUklicenka/.externalNativeBuild
+EUklicenka/.cxx
+EUklicenka/local.properties
