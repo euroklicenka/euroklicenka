@@ -34,5 +34,5 @@ class MyListAdapter (var mCtx: Context, var resource:Int, var items:List<Model>)
         return view
     }
 
-
+    //Test comment. Delete it when you see it.
 }
