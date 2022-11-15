@@ -1,5 +1,4 @@
 import 'package:euk2_project/main_screen.dart';
-import 'package:euk2_project/pages/list_page.dart';
 import 'package:euk2_project/pages/map_page.dart';
 import 'package:euk2_project/pages/settings_page.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
@@ -37,29 +36,35 @@ class RootPage extends StatefulWidget {
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<Widget> pages = const [
-    MapPage(),
-    ListPage(),
-    SettingsPage()
+    SettingsPage(),
+    MapPage()
+    //ListPage(),
+
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Euroklíčenka'),
+        centerTitle: true,
+      ),
       body: pages[currentPage],
       bottomNavigationBar: NavigationBar(
         height: 60,
         destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.map_outlined, size: 35 ),
-            selectedIcon: Icon(Icons.map, size: 35),
-            label: "Mapa"),
-          NavigationDestination(
-              icon: Icon(Icons.list, size: 35),
-              selectedIcon: Icon(Icons.list_alt, size: 35),
-              label: "List"),
+
+          //NavigationDestination(
+           //   icon: Icon(Icons.list, size: 35),
+            //  selectedIcon: Icon(Icons.list_alt, size: 35),
+             // label: "List"),
           NavigationDestination(
               icon: Icon(Icons.settings, size: 35),
               selectedIcon: Icon(Icons.settings_applications, size: 35),
-              label: "Nastavení")
+              label: "Nastavení"),
+          NavigationDestination(
+              icon: Icon(Icons.map_outlined, size: 35 ),
+              selectedIcon: Icon(Icons.map, size: 35),
+              label: "Mapa"),
         ],
         onDestinationSelected: (int index){
           setState((){
