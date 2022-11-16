@@ -1,5 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:euk2_project/locations/location_data_test.dart';
+import 'package:euk2_project/locations/test_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -166,7 +168,8 @@ class _MapPageState extends State<MapPage> {
                 address,
                 maxLines: 2,
                 softWrap: false,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+
               ),
             ),
             // widget.data!.date!
@@ -198,105 +201,82 @@ class _MapPageState extends State<MapPage> {
       elevation: 16.0,
       child: Column(
         children: <Widget>[
+          //TODO - Replace SizedBox with a more flexible solution
+          const SizedBox(height: 62,),
+          ColoredBox(
+            color: Colors.amber,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+              child: Row(
+                children: [
+                  const CircleAvatar(
+                    backgroundImage: NetworkImage('https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280'),
+                  ),
+                  const SizedBox(width: 10,),
+                  const Text('EuroKlíčenka 2.0', style: TextStyle(color: Colors.white,fontSize: 15, fontWeight: FontWeight.bold),),
+                  const Spacer(),
+                  GestureDetector(
+                    child: const Icon(Icons.settings, color: Colors.white),
+                  ),
 
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.amber,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                CircleAvatar(
-                  backgroundImage: NetworkImage('https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280'),
-                  radius: 40.0,
-                ),
-
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text('Euroklíčenka',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 25.0
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    //Text('Přírodovědecká fakulta OU',
-                    //style: TextStyle(
-                    //fontWeight: FontWeight.bold,
-                    //color: Colors.white,
-                    //fontSize: 14.0
-                    //),
-                    //),
-                  ],
-                )
-              ],
+                ],
+              ),
             ),
           ),
 
-          ListTile(
-            title: new Text("Seznam míst"),
-            leading: new Icon(Icons.place),
+
+          const ListTile(
+            title: Text("Seznam míst"),
+            leading: Icon(Icons.place, color: Colors.white,),
+            // tileColor: Colors.amber,
+            textColor: Colors.white,
           ),
-          Divider(),
+          const Divider(),
           ListTile(
             onTap: () {
               _goToNewYork();
               Navigator.of(context).pop();
             },
-            title: new Text("Opava - Kateřinky"),
-            subtitle: new Text("Hypermarket Kaufland, Hlučínská 1698/5"),
-            trailing: new Icon(Icons.accessible),
+            title: const Text("Opava - Kateřinky"),
+            subtitle: const Text("Hypermarket Kaufland, Hlučínská 1698/5"),
+            trailing: getIconByType(TestLocationType.platform),
           ),
-          ListTile(
-            onTap: () {
-              _goToNewDelhi();
-              Navigator.of(context).pop();
-            },
-            title: new Text("Opava - Předměstí"),
-            subtitle: new Text(
-                "Hypermarket Kaufland, Olomoucká 2995, 746 01 Opava - Předměstí"),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     _goToNewDelhi();
+          //     Navigator.of(context).pop();
+          //   },
+          //   title: const Text("Opava - Předměstí"),
+          //   subtitle: const Text("Hypermarket Kaufland, Olomoucká 2995, 746 01 Opava - Předměstí",),
+          //   trailing: getIconByType(TestLocationType.platform),
+          // ),
           ListTile(
             onTap: () {
               _goToLondon();
               Navigator.of(context).pop();
             },
-            title: new Text("Hradec nad Moravicí"),
-            subtitle: new Text(
-                "Státní zámek "),
-
-            trailing: new Icon(Icons.accessible),
+            title: const Text("Státní zámek"),
+            subtitle: const Text("Hradec nad Moravicí"),
+            trailing: getIconByType(TestLocationType.platform),
           ),
           ListTile(
             onTap: () {
               _goToTokyo();
               Navigator.of(context).pop();
             },
-            title: new Text("Hradec nad Moravicí"),
-            subtitle: new Text(
-                "U železniční stanice"),
-            trailing: new Icon(Icons.accessible),
+            title: const Text("U železniční stanice"),
+            subtitle: const Text("Hradec nad Moravicí"),
+            trailing: getIconByType(TestLocationType.platform),
           ),
           ListTile(
             onTap: () {
               _goToDubai();
               Navigator.of(context).pop();
             },
-            title: new Text("Slezská nemocnice Opava"),
-            trailing: new Icon(Icons.accessible),
+            title: const Text("Slezská nemocnice Opava"),
+            subtitle: const Text('Opava'),
+            trailing: getIconByType(TestLocationType.hospital),
           ),
-          ListTile(
-            onTap: () {
-              _goToParis();
-              Navigator.of(context).pop();
-            },
-            title: new Text("Paris"),
-            subtitle: new Text("data"),
-            trailing: new Icon(Icons.accessible),
-          )
         ],
       ),
     );
@@ -319,22 +299,22 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
-  Future<void> _goToNewDelhi() async {
-    _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.9304661, 17.8747525), _zoom),
-    );
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('Opava Předměstí'),
-          position: LatLng(49.9304661, 17.8747525),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(title: 'Opava Předměstí', snippet: 'WC'),
-        ),
-      );
-    });
-  }
+  // Future<void> _goToNewDelhi() async {
+  //   _controller?.animateCamera(
+  //     CameraUpdate.newLatLngZoom(const LatLng(49.9304661, 17.8747525), _zoom),
+  //   );
+  //   setState(() {
+  //     //markers.clear();
+  //     markers.add(
+  //       const Marker(
+  //         markerId: MarkerId('Opava Předměstí'),
+  //         position: LatLng(49.9304661, 17.8747525),
+  //         //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+  //         infoWindow: InfoWindow(title: 'Opava Předměstí', snippet: 'WC'),
+  //       ),
+  //     );
+  //   });
+  // }
 
   Future<void> _goToLondon() async {
     //final GoogleMapController controller = await _controller.future;
@@ -404,7 +384,7 @@ class _MapPageState extends State<MapPage> {
     const double long = 2.3522;
     //final GoogleMapController controller = await _controller.future;
     _controller
-        ?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(lat, long), _zoom));
+        ?.animateCamera(CameraUpdate.newLatLngZoom(const LatLng(lat, long), _zoom));
     setState(() {
       //markers.clear();
       markers.add(
@@ -423,7 +403,7 @@ class _MapPageState extends State<MapPage> {
     // loadData() ;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Euroklíčenka'),
+        title: const Text('Mapa míst'),
         centerTitle: true,
       ),
       drawer: _drawer(),

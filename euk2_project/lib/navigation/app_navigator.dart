@@ -14,10 +14,8 @@ class AppNavigator {
 
   AppNavigator({int defaultPage = 0}) {
     _screens = [
-      //PageInfo(listAppBar, ListPage()),
-
-      PageInfo(settingsAppBar, SettingsPage()),
       PageInfo(mapAppBar, MapPage()),
+      PageInfo(settingsAppBar, SettingsPage()),
     ];
 
     navigate(defaultPage);
