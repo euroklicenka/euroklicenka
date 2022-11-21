@@ -32,17 +32,17 @@ Icon getIconByType(EUKLocationType type) {
 ///Returns a custom marker icon, based on an EUK location type.
 Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
   Uint8List icon;
-  const int size = 100;
+  const int size = 110;
 
   switch (type) {
     case EUKLocationType.wc:
       icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
       break;
     case EUKLocationType.platform:
-      icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
+      icon = await _getBytesFromAsset("assets/images/map_marker_platform.png", size);
       break;
     case EUKLocationType.hospital:
-      icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
+      icon = await _getBytesFromAsset("assets/images/map_marker_hospital.png", size);
       break;
   }
 

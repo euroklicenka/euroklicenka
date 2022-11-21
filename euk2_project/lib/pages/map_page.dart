@@ -1,9 +1,7 @@
-import 'dart:ui' as ui;
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/icon_management/icon_manager.dart';
 import 'package:euk2_project/locations/location_data_test.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -59,7 +57,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId('2'),
             position: const LatLng(49.8701600, 17.8791761),
-            icon: await getMarkerIconByType(EUKLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.platform),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -79,7 +77,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: MarkerId(i.toString()),
             position: const LatLng(49.9337922, 17.8793431),
-            icon: await getMarkerIconByType(EUKLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.hospital),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -98,7 +96,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId("3"),
             position: const LatLng(49.8758258, 17.8759750),
-            icon: await getMarkerIconByType(EUKLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.platform),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -262,22 +260,22 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
-  Future<void> _goToCastle() async {
+  Future<void> _goToTrainStation() async {
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
     );
 
   }
 
-  Future<void> _goToTrainStation() async {
+  Future<void> _goToCastle() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.9337922, 17.8793431), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
   }
 
   Future<void> _goToHospital() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.9337922, 17.8793431), _zoom),
     );
   }
 
