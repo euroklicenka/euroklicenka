@@ -24,21 +24,7 @@ class _MapPageState extends State<MapPage> {
   final double _zoom = 15;
   List<String> images = ['assets/images/car.png', 'images/marker.png ,'];
   final CustomInfoWindowController _customInfoWindowController =
-  CustomInfoWindowController();
-
-  Uint8List? markerImage;
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    final ByteData data = await rootBundle.load(path);
-    final ui.Codec codec = await ui.instantiateImageCodec(
-      data.buffer.asUint8List(),
-      targetWidth: width,
-    );
-    final ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
+      CustomInfoWindowController();
 
   //zobrazení aktuální pozice uživatele
   Future<void> getLocation() async {
@@ -73,7 +59,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId('2'),
             position: const LatLng(49.8701600, 17.8791761),
-            icon: await getMarkerIconByType(TestLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -81,7 +67,7 @@ class _MapPageState extends State<MapPage> {
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
                   imageURL:
-                  'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                      'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
                 const LatLng(49.8701600, 17.8791761),
               );
@@ -93,7 +79,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: MarkerId(i.toString()),
             position: const LatLng(49.9337922, 17.8793431),
-            icon: await getMarkerIconByType(TestLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -101,7 +87,7 @@ class _MapPageState extends State<MapPage> {
                   city: 'Opava',
                   ZIP: '746 01',
                   imageURL:
-                  'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
+                      'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
                 ),
                 const LatLng(49.9337922, 17.8793431),
               );
@@ -112,7 +98,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId("3"),
             position: const LatLng(49.8758258, 17.8759750),
-            icon: await getMarkerIconByType(TestLocationType.wc),
+            icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -120,7 +106,7 @@ class _MapPageState extends State<MapPage> {
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
                   imageURL:
-                  'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
+                      'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
                 ),
                 const LatLng(49.8758258, 17.8759750),
               );
@@ -171,8 +157,8 @@ class _MapPageState extends State<MapPage> {
                 address,
                 maxLines: 2,
                 softWrap: false,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
             ),
             // widget.data!.date!
@@ -205,200 +191,94 @@ class _MapPageState extends State<MapPage> {
       child: Column(
         children: <Widget>[
           //TODO - Replace SizedBox with a more flexible solution
-          const SizedBox(height: 62,),
+          const SizedBox(height: 62),
           ColoredBox(
             color: Colors.amber,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
               child: Row(
                 children: [
                   const CircleAvatar(
-                    backgroundImage: NetworkImage('https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280'),
+                    backgroundImage: NetworkImage(
+                        'https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280'),
                   ),
-                  const SizedBox(width: 10,),
-                  const Text('EuroKlíčenka 2.0', style: TextStyle(color: Colors.white,fontSize: 15, fontWeight: FontWeight.bold),),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    'EuroKlíčenka 2.0',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold),
+                  ),
                   const Spacer(),
                   GestureDetector(
                     child: const Icon(Icons.settings, color: Colors.white),
                   ),
-
                 ],
               ),
             ),
           ),
-
-
           const ListTile(
             title: Text("Seznam míst"),
-            leading: Icon(Icons.place, color: Colors.white,),
-            // tileColor: Colors.amber,
-            textColor: Colors.white,
+            leading: Icon(
+              Icons.place,
+              color: Colors.black87,
+            ),
+            textColor: Colors.black87,
           ),
           const Divider(),
           ListTile(
             onTap: () {
-              _goToNewYork();
-              Navigator.of(context).pop();
-            },
-            title: const Text("Opava - Kateřinky"),
-            subtitle: const Text("Hypermarket Kaufland, Hlučínská 1698/5"),
-            trailing: getIconByType(TestLocationType.platform),
-          ),
-          // ListTile(
-          //   onTap: () {
-          //     _goToNewDelhi();
-          //     Navigator.of(context).pop();
-          //   },
-          //   title: const Text("Opava - Předměstí"),
-          //   subtitle: const Text("Hypermarket Kaufland, Olomoucká 2995, 746 01 Opava - Předměstí",),
-          //   trailing: getIconByType(TestLocationType.platform),
-          // ),
-          ListTile(
-            onTap: () {
-              _goToLondon();
+              _goToCastle();
               Navigator.of(context).pop();
             },
             title: const Text("Státní zámek"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
           ListTile(
             onTap: () {
-              _goToTokyo();
+              _goToTrainStation();
               Navigator.of(context).pop();
             },
             title: const Text("U železniční stanice"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
           ListTile(
             onTap: () {
-              _goToDubai();
+              _goToHospital();
               Navigator.of(context).pop();
             },
             title: const Text("Slezská nemocnice Opava"),
             subtitle: const Text('Opava'),
-            trailing: getIconByType(TestLocationType.hospital),
+            trailing: getIconByType(EUKLocationType.hospital),
           ),
         ],
       ),
     );
   }
 
-  Future<void> _goToNewYork() async {
+  Future<void> _goToCastle() async {
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
     );
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('Opava Kateřinky'),
-          position: LatLng(49.9463158, 17.9287797),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(title: 'Opava Kateřinky', snippet: 'WC'),
-        ),
-      );
-    });
+
   }
 
-  // Future<void> _goToNewDelhi() async {
-  //   _controller?.animateCamera(
-  //     CameraUpdate.newLatLngZoom(const LatLng(49.9304661, 17.8747525), _zoom),
-  //   );
-  //   setState(() {
-  //     //markers.clear();
-  //     markers.add(
-  //       const Marker(
-  //         markerId: MarkerId('Opava Předměstí'),
-  //         position: LatLng(49.9304661, 17.8747525),
-  //         //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-  //         infoWindow: InfoWindow(title: 'Opava Předměstí', snippet: 'WC'),
-  //       ),
-  //     );
-  //   });
-  // }
-
-  Future<void> _goToLondon() async {
-    //final GoogleMapController controller = await _controller.future;
-    _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
-    );
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('hradec'),
-          position: LatLng(49.8701600, 17.8791761),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(
-            title: 'Hradec nad Moravicí',
-            snippet: 'Státní zámek ',
-          ),
-        ),
-      );
-    });
-  }
-
-  Future<void> _goToTokyo() async {
-    //final GoogleMapController controller = await _controller.future;
+  Future<void> _goToTrainStation() async {
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.9337922, 17.8793431), _zoom),
     );
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('hradec2'),
-          position: LatLng(49.8758258, 17.8759750),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(
-            title: 'Hradec nad Moravicí',
-            snippet: 'Železniční stanice',
-          ),
-        ),
-      );
-    });
   }
 
-  Future<void> _goToDubai() async {
-    //final GoogleMapController controller = await _controller.future;
+  Future<void> _goToHospital() async {
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('opava_nemocnice'),
-          position: LatLng(49.9337922, 17.8793431),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(
-            title: 'Slezská nemocnice Opava',
-            snippet: 'wc, přízemí',
-          ),
-        ),
-      );
-    });
-  }
-
-  Future<void> _goToParis() async {
-    const double lat = 48.8566;
-    const double long = 2.3522;
-    //final GoogleMapController controller = await _controller.future;
-    _controller
-        ?.animateCamera(CameraUpdate.newLatLngZoom(const LatLng(lat, long), _zoom));
-    setState(() {
-      //markers.clear();
-      markers.add(
-        const Marker(
-          markerId: MarkerId('paris'),
-          position: LatLng(lat, long),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-          infoWindow: InfoWindow(title: 'Paris', snippet: 'Welcome to Paris'),
-        ),
-      );
-    });
   }
 
   @override
