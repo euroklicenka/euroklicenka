@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:euk2_project/icon_management/icon_manager.dart';
 import 'package:euk2_project/locations/location_data_test.dart';
-import 'package:euk2_project/locations/test_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -64,7 +64,7 @@ class _MapPageState extends State<MapPage> {
     super.dispose();
   }
 
-  void getMarkers() {
+  Future<void> getMarkers() async {
     for (int i = 0; i < images.length; i++) {
       print('name${images[i]}');
 
@@ -73,6 +73,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId('2'),
             position: const LatLng(49.8701600, 17.8791761),
+            icon: await getMarkerIconByType(TestLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -92,6 +93,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: MarkerId(i.toString()),
             position: const LatLng(49.9337922, 17.8793431),
+            icon: await getMarkerIconByType(TestLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -110,6 +112,7 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId("3"),
             position: const LatLng(49.8758258, 17.8759750),
+            icon: await getMarkerIconByType(TestLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(

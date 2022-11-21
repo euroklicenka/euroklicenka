@@ -11,13 +11,4 @@ final List<TestLocationData> testDestinations = [
   TestLocationData('Fakultní nemocnice Ostrava, 17. listopadu 1790', 'Ostrava', '708 52', TestLocationType.hospital),
 ];
 
-Icon getIconByType(TestLocationType type) {
-  switch (type) {
-    case TestLocationType.wc:
-      return const Icon(Icons.wc, color: Colors.blue, size: 28,);
-    case TestLocationType.platform:
-      return const Icon(Icons.accessible_sharp, color: Colors.red, size: 28,);
-    case TestLocationType.hospital:
-      return const Icon(Icons.local_hospital, color: Colors.green, size: 28,);
-  }
-}
+
