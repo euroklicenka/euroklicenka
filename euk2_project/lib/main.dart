@@ -1,6 +1,4 @@
-import 'package:euk2_project/main_screen.dart';
-import 'package:euk2_project/pages/map_page.dart';
-import 'package:euk2_project/pages/settings_page.dart';
+import 'package:euk2_project/pages/map_page/map_page.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: yellowTheme,
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
-      home: const MainScreen(),
+      home: const MapPage(),
     );
   }
 }

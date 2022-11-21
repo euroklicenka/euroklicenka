@@ -1,14 +1,13 @@
-import 'dart:ui' as ui;
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/locations/location_data_test.dart';
-import 'package:euk2_project/locations/test_locations.dart';
+import 'package:euk2_project/location_data/test_location_data.dart';
+import 'package:euk2_project/pages/map_page/popup_window/popup_window.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+import '../../location_data/test_locations.dart';
+
 ///AppBar of the More Screen.
-AppBar? mapAppBar;
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -26,19 +25,6 @@ class _MapPageState extends State<MapPage> {
   final CustomInfoWindowController _customInfoWindowController =
   CustomInfoWindowController();
 
-  Uint8List? markerImage;
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    final ByteData data = await rootBundle.load(path);
-    final ui.Codec codec = await ui.instantiateImageCodec(
-      data.buffer.asUint8List(),
-      targetWidth: width,
-    );
-    final ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
-  }
 
   //zobrazení aktuální pozice uživatele
   Future<void> getLocation() async {
@@ -55,8 +41,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   final MapType _currentMapType = MapType.normal;
-
-  //final Set<Marker> markers = Set();
 
   @override
   void dispose() {
@@ -75,7 +59,7 @@ class _MapPageState extends State<MapPage> {
             position: const LatLng(49.8701600, 17.8791761),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'U železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -94,7 +78,7 @@ class _MapPageState extends State<MapPage> {
             position: const LatLng(49.9337922, 17.8793431),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Slezská nemocnice Opava',
                   city: 'Opava',
                   ZIP: '746 01',
@@ -112,7 +96,7 @@ class _MapPageState extends State<MapPage> {
             position: const LatLng(49.8758258, 17.8759750),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Státní zámek',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -129,62 +113,6 @@ class _MapPageState extends State<MapPage> {
     }
   }
 
-  Widget buildPopupWindow({
-    String city = 'Unknown City',
-    String ZIP = 'XXXXX',
-    String address = 'Unknown Address',
-    String imageURL = '',
-  }) {
-    return Container(
-      width: 300,
-      height: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 300,
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(imageURL),
-                fit: BoxFit.fitWidth,
-                filterQuality: FilterQuality.high,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10.0),
-              ),
-              color: Colors.red,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: SizedBox(
-              child: Text(
-                address,
-                maxLines: 2,
-                softWrap: false,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-
-              ),
-            ),
-            // widget.data!.date!
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-            child: Text(
-              '$city, $ZIP',
-              maxLines: 2,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -227,9 +155,9 @@ class _MapPageState extends State<MapPage> {
 
           const ListTile(
             title: Text("Seznam míst"),
-            leading: Icon(Icons.place, color: Colors.white,),
+            leading: Icon(Icons.place, color: Colors.black,),
             // tileColor: Colors.amber,
-            textColor: Colors.white,
+            textColor: Colors.black,
           ),
           const Divider(),
           ListTile(
@@ -239,17 +167,8 @@ class _MapPageState extends State<MapPage> {
             },
             title: const Text("Opava - Kateřinky"),
             subtitle: const Text("Hypermarket Kaufland, Hlučínská 1698/5"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
-          // ListTile(
-          //   onTap: () {
-          //     _goToNewDelhi();
-          //     Navigator.of(context).pop();
-          //   },
-          //   title: const Text("Opava - Předměstí"),
-          //   subtitle: const Text("Hypermarket Kaufland, Olomoucká 2995, 746 01 Opava - Předměstí",),
-          //   trailing: getIconByType(TestLocationType.platform),
-          // ),
           ListTile(
             onTap: () {
               _goToLondon();
@@ -257,7 +176,7 @@ class _MapPageState extends State<MapPage> {
             },
             title: const Text("Státní zámek"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
           ListTile(
             onTap: () {
@@ -266,7 +185,7 @@ class _MapPageState extends State<MapPage> {
             },
             title: const Text("U železniční stanice"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
           ListTile(
             onTap: () {
@@ -275,7 +194,7 @@ class _MapPageState extends State<MapPage> {
             },
             title: const Text("Slezská nemocnice Opava"),
             subtitle: const Text('Opava'),
-            trailing: getIconByType(TestLocationType.hospital),
+            trailing: getIconByType(EUKLocationType.hospital),
           ),
         ],
       ),
@@ -299,23 +218,6 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
-  // Future<void> _goToNewDelhi() async {
-  //   _controller?.animateCamera(
-  //     CameraUpdate.newLatLngZoom(const LatLng(49.9304661, 17.8747525), _zoom),
-  //   );
-  //   setState(() {
-  //     //markers.clear();
-  //     markers.add(
-  //       const Marker(
-  //         markerId: MarkerId('Opava Předměstí'),
-  //         position: LatLng(49.9304661, 17.8747525),
-  //         //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-  //         infoWindow: InfoWindow(title: 'Opava Předměstí', snippet: 'WC'),
-  //       ),
-  //     );
-  //   });
-  // }
-
   Future<void> _goToLondon() async {
     //final GoogleMapController controller = await _controller.future;
     _controller?.animateCamera(
@@ -338,17 +240,14 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> _goToTokyo() async {
-    //final GoogleMapController controller = await _controller.future;
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.9337922, 17.8793431), _zoom),
     );
     setState(() {
-      //markers.clear();
       markers.add(
         const Marker(
           markerId: MarkerId('hradec2'),
           position: LatLng(49.8758258, 17.8759750),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           infoWindow: InfoWindow(
             title: 'Hradec nad Moravicí',
             snippet: 'Železniční stanice',
@@ -359,7 +258,6 @@ class _MapPageState extends State<MapPage> {
   }
 
   Future<void> _goToDubai() async {
-    //final GoogleMapController controller = await _controller.future;
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
@@ -369,7 +267,6 @@ class _MapPageState extends State<MapPage> {
         const Marker(
           markerId: MarkerId('opava_nemocnice'),
           position: LatLng(49.9337922, 17.8793431),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           infoWindow: InfoWindow(
             title: 'Slezská nemocnice Opava',
             snippet: 'wc, přízemí',
@@ -382,7 +279,6 @@ class _MapPageState extends State<MapPage> {
   Future<void> _goToParis() async {
     const double lat = 48.8566;
     const double long = 2.3522;
-    //final GoogleMapController controller = await _controller.future;
     _controller
         ?.animateCamera(CameraUpdate.newLatLngZoom(const LatLng(lat, long), _zoom));
     setState(() {
@@ -391,7 +287,6 @@ class _MapPageState extends State<MapPage> {
         const Marker(
           markerId: MarkerId('paris'),
           position: LatLng(lat, long),
-          //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
           infoWindow: InfoWindow(title: 'Paris', snippet: 'Welcome to Paris'),
         ),
       );
