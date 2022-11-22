@@ -1,13 +1,12 @@
+
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:euk2_project/icon_management/icon_manager.dart';
 import 'package:euk2_project/location_data/test_location_data.dart';
 import 'package:euk2_project/pages/map_page/popup_window/popup_window.dart';
-import 'package:euk2_project/icon_management/icon_manager.dart';
-import 'package:euk2_project/locations/location_data_test.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-import '../../location_data/test_locations.dart';
 
 ///AppBar of the More Screen.
 
@@ -20,18 +19,17 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   GoogleMapController? _controller;
-  Location currentLocation = Location();
+  Location _currentLocation = Location();
+  LatLng initPosition = const LatLng(50.073658, 14.418540);
   Set<Marker> markers = {};
   final double _zoom = 15;
   List<String> images = ['assets/images/car.png', 'images/marker.png ,'];
-  final CustomInfoWindowController _customInfoWindowController =
-  CustomInfoWindowController();
+  final CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
 
-      CustomInfoWindowController();
 
   //zobrazení aktuální pozice uživatele
   Future<void> getLocation() async {
-    currentLocation.onLocationChanged.listen((LocationData loc) {
+    _currentLocation.onLocationChanged.listen((LocationData loc) {
       _controller?.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
@@ -226,6 +224,18 @@ class _MapPageState extends State<MapPage> {
     );
   }
 
+  void _onMapCreated(GoogleMapController controller) {
+    _controller = controller;
+    _customInfoWindowController.googleMapController = controller;
+    _currentLocation.onLocationChanged.listen((l) {
+      _controller?.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude ?? 0, l.longitude ?? 0),zoom: 10),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // loadData() ;
@@ -245,10 +255,7 @@ class _MapPageState extends State<MapPage> {
             onCameraMove: (position) {
               _customInfoWindowController.onCameraMove!();
             },
-            onMapCreated: (GoogleMapController controller) {
-              _controller = controller;
-              _customInfoWindowController.googleMapController = controller;
-            },
+            onMapCreated: _onMapCreated,
             mapType: _currentMapType,
             markers: markers,
             initialCameraPosition: const CameraPosition(

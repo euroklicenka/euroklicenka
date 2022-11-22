@@ -25,25 +25,3 @@ final List<TestLocationData> testDestinations = [
       type: EUKLocationType.platform),
 ];
 
-Icon getIconByType(EUKLocationType type) {
-  switch (type) {
-    case EUKLocationType.wc:
-      return const Icon(
-        Icons.wc,
-        color: Colors.blue,
-        size: 28,
-      );
-    case EUKLocationType.platform:
-      return const Icon(
-        Icons.accessible_sharp,
-        color: Colors.red,
-        size: 28,
-      );
-    case EUKLocationType.hospital:
-      return const Icon(
-        Icons.local_hospital,
-        color: Colors.green,
-        size: 28,
-      );
-  }
-}
