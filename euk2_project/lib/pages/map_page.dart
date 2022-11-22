@@ -59,17 +59,16 @@ class _MapPageState extends State<MapPage> {
           Marker(
             markerId: const MarkerId('1'),
             position: const LatLng(49.8701600, 17.8791761),
-            icon: await getMarkerIconByType(EUKLocationType.platform),
+            icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
-                  imageURL:
-                      'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                  imageURL: 'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
-                const LatLng(49.8771889, 17.8762339),
+                const LatLng(49.8701600, 17.8791761),
               );
             },
           ),
@@ -108,7 +107,7 @@ class _MapPageState extends State<MapPage> {
                   imageURL:
                       'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
                 ),
-                const LatLng(49.8650583, 17.8751667),
+                const LatLng(49.8758258, 17.8759750),
               );
             },
           ),
@@ -258,7 +257,7 @@ class _MapPageState extends State<MapPage> {
                   imageURL:
                   'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
                 ),
-                const LatLng(49.8650583, 17.8751667),
+                const LatLng(49.8758258, 17.8759750),
               );
 
             },
@@ -278,12 +277,12 @@ class _MapPageState extends State<MapPage> {
                   imageURL:
                   'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
-                const LatLng(49.8771889, 17.8762339),
+                const LatLng(49.8701600, 17.8791761),
               );
             },
             title: const Text("Veřejné WC u železniční stanice"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(EUKLocationType.platform),
+            trailing: getIconByType(EUKLocationType.wc),
           ),
 
 
@@ -314,14 +313,14 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> _goToTrainStation() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
 
   }
 
   Future<void> _goToCastle() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8650583, 17.8751667), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
     );
   }
 

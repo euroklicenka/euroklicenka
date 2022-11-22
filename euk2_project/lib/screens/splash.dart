@@ -12,7 +12,7 @@ class SplashScreenPage extends StatelessWidget {
       backgroundColor: Colors.white,
 
       title: new Text('EuroKlíčenka',textScaleFactor: 2,),
-      image: new Image.asset('assets/images/logo_key.png'),
+      image: new Image.asset('assets/images/logo_key.png', scale: 0.5,),
       loadingText: Text("Loading"),
       photoSize: 150.0,
       loaderColor: Colors.green,
