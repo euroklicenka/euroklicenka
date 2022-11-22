@@ -247,27 +247,6 @@ class _MapPageState extends State<MapPage> {
 
           ListTile(
             onTap: () {
-              _goToHospital();
-              Navigator.of(context).pop();
-              _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
-                  address: 'Veřejné WC u železniční stanice',
-                  city: 'Hradec nad Moravicí',
-                  ZIP: '747 41',
-                  imageURL:
-                  'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
-                ),
-                const LatLng(49.8771889, 17.8762339),
-              );
-            },
-            title: const Text("Veřejné WC u železniční stanice"),
-            subtitle: const Text("747 47 Hradec nad Moravicí"),
-            trailing: getIconByType(EUKLocationType.platform),
-          ),
-
-
-          ListTile(
-            onTap: () {
               _goToCastle();
               Navigator.of(context).pop();
 
@@ -342,7 +321,7 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> _goToCastle() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.9337922, 17.8793431), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8650583, 17.8751667), _zoom),
     );
   }
 
