@@ -235,7 +235,7 @@ class _MapPageState extends State<MapPage> {
             textColor: Colors.black,
 
           ),
-
+          const Divider(),
           const ListTile(
             title: Text("Seznam míst"),
             trailing: Icon(Icons.place, color: Colors.black),
@@ -247,7 +247,7 @@ class _MapPageState extends State<MapPage> {
 
           ListTile(
             onTap: () {
-              hradec2();
+              _goToHospital();
               Navigator.of(context).pop();
               _customInfoWindowController.addInfoWindow!(
                 buildPopupWindow(
@@ -262,7 +262,7 @@ class _MapPageState extends State<MapPage> {
             },
             title: const Text("Veřejné WC u železniční stanice"),
             subtitle: const Text("747 47 Hradec nad Moravicí"),
-            trailing: getIconByType(TestLocationType.platform),
+            trailing: getIconByType(EUKLocationType.platform),
           ),
 
 
