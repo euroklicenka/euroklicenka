@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+import '../screens/intro_screen.dart';
 
 ///AppBar of the More Screen.
 
@@ -56,17 +57,16 @@ class _MapPageState extends State<MapPage> {
       if (i == 1) {
         markers.add(
           Marker(
-            markerId: const MarkerId('2'),
+            markerId: const MarkerId('1'),
             position: const LatLng(49.8701600, 17.8791761),
-            icon: await getMarkerIconByType(EUKLocationType.platform),
+            icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
-                  address: 'U železniční stanice',
+                buildPopupWindow(
+                  address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
-                  imageURL:
-                      'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                  imageURL: 'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
                 const LatLng(49.8701600, 17.8791761),
               );
@@ -76,7 +76,7 @@ class _MapPageState extends State<MapPage> {
       } else {
         markers.add(
           Marker(
-            markerId: MarkerId(i.toString()),
+            markerId: MarkerId('2'),
             position: const LatLng(49.9337922, 17.8793431),
             icon: await getMarkerIconByType(EUKLocationType.hospital),
             onTap: () {
@@ -164,19 +164,46 @@ class _MapPageState extends State<MapPage> {
               ),
             ),
           ),
-          const ListTile(
-            title: Text("Seznam míst"),
-            leading: Icon(
-              Icons.place,
-              color: Colors.black87,
-            ),
-            textColor: Colors.black87,
+
+
+
+
+          ListTile(
+            onTap:() {
+             new IntroScreen();
+            },
+            title: Text("Průvodce"),
+            trailing: Icon(Icons.bookmarks_outlined, color: Colors.black),
+            // tileColor: Colors.amber,
+            textColor: Colors.black,
+
           ),
           const Divider(),
+          const ListTile(
+            title: Text("Seznam míst"),
+            trailing: Icon(Icons.place, color: Colors.black),
+            // tileColor: Colors.amber,
+            textColor: Colors.black,
+          ),
+
+          const Divider(),
+
           ListTile(
             onTap: () {
               _goToCastle();
               Navigator.of(context).pop();
+
+              _customInfoWindowController.addInfoWindow!(
+                buildPopupWindow(
+                  address: 'Státní zámek',
+                  city: 'Hradec nad Moravicí',
+                  ZIP: '747 41',
+                  imageURL:
+                  'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
+                ),
+                const LatLng(49.8758258, 17.8759750),
+              );
+
             },
             title: const Text("Státní zámek"),
             subtitle: const Text("Hradec nad Moravicí"),
@@ -186,15 +213,38 @@ class _MapPageState extends State<MapPage> {
             onTap: () {
               _goToTrainStation();
               Navigator.of(context).pop();
+              _customInfoWindowController.addInfoWindow!(
+                buildPopupWindow(
+                  address: 'Veřejné WC u železniční stanice',
+                  city: 'Hradec nad Moravicí',
+                  ZIP: '747 41',
+                  imageURL:
+                  'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                ),
+                const LatLng(49.8701600, 17.8791761),
+              );
             },
-            title: const Text("U železniční stanice"),
+            title: const Text("Veřejné WC u železniční stanice"),
             subtitle: const Text("Hradec nad Moravicí"),
-            trailing: getIconByType(EUKLocationType.platform),
+            trailing: getIconByType(EUKLocationType.wc),
           ),
+
+
           ListTile(
             onTap: () {
               _goToHospital();
               Navigator.of(context).pop();
+              _customInfoWindowController.addInfoWindow!(
+                buildPopupWindow(
+                  address: 'Slezská nemocnice Opava',
+                  city: 'Opava',
+                  ZIP: '746 01',
+                  imageURL:
+                  'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
+                ),
+                const LatLng(49.9337922, 17.8793431),
+              );
+
             },
             title: const Text("Slezská nemocnice Opava"),
             subtitle: const Text('Opava'),
@@ -207,14 +257,14 @@ class _MapPageState extends State<MapPage> {
 
   Future<void> _goToTrainStation() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
 
   }
 
   Future<void> _goToCastle() async {
     _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
+      CameraUpdate.newLatLngZoom(const LatLng(49.8758258, 17.8759750), _zoom),
     );
   }
 
