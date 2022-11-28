@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-///Returns an icon, representing the given location type.
+///Returns an icon, representing the given location [type].
 Icon getIconByType(EUKLocationType type) {
   switch (type) {
+    case EUKLocationType.none:
+      return const Icon(
+        Icons.lock,
+        color: Colors.deepOrangeAccent,
+        size: 28,
+      );
     case EUKLocationType.wc:
       return const Icon(
         Icons.wc,
@@ -35,6 +41,9 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
   const int size = 110;
 
   switch (type) {
+    case EUKLocationType.none:
+      icon = await _getBytesFromAsset("assets/images/map_marker_default.png", size);
+      break;
     case EUKLocationType.wc:
       icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
       break;
@@ -49,6 +58,7 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
   return BitmapDescriptor.fromBytes(icon);
 }
 
+///Returns a PNG image as bytes under a specific [path] with a [width].
 Future<Uint8List> _getBytesFromAsset(String path, int width) async {
   final ByteData data = await rootBundle.load(path);
   final Codec codec = await instantiateImageCodec(
