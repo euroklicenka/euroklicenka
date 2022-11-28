@@ -66,7 +66,8 @@ class _MapPageState extends State<MapPage> {
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
-                  imageURL: 'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                  imageURL:
+                      'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
                 const LatLng(49.8701600, 17.8791761),
               );
@@ -108,6 +109,24 @@ class _MapPageState extends State<MapPage> {
                       'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
                 ),
                 const LatLng(49.8758258, 17.8759750),
+              );
+            },
+          ),
+        );
+        markers.add(
+          Marker(
+            markerId: const MarkerId("4"),
+            position: const LatLng(49.88051393727233, 17.878107236492742),
+            icon: await getMarkerIconByType(EUKLocationType.none),
+            onTap: () {
+              _customInfoWindowController.addInfoWindow!(
+                buildPopupWindow(
+                  address: 'Nepřiřazená lokace',
+                  city: 'Hradec nad Moravicí',
+                  ZIP: '747 41',
+                  imageURL: '',
+                ),
+                const LatLng(49.88051393727233, 17.878107236492742),
               );
             },
           ),
@@ -221,18 +240,14 @@ class _MapPageState extends State<MapPage> {
             ),
           ),
 
-
-
-
           ListTile(
-            onTap:() {
-             new IntroScreen();
+            onTap: () {
+              new IntroScreen();
             },
             title: Text("Průvodce"),
             trailing: Icon(Icons.bookmarks_outlined, color: Colors.black),
             // tileColor: Colors.amber,
             textColor: Colors.black,
-
           ),
           const Divider(),
           const ListTile(
@@ -255,11 +270,10 @@ class _MapPageState extends State<MapPage> {
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
                   imageURL:
-                  'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
+                      'https://www.historickasidla.cz/galerie/obrazky/imager.php?img=542938&x=1000&y=664&hash=6619ef2c0cb8b6992c4e7fd2c699bb43',
                 ),
                 const LatLng(49.8758258, 17.8759750),
               );
-
             },
             title: const Text("Státní zámek"),
             subtitle: const Text("Hradec nad Moravicí"),
@@ -275,7 +289,7 @@ class _MapPageState extends State<MapPage> {
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
                   imageURL:
-                  'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
+                      'https://g.denik.cz/74/9d/op-hradec-nad-moravici-toalety0205_denik-630-16x9.jpg',
                 ),
                 const LatLng(49.8701600, 17.8791761),
               );
@@ -284,7 +298,6 @@ class _MapPageState extends State<MapPage> {
             subtitle: const Text("Hradec nad Moravicí"),
             trailing: getIconByType(EUKLocationType.wc),
           ),
-
 
           ListTile(
             onTap: () {
@@ -296,11 +309,10 @@ class _MapPageState extends State<MapPage> {
                   city: 'Opava',
                   ZIP: '746 01',
                   imageURL:
-                  'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
+                      'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
                 ),
                 const LatLng(49.9337922, 17.8793431),
               );
-
             },
             title: const Text("Slezská nemocnice Opava"),
             subtitle: const Text('Opava'),
@@ -315,7 +327,6 @@ class _MapPageState extends State<MapPage> {
     _controller?.animateCamera(
       CameraUpdate.newLatLngZoom(const LatLng(49.8701600, 17.8791761), _zoom),
     );
-
   }
 
   Future<void> _goToCastle() async {
