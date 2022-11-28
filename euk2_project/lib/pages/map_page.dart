@@ -376,7 +376,7 @@ class _MapPageState extends State<MapPage> {
             controller: _customInfoWindowController,
             height: 200,
             width: 300,
-            offset: 35,
+            offset: 55,
           ),
         ],
       ),
