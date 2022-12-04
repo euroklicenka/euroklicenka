@@ -1,8 +1,8 @@
 import 'package:euk2_project/navigation/page_info.dart';
-import 'package:euk2_project/pages/list_page.dart';
 import 'package:euk2_project/pages/map_page.dart';
 import 'package:euk2_project/pages/settings_page.dart';
 import 'package:flutter/material.dart';
+
 
 /// Controls the navigation between pages.
 class AppNavigator {
@@ -15,7 +15,6 @@ class AppNavigator {
 
   AppNavigator({int defaultPage = 0}) {
     _screens = [
-      PageInfo(listAppBar, ListPage()),
       PageInfo(mapAppBar, MapPage()),
       PageInfo(settingsAppBar, SettingsPage()),
     ];

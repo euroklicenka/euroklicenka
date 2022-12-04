@@ -11,23 +11,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  final AppNavigator _navigator = AppNavigator(defaultPage: 1);
+  final AppNavigator _navigator = AppNavigator(defaultPage: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _navigator.currentAppBar,
       body:_navigator.currentBody,
-
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _navigator.screenIndex,
-        onTap: (index) => setState(() => _navigator.navigate(index)),
-        items:  const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), activeIcon: Icon(Icons.list_alt), label: 'List'),
-          BottomNavigationBarItem(icon: Icon(Icons.map), activeIcon: Icon(Icons.map_outlined), label: 'Mapa'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), activeIcon: Icon(Icons.settings_applications), label: 'Nastavení'),
-        ],
-      ),
     );
   }
 }
