@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
       home: BlocProvider(
-        create: (context) => InitScreenBloc()..add(OnLoad()),
+        create: (context) => MainScreenBloc()..add(OnLoad()),
         child: const MainScreen(),
       ),
     );

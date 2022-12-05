@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<InitScreenBloc, InitScreenState>(
+    return BlocBuilder<MainScreenBloc, InitScreenState>(
       builder: (context, state) {
         if (state is InitScreenInitialState) {
           return const EUKSplashScreen();
