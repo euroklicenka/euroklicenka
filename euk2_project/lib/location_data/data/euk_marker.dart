@@ -30,9 +30,10 @@ class EUKMarker extends Marker {
               info: data.info,
               ZIP: data.ZIP,
               imageURL:
+                  //TODO Replace or Remove once we know how we are going to put in pictures.
               'http://polar.cz/data/gallery/modules/polar/news/articles/videos/20200319151335_301/715x402.jpg?ver=20200319151525',
             ),
-            const LatLng(49.9337922, 17.8793431),
+            LatLng(data.lat, data.long),
           );
         },
     );

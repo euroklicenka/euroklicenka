@@ -212,6 +212,10 @@ class _MapScreenState extends State<MapScreen> {
         children: <Widget>[
           GoogleMap(
             myLocationEnabled: true,
+            onMapCreated: (GoogleMapController controller) {
+              _controller = controller;
+              context.read<MainScreenBloc>().locationManager.windowController.googleMapController = controller;
+            },
             onTap: (position) {
               context.read<MainScreenBloc>().locationManager.windowController.hideInfoWindow!();
             },
