@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
-
 ///A popup window, that shows information about a specific eurokey location.
-Widget MarkerPopupWindow({required String city, required String ZIP, required String address, required String imageURL,}) {
+Widget EUKPopupWindow({
+  required String address,
+  required String region,
+  required String city,
+  required String ZIP,
+  required String info,
+  required String imageURL,
+}) {
   return Container(
     width: 300,
     height: 200,
@@ -37,7 +43,6 @@ Widget MarkerPopupWindow({required String city, required String ZIP, required St
               maxLines: 2,
               softWrap: false,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-
             ),
           ),
           // widget.data!.date!

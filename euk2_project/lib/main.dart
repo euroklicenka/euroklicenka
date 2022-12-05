@@ -1,5 +1,5 @@
 import 'package:euk2_project/main_screen.dart';
-import 'package:euk2_project/screens/init_screen_bloc/init_screen_bloc.dart';
+import 'package:euk2_project/screens/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: _themeManager.themeMode,
       home: BlocProvider(
-        create: (context) => MainScreenBloc()..add(OnLoad()),
+        create: (context) => MainScreenBloc()..add(OnAppInit()),
         child: const MainScreen(),
       ),
     );

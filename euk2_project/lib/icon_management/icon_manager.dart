@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:euk2_project/location_data/test_location_data.dart';
+import 'package:euk2_project/location_data/data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-///Returns an icon, representing the given location [type].
+///Returns an [Icon], representing the given location [type].
 Icon getIconByType(EUKLocationType type) {
   switch (type) {
     case EUKLocationType.none:

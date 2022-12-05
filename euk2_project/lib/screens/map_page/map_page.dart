@@ -1,8 +1,8 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/icon_management/icon_manager.dart';
-import 'package:euk2_project/location_data/test_location_data.dart';
+import 'package:euk2_project/location_data/data/euk_location_data.dart';
 import 'package:euk2_project/screens/map_page/popup_window/popup_window.dart';
-import 'package:euk2_project/screens/intro_screen.dart';
+import 'package:euk2_project/screens/intro_guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -54,12 +54,13 @@ class _MapScreenState extends State<MapScreen> {
       if (i == 1) {
         markers.add(
           Marker(
+
             markerId: const MarkerId('1'),
             position: const LatLng(49.8701600, 17.8791761),
             icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -79,7 +80,7 @@ class _MapScreenState extends State<MapScreen> {
             icon: await getMarkerIconByType(EUKLocationType.hospital),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Slezská nemocnice Opava',
                   city: 'Opava',
                   ZIP: '746 01',
@@ -98,7 +99,7 @@ class _MapScreenState extends State<MapScreen> {
             icon: await getMarkerIconByType(EUKLocationType.platform),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Státní zámek',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -117,7 +118,7 @@ class _MapScreenState extends State<MapScreen> {
             icon: await getMarkerIconByType(EUKLocationType.none),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Nepřiřazená lokace',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -206,7 +207,7 @@ class _MapScreenState extends State<MapScreen> {
               Navigator.of(context).pop();
 
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Státní zámek',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -225,7 +226,7 @@ class _MapScreenState extends State<MapScreen> {
               _goToTrainStation();
               Navigator.of(context).pop();
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -245,7 +246,7 @@ class _MapScreenState extends State<MapScreen> {
               _goToHospital();
               Navigator.of(context).pop();
               _customInfoWindowController.addInfoWindow!(
-                MarkerPopupWindow(
+                EUKPopupWindow(
                   address: 'Slezská nemocnice Opava',
                   city: 'Opava',
                   ZIP: '746 01',
@@ -293,6 +294,8 @@ class _MapScreenState extends State<MapScreen> {
       );
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {

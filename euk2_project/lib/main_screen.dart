@@ -1,5 +1,5 @@
-import 'package:euk2_project/screens/init_screen_bloc/init_screen_bloc.dart';
-import 'package:euk2_project/screens/intro_screen.dart';
+import 'package:euk2_project/screens/intro_guide_screen.dart';
+import 'package:euk2_project/screens/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/screens/map_page/map_page.dart';
 import 'package:euk2_project/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +16,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainScreenBloc, InitScreenState>(
+    return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
-        if (state is InitScreenInitialState) {
+        if (state is MainScreenInitialState) {
           return const EUKSplashScreen();
-        } else if (state is InitScreenGuideState) {
+        } else if (state is MainScreenGuideState) {
           return IntroGuideScreen();
         } else {
           return const MapScreen();
