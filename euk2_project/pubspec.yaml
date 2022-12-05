@@ -22,6 +22,7 @@ dependencies:
   introduction_screen: ^2.1.0
   shared_preferences: ^2.0.11
   splashscreen: ^1.2.0
+  flutter_bloc: ^8.1.1
 
 
 dev_dependencies:

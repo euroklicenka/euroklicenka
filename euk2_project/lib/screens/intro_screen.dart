@@ -1,11 +1,8 @@
 
-import 'package:euk2_project/main_screen.dart';
+import 'package:euk2_project/screens/map_page/map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
-
 
 class IntroScreen extends StatelessWidget {
   IntroScreen({Key? key}) : super(key: key);
@@ -17,7 +14,7 @@ class IntroScreen extends StatelessWidget {
 
         title: 'O EuroKlíčence',
         body: 'Pokud jste majitelem Euroklíče, můžete použít aplikaci EuroKlíčenka k nalezení nejbližšího sociálního zařízení, které Euroklíč umí otevřít.Euroklíče distrubuuje Národní rada osob se zdravotním postižením ČR.',
-        footer: SizedBox(
+        footer: const SizedBox(
           height: 45,
           width: 300,
 
@@ -35,7 +32,7 @@ class IntroScreen extends StatelessWidget {
     PageViewModel(
         title: 'Síť pro rodinu',
         body: 'akjfkjdhjksdhfkjasdhfkajsdhfkjasdhfkjasdhfkjasdhfkjasdhfkasjdfhaksdjf',
-        footer: SizedBox(
+        footer: const SizedBox(
           height: 45,
           width: 300,
 
@@ -55,7 +52,7 @@ class IntroScreen extends StatelessWidget {
         body: 'Za vývojem aplikace stojí studentí z Katedry informatiky a počítačů, Přírodvědecké fakulty Ostravské univerzity.'
             'Na tým vývojářů: Bc. Jan Sonnek, Bc. Jan Kunetka, Bc. Ondřej Sládek a Ondřej Zeman, '
             'dohlíželi vyučující: Doc. RNDr. Martin Kotyrba, Ph.D., PhDr. RNDr. Martin Žáček, Ph.D. a RNDr. Marek Vajgl, Ph.D.',
-        footer: SizedBox(
+        footer: const SizedBox(
           height: 45,
           width: 300,
 
@@ -103,9 +100,9 @@ class IntroScreen extends StatelessWidget {
     );
   }
 
-  void onDone(context) async {
+  void onDone(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('ON_BOARDING', false);
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MainScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MapScreen()));
   }
 }

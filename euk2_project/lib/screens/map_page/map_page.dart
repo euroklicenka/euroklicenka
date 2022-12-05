@@ -1,26 +1,23 @@
-
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/icon_management/icon_manager.dart';
 import 'package:euk2_project/location_data/test_location_data.dart';
-import 'package:euk2_project/pages/map_page/popup_window/popup_window.dart';
+import 'package:euk2_project/screens/map_page/popup_window/popup_window.dart';
+import 'package:euk2_project/screens/intro_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-import '../screens/intro_screen.dart';
 
-///AppBar of the More Screen.
-
-class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  State<MapPage> createState() => _MapPageState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
-class _MapPageState extends State<MapPage> {
+class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _controller;
-  Location _currentLocation = Location();
+  final Location _currentLocation = Location();
   LatLng initPosition = const LatLng(50.073658, 14.418540);
   Set<Marker> markers = {};
   final double _zoom = 15;
@@ -62,7 +59,7 @@ class _MapPageState extends State<MapPage> {
             icon: await getMarkerIconByType(EUKLocationType.wc),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -77,7 +74,7 @@ class _MapPageState extends State<MapPage> {
       } else {
         markers.add(
           Marker(
-            markerId: MarkerId('2'),
+            markerId: const MarkerId('2'),
             position: const LatLng(49.9337922, 17.8793431),
             icon: await getMarkerIconByType(EUKLocationType.hospital),
             onTap: () {
@@ -120,7 +117,7 @@ class _MapPageState extends State<MapPage> {
             icon: await getMarkerIconByType(EUKLocationType.none),
             onTap: () {
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Nepřiřazená lokace',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -186,10 +183,10 @@ class _MapPageState extends State<MapPage> {
 
           ListTile(
             onTap: () {
-              new IntroScreen();
+              IntroScreen();
             },
-            title: Text("Průvodce"),
-            trailing: Icon(Icons.bookmarks_outlined, color: Colors.black),
+            title: const Text("Průvodce"),
+            trailing: const Icon(Icons.bookmarks_outlined, color: Colors.black),
             // tileColor: Colors.amber,
             textColor: Colors.black,
           ),
@@ -209,7 +206,7 @@ class _MapPageState extends State<MapPage> {
               Navigator.of(context).pop();
 
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Státní zámek',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -228,7 +225,7 @@ class _MapPageState extends State<MapPage> {
               _goToTrainStation();
               Navigator.of(context).pop();
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Veřejné WC u železniční stanice',
                   city: 'Hradec nad Moravicí',
                   ZIP: '747 41',
@@ -248,7 +245,7 @@ class _MapPageState extends State<MapPage> {
               _goToHospital();
               Navigator.of(context).pop();
               _customInfoWindowController.addInfoWindow!(
-                buildPopupWindow(
+                MarkerPopupWindow(
                   address: 'Slezská nemocnice Opava',
                   city: 'Opava',
                   ZIP: '746 01',
