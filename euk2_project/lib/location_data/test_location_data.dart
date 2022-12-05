@@ -29,6 +29,7 @@ class TestLocationData {
 }
 
 enum EUKLocationType {
+  none,
   wc,
   platform,
   hospital
