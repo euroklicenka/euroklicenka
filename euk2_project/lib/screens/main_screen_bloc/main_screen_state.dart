@@ -14,8 +14,6 @@ class MainScreenGuideState extends MainScreenState {
 }
 
 class MainScreenMapState extends MainScreenState {
-  final Set<EUKMarker> markers;
-
-  const MainScreenMapState(this.markers);
+  const MainScreenMapState();
 
 }

@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/location_data/data/euk_marker.dart';
-import 'package:euk2_project/location_data/location_data_manager.dart';
+import 'package:euk2_project/location_data/location_manager.dart';
 import 'package:euk2_project/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -12,13 +10,10 @@ part 'main_screen_state.dart';
 
 ///Controls the data on the screen.
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-  UserDataManager? dataManager;
-  EUKLocationDataManager? locationManager;
-  late CustomInfoWindowController windowController;
+  late UserDataManager dataManager;
+  late EUKLocationManager locationManager;
 
   MainScreenBloc() : super(const MainScreenInitialState()) {
-    windowController = CustomInfoWindowController();
-
     on<OnAppInit>(_onAppInit);
   }
 
@@ -27,9 +22,9 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     emit(const MainScreenInitialState());
 
     dataManager = await UserDataManager.create();
-    locationManager = EUKLocationDataManager.create();
+    locationManager = await EUKLocationManager.create();
 
-    if (dataManager?.initScreen == null || dataManager?.initScreen == 0) {
+    if (dataManager.initScreen == null || dataManager.initScreen == 0) {
       emit(const MainScreenGuideState());
     } else {
 
