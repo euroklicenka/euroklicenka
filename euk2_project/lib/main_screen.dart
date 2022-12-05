@@ -19,13 +19,11 @@ class _MainScreenState extends State<MainScreen> {
     return BlocBuilder<InitScreenBloc, InitScreenState>(
       builder: (context, state) {
         if (state is InitScreenInitialState) {
-          return TestSplashScreen();
-        } else if (state is InitScreenSplashState) {
-          return TestSplashScreen();
+          return const TestSplashScreen();
         } else if (state is InitScreenGuideState) {
-          return IntroScreen();
+          return IntroGuideScreen();
         } else {
-          return MapScreen();
+          return const MapScreen();
         }
       },
     );

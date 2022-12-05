@@ -183,7 +183,7 @@ class _MapScreenState extends State<MapScreen> {
 
           ListTile(
             onTap: () {
-              IntroScreen();
+              IntroGuideScreen();
             },
             title: const Text("Průvodce"),
             trailing: const Icon(Icons.bookmarks_outlined, color: Colors.black),
