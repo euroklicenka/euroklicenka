@@ -13,7 +13,7 @@ final List<EUKLocationData> testLocations = [
       city: 'Hradec nad Moravicí',
       info: '',
       ZIP: '747 41',
-      type: EUKLocationType.platform),
+      type: EUKLocationType.platform,),
   EUKLocationData.latLng(
       id: _idCounter.toString(),
       latLng: const LatLng(49.9337922, 17.8793431),
@@ -22,7 +22,7 @@ final List<EUKLocationData> testLocations = [
       city: 'Opava',
       info: '',
       ZIP: '746 01',
-      type: EUKLocationType.hospital),
+      type: EUKLocationType.hospital,),
   EUKLocationData.latLng(
       id: _idCounter.toString(),
       latLng: const LatLng(49.8758258, 17.8759750),
@@ -31,7 +31,16 @@ final List<EUKLocationData> testLocations = [
       city: 'Hradec nad Moravicí',
       info: '',
       ZIP: '747 41',
-      type: EUKLocationType.wc),
+      type: EUKLocationType.wc,),
+  EUKLocationData.latLng(
+      id: _idCounter.toString(),
+      latLng: const LatLng(49.8, 17.87),
+      address: 'Clam - Gallasův palác, Husova 158/20, 110 00 Praha 1',
+      region: 'Hlavní město Praha',
+      city: 'Praha 1',
+      info: 'přízemí',
+      ZIP: '110 00',
+      type: EUKLocationType.wc,),
 ];
 
 int getID() {
