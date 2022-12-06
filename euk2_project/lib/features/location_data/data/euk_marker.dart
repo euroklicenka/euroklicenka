@@ -1,7 +1,7 @@
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/icon_management/icon_manager.dart';
-import 'package:euk2_project/location_data/data/euk_location_data.dart';
-import 'package:euk2_project/screens/map_page/popup_window/popup_window.dart';
+import 'package:euk2_project/features/icon_management/icon_manager.dart';
+import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/features/popup_window/popup_window.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Represents a map marker of an EUK location.

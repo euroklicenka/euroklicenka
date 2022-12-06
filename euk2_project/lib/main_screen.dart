@@ -1,6 +1,6 @@
+import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/screens/intro_guide_screen.dart';
-import 'package:euk2_project/screens/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/screens/map_page/map_page.dart';
+import 'package:euk2_project/screens/map_screen.dart';
 import 'package:euk2_project/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

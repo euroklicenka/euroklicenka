@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:euk2_project/location_data/location_manager.dart';
-import 'package:euk2_project/user_data_management/user_data_manager.dart';
+import 'package:euk2_project/features/location_data/location_manager.dart';
+import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 
 part 'main_screen_event.dart';

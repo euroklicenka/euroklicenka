@@ -1,9 +1,5 @@
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/icon_management/icon_manager.dart';
-import 'package:euk2_project/location_data/data/euk_location_data.dart';
-import 'package:euk2_project/screens/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/screens/map_page/popup_window/popup_window.dart';
-import 'package:euk2_project/screens/intro_guide_screen.dart';
+import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
