@@ -18,14 +18,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: yellowTheme,
-      darkTheme: darkTheme,
-      themeMode: _themeManager.themeMode,
-      home: BlocProvider(
-        create: (context) => MainScreenBloc()..add(OnAppInit()),
-        child: const MainScreen(),
+    return BlocProvider(
+      create:(context) => MainScreenBloc()..add(OnAppInit()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: yellowTheme,
+        darkTheme: darkTheme,
+        themeMode: _themeManager.themeMode,
+        home: const MainScreen(),
       ),
     );
   }
