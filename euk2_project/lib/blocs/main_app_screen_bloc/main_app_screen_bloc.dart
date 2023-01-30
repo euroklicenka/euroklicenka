@@ -5,7 +5,7 @@ part 'main_app_screen_event.dart';
 part 'main_app_screen_state.dart';
 
 class MainAppScreenBloc extends Bloc<MainAppScreenEvent, MainAppScreenState> {
-  int currentScreenIndex = 0;
+  int currentScreenIndex = 1;
 
   MainAppScreenBloc() : super(const AppScreenMap()) {
     on<OnSwitchPage>(_onSwitchPage);
@@ -15,10 +15,10 @@ class MainAppScreenBloc extends Bloc<MainAppScreenEvent, MainAppScreenState> {
       currentScreenIndex = event.index;
       switch(currentScreenIndex) {
         case 0:
-          emit(const AppScreenMap());
+          emit(const AppScreenList());
           break;
         case 1:
-          emit(const AppScreenList());
+          emit(const AppScreenMap());
           break;
         case 2:
           emit(const AppScreenOptions());

@@ -1,4 +1,5 @@
 import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
+import 'package:euk2_project/screens/app/list_screen.dart';
 import 'package:euk2_project/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,9 +21,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
           if (state is AppScreenMap) {
             return const MapScreen();
           } else if (state is AppScreenList) {
-            return const MapScreen();
+            return const ListScreen();
           } else if (state is AppScreenOptions) {
-            return const MapScreen();
+            return const Placeholder();
           } else {
             return const MapScreen();
           }
