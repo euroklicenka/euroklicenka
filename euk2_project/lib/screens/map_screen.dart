@@ -97,18 +97,13 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
           ),
-          const Divider(),
-          const ListTile(
-            title: Text("Seznam míst"),
-            trailing: Icon(Icons.place, color: Colors.black),
-            // tileColor: Colors.amber,
-            textColor: Colors.black,
-          ),
-
-          ListView.separated(
-            itemCount: context.read<MainScreenBloc>().locationManager.locations.length,
-            itemBuilder: _buildListTile,
-            separatorBuilder: (BuildContext context, int index) => const Divider(),
+          Expanded(
+            child: ListView.separated(
+              itemCount: context.read<MainScreenBloc>().locationManager.locations.length,
+              itemBuilder: _buildListTile,
+              separatorBuilder: (BuildContext context, int index) => const Divider(),
+              shrinkWrap: true,
+            ),
           )
           
           // ListTile(
