@@ -1,6 +1,6 @@
 import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/main_screen.dart';
+import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
 import 'package:flutter/material.dart';

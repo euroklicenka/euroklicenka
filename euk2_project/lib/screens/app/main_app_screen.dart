@@ -1,5 +1,5 @@
 import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
-import 'package:euk2_project/screens/map_screen.dart';
+import 'package:euk2_project/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
