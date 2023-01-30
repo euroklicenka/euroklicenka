@@ -4,6 +4,4 @@ part of 'main_screen_bloc.dart';
 abstract class MainScreenEvent {}
 
 ///Is called when it is time to load the map screen.
-class OnAppInit extends MainScreenEvent {
-
-}
+class OnAppInit extends MainScreenEvent {}

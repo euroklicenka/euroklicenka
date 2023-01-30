@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
@@ -18,8 +19,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:(context) => MainScreenBloc()..add(OnAppInit()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MainScreenBloc()..add(OnAppInit()),
+        ),
+        BlocProvider(
+          create: (context) => MainAppScreenBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: yellowTheme,
