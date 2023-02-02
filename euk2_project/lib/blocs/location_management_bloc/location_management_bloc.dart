@@ -36,7 +36,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
     await locationManager.windowController.googleMapController
         ?.animateCamera(CameraUpdate.newLatLngZoom(
-      event.location, event.zoom,));
+      LatLng(event.location.latitude + 0.003, event.location.longitude), event.zoom,));
 
 
 
