@@ -1,5 +1,4 @@
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:flutter/material.dart';
@@ -25,11 +24,7 @@ class _ListScreenState extends State<ListScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: ListView.separated(
-                itemCount: context
-                    .read<LocationManagementBloc>()
-                    .locationManager
-                    .locations
-                    .length,
+                itemCount: context.watch<LocationManagementBloc>().locationManager.locations.length,
                 itemBuilder: _buildListTile,
                 separatorBuilder: (BuildContext context, int index) =>
                     const Divider(),
@@ -42,15 +37,13 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data =
-        context.read<LocationManagementBloc>().locationManager.locations[index];
+    final EUKLocationData data = context.read<LocationManagementBloc>().locationManager.locations[index];
     return ListTile(
       title: Text(data.address),
       subtitle: Text('${data.city}, ${data.ZIP}'),
       trailing: getIconByType(data.type),
-      onTap: () => context
-          .read<LocationManagementBloc>()
-          .add(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: 15)),
+      onTap: () => context.read<LocationManagementBloc>()
+          .add(OnFocusOnEUKLocation(data.id, zoom: 15)),
     );
   }
 }

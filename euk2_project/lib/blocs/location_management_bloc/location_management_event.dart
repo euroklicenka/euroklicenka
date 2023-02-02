@@ -8,3 +8,9 @@ class OnFocusOnLocation extends LocationManagementEvent {
   final double zoom;
   OnFocusOnLocation(this.location, {required this.zoom});
 }
+
+class OnFocusOnEUKLocation extends LocationManagementEvent {
+  final String locationID;
+  final double zoom;
+  OnFocusOnEUKLocation(this.locationID, {required this.zoom});
+}
