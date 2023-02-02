@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
+///Screen that shows the primary map with EUK locations.
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -190,14 +191,7 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // loadData() ;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mapa míst'),
-        centerTitle: true,
-      ),
-      drawer: _drawer(),
-      body: Stack(
+    return Stack(
         children: <Widget>[
           GoogleMap(
             myLocationEnabled: true,
@@ -222,7 +216,20 @@ class _MapScreenState extends State<MapScreen> {
             offset: 70,
           ),
         ],
-      ),
+      );
+  }
+}
+
+///The AppBar for the Map Screen.
+class AppBarMapScreen extends StatelessWidget {
+  const AppBarMapScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text('Mapa míst'),
+      centerTitle: true,
     );
   }
 }
+

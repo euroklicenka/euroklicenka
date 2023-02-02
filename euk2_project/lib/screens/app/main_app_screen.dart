@@ -16,6 +16,22 @@ class _MainAppScreenState extends State<MainAppScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(58),
+        child: BlocBuilder<MainAppScreenBloc, MainAppScreenState>(
+          builder: (context, state) {
+            if (state is AppScreenMap) {
+              return const AppBarMapScreen();
+            } else if (state is AppScreenList) {
+              return const AppBarListScreen();
+            } else if (state is AppScreenOptions) {
+              return const Placeholder();
+            } else {
+              return const MapScreen();
+            }
+          },
+        ),
+      ),
       body: BlocBuilder<MainAppScreenBloc, MainAppScreenState>(
         builder: (context, state) {
           if (state is AppScreenMap) {

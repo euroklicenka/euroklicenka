@@ -14,3 +14,17 @@ class _ListScreenState extends State<ListScreen> {
     return const Placeholder();
   }
 }
+
+///The AppBar for the List Screen.
+class AppBarListScreen extends StatelessWidget {
+  const AppBarListScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text('List lokací'),
+      centerTitle: true,
+    );
+  }
+}
+
