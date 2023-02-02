@@ -17,16 +17,40 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        Expanded(
+          child: Scrollbar(
+            thumbVisibility: true,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: ListView.separated(
+                itemCount: context
+                    .read<LocationManagementBloc>()
+                    .locationManager
+                    .locations
+                    .length,
+                itemBuilder: _buildListTile,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data = context.read<LocationManagementBloc>().locationManager.locations[index];
+    final EUKLocationData data =
+        context.read<LocationManagementBloc>().locationManager.locations[index];
     return ListTile(
       title: Text(data.address),
       subtitle: Text('${data.city}, ${data.ZIP}'),
       trailing: getIconByType(data.type),
-      onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: 15)),
+      onTap: () => context
+          .read<LocationManagementBloc>()
+          .add(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: 15)),
     );
   }
 }
@@ -43,4 +67,3 @@ class AppBarListScreen extends StatelessWidget {
     );
   }
 }
-
