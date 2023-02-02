@@ -35,20 +35,6 @@ class _MapScreenState extends State<MapScreen> {
 
   final MapType _currentMapType = MapType.normal;
 
-  @override
-  void dispose() {
-    context.read<LocationManagementBloc>().locationManager.dispose();
-    super.dispose();
-  }
-
-
-
-  Future<void> _zoomOnMarker(LatLng markerPos, double zoomAmount) async {
-    _controller?.animateCamera(
-      CameraUpdate.newLatLngZoom(markerPos, zoomAmount),
-    );
-  }
-
   // Widget _drawer() {
   //   return Drawer(
   //     elevation: 16.0,
@@ -189,7 +175,7 @@ class _MapScreenState extends State<MapScreen> {
             onTap: (position) => context.read<LocationManagementBloc>().locationManager.windowController.hideInfoWindow!(),
             onCameraMove: (position) => context.read<LocationManagementBloc>().locationManager.windowController.onCameraMove!(),
             mapType: _currentMapType,
-            markers: context.read<LocationManagementBloc>().locationManager.markers,
+            markers: context.watch<LocationManagementBloc>().locationManager.markers,
             initialCameraPosition: const CameraPosition(
               //target: LatLng(0.0, 0.0),
               target: LatLng(50.073658, 14.418540),
@@ -197,7 +183,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           CustomInfoWindow(
-            controller: context.read<LocationManagementBloc>().locationManager.windowController,
+            controller: context.watch<LocationManagementBloc>().locationManager.windowController,
             height: MediaQuery.of(context).size.height * 0.32,
             width: MediaQuery.of(context).size.width * 0.8,
             offset: 70,

@@ -46,7 +46,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: context.read<ScreenNavigationBloc>().currentScreen.index,
+        currentIndex: context.watch<ScreenNavigationBloc>().currentScreen.index,
         onTap: (index) => context.read<ScreenNavigationBloc>().add(OnSwitchPage(index)),
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
