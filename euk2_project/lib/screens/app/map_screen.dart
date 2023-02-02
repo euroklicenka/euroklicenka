@@ -1,7 +1,5 @@
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/features/icon_management/icon_manager.dart';
-import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -39,22 +37,11 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void dispose() {
-    context.read<MainScreenBloc>().locationManager.dispose();
+    context.read<LocationManagementBloc>().locationManager.dispose();
     super.dispose();
   }
 
-  Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data = context.read<MainScreenBloc>().locationManager.locations[index];
-    return ListTile(
-          title: Text(data.address),
-          subtitle: Text('${data.city}, ${data.ZIP}'),
-          trailing: getIconByType(data.type),
-          onTap: (){
-            _zoomOnMarker(LatLng(data.lat, data.long), 15);
-            Navigator.of(context).pop();
-          },
-        );
-  }
+
 
   Future<void> _zoomOnMarker(LatLng markerPos, double zoomAmount) async {
     _controller?.animateCamera(
@@ -62,50 +49,50 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Widget _drawer() {
-    return Drawer(
-      elevation: 16.0,
-      child: Column(
-        children: [
-          //TODO - Replace SizedBox with a more flexible solution
-          const SizedBox(height: 62),
-          ColoredBox(
-            color: Colors.amber,
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
-              child: Row(
-                children: [
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280',),
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    'EuroKlíčenka 2.0',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,),
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    child: const Icon(Icons.settings, color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.separated(
-              itemCount: context.read<MainScreenBloc>().locationManager.locations.length,
-              itemBuilder: _buildListTile,
-              separatorBuilder: (BuildContext context, int index) => const Divider(),
-              shrinkWrap: true,
-            ),
-          )
+  // Widget _drawer() {
+  //   return Drawer(
+  //     elevation: 16.0,
+  //     child: Column(
+  //       children: [
+  //         //TODO - Replace SizedBox with a more flexible solution
+  //         const SizedBox(height: 62),
+  //         ColoredBox(
+  //           color: Colors.amber,
+  //           child: Padding(
+  //             padding:
+  //                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 15.0),
+  //             child: Row(
+  //               children: [
+  //                 const CircleAvatar(
+  //                   backgroundImage: NetworkImage(
+  //                       'https://play-lh.googleusercontent.com/S0gCtkUxcS1LOC6V2ZqJvVD5lfdTTfSIagePsauBAcLLo-6kGNhoMwgadLRUXyr00jLa=w280-h280',),
+  //                 ),
+  //                 const SizedBox(
+  //                   width: 10,
+  //                 ),
+  //                 const Text(
+  //                   'EuroKlíčenka 2.0',
+  //                   style: TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 15,
+  //                       fontWeight: FontWeight.bold,),
+  //                 ),
+  //                 const Spacer(),
+  //                 GestureDetector(
+  //                   child: const Icon(Icons.settings, color: Colors.white),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //         Expanded(
+  //           child: ListView.separated(
+  //             itemCount: context.read<MainScreenBloc>().locationManager.locations.length,
+  //             itemBuilder: _buildListTile,
+  //             separatorBuilder: (BuildContext context, int index) => const Divider(),
+  //             shrinkWrap: true,
+  //           ),
+  //         )
           
           // ListTile(
           //   onTap: () {
@@ -166,10 +153,10 @@ class _MapScreenState extends State<MapScreen> {
           //   subtitle: const Text('Opava'),
           //   trailing: getIconByType(EUKLocationType.hospital),
           // ),
-        ],
-      ),
-    );
-  }
+  //       ],
+  //     ),
+  //   );
+  // }
 
   // Future<void> _goToTrainStation() async {
   //   _controller?.animateCamera(
@@ -197,12 +184,12 @@ class _MapScreenState extends State<MapScreen> {
             myLocationEnabled: true,
             onMapCreated: (GoogleMapController controller) {
               _controller = controller;
-              context.read<MainScreenBloc>().locationManager.windowController.googleMapController = controller;
+              context.read<LocationManagementBloc>().locationManager.windowController.googleMapController = controller;
             },
-            onTap: (position) => context.read<MainScreenBloc>().locationManager.windowController.hideInfoWindow!(),
-            onCameraMove: (position) => context.read<MainScreenBloc>().locationManager.windowController.onCameraMove!(),
+            onTap: (position) => context.read<LocationManagementBloc>().locationManager.windowController.hideInfoWindow!(),
+            onCameraMove: (position) => context.read<LocationManagementBloc>().locationManager.windowController.onCameraMove!(),
             mapType: _currentMapType,
-            markers: context.read<MainScreenBloc>().locationManager.markers,
+            markers: context.read<LocationManagementBloc>().locationManager.markers,
             initialCameraPosition: const CameraPosition(
               //target: LatLng(0.0, 0.0),
               target: LatLng(50.073658, 14.418540),
@@ -210,7 +197,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
           ),
           CustomInfoWindow(
-            controller: context.read<MainScreenBloc>().locationManager.windowController,
+            controller: context.read<LocationManagementBloc>().locationManager.windowController,
             height: MediaQuery.of(context).size.height * 0.32,
             width: MediaQuery.of(context).size.width * 0.8,
             offset: 70,

@@ -1,5 +1,6 @@
-import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
@@ -22,10 +23,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => MainScreenBloc()..add(OnAppInit()),
+          create: (context) => LocationManagementBloc(),
         ),
         BlocProvider(
-          create: (context) => MainAppScreenBloc(),
+          create: (context) => ScreenNavigationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => MainScreenBloc(locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
         ),
       ],
       child: MaterialApp(

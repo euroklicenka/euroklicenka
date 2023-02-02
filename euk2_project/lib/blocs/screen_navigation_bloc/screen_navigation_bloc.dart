@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
-part 'main_app_screen_event.dart';
-part 'main_app_screen_state.dart';
+part 'screen_navigation_event.dart';
+part 'screen_navigation_state.dart';
 
-class MainAppScreenBloc extends Bloc<MainAppScreenEvent, MainAppScreenState> {
+///Controls user navigation between app screens.
+class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationState> {
   int currentScreenIndex = 1;
 
-  MainAppScreenBloc() : super(const AppScreenMap()) {
+  ScreenNavigationBloc() : super(const AppScreenMap()) {
     on<OnSwitchPage>(_onSwitchPage);
   }
 

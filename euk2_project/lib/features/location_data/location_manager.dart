@@ -37,9 +37,6 @@ class EUKLocationManager {
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
-
-  ///Returns a set of []
   Set<Marker> get markers => _markers;
-
   CustomInfoWindowController get windowController => _windowController;
 }

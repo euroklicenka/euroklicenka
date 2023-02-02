@@ -1,4 +1,4 @@
-import 'package:euk2_project/blocs/main_app_screen_bloc/main_app_screen_bloc.dart';
+import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/app/list_screen.dart';
 import 'package:euk2_project/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(58),
-        child: BlocBuilder<MainAppScreenBloc, MainAppScreenState>(
+        child: BlocBuilder<ScreenNavigationBloc, ScreenNavigationState>(
           builder: (context, state) {
             if (state is AppScreenMap) {
               return const AppBarMapScreen();
@@ -32,7 +32,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
           },
         ),
       ),
-      body: BlocBuilder<MainAppScreenBloc, MainAppScreenState>(
+      body: BlocBuilder<ScreenNavigationBloc, ScreenNavigationState>(
         builder: (context, state) {
           if (state is AppScreenMap) {
             return const MapScreen();
@@ -46,8 +46,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
         },
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: context.read<MainAppScreenBloc>().currentScreenIndex,
-        onTap: (index) => context.read<MainAppScreenBloc>().add(OnSwitchPage(index)),
+        currentIndex: context.read<ScreenNavigationBloc>().currentScreenIndex,
+        onTap: (index) => context.read<ScreenNavigationBloc>().add(OnSwitchPage(index)),
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
