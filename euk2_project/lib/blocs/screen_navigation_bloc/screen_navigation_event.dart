@@ -4,6 +4,7 @@ part of 'screen_navigation_bloc.dart';
 abstract class ScreenNavigationEvent {}
 
 class OnSwitchPage extends ScreenNavigationEvent {
-  final int index;
-  OnSwitchPage(this.index);
+  final ScreenType screen;
+  OnSwitchPage(int screenIndex) : screen = ScreenType.values[screenIndex];
+  OnSwitchPage.screen(this.screen);
 }

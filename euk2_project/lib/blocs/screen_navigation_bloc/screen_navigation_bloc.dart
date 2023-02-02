@@ -2,29 +2,33 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'screen_navigation_event.dart';
+
 part 'screen_navigation_state.dart';
 
 ///Controls user navigation between app screens.
 class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationState> {
-  int currentScreenIndex = 1;
+  ScreenType currentScreen = ScreenType.map;
 
   ScreenNavigationBloc() : super(const AppScreenMap()) {
     on<OnSwitchPage>(_onSwitchPage);
   }
 
   void _onSwitchPage(OnSwitchPage event, emit) {
-      currentScreenIndex = event.index;
-      switch(currentScreenIndex) {
-        case 0:
-          emit(const AppScreenList());
-          break;
-        case 1:
-          emit(const AppScreenMap());
-          break;
-        case 2:
-          emit(const AppScreenOptions());
-          break;
-      }
+    if (currentScreen == event.screen) return;
+
+    currentScreen = event.screen;
+    switch (currentScreen) {
+      case ScreenType.list:
+        emit(const AppScreenList());
+        break;
+      case ScreenType.map:
+        emit(const AppScreenMap());
+        break;
+      case ScreenType.options:
+        emit(const AppScreenOptions());
+        break;
+    }
+  }
 }
 
-}
+enum ScreenType {list, map, options}

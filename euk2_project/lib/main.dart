@@ -23,10 +23,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => LocationManagementBloc(),
+          create: (context) => ScreenNavigationBloc(),
         ),
         BlocProvider(
-          create: (context) => ScreenNavigationBloc(),
+          create: (context) => LocationManagementBloc(navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context)),
         ),
         BlocProvider(
           create: (context) => MainScreenBloc(locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
