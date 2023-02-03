@@ -51,16 +51,19 @@ class _MainAppScreenState extends State<MainAppScreen> {
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.view_list_outlined),
+            icon: Icon(Icons.view_list),
+            activeIcon: Icon(Icons.view_list_outlined),
             label: "List",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
+            activeIcon: Icon(Icons.map_outlined),
             label: "Map",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
+            icon: Icon(Icons.format_list_bulleted),
+            activeIcon: Icon(Icons.format_align_center),
+            label: "More",
           ),
         ],
       ),
