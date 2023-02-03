@@ -1,5 +1,7 @@
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/main_screen.dart';
+import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +20,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: yellowTheme,
-      darkTheme: darkTheme,
-      themeMode: _themeManager.themeMode,
-      home: BlocProvider(
-        create: (context) => MainScreenBloc()..add(OnAppInit()),
-        child: const MainScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ScreenNavigationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => LocationManagementBloc(navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context)),
+        ),
+        BlocProvider(
+          create: (context) => MainScreenBloc(locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: yellowTheme,
+        darkTheme: darkTheme,
+        themeMode: _themeManager.themeMode,
+        home: const MainScreen(),
       ),
     );
   }

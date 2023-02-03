@@ -1,5 +1,5 @@
 
-import 'package:euk2_project/screens/map_screen.dart';
+import 'package:euk2_project/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
