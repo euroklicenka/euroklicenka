@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Manages all of user's saved data.
 class UserDataManager {
-  SharedPreferences? _prefs;
+  late SharedPreferences _prefs;
   int? _initScreen;
 
   UserDataManager._create();
@@ -12,8 +12,8 @@ class UserDataManager {
     final UserDataManager m = UserDataManager._create();
 
     m._prefs = await SharedPreferences.getInstance();
-    m._initScreen = m._prefs!.getInt('onBoard');
-    await m._prefs!.setInt('onBoard', 1);
+    m._initScreen = m._prefs.getInt('onBoard');
+    await m._prefs.setInt('onBoard', 1);
 
     return m;
   }
