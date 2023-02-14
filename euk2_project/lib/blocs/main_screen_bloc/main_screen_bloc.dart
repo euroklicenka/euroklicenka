@@ -29,10 +29,6 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     if (dataManager.initScreen == null || dataManager.initScreen == 0) {
       emit(const MainScreenGuideState());
     } else {
-
-      //TODO Heat up Google maps before app load.
-      //TODO Build markers here before app load.
-
       _onInitFinish(event, emit);
     }
   }
