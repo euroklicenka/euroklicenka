@@ -21,7 +21,7 @@ class _HomepageState extends State<Homepage> {
 
   Future<List<List<dynamic>>> processCsv() async {
     var result = await DefaultAssetBundle.of(context).loadString(
-      "assets/data/test.csv",
+      "assets/loading_data.csv",
     );
     return const CsvToListConverter().convert(result, eol: "\n");
   }
