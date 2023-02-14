@@ -14,9 +14,9 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
 
   late UserDataManager dataManager;
 
-
   MainScreenBloc({required this.locationBloc}) : super(const MainScreenInitialState()) {
     on<OnAppInit>(_onAppInit);
+    on<OnInitFinish>(_onInitFinish);
   }
 
   ///Loads the proper screen on startup and initializes variables.
@@ -33,7 +33,11 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       //TODO Heat up Google maps before app load.
       //TODO Build markers here before app load.
 
-      emit(const MainScreenMapState());
+      _onInitFinish(event, emit);
     }
+  }
+
+  FutureOr<void> _onInitFinish(event, emit) {
+    emit(const MainScreenMapState());
   }
 }
