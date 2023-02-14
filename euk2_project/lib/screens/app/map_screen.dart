@@ -29,8 +29,8 @@ class _MapScreenState extends State<MapScreen> {
             markers: context.watch<LocationManagementBloc>().locationManager.markers,
             initialCameraPosition: const CameraPosition(
               //target: LatLng(0.0, 0.0),
-              target: LatLng(50.073658, 14.418540),
-              zoom: 6.0,
+              target: LatLng(50.073658, 15.418540),
+              zoom: 6.25,
             ),
           ),
           CustomInfoWindow(
