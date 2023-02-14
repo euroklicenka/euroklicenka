@@ -1,6 +1,7 @@
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/app/list_screen.dart';
 import 'package:euk2_project/screens/app/map_screen.dart';
+import 'package:euk2_project/screens/app/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +26,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
             } else if (state is AppScreenList) {
               return const AppBarListScreen();
             } else if (state is AppScreenOptions) {
-              return const Placeholder();
+              return const AppBarSettingsScreen();
             } else {
               return const MapScreen();
             }
@@ -39,7 +40,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
           } else if (state is AppScreenList) {
             return const ListScreen();
           } else if (state is AppScreenOptions) {
-            return const Placeholder();
+            return const SettingsScreen();
           } else {
             return const MapScreen();
           }

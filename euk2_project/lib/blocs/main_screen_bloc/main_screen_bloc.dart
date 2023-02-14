@@ -30,9 +30,6 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       emit(const MainScreenGuideState());
     } else {
 
-      //TODO Heat up Google maps before app load.
-      //TODO Build markers here before app load.
-
       _onInitFinish(event, emit);
     }
   }
