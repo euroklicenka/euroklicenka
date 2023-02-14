@@ -21,7 +21,6 @@ dependencies:
   introduction_screen: ^2.1.0
   shared_preferences: ^2.0.11
   flutter_bloc: ^8.1.1
-  csv: ^5.0.1
 
 
 dev_dependencies:
@@ -39,7 +38,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
-    - assets/location_data.csv
 
   #   - images/a_dot_ham.jpeg
 
