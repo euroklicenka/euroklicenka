@@ -18,30 +18,26 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   final ScreenNavigationBloc navigationBloc;
 
-  final UserPositionLocator userLocation = UserPositionLocator();
+  final UserPositionLocator _userLocation = UserPositionLocator();
   late EUKLocationManager locationManager;
 
-  LocationManagementBloc({required this.navigationBloc}) : super(LocationManagementDefault()) {
-    on<OnFocusOnLocation>(onFocusOnLocation);
-    on<OnFocusOnEUKLocation>(onFocusOnEUKLocation);
-
-    navigationBloc.stream.listen((event) {
-        if (event is AppScreenMap) {
-          userLocation.updateLocation();
-          add(OnFocusOnLocation(userLocation.currentPosition, zoom: 15));
-        }
-    });
+  LocationManagementBloc({required this.navigationBloc}) : super(const LocationManagementDefault()) {
+    on<OnFocusOnLocation>(_onFocusOnLocation);
+    on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
+    on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
   }
 
+  ///Async constructor for [LocationManagementBloc].
   Future<void> create() async {
     locationManager = await EUKLocationManager.create();
-    Timer.periodic(const Duration(seconds: 10), (timer) => userLocation.updateLocation());
-    await userLocation.updateLocation();
+    Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
+    await _userLocation.updateLocation();
   }
 
-  Future<void> onFocusOnLocation(OnFocusOnLocation event, emit) async {
+  Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
     emit(const LocationManagementFocusing());
 
+    //Switch to the map screen
     navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
     await Future.delayed(const Duration(seconds: 1));
 
@@ -54,9 +50,14 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     emit(const LocationManagementDefault());
   }
 
-  Future<FutureOr<void>> onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
+  Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
     final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
-    await onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
+
+    await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
     locationManager.windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
+  }
+
+  FutureOr<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
+    await _onFocusOnLocation(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount), emit);
   }
 }

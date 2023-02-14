@@ -14,3 +14,5 @@ class OnFocusOnEUKLocation extends LocationManagementEvent {
   final double zoom;
   OnFocusOnEUKLocation(this.locationID, {required this.zoom});
 }
+
+class OnFocusOnUserPosition extends LocationManagementEvent {}

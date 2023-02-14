@@ -42,8 +42,7 @@ class _ListScreenState extends State<ListScreen> {
       title: Text(data.address),
       subtitle: Text('${data.city}, ${data.ZIP}'),
       trailing: getIconByType(data.type),
-      onTap: () => context.read<LocationManagementBloc>()
-          .add(OnFocusOnEUKLocation(data.id, zoom: 15)),
+      onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnEUKLocation(data.id, zoom: 15)),
     );
   }
 }

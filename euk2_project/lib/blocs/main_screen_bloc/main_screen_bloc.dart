@@ -34,6 +34,8 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       //TODO Build markers here before app load.
 
       emit(const MainScreenAppContentState());
+      await Future.delayed(const Duration(milliseconds: 500));
+      locationBloc.add(OnFocusOnUserPosition());
     }
   }
 }
