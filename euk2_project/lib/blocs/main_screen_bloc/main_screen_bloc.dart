@@ -17,6 +17,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   MainScreenBloc({required this.locationBloc}) : super(const MainScreenInitialState()) {
     on<OnAppInit>(_onAppInit);
     on<OnInitFinish>(_onInitFinish);
+    on<OnOpenGuideScreen>(_onOpenGuideScreen);
   }
 
   ///Loads the proper screen on startup and initializes variables.
@@ -27,14 +28,17 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     await locationBloc.create();
 
     if (dataManager.initScreen == null || dataManager.initScreen == 0) {
-      emit(const MainScreenGuideState());
+      _onOpenGuideScreen(event, emit);
     } else {
-
       _onInitFinish(event, emit);
     }
   }
 
   FutureOr<void> _onInitFinish(event, emit) {
     emit(const MainScreenMapState());
+  }
+
+  FutureOr<void> _onOpenGuideScreen(event, emit) {
+    emit(const MainScreenGuideState());
   }
 }
