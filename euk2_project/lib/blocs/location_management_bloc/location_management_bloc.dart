@@ -30,6 +30,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   ///Async constructor for [LocationManagementBloc].
   Future<void> create() async {
     locationManager = await EUKLocationManager.create();
+    await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
   }
