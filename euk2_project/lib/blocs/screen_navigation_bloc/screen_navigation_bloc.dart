@@ -14,8 +14,6 @@ class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationS
   }
 
   void _onSwitchPage(OnSwitchPage event, emit) {
-    if (currentScreen == event.screen) return;
-
     currentScreen = event.screen;
     switch (currentScreen) {
       case ScreenType.list:

@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/app/list_screen.dart';
 import 'package:euk2_project/screens/app/map_screen.dart';
@@ -48,7 +49,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: context.watch<ScreenNavigationBloc>().currentScreen.index,
-        onTap: (index) => context.read<ScreenNavigationBloc>().add(OnSwitchPage(index)),
+        onTap: (index) {
+          context.read<ScreenNavigationBloc>().add(OnSwitchPage(index));
+          if (index == ScreenType.map.index) context.read<LocationManagementBloc>().add(OnFocusOnUserPosition());
+        },
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

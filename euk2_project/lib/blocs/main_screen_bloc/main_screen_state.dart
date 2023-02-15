@@ -13,7 +13,7 @@ class MainScreenGuideState extends MainScreenState {
   const MainScreenGuideState();
 }
 
-class MainScreenMapState extends MainScreenState {
-  const MainScreenMapState();
+class MainScreenAppContentState extends MainScreenState {
+  const MainScreenAppContentState();
 
 }
