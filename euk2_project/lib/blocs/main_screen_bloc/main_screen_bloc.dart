@@ -32,16 +32,16 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
       _onOpenGuideScreen(event, emit);
     } else {
 
-      _onInitFinish(event, emit);
       emit(const MainScreenAppContentState());
       await Future.delayed(const Duration(milliseconds: 500));
       locationBloc.add(OnFocusOnUserPosition());
+      _onInitFinish(event, emit);
 
     }
   }
 
   FutureOr<void> _onInitFinish(event, emit) {
-    emit(const MainScreenMapState());
+    emit(const MainScreenAppContentState());
   }
 
   FutureOr<void> _onOpenGuideScreen(event, emit) {
