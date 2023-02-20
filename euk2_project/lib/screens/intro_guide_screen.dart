@@ -1,12 +1,11 @@
 
-import 'package:euk2_project/screens/map_screen.dart';
+import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroGuideScreen extends StatelessWidget {
-  IntroGuideScreen({Key? key}) : super(key: key);
-
+  IntroGuideScreen({super.key});
 
   final List<PageViewModel> pages = [
 
@@ -93,16 +92,10 @@ class IntroGuideScreen extends StatelessWidget {
           skip: const Text('Skip', style: TextStyle(fontSize: 20),),
           showNextButton: true,
           next: const Icon(Icons.arrow_forward, size: 25,),
-          onDone: () => onDone(context),
+          onDone: () => context.read<MainScreenBloc>().add(OnInitFinish()),
           curve: Curves.bounceOut,
         ),
       ),
     );
-  }
-
-  void onDone(BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('ON_BOARDING', false);
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MapScreen()));
   }
 }

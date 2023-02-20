@@ -1,7 +1,7 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:euk2_project/features/location_data/data/test_locations.dart';
-import 'package:euk2_project/features/location_data/map_marker_converter.dart';
+import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 /// Stores and works with all EUK Locations.
@@ -37,9 +37,6 @@ class EUKLocationManager {
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
-
-  ///Returns a set of []
   Set<Marker> get markers => _markers;
-
   CustomInfoWindowController get windowController => _windowController;
 }

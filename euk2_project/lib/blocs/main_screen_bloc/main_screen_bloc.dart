@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
-import 'package:euk2_project/features/location_data/location_manager.dart';
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -10,11 +10,14 @@ part 'main_screen_state.dart';
 
 ///Controls the data on the screen.
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-  late UserDataManager dataManager;
-  late EUKLocationManager locationManager;
 
-  MainScreenBloc() : super(const MainScreenInitialState()) {
+  final LocationManagementBloc locationBloc;
+  late UserDataManager dataManager;
+
+  MainScreenBloc({required this.locationBloc}) : super(const MainScreenInitialState()) {
     on<OnAppInit>(_onAppInit);
+    on<OnInitFinish>(_onInitFinish);
+    on<OnOpenGuideScreen>(_onOpenGuideScreen);
   }
 
   ///Loads the proper screen on startup and initializes variables.
@@ -22,16 +25,25 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     emit(const MainScreenInitialState());
 
     dataManager = await UserDataManager.create();
-    locationManager = await EUKLocationManager.create();
+    await locationBloc.create();
 
     if (dataManager.initScreen == null || dataManager.initScreen == 0) {
-      emit(const MainScreenGuideState());
+      _onOpenGuideScreen(event, emit);
     } else {
 
-      //TODO Heat up Google maps before app load.
-      //TODO Build markers here before app load.
+      emit(const MainScreenAppContentState());
+      await Future.delayed(const Duration(milliseconds: 500));
+      locationBloc.add(OnFocusOnUserPosition());
+      _onInitFinish(event, emit);
 
-      emit(const MainScreenMapState());
     }
+  }
+
+  FutureOr<void> _onInitFinish(event, emit) {
+    emit(const MainScreenAppContentState());
+  }
+
+  FutureOr<void> _onOpenGuideScreen(event, emit) {
+    emit(const MainScreenGuideState());
   }
 }

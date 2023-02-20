@@ -54,4 +54,4 @@ class EUKLocationData {
   EUKLocationType get type => _type;
 }
 
-enum EUKLocationType { none, wc, platform, hospital, office }
+enum EUKLocationType { none, wc, platform, hospital }
