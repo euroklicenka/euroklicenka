@@ -1,8 +1,6 @@
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-int _idCounter = 0;
-
 /// A list of destinations used for testing
 final List<EUKLocationData> testLocations = [
   EUKLocationData.latLng(
@@ -54,7 +52,7 @@ final List<EUKLocationData> testLocations = [
         type: EUKLocationType.wc,),
 
     EUKLocationData.latLng(
-        id: '5'),
+        id: '5',
         latLng: const LatLng(50.086856, 14.420197),
         address: 'Magistrát hl. m. Prahy, Staroměstská radnice s orlojem, Staroměstské náměstí 1/3',
         region: 'Hlavní město Praha',
