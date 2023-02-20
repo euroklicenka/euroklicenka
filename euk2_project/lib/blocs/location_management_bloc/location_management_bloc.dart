@@ -29,7 +29,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   ///Async constructor for [LocationManagementBloc].
   Future<void> create() async {
-    locationManager = await EUKLocationManager.create();
+    locationManager = EUKLocationManager();
+    await locationManager.create();
     await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
@@ -40,7 +41,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
     //Switch to the map screen
     navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 5));
 
     await locationManager.windowController.googleMapController
         ?.animateCamera(CameraUpdate.newLatLngZoom(

@@ -2,18 +2,28 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Represents an EUK location.
 class EUKLocationData {
-  final String _id;
-  final double _lat;
-  final double _long;
-  final String _address;
-  final String _region;
-  final String _city;
-  final String _ZIP;
-  final String _info;
-  final EUKLocationType _type;
+  late String _id;
+  late double _lat;
+  late double _long;
+  late String _address;
+  late String _region;
+  late String _city;
+  late String _ZIP;
+  late String _info;
+  late EUKLocationType _type;
 
-  EUKLocationData(this._id, this._lat, this._long, this._address, this._region,
-      this._city, this._info, this._ZIP, this._type);
+  EUKLocationData({required String id, required double lat, required double long, required String address, required String region, required String city,
+  required String ZIP, required String info, required EUKLocationType type}) {
+    _id = id;
+    _lat = lat;
+    _long = long;
+    _address = address;
+    _region = region;
+    _city = city;
+    _ZIP = ZIP;
+    _info = info;
+    _type = type;
+  }
 
   EUKLocationData.latLng({
     required String id,
