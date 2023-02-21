@@ -25,12 +25,13 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
+    on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
   }
 
   ///Async constructor for [LocationManagementBloc].
   Future<void> create() async {
     locationManager = EUKLocationManager();
-    await locationManager.create();
+    locationManager.reloadFromDatabase();
     await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
@@ -59,7 +60,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     locationManager.windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
   }
 
-  FutureOr<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
+  Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
     await _onFocusOnLocation(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount), emit);
+  }
+
+  Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
+    locationManager.reloadFromDatabase();
   }
 }

@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,25 +38,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             // tileColor: Colors.amber,
           ),
           const DividerOptions(),
-          // Expanded(
-          //   child: Align(
-          //     alignment: Alignment.bottomCenter,
-          //     child: Padding(
-          //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          //       child: ElevatedButton.icon(
-          //         onPressed: () {},
-          //         style: ElevatedButton.styleFrom(
-          //           foregroundColor: Colors.white70,
-          //           backgroundColor: Colors.deepOrangeAccent,
-          //           minimumSize: const Size.fromHeight(50),
-          //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          //         ),
-          //         icon: const Icon(Icons.refresh),
-          //         label: const Text('Aktualizace databáze'),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase());
+                  },
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white70,
+                    backgroundColor: Colors.deepOrangeAccent,
+                    minimumSize: const Size.fromHeight(50),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  ),
+                  icon: const Icon(Icons.refresh),
+                  label: const Text('Aktualizace databáze'),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

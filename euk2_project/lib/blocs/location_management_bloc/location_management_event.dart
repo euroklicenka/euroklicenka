@@ -16,3 +16,4 @@ class OnFocusOnEUKLocation extends LocationManagementEvent {
 }
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}
+class OnLoadLocationsFromDatabase extends LocationManagementEvent {}
