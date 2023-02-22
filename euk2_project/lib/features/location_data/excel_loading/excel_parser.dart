@@ -3,6 +3,7 @@ import 'package:spreadsheet_decoder/spreadsheet_decoder.dart';
 
 ///Parses EUK data from an excel table.
 class ExcelParser {
+
   ///Parses data from an excel file and returns it as a list.
   Future<List<EUKLocationData>> parse(List<int> fileBytes) async {
     final List<EUKLocationData> locations = [];
@@ -11,76 +12,56 @@ class ExcelParser {
     for (final String table in decoder.tables.keys) {
       for (int i = 1; i < decoder.tables[table]!.rows.length; i++) {
         final List row = decoder.tables[table]!.rows[i];
+
+        if (row[3] == null) continue;
+        final List<String> latlng = _toString(row[3]).split(',');
+
         locations.add(EUKLocationData(
             id: (i - 1).toString(),
-            lat: 0,
-            long: 0,
-        //     for (var row in table.rows) {
-        // var gpsCoords = row[3]; // 4 sloupec GPS soradnice z excelu
-        // var latLng = convertGpsToLatLng(gpsCoords);
-        // TODO String gpsCoords = "50°5'11.124\", 14°25'4.031\"";
-        // }
-        //
-        //
-        //     LatLng convertGpsToLatLng(String gpsCoords)
-        // {
-        //   var parts = gpsCoords.split(', ');
-        //
-        //   // Extract the degrees, minutes, and seconds for the latitude
-        //   var latDegrees = int.parse(
-        //       parts[0].substring(0, parts[0].indexOf('°')));
-        //   var latMinutes = int.parse(parts[0].substring(
-        //       parts[0].indexOf('°') + 1, parts[0].indexOf('\'')));
-        //   var latSeconds = double.parse(parts[0].substring(
-        //       parts[0].indexOf('\'') + 1, parts[0].indexOf('"')));
-        //
-        //   // Extract the degrees, minutes, and seconds for the longitude
-        //   var lngDegrees = int.parse(
-        //       parts[1].substring(0, parts[1].indexOf('°')));
-        //   var lngMinutes = int.parse(parts[1].substring(
-        //       parts[1].indexOf('°') + 1, parts[1].indexOf('\'')));
-        //   var lngSeconds = double.parse(parts[1].substring(
-        //       parts[1].indexOf('\'') + 1, parts[1].indexOf('"')));
-        //
-        //   // Convert  degrees, minutes, and seconds to decimal degrees for LatLng
-        //   var latitude = GeolocatorPlatform.instance
-        //       .fromDMS(latDegrees, latMinutes, latSeconds)
-        //       .latitude;
-        //   var longitude = GeolocatorPlatform.instance
-        //       .fromDMS(lngDegrees, lngMinutes, lngSeconds)
-        //       .longitude;
-        //
-        //   return LatLng(latitude, longitude);
-        // }
-            address: row[2].toString(),
-            region: row[0].toString(),
-            city: row[1].toString(),
-            info: row[4].toString(),
-            ZIP: '',
-      //
-      //       var zipCodes = <String>[];
-      //
-      //   for (var row in table.rows) {
-      //   var address = row[2].value; // adressa na 2 indexu
-      //   var zipCode = extractZipCode(address); //parametr adressy do metody extractZipCode
-      //   zipCodes.add(zipCode);
-      //   }
-      //
-      //       print(zipCodes);
-      // }
-      //
-      // String extractZipCode(String address) {
-      //   var zipCodeRegex = RegExp(
-      //       r'\b\d{5}\b'); // regresní metoda, hleda v celem stringu 5 čiselny diggit odpovidající ZIP codu, který je oddělený napriklad whitespace,punctuation..
-      //   var match = zipCodeRegex.firstMatch(address);
-      //   return match?.group(0) ??
-      //       ''; // pokus nenajde pattern vratí prázdný string
-      // }
-            type: EUKLocationType.none)); //TODO Add a location parser
+            lat: _fromDegreesToDecimals(latlng[0].trim()),
+            long: _fromDegreesToDecimals(latlng[1].trim()),
+            address: _toString(row[2]),
+            region: _toString(row[0]),
+            city: _toString(row[1]),
+            info: _toString(row[4]),
+            ZIP: _extractZipCode(row[2].toString()),
+            type: _extractLocationType(_toString(row[2])))); //TODO Add a location parser
       }
     }
     return locations;
   }
+
+  ///Converts GPS coordinates from degrees into the decimal format (used by Latitude & Longitude)
+  double _fromDegreesToDecimals(String s) {
+    final double degrees = double.parse(s.substring(0, s.indexOf('°')));
+    final double minutes = double.parse(s.substring(s.indexOf('°') + 1, s.indexOf('\'')));
+    final double seconds = double.parse(s.substring(s.indexOf('\'') + 1, s.indexOf('"')));
+    return _fromDegreesToDecimal(degrees, minutes, seconds);
+  }
+
+  ///Converts GPS coordinates from degrees into the decimal format (used by Latitude & Longitude)
+  double _fromDegreesToDecimal(double degree, double minutes, double seconds) {
+    return degree + (minutes / 60) + (seconds / 3600);
+  }
+
+  ///Extracts a ZIP code (XXX XX number) from a string.
+  String _extractZipCode(String address) {
+    final RegExp zipCodeRegex = RegExp(r'\b\d{3} \d{2}\b');
+    final RegExpMatch? match = zipCodeRegex.firstMatch(address);
+    return match?.group(0) ?? '';
+  }
+
+  ///Based on text snippets in a string returns a [EUKLocationType].
+  EUKLocationType _extractLocationType(String address) {
+    if (address.isEmpty) return EUKLocationType.none;
+    if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
+    if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
+    if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
+    return EUKLocationType.none;
+  }
+
+  ///Returns the object as a string, but if it is null, returns a default symbol.
+  String _toString(dynamic s) => (s == null) ? '---' : s.toString();
 }
 
 
