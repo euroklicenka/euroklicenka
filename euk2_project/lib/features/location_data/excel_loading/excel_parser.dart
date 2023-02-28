@@ -57,6 +57,8 @@ class ExcelParser {
     if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
     if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
     if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
+    if (RegExp(r'\Výtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
+    if (RegExp(r'\Brána\b').firstMatch(address) != null) return EUKLocationType.gate;
     return EUKLocationType.none;
   }
 
