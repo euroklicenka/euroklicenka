@@ -10,15 +10,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
-
 part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
 
   final ScreenNavigationBloc navigationBloc;
-
   final UserPositionLocator _userLocation = UserPositionLocator();
+
   late EUKLocationManager locationManager;
 
   LocationManagementBloc({required this.navigationBloc}) : super(const LocationManagementDefault()) {

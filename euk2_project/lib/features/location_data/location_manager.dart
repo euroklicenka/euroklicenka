@@ -15,7 +15,6 @@ class EUKLocationManager {
   late ExcelParser _excelParser;
   late CustomInfoWindowController _windowController;
   late List<EUKLocationData> _locations;
-
   late Set<Marker> _markers;
 
   EUKLocationManager() {

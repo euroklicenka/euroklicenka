@@ -12,6 +12,7 @@ class UserPositionLocator {
   final LatLng _defaultPos = const LatLng(50.073658, 14.418540);
   LatLng _currentPosition = const LatLng(0, 0);
 
+  ///Initializes the location service.
   Future<void> initLocation() async {
     _serviceEnabled = await _loc.serviceEnabled();
     if (!_serviceEnabled) {
@@ -33,6 +34,7 @@ class UserPositionLocator {
     _currentPosition = LatLng(_locData.latitude ?? _defaultPos.latitude, _locData.longitude ?? _defaultPos.longitude);
   }
 
+  ///Updates the current position of the device.
   Future<void> updateLocation() async {
     _loc.onLocationChanged.listen((LocationData loc) {
       _currentPosition = LatLng(loc.latitude ?? _defaultPos.latitude, loc.longitude ?? _defaultPos.longitude);
