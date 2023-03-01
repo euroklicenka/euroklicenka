@@ -4,15 +4,18 @@ import 'package:euk2_project/features/location_data/excel_loading/excel_parser.d
 import 'package:euk2_project/features/location_data/excel_loading/http_loader.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
   final String locationsURL = 'https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true&download_filename=Pr%C5%AFvodce+po+m%C3%ADstech+%C4%8CR+osazen%C3%BDch+Euroz%C3%A1mky.xlsx';
+  final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
 
   late HTTPLoader _HTTPloader;
   late ExcelParser _excelParser;
   late CustomInfoWindowController _windowController;
   late List<EUKLocationData> _locations;
+
   late Set<Marker> _markers;
 
   EUKLocationManager() {
@@ -34,27 +37,21 @@ class EUKLocationManager {
     final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
-    _markers = await _buildMarkers();
+    _buildMarkers();
   }
 
-  // Future<Set<Marker>> _buildMarkers() async {
-  //   final Set<Marker> markers = {};
-  //   for (final EUKLocationData data in _locations) {
-  //     _markers.add(await convertToMarker(data, _windowController));
-  //   }
-  //   return markers;
-  // }
+  Future<void> _buildMarkers() async {
+    _markers.clear();
 
-  Future<Set<Marker>> _buildMarkers() async {
-  final Set<Marker> markers = {};
     for(final EUKLocationData loc in _locations) {
-      markers.add(await convertToMarker(loc, windowController));
+      _markers.add(await convertToMarker(loc, windowController));
+      _markerStream.sink.add(markers);
     }
-    return markers;
   }
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
   Set<Marker> get markers => _markers;
+  Stream<Set<Marker>> get markerStream => _markerStream;
   CustomInfoWindowController get windowController => _windowController;
 }

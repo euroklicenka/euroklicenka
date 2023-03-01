@@ -24,6 +24,7 @@ dependencies:
   csv: ^5.0.1
   spreadsheet_decoder: ^2.1.1
   http: ^0.13.5
+  rxdart: ^0.27.7
 
 
 
