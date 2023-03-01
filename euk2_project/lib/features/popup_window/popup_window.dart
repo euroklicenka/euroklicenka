@@ -7,7 +7,6 @@ Widget EUKPopupWindow({
   required String city,
   required String ZIP,
   required String info,
-  required String imageURL,
 }) {
   const double headerSize = 18;
   const double textSize = 16;
@@ -115,25 +114,6 @@ Widget EUKPopupWindow({
         ],
       ),
 
-    ),
-  );
-}
-
-Widget _PopupWindowImage(String imageURL)
-{
-  return Container(
-    width: 300,
-    height: 100,
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage(imageURL),
-        fit: BoxFit.fitWidth,
-        filterQuality: FilterQuality.high,
-      ),
-      borderRadius: const BorderRadius.all(
-        Radius.circular(10.0),
-      ),
-      color: Colors.red,
     ),
   );
 }

@@ -34,7 +34,23 @@ class EUKLocationManager {
     final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
-    _markers = await convertToMarkers(_locations, _windowController);
+    _markers = await _buildMarkers();
+  }
+
+  // Future<Set<Marker>> _buildMarkers() async {
+  //   final Set<Marker> markers = {};
+  //   for (final EUKLocationData data in _locations) {
+  //     _markers.add(await convertToMarker(data, _windowController));
+  //   }
+  //   return markers;
+  // }
+
+  Future<Set<Marker>> _buildMarkers() async {
+  final Set<Marker> markers = {};
+    for(final EUKLocationData loc in _locations) {
+      markers.add(await convertToMarker(loc, windowController));
+    }
+    return markers;
   }
 
   ///Returns the list of all EUK locations.
