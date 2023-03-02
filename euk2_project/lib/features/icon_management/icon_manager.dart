@@ -34,7 +34,7 @@ Icon getIconByType(EUKLocationType type) {
       );
     case EUKLocationType.gate:
       return const Icon(
-        Icons.account_balance_sharp,
+        Icons.door_sliding,
         color: Colors.brown,
         size: 28,
       );
