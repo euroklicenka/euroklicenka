@@ -1,7 +1,8 @@
+import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Represents an EUK location.
-class EUKLocationData {
+ class EUKLocationData extends ClusterItem {
   late String _id;
   late double _lat;
   late double _long;
@@ -62,6 +63,18 @@ class EUKLocationData {
   String get ZIP => _ZIP;
 
   EUKLocationType get type => _type;
+
+  @override
+  // TODO: implement geohash
+  String get geohash => throw UnimplementedError();
+
+  @override
+  // TODO: implement location
+  LatLng get location => throw UnimplementedError();
+
+
+
 }
 
 enum EUKLocationType { none, wc, platform, hospital }
+
