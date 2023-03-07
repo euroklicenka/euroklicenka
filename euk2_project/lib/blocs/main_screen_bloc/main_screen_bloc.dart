@@ -5,16 +5,16 @@ import 'package:euk2_project/features/user_data_management/user_data_manager.dar
 import 'package:flutter/material.dart';
 
 part 'main_screen_event.dart';
-
 part 'main_screen_state.dart';
 
 ///Controls the data on the screen.
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
 
-  final LocationManagementBloc locationBloc;
-  late UserDataManager dataManager;
+  late LocationManagementBloc _locationBloc;
+  late UserDataManager _dataManager;
 
-  MainScreenBloc({required this.locationBloc}) : super(const MainScreenInitialState()) {
+  MainScreenBloc({required LocationManagementBloc locationBloc}) : super(const MainScreenInitialState()) {
+    _locationBloc = locationBloc;
     on<OnAppInit>(_onAppInit);
     on<OnInitFinish>(_onInitFinish);
     on<OnOpenGuideScreen>(_onOpenGuideScreen);
@@ -24,18 +24,17 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _onAppInit(event, emit) async {
     emit(const MainScreenInitialState());
 
-    dataManager = await UserDataManager.create();
-    await locationBloc.create();
+    _dataManager = await UserDataManager.create();
+    await _locationBloc.create(dataManager: _dataManager);
 
-    if (dataManager.initScreen == null || dataManager.initScreen == 0) {
+    if (_dataManager.initScreen == null || _dataManager.initScreen == 0) {
       _onOpenGuideScreen(event, emit);
     } else {
 
       emit(const MainScreenAppContentState());
       await Future.delayed(const Duration(milliseconds: 500));
-      locationBloc.add(OnFocusOnUserPosition());
+      _locationBloc.add(OnFocusOnUserPosition());
       _onInitFinish(event, emit);
-
     }
   }
 
@@ -46,4 +45,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _onOpenGuideScreen(event, emit) {
     emit(const MainScreenGuideState());
   }
+
+  LocationManagementBloc get locationBloc => _locationBloc;
+  UserDataManager get dataManager => _dataManager;
 }
