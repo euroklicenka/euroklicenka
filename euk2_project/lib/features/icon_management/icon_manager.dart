@@ -32,6 +32,18 @@ Icon getIconByType(EUKLocationType type) {
         color: Colors.green,
         size: 28,
       );
+    case EUKLocationType.gate:
+      return const Icon(
+        Icons.door_sliding,
+        color: Colors.teal,
+        size: 28,
+      );
+    case EUKLocationType.elevator:
+      return const Icon(
+        Icons.elevator,
+        color: Colors.black38,
+        size: 28,
+      );
   }
 }
 
@@ -52,6 +64,12 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
       break;
     case EUKLocationType.hospital:
       icon = await _getBytesFromAsset("assets/images/map_marker_hospital.png", size);
+      break;
+    case EUKLocationType.gate:
+      icon = await _getBytesFromAsset("assets/images/map_marker_gate.png", size);
+      break;
+    case EUKLocationType.elevator:
+      icon = await _getBytesFromAsset("assets/images/map_marker_elevator.png", size);
       break;
   }
 
