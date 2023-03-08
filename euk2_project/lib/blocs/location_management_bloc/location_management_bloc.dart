@@ -42,6 +42,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
+    await _onFocusOnUserPosition(OnFocusOnUserPosition(), emit);
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
@@ -61,10 +62,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
-    await _onFocusOnLocation(
-        OnFocusOnLocation(_userLocation.currentPosition,
-            zoom: _userLocation.zoomAmount),
-        emit);
+    await _onFocusOnLocation(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount), emit);
   }
 
   Future<void> _onCanFocus(OnCanFocus event, emit) async {
@@ -88,6 +86,4 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
-
-
 }
