@@ -35,7 +35,7 @@ Icon getIconByType(EUKLocationType type) {
     case EUKLocationType.gate:
       return const Icon(
         Icons.door_sliding,
-        color: Colors.brown,
+        color: Colors.teal,
         size: 28,
       );
     case EUKLocationType.elevator:
