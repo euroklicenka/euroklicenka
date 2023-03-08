@@ -11,7 +11,6 @@ class HTTPLoader {
     } on SocketException {
       //TODO Throw error to user when loading was not successful.
     }
-    // throw Exception('It was not possible to load the EUK Excel file.');
     return [];
   }
 }
