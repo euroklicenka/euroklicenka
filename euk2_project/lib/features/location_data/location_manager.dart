@@ -3,6 +3,7 @@ import 'package:euk2_project/features/location_data/data/euk_location_data.dart'
 import 'package:euk2_project/features/location_data/excel_loading/excel_parser.dart';
 import 'package:euk2_project/features/location_data/excel_loading/http_loader.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
+import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -18,7 +19,6 @@ class EUKLocationManager {
   late CustomInfoWindowController _windowController;
   late List<EUKLocationData> _locations;
   late Set<Marker> _markers;
-
 
   EUKLocationManager() {
     _HTTPloader = HTTPLoader();
