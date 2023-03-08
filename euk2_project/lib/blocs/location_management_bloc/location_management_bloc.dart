@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:euk2_project/blocs/location_management_bloc/location_zoom_info.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:euk2_project/features/location_data/location_manager.dart';
@@ -16,15 +17,13 @@ part 'location_management_event.dart';
 part 'location_management_state.dart';
 
 ///Stores location data.
-class LocationManagementBloc
-    extends Bloc<LocationManagementEvent, LocationManagementState> {
+class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
   final UserPositionLocator _userLocation = UserPositionLocator();
+  final LocationZoomInfo zoomInfo = LocationZoomInfo();
 
   late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
 
-  LatLng? wantedPosition;
-  double? wantedZoom;
 
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc})
       : super(const LocationManagementDefault()) {
@@ -50,16 +49,15 @@ class LocationManagementBloc
 
     //Switch to the map screen
     _navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
-    wantedPosition = LatLng(event.location.latitude + 0.003, event.location.longitude);
-    wantedZoom = event.zoom;
-
+    zoomInfo.wantedPosition = event.location;
+    zoomInfo.wantedZoom = event.zoom;
   }
 
   Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
     final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
+    zoomInfo.popupWindow = buildPopUpWindow(data);
 
     await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
-    locationManager.windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
   }
 
   Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
@@ -70,13 +68,13 @@ class LocationManagementBloc
   }
 
   Future<void> _onCanFocus(OnCanFocus event, emit) async {
-    if (wantedPosition == null) return;
+    if (zoomInfo.wantedPosition == null) return;
 
     try {
-      await locationManager.windowController.googleMapController
-          ?.animateCamera(CameraUpdate.newLatLngZoom(wantedPosition ?? _userLocation.currentPosition, wantedZoom ?? 15));
-      wantedPosition = null;
-      wantedZoom = null;
+      final LatLng offsetPosition = LatLng(zoomInfo.wantedPosition!.latitude + 0.003, zoomInfo.wantedPosition!.longitude);
+      await locationManager.windowController.googleMapController?.animateCamera(CameraUpdate.newLatLngZoom(offsetPosition, zoomInfo.wantedZoom!));
+      if (zoomInfo.popupWindow != null) locationManager.windowController.addInfoWindow!(zoomInfo.popupWindow!, zoomInfo.wantedPosition!);
+      zoomInfo.clear();
     } on MissingPluginException {
       //TODO throw error: 'The camera could not zoom on a position, map cannot be accessed.'
     }
