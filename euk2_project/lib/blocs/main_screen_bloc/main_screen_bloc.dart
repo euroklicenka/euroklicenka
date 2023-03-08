@@ -27,7 +27,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     _dataManager = await UserDataManager.create();
     await _locationBloc.create(dataManager: _dataManager);
 
-    if (_dataManager.initScreen == null || _dataManager.initScreen == 0) {
+    if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
       _onOpenGuideScreen(event, emit);
     } else {
 

@@ -44,7 +44,8 @@ class EUKLocationManager {
     _dataManager.saveEUKLocationData(locations);
   }
 
-  ///Loads EUK Locations from the app's save file.
+  ///Loads EUK Locations from the current device.
+  ///If no save data is found, tries to load data from the internet.
   void reloadFromLocalStorage() {
     _locations.clear();
     _locations = _dataManager.loadEUKLocationData();

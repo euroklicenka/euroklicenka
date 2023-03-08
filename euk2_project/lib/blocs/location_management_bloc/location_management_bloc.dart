@@ -7,6 +7,7 @@ import 'package:euk2_project/features/location_data/location_manager.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:euk2_project/features/location_data/user_pos_locator.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
@@ -45,10 +46,13 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
    _navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
     await Future.delayed(const Duration(seconds: 5));
 
-    await locationManager.windowController.googleMapController
-        ?.animateCamera(CameraUpdate.newLatLngZoom(
-      LatLng(event.location.latitude + 0.003, event.location.longitude), event.zoom,));
-
+    try {
+      await locationManager.windowController.googleMapController
+              ?.animateCamera(CameraUpdate.newLatLngZoom(
+            LatLng(event.location.latitude + 0.003, event.location.longitude), event.zoom,));
+    } on MissingPluginException {
+      //TODO throw error: 'The camera could not zoom on a position, map cannot be accessed.'
+    }
 
 
     emit(const LocationManagementDefault());
