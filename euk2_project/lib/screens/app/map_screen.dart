@@ -23,7 +23,11 @@ class _MapScreenState extends State<MapScreen> {
           builder: (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
             return GoogleMap(
               myLocationEnabled: true,
-              onMapCreated: (GoogleMapController controller) => context.read<LocationManagementBloc>().locationManager.windowController.googleMapController = controller,
+              onMapCreated: (GoogleMapController controller) {
+                final bloc = context.read<LocationManagementBloc>();
+                bloc.locationManager.windowController.googleMapController = controller;
+                bloc.add(OnCanFocus());
+              },
               onTap: (position) => context.read<LocationManagementBloc>().locationManager.windowController.hideInfoWindow!(),
               onCameraMove: (position) => context.read<LocationManagementBloc>().locationManager.windowController.onCameraMove!(),
               markers: (snapshot.data == null) ? <Marker>{} : snapshot.data!.toSet(),
