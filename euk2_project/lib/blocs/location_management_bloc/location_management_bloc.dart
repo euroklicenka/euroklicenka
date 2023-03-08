@@ -6,6 +6,8 @@ import 'package:euk2_project/features/location_data/data/euk_location_data.dart'
 import 'package:euk2_project/features/location_data/location_manager.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:euk2_project/features/location_data/user_pos_locator.dart';
+import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
@@ -15,12 +17,13 @@ part 'location_management_state.dart';
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
 
-  final ScreenNavigationBloc navigationBloc;
   final UserPositionLocator _userLocation = UserPositionLocator();
 
+  late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
 
-  LocationManagementBloc({required this.navigationBloc}) : super(const LocationManagementDefault()) {
+  LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(const LocationManagementDefault()) {
+    _navigationBloc = navigationBloc;
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
@@ -28,9 +31,9 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ///Async constructor for [LocationManagementBloc].
-  Future<void> create() async {
-    locationManager = EUKLocationManager();
-    locationManager.reloadFromDatabase();
+  Future<void> create({required UserDataManager dataManager}) async {
+    locationManager = EUKLocationManager(dataManager: dataManager);
+    locationManager.reloadFromLocalStorage();
     await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
@@ -40,13 +43,16 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     emit(const LocationManagementFocusing());
 
     //Switch to the map screen
-    navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
+   _navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
     await Future.delayed(const Duration(seconds: 5));
 
-    await locationManager.windowController.googleMapController
-        ?.animateCamera(CameraUpdate.newLatLngZoom(
-      LatLng(event.location.latitude + 0.003, event.location.longitude), event.zoom,));
-
+    try {
+      await locationManager.windowController.googleMapController
+              ?.animateCamera(CameraUpdate.newLatLngZoom(
+            LatLng(event.location.latitude + 0.003, event.location.longitude), event.zoom,));
+    } on MissingPluginException {
+      //TODO throw error: 'The camera could not zoom on a position, map cannot be accessed.'
+    }
 
 
     emit(const LocationManagementDefault());
@@ -66,4 +72,6 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
     locationManager.reloadFromDatabase();
   }
+
+  ScreenNavigationBloc get navigationBloc => _navigationBloc;
 }

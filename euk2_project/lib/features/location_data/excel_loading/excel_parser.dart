@@ -6,6 +6,8 @@ class ExcelParser {
 
   ///Parses data from an excel file and returns it as a list.
   Future<List<EUKLocationData>> parse(List<int> fileBytes) async {
+    if (fileBytes.isEmpty) return [];
+
     final List<EUKLocationData> locations = [];
 
     final SpreadsheetDecoder decoder = SpreadsheetDecoder.decodeBytes(fileBytes, update: true);
