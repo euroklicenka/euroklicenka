@@ -3,7 +3,6 @@ import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///The screen that shows the list of all EUK Locations.
 class ListScreen extends StatefulWidget {
@@ -16,21 +15,32 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
+    final bloc = context.watch<LocationManagementBloc>();
     return Column(
       children: [
         Expanded(
-          child: Scrollbar(
-            thumbVisibility: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListView.separated(
-                itemCount: context.watch<LocationManagementBloc>().locationManager.locations.length,
-                itemBuilder: _buildListTile,
-                separatorBuilder: (BuildContext context, int index) =>
-                    const Divider(),
-              ),
-            ),
-          ),
+          child: bloc.locationManager.locations.isEmpty
+              ? const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Žádné položky nebyly nalezeny. \n\n Zkus aktualizovat databázi v menu Více.',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
+              : Scrollbar(
+                  thumbVisibility: true,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ListView.separated(
+                      itemCount: bloc.locationManager.locations.length,
+                      itemBuilder: _buildListTile,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                    ),
+                  ),
+                ),
         ),
       ],
     );
