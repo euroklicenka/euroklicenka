@@ -22,7 +22,7 @@ class ExcelParser {
             id: (i - 1).toString(),
             lat: _fromDegreesToDecimals(latlng[0].trim()),
             long: _fromDegreesToDecimals(latlng[1].trim()),
-            address: _toString(row[2]),
+            address: _extractAddress(row[2].toString()),
             region: _toString(row[0]),
             city: _toString(row[1]),
             info: _toString(row[4]),
@@ -56,12 +56,22 @@ class ExcelParser {
   ///Based on text snippets in a string returns a [EUKLocationType].
   EUKLocationType _extractLocationType(String address) {
     if (address.isEmpty) return EUKLocationType.none;
-    if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
     if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
+    if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
     if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
-    if (RegExp(r'\Výtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
-    if (RegExp(r'\Brána\b').firstMatch(address) != null) return EUKLocationType.gate;
+    if (RegExp(r'\bVýtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
+    if (RegExp(r'\bBrána\b').firstMatch(address) != null) return EUKLocationType.gate;
     return EUKLocationType.none;
+  }
+
+  String _extractAddress(String address) {
+    RegExp exp = RegExp(r'^.*?\.\s*([\w (),./Č-Ž-]+),\s*(\d{3}\s*\d{2})');
+    Match? match = exp.firstMatch(address);
+    if (match != null) {
+      return match.group(1)?.trim() ?? '';
+    } else {
+      return '';
+    }
   }
 
   ///Returns the object as a string, but if it is null, returns a default symbol.
