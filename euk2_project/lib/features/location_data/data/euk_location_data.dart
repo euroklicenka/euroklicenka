@@ -13,8 +13,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
   late String _info;
   late EUKLocationType _type;
 
-  EUKLocationData({required String id, required double lat, required double long, required String address, required String region, required String city,
-  required String ZIP, required String info, required EUKLocationType type}) {
+  EUKLocationData(
+      {required String id, required double lat, required double long, required String address, required String region, required String city,
+        required String ZIP, required String info, required EUKLocationType type}) {
     _id = id;
     _lat = lat;
     _long = long;
@@ -26,6 +27,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
     _type = type;
   }
 
+  EUKLocationData.copy(EUKLocationData data) {
+    _id = data.id;
+    _lat = data.lat;
+    _long = data.long;
+    _address = data.address;
+    _region = data.region;
+    _city = data.city;
+    _ZIP = data.ZIP;
+    _info = data.info;
+    _type = data.type;
+  }
+
   EUKLocationData.latLng({
     required String id,
     required LatLng latLng,
@@ -35,7 +48,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
     required String info,
     required String ZIP,
     required EUKLocationType type,
-  })  : _id = id,
+  })
+      : _id = id,
         _lat = latLng.latitude,
         _long = latLng.longitude,
         _address = address,
@@ -44,6 +58,33 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
         _info = info,
         _ZIP = ZIP,
         _type = type;
+
+  factory EUKLocationData.fromJson(Map<String, dynamic> json) {
+    return EUKLocationData(
+        id: json['id'].toString(),
+        lat: double.parse(json['lat'].toString()),
+        long: double.parse(json['long'].toString()),
+        address: json['address'].toString(),
+        region: json['region'].toString(),
+        city: json['city'].toString(),
+        ZIP: json['ZIP'].toString(),
+        info: json['info'].toString(),
+        type: EUKLocationType.values[int.parse(json['type'].toString())],
+    );
+  }
+
+  Map<String, dynamic> toMap() => {
+        'id': id,
+        'lat': lat,
+        'long': long,
+        'address': address,
+        'region': region,
+        'city': city,
+        'ZIP': ZIP,
+        'info': info,
+        'type': type.index,
+      };
+
 
 
   String get id => _id;
@@ -73,5 +114,4 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 }
 
-enum EUKLocationType { none, wc, platform, hospital }
-
+enum EUKLocationType { none, wc, platform, hospital, gate, elevator }

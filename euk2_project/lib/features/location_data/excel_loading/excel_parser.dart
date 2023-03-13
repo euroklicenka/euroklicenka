@@ -6,6 +6,8 @@ class ExcelParser {
 
   ///Parses data from an excel file and returns it as a list.
   Future<List<EUKLocationData>> parse(List<int> fileBytes) async {
+    if (fileBytes.isEmpty) return [];
+
     final List<EUKLocationData> locations = [];
 
     final SpreadsheetDecoder decoder = SpreadsheetDecoder.decodeBytes(fileBytes, update: true);
@@ -25,7 +27,7 @@ class ExcelParser {
             city: _toString(row[1]),
             info: _toString(row[4]),
             ZIP: _extractZipCode(row[2].toString()),
-            type: _extractLocationType(_toString(row[2])))); //TODO Add a location parser
+            type: _extractLocationType(_toString(row[2]))));
       }
     }
     return locations;
@@ -57,6 +59,8 @@ class ExcelParser {
     if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
     if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
     if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
+    if (RegExp(r'\Výtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
+    if (RegExp(r'\Brána\b').firstMatch(address) != null) return EUKLocationType.gate;
     return EUKLocationType.none;
   }
 

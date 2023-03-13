@@ -14,6 +14,7 @@ class OnFocusOnEUKLocation extends LocationManagementEvent {
   final double zoom;
   OnFocusOnEUKLocation(this.locationID, {required this.zoom});
 }
+class OnCanFocus extends LocationManagementEvent {}
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}

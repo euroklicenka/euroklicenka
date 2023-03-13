@@ -4,6 +4,7 @@ import 'package:euk2_project/features/location_data/excel_loading/excel_parser.d
 import 'package:euk2_project/features/location_data/excel_loading/http_loader.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
+import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,13 +15,15 @@ class EUKLocationManager {
   final BehaviorSubject<Set<Marker>> _markerStream =
       BehaviorSubject<Set<Marker>>();
 
+  late UserDataManager _dataManager;
   late HTTPLoader _HTTPloader;
   late ExcelParser _excelParser;
   late CustomInfoWindowController _windowController;
   late List<EUKLocationData> _locations;
   late Set<Marker> _markers;
 
-  EUKLocationManager() {
+  EUKLocationManager({required UserDataManager dataManager}) {
+    _dataManager = dataManager;
     _HTTPloader = HTTPLoader();
     _excelParser = ExcelParser();
     _windowController = CustomInfoWindowController();
@@ -40,6 +43,21 @@ class EUKLocationManager {
     final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
+    _buildMarkers();
+
+    _dataManager.saveEUKLocationData(locations);
+  }
+
+  ///Loads EUK Locations from the current device.
+  ///If no save data is found, tries to load data from the internet.
+  void reloadFromLocalStorage() {
+    _locations.clear();
+    _locations = _dataManager.loadEUKLocationData();
+
+    if (_locations.isEmpty) {
+      reloadFromDatabase();
+      return;
+    }
     _buildMarkers();
   }
 
