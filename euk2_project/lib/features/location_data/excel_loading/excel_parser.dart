@@ -65,7 +65,7 @@ class ExcelParser {
   }
 
   String _extractAddress(String address) {
-    RegExp exp = RegExp(r'^.*?\.\s*([\w (),./Č-Ž-]+),\s*(\d{3}\s*\d{2})');
+    RegExp exp = RegExp(r'^[^\.]*\.\s*(.*?),?\s*\b\d{3} \d{2}\b');
     Match? match = exp.firstMatch(address);
     if (match != null) {
       return match.group(1)?.trim() ?? '';
