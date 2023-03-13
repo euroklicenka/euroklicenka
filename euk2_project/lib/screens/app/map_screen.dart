@@ -31,7 +31,7 @@ class _MapScreenState extends State<MapScreen> {
               onTap: (position) => context.read<LocationManagementBloc>().locationManager.windowController.hideInfoWindow!(),
               onCameraMove: (position) => context.read<LocationManagementBloc>().locationManager.windowController.onCameraMove!(),
               markers: (snapshot.data == null) ? <Marker>{} : snapshot.data!.toSet(),
-              initialCameraPosition: const CameraPosition(target: LatLng(50.073658, 14.418540), zoom: 6.0,
+              initialCameraPosition: CameraPosition(target: context.watch<LocationManagementBloc>().wantedPosition ?? const LatLng(50.073658, 14.418540), zoom: context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,
               ),
             );
           },
