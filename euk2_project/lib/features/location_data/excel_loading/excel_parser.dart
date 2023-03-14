@@ -56,31 +56,22 @@ class ExcelParser {
   ///Based on text snippets in a string returns a [EUKLocationType].
   EUKLocationType _extractLocationType(String address) {
     if (address.isEmpty) return EUKLocationType.none;
-    if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
     if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
+    if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
     if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
     if (RegExp(r'\bVýtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
     if (RegExp(r'\bBrána\b').firstMatch(address) != null) return EUKLocationType.gate;
     return EUKLocationType.none;
   }
 
+  ///Removes excess information from [address] like location type, city, ZIP
+  ///and extra info.
   String _extractAddress(String address) {
-    RegExp exp = RegExp(r'^[^\.]*\.\s*(.*?),?\s*\b\d{3} \d{2}\b');
-    Match? match = exp.firstMatch(address);
-    if (match != null) {
-      return match.group(0)?.trim() ?? '';
-    } else {
-      return address;
-    }
+    final RegExp exp = RegExp(r'^[^.]*\.\s*(.*?),?\s*\b\d{3} \d{2}\b');
+    final Match? match = exp.firstMatch(address);
+    return (match != null) ? match.group(1)?.trim() ?? '' : address;
   }
 
   ///Returns the object as a string, but if it is null, returns a default symbol.
   String _toString(dynamic s) => (s == null) ? '---' : s.toString();
 }
-
-
-
-
-
-
-
