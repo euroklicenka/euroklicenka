@@ -68,9 +68,9 @@ class ExcelParser {
     RegExp exp = RegExp(r'^[^\.]*\.\s*(.*?),?\s*\b\d{3} \d{2}\b');
     Match? match = exp.firstMatch(address);
     if (match != null) {
-      return match.group(1)?.trim() ?? '';
+      return match.group(0)?.trim() ?? '';
     } else {
-      return '';
+      return address;
     }
   }
 
