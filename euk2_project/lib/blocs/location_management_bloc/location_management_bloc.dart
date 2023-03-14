@@ -31,7 +31,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
-    on<OnCanFocus>(_onCanFocus);
+    on<OnMapIsReady>(_onMapIsReady);
     on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
   }
 
@@ -48,7 +48,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
     emit(const LocationManagementFocusing());
 
-    _zoomInfo.wantedPosition = LatLng(event.location.latitude + 0.003, event.location.longitude);
+    _zoomInfo.wantedPosition = LatLng(event.location.latitude, event.location.longitude);
     _zoomInfo.wantedZoom = event.zoom;
 
     //Switch to the map screen
@@ -66,12 +66,14 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     await _onFocusOnLocation(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount), emit);
   }
 
-  Future<void> _onCanFocus(OnCanFocus event, emit) async {
+  Future<void> _onMapIsReady(OnMapIsReady event, emit) async {
+    locationManager.clusterManager.setMapId(event.mapController.mapId);
+
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
     try {
-        final LatLng offsetPosition = LatLng(_zoomInfo.wantedPosition!.latitude - 0.0033, _zoomInfo.wantedPosition!.longitude);
+        final LatLng offsetPosition = LatLng(_zoomInfo.wantedPosition!.latitude, _zoomInfo.wantedPosition!.longitude);
         await locationManager.windowController.googleMapController?.animateCamera(CameraUpdate.newLatLngZoom(_zoomInfo.wantedPosition!, _zoomInfo.wantedZoom!));
         locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, offsetPosition);
         _zoomInfo.clear();

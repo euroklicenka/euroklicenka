@@ -16,24 +16,27 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<LocationManagementBloc>();
     return Stack(
       children: <Widget>[
         StreamBuilder<Set<Marker>>(
           initialData: const <Marker>{},
-          stream: context.read<LocationManagementBloc>().locationManager.markerStream,
+          stream: bloc.locationManager.markerStream,
           builder: (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
             return GoogleMap(
               myLocationEnabled: true,
               onMapCreated: (GoogleMapController controller) {
-                final bloc = context.read<LocationManagementBloc>();
                 bloc.locationManager.windowController.googleMapController = controller;
-                bloc.add(OnCanFocus());
+                bloc.add(OnMapIsReady(controller));
               },
-              onTap: (position) => context.read<LocationManagementBloc>().locationManager.windowController.hideInfoWindow!(),
-              onCameraMove: (position) => context.read<LocationManagementBloc>().locationManager.windowController.onCameraMove!(),
+              onTap: (position) => bloc.locationManager.windowController.hideInfoWindow!(),
+              onCameraMove: (position) {
+                bloc.locationManager.windowController.onCameraMove!();
+                bloc.locationManager.clusterManager.onCameraMove(position);
+              },
               markers: (snapshot.data == null) ? <Marker>{} : snapshot.data!.toSet(),
-              initialCameraPosition: CameraPosition(target: context.watch<LocationManagementBloc>().wantedPosition ?? const LatLng(50.073658, 14.418540), zoom: context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,
-              ),
+              initialCameraPosition: CameraPosition(target: context.watch<LocationManagementBloc>().wantedPosition ?? const LatLng(50.073658, 14.418540), zoom: context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,),
+              onCameraIdle: bloc.locationManager.clusterManager.updateMap,
             );
           },
         ),

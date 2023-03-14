@@ -14,7 +14,10 @@ class OnFocusOnEUKLocation extends LocationManagementEvent {
   final double zoom;
   OnFocusOnEUKLocation(this.locationID, {required this.zoom});
 }
-class OnCanFocus extends LocationManagementEvent {}
+class OnMapIsReady extends LocationManagementEvent {
+  final GoogleMapController mapController;
+  OnMapIsReady(this.mapController);
+}
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}

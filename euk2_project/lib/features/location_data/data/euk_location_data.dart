@@ -85,8 +85,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
         'type': type.index,
       };
 
-
-
   String get id => _id;
 
   double get lat => _lat;
@@ -105,13 +103,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
   EUKLocationType get type => _type;
 
-
-
-
   @override
   LatLng get location => LatLng(_lat, _long);
-
-
 }
 
 enum EUKLocationType { none, wc, platform, hospital, gate, elevator }
