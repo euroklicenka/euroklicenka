@@ -33,7 +33,6 @@ class EUKLocationManager {
     _windowController = CustomInfoWindowController();
     _locations = [];
     _markers = {};
-    _initClusterManager();
   }
 
   ///Disposes of the Popup Window.
@@ -47,7 +46,7 @@ class EUKLocationManager {
     final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
-    _buildClusters();
+    _buildMarkers();
 
     _dataManager.saveEUKLocationData(locations);
   }
@@ -62,27 +61,47 @@ class EUKLocationManager {
       reloadFromDatabase();
       return;
     }
-    _buildClusters();
+    _buildMarkers();
   }
 
-  Future<void> _buildClusters() async {
+  ///Builds are markers based data from [_locations].
+  Future<void> _buildMarkers() async {
     _markers.clear();
     _initClusterManager();
 
     for (final EUKLocationData loc in _locations) {
-      _markers.add(await convertToMarker(loc, windowController));
+      _markers.add(Marker(markerId: MarkerId(loc.id), position: loc.location));
     }
   }
 
+  ///Initializes the cluster manager.
   void _initClusterManager() {
-    _clusterManager = ClusterManager<EUKLocationData>(_locations, _updateMarkers, markerBuilder: _markerBuilder);
+    _clusterManager = ClusterManager<EUKLocationData>(_locations, _updateMarkers, markerBuilder: getMarkerBuilder);
   }
 
   void _updateMarkers(Set<Marker> markers) {
-    print('Updated ${markers.length} markers');
     _markers = markers;
     _markerStream.sink.add(_markers);
   }
+
+  /// A method, who's responsibility is to create new map markers, based on
+  /// clusters, that need to be built.
+  ///
+  /// Uses custom icons for individual markers and cluster icons for clusters.
+  Future<Marker>Function(Cluster<EUKLocationData>)? get getMarkerBuilder => (cluster) async {
+    final BitmapDescriptor icon = (cluster.isMultiple) ? await getClusterIcon(125, text:cluster.count.toString()) : await getMarkerIconByType(cluster.items.first.type);
+    final Function() onTap = (cluster.isMultiple) ? (){} : (){
+      final EUKLocationData data = cluster.items.first;
+      windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
+    };
+
+    return Marker(
+      markerId: MarkerId(cluster.getId()),
+      position: cluster.location,
+      onTap: onTap,
+      icon: icon,
+    );
+  };
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
@@ -102,53 +121,7 @@ class EUKLocationManager {
 
 
 
-  Future<Marker>Function(Cluster<EUKLocationData>)? get _markerBuilder =>
-          (cluster) async {
-        return Marker(
-          markerId: MarkerId(cluster.getId()),
-          position: cluster.location,
-          onTap: () {
-            print('---- $cluster');
-            cluster.items.forEach((p) => print(p));
-          },
-          icon: await _getMarkerBitmap(cluster.isMultiple ? 125 : 75,
-              text: cluster.isMultiple ? cluster.count.toString() : null),
-        );
-      };
 
-  Future<BitmapDescriptor> _getMarkerBitmap(int size, {String? text}) async {
-    if (kIsWeb) size = (size / 2).floor();
-
-    final PictureRecorder pictureRecorder = PictureRecorder();
-    final Canvas canvas = Canvas(pictureRecorder);
-    final Paint paint1 = Paint()..color = Colors.orange;
-    final Paint paint2 = Paint()..color = Colors.white;
-
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.2, paint2);
-    canvas.drawCircle(Offset(size / 2, size / 2), size / 2.8, paint1);
-
-    if (text != null) {
-      TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
-      painter.text = TextSpan(
-        text: text,
-        style: TextStyle(
-            fontSize: size / 3,
-            color: Colors.white,
-            fontWeight: FontWeight.normal),
-      );
-      painter.layout();
-      painter.paint(
-        canvas,
-        Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
-      );
-    }
-
-    final img = await pictureRecorder.endRecording().toImage(size, size);
-    final data = await img.toByteData(format: ImageByteFormat.png) as ByteData;
-
-    return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
-  }
 
 }
 

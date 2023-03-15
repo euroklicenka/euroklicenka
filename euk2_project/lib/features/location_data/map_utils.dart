@@ -9,18 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
-/// Converts [EUKLocationData] into Google Maps [Marker] data.
-Future<Marker> convertToMarker(EUKLocationData data, CustomInfoWindowController windowController) async {
-  final BitmapDescriptor icon = await getMarkerIconByType(data.type);
-  return Marker(
-    markerId: MarkerId(data.id),
-    icon: icon,
-    position: LatLng(data.lat, data.long),
-    onTap: () => windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long)),
-  );
-}
-
   ///Builds a [EUKPopupWindow] from [EUKLocationData] and returns it.
   Widget buildPopUpWindow(EUKLocationData data) {
     return EUKPopupWindow(
@@ -31,10 +19,3 @@ Future<Marker> convertToMarker(EUKLocationData data, CustomInfoWindowController 
       ZIP: data.ZIP,
     );
   }
-
-
-
-
-
-
-

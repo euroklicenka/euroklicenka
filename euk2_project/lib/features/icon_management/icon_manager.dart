@@ -76,6 +76,43 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
   return BitmapDescriptor.fromBytes(icon);
 }
 
+///Creates a new icon for a cluster.
+///
+/// [size] controls how big the icon is.
+///
+/// [text] controls what text is written at the cneter of the icon.
+Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
+  final PictureRecorder pictureRecorder = PictureRecorder();
+  final Canvas canvas = Canvas(pictureRecorder);
+  final Paint paint1 = Paint()..color = Colors.orange;
+  final Paint paint2 = Paint()..color = Colors.white;
+
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.2, paint2);
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.8, paint1);
+
+  if (text != null) {
+    final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+    painter.text = TextSpan(
+      text: text,
+      style: TextStyle(
+          fontSize: size / 3,
+          color: Colors.white,
+          fontWeight: FontWeight.normal),
+    );
+    painter.layout();
+    painter.paint(
+      canvas,
+      Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
+    );
+  }
+
+  final img = await pictureRecorder.endRecording().toImage(size, size);
+  final ByteData? data = await img.toByteData(format: ImageByteFormat.png);
+
+  return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
+}
+
 ///Returns a PNG image as bytes under a specific [path] with a [width].
 Future<Uint8List> _getBytesFromAsset(String path, int width) async {
   final ByteData data = await rootBundle.load(path);
