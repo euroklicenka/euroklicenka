@@ -46,8 +46,6 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
-    emit(const LocationManagementFocusing());
-
     _zoomInfo.wantedPosition = LatLng(event.location.latitude, event.location.longitude);
     _zoomInfo.wantedZoom = event.zoom;
 
@@ -58,7 +56,6 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
     final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
     _zoomInfo.popupWindow = buildPopUpWindow(data);
-
     await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
   }
 
@@ -72,17 +69,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
-    try {
-        final LatLng offsetPosition = LatLng(_zoomInfo.wantedPosition!.latitude, _zoomInfo.wantedPosition!.longitude);
-        await locationManager.windowController.googleMapController?.animateCamera(CameraUpdate.newLatLngZoom(_zoomInfo.wantedPosition!, _zoomInfo.wantedZoom!));
-        locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, offsetPosition);
-        _zoomInfo.clear();
-
-    } on MissingPluginException {
-      //TODO throw error: 'The camera could not zoom on a position, map cannot be accessed.'
-    }
-
-    emit(const LocationManagementDefault());
+    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!);
+    _zoomInfo.clear();
   }
 
   Future<void> _onLoadFromDatabase(

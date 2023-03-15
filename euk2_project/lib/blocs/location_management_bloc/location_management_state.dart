@@ -9,6 +9,3 @@ class LocationManagementDefault extends LocationManagementState {
   const LocationManagementDefault();
 }
 
-class LocationManagementFocusing extends LocationManagementState {
-  const LocationManagementFocusing();
-}

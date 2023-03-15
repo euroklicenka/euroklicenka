@@ -36,7 +36,10 @@ class _MapScreenState extends State<MapScreen> {
               },
               markers: (snapshot.data == null) ? <Marker>{} : snapshot.data!.toSet(),
               initialCameraPosition: CameraPosition(target: context.watch<LocationManagementBloc>().wantedPosition ?? const LatLng(50.073658, 14.418540), zoom: context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,),
-              onCameraIdle: bloc.locationManager.clusterManager.updateMap,
+              onCameraIdle: () {
+                bloc.locationManager.clusterManager.updateMap();
+                bloc.locationManager.windowController.onCameraMove!();
+              },
             );
           },
         ),
