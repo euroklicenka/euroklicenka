@@ -89,7 +89,7 @@ class EUKLocationManager {
   ///
   /// Uses custom icons for individual markers and cluster icons for clusters.
   Future<Marker>Function(Cluster<EUKLocationData>)? get getMarkerBuilder => (cluster) async {
-    final BitmapDescriptor icon = (cluster.isMultiple) ? await getClusterIcon(125, text:cluster.count.toString()) : await getMarkerIconByType(cluster.items.first.type);
+    final BitmapDescriptor icon = (cluster.isMultiple) ? await getClusterIcon(150, text:cluster.count.toString()) : await getMarkerIconByType(cluster.items.first.type);
     final Function() onTap = (cluster.isMultiple) ? (){} : (){
       final EUKLocationData data = cluster.items.first;
       windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
