@@ -18,6 +18,8 @@ part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
+  final double _cameraOffset = 0.0007;
+
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
@@ -56,7 +58,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
     final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
     _zoomInfo.popupWindow = buildPopUpWindow(data);
-    await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
+    await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat + _cameraOffset, data.long), zoom: event.zoom), emit);
   }
 
   Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
@@ -69,7 +71,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
-    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!);
+    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, LatLng(_zoomInfo.wantedPosition!.latitude - _cameraOffset, _zoomInfo.wantedPosition!.longitude));
     _zoomInfo.clear();
   }
 
