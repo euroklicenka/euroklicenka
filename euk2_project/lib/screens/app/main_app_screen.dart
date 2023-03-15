@@ -63,12 +63,12 @@ class _MainAppScreenState extends State<MainAppScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
             activeIcon: Icon(Icons.map_outlined),
-            label: "Map",
+            label: "Mapa",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.format_list_bulleted),
             activeIcon: Icon(Icons.format_align_center),
-            label: "More",
+            label: "Více",
           ),
         ],
       ),
