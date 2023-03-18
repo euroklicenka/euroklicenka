@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -11,6 +13,14 @@ class UserPositionLocator {
   final double zoomAmount = 15;
   final LatLng _defaultPos = const LatLng(50.073658, 14.418540);
   LatLng _currentPosition = const LatLng(0, 0);
+  StreamSubscription<LocationData>? _locationSubscription;
+
+  UserPositionLocator() {
+    initLocation();
+  }
+
+  LatLng get currentPosition => _currentPosition;
+
 
   ///Initializes the location service.
   Future<void> initLocation() async {
@@ -18,7 +28,7 @@ class UserPositionLocator {
     if (!_serviceEnabled) {
       _serviceEnabled = await _loc.requestService();
       if (!_serviceEnabled) {
-        return;
+        throw Exception('Location service not enabled');
       }
     }
 
@@ -26,7 +36,7 @@ class UserPositionLocator {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _loc.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        return;
+        throw Exception('Location permission not granted');
       }
     }
 
@@ -36,10 +46,15 @@ class UserPositionLocator {
 
   ///Updates the current position of the device.
   Future<void> updateLocation() async {
-    _loc.onLocationChanged.listen((LocationData loc) {
-      _currentPosition = LatLng(loc.latitude ?? _defaultPos.latitude, loc.longitude ?? _defaultPos.longitude);
+    _locationSubscription = _loc.onLocationChanged.listen((LocationData loc) {
+      _currentPosition = LatLng(
+        loc.latitude ?? _defaultPos.latitude,
+        loc.longitude ?? _defaultPos.longitude,
+      );
     });
   }
 
-  LatLng get currentPosition => _currentPosition;
+  void stopListening() {
+    _locationSubscription?.cancel();
+  }
 }
