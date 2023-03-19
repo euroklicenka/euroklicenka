@@ -1,17 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-///A popup window, that shows information about a specific eurokey location.
+
+/// A popup window, that shows information about a specific eurokey location.
 Widget EUKPopupWindow({
   required String address,
   required String region,
   required String city,
   required String ZIP,
   required String info,
+  required double lat,
+  required double long,
 }) {
   const double headerSize = 18;
   const double textSize = 16;
   const double elementSpace = 4;
   final Color? iconColor = Colors.amber[900];
+
+  Future<void> _launchNavigationApp() async {
+    Uri url = Uri.https('www.google.com', '/maps/dir/', {
+      'api': '1',
+      'destination': '$lat,$long',
+    });
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   return Container(
     width: 300,
@@ -22,9 +38,9 @@ Widget EUKPopupWindow({
       borderRadius: BorderRadius.circular(10.0),
     ),
     child: Padding(
-      padding: const EdgeInsets.only(left:12.0, right: 12.0, top: 12.0, bottom: 6.0),
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0, bottom: 6.0),
       child: Column(
-        children:[
+        children: [
           Text(
             address,
             maxLines: 3,
@@ -45,7 +61,8 @@ Widget EUKPopupWindow({
                           Tooltip(
                             message: 'Město',
                             triggerMode: TooltipTriggerMode.tap,
-                            child: Icon(Icons.location_city_outlined, color: iconColor,),),
+                            child: Icon(Icons.location_city_outlined, color: iconColor,),
+                          ),
                           const SizedBox(width: 8,),
                           Flexible(
                             child: Text(
@@ -62,7 +79,8 @@ Widget EUKPopupWindow({
                           Tooltip(
                             message: 'Kraj',
                             triggerMode: TooltipTriggerMode.tap,
-                            child: Icon(Icons.map, color: iconColor,),),
+                            child: Icon(Icons.map, color: iconColor,),
+                          ),
                           const SizedBox(width: 8,),
                           Flexible(
                             child: Text(
@@ -79,7 +97,8 @@ Widget EUKPopupWindow({
                           Tooltip(
                             message: 'Info',
                             triggerMode: TooltipTriggerMode.tap,
-                            child: Icon(Icons.info_outline, color: iconColor,),),
+                            child: Icon(Icons.info_outline, color: iconColor,),
+                          ),
                           const SizedBox(width: 8,),
                           Flexible(
                             child: Text(
@@ -102,18 +121,18 @@ Widget EUKPopupWindow({
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                onPressed: (){
-                  //TODO Add functionality.
+                onPressed: () {
+                  _launchNavigationApp();
                 },
                 child: const Text(
                   'Navigovat',
-                  style: TextStyle(fontSize: 16),),
+                  style: TextStyle(fontSize: 16),
+                ),
               )
             ],
           ),
         ],
       ),
-
     ),
   );
 }
