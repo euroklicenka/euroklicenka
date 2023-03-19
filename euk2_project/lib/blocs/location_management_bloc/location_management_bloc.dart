@@ -17,15 +17,12 @@ part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
-  final UserPositionLocator _userLocation = UserPositionLocator();
+  final UserPositionLocator _userLocation = UserPositionLocator(); // Create an instance of UserPositionLocator
+  UserPositionLocator get userLocation => _userLocation; // Expose a getter for _userLocation
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
-  UserPositionLocator get userLocation => _userLocation;
-  EUKLocationManager get locationManager => _locationManager;
-
 
   late ScreenNavigationBloc _navigationBloc;
-  late EUKLocationManager _locationManager; // Changed to private
-  Timer? _locationUpdateTimer; // Added
+  late EUKLocationManager locationManager;
 
 
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc})
@@ -40,18 +37,12 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   ///Async constructor for [LocationManagementBloc].
   Future<void> create({required UserDataManager dataManager}) async {
-    _locationManager = EUKLocationManager(dataManager: dataManager);
-    _locationManager.reloadFromLocalStorage();
+    locationManager = EUKLocationManager(dataManager: dataManager);
+    locationManager.reloadFromLocalStorage();
     await _userLocation.initLocation();
-    _locationUpdateTimer = Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
+    Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
     await _onFocusOnUserPosition(OnFocusOnUserPosition(), emit);
-  }
-  @override
-  Future<void> close() {
-    _locationUpdateTimer?.cancel();
-    _userLocation.stopListening(); // Added
-    return super.close();
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
@@ -63,7 +54,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
-    final EUKLocationData data = _locationManager.locations.where((d) => d.id == event.locationID).first;
+    final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
     _zoomInfo.popupWindow = buildPopUpWindow(data);
     await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
   }
@@ -73,18 +64,18 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onMapIsReady(OnMapIsReady event, emit) async {
-    _locationManager.clusterManager.setMapId(event.mapController.mapId);
+    locationManager.clusterManager.setMapId(event.mapController.mapId);
 
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
-    _locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!);
+    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!);
     _zoomInfo.clear();
   }
 
   Future<void> _onLoadFromDatabase(
       OnLoadLocationsFromDatabase event, emit) async {
-    _locationManager.reloadFromDatabase();
+    locationManager.reloadFromDatabase();
   }
 
   ScreenNavigationBloc get navigationBloc => _navigationBloc;

@@ -17,7 +17,7 @@ class _ListScreenState extends State<ListScreen> {
   List<EUKLocationData> sortedLocations = [];
 
   List<EUKLocationData> sortedLocationsByDistance() {
-    final LatLng userLocation = context.read<LocationManagementBloc>().userLocation.currentPosition;
+    final LatLng userLocation = context.read<LocationManagementBloc>().userLocation.currentPosition as LatLng;
     List<EUKLocationData> locations = List.from(context.read<LocationManagementBloc>().locationManager.locations);
 
 
@@ -97,7 +97,7 @@ class _ListScreenState extends State<ListScreen> {
         children: [
           Text('${data.city}, ${data.ZIP}'),
           SizedBox(height: 4),
-          Text('Vzdálenost: ${distance.toStringAsFixed(0)} m'),
+          Text('${distance.toStringAsFixed(0)} m'),
         ],
       ),
       trailing: getIconByType(data.type),

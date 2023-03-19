@@ -12,14 +12,15 @@ class UserPositionLocator {
   late LocationData _locData;
   final double zoomAmount = 15;
   final LatLng _defaultPos = const LatLng(50.073658, 14.418540);
-  LatLng _currentPosition = const LatLng(0, 0);
-  StreamSubscription<LocationData>? _locationSubscription;
+  LatLng _currentPosition = LatLng(0, 0);
+
+  LatLng get currentPosition => _currentPosition;
+
 
   UserPositionLocator() {
     initLocation();
   }
 
-  LatLng get currentPosition => _currentPosition;
 
 
   ///Initializes the location service.
@@ -28,7 +29,7 @@ class UserPositionLocator {
     if (!_serviceEnabled) {
       _serviceEnabled = await _loc.requestService();
       if (!_serviceEnabled) {
-        throw Exception('Location service not enabled');
+        return;
       }
     }
 
@@ -36,7 +37,7 @@ class UserPositionLocator {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _loc.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
-        throw Exception('Location permission not granted');
+        return;
       }
     }
 
@@ -46,15 +47,10 @@ class UserPositionLocator {
 
   ///Updates the current position of the device.
   Future<void> updateLocation() async {
-    _locationSubscription = _loc.onLocationChanged.listen((LocationData loc) {
-      _currentPosition = LatLng(
-        loc.latitude ?? _defaultPos.latitude,
-        loc.longitude ?? _defaultPos.longitude,
-      );
+    _loc.onLocationChanged.listen((LocationData loc) {
+      _currentPosition = LatLng(loc.latitude ?? _defaultPos.latitude, loc.longitude ?? _defaultPos.longitude);
     });
   }
 
-  void stopListening() {
-    _locationSubscription?.cancel();
-  }
+
 }
