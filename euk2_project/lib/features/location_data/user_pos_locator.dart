@@ -1,6 +1,4 @@
 
-import 'dart:async';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -12,16 +10,7 @@ class UserPositionLocator {
   late LocationData _locData;
   final double zoomAmount = 15;
   final LatLng _defaultPos = const LatLng(50.073658, 14.418540);
-  LatLng _currentPosition = LatLng(0, 0);
-
-  LatLng get currentPosition => _currentPosition;
-
-
-  UserPositionLocator() {
-    initLocation();
-  }
-
-
+  LatLng _currentPosition = const LatLng(0, 0);
 
   ///Initializes the location service.
   Future<void> initLocation() async {
@@ -52,5 +41,5 @@ class UserPositionLocator {
     });
   }
 
-
+  LatLng get currentPosition => _currentPosition;
 }

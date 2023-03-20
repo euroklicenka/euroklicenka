@@ -3,11 +3,11 @@ import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong/latlong.dart' as d;
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key}) : super(key: key);
+  const ListScreen({super.key});
 
   @override
   State<ListScreen> createState() => _ListScreenState();
@@ -16,25 +16,17 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   List<EUKLocationData> sortedLocations = [];
 
-  List<EUKLocationData> sortedLocationsByDistance() {
-    final LatLng userLocation = context.read<LocationManagementBloc>().userLocation.currentPosition as LatLng;
-    List<EUKLocationData> locations = List.from(context.read<LocationManagementBloc>().locationManager.locations);
-
+  List<EUKLocationData> sortLocationsByDistance() {
+    final LatLng userLocation = context.read<LocationManagementBloc>().userLocation.currentPosition;
+    final List<EUKLocationData> locations = List.from(context.read<LocationManagementBloc>().locationManager.locations);
+    const d.Distance distance = d.Distance();
 
     locations.sort((a, b) {
-      double aDistance = Geolocator.distanceBetween(
-          userLocation.latitude,
-          userLocation.longitude,
-          a.location.latitude,
-          a.location.longitude
-      );
-      double bDistance = Geolocator.distanceBetween(
-          userLocation.latitude,
-          userLocation.longitude,
-          b.location.latitude,
-          b.location.longitude
-      );
-
+      final d.LatLng posUser = d.LatLng(userLocation.latitude, userLocation.longitude);
+      final d.LatLng posA = d.LatLng(a.lat, a.long);
+      final d.LatLng posB = d.LatLng(b.lat, b.long);
+      final double aDistance = distance.as(d.LengthUnit.Kilometer, posUser, posA) as double;
+      final double bDistance = distance.as(d.LengthUnit.Kilometer, posUser, posB) as double;
       return aDistance.compareTo(bDistance);
     });
 
@@ -44,7 +36,7 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void initState() {
     super.initState();
-    sortedLocations = sortedLocationsByDistance();
+    sortedLocations = sortLocationsByDistance();
   }
 
   @override
@@ -83,7 +75,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget _buildListTile(BuildContext context, int index) {
     final EUKLocationData data = sortedLocations[index];
 
-    double distance = Geolocator.distanceBetween(
+    final double distance = Geolocator.distanceBetween(
       context.read<LocationManagementBloc>().userLocation.currentPosition.latitude,
       context.read<LocationManagementBloc>().userLocation.currentPosition.longitude,
       data.location.latitude,
@@ -97,13 +89,11 @@ class _ListScreenState extends State<ListScreen> {
         children: [
           Text('${data.city}, ${data.ZIP}'),
           SizedBox(height: 4),
-          Text('${distance.toStringAsFixed(0)} m'),
+          Text('${distance.toStringAsFixed(2)} km'),
         ],
       ),
       trailing: getIconByType(data.type),
-      onTap: () => context
-          .read<LocationManagementBloc>()
-          .add(OnFocusOnEUKLocation(data.id, zoom: 17)),
+      onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnEUKLocation(data.id, zoom: 17)),
     );
   }
 }

@@ -17,16 +17,14 @@ part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
-  final UserPositionLocator _userLocation = UserPositionLocator(); // Create an instance of UserPositionLocator
-  UserPositionLocator get userLocation => _userLocation; // Expose a getter for _userLocation
+  final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
   late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
 
 
-  LocationManagementBloc({required ScreenNavigationBloc navigationBloc})
-      : super(const LocationManagementDefault()) {
+  LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(const LocationManagementDefault()) {
     _navigationBloc = navigationBloc;
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
@@ -79,6 +77,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
+  UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
 }
