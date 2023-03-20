@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
@@ -12,14 +13,6 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  List<EUKLocationData> sortedLocations = [];
-
-  @override
-  void initState() {
-    super.initState();
-    sortedLocations = context.read<LocationManagementBloc>().locationManager.locations..sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
-  }
-
   @override
   Widget build(BuildContext context) {
     final bloc = context.watch<LocationManagementBloc>();
@@ -28,33 +21,36 @@ class _ListScreenState extends State<ListScreen> {
         Expanded(
           child: bloc.locationManager.locations.isEmpty
               ? const Center(
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'Žádné položky nebyly nalezeny. \n\n Zkus aktualizovat databázi v menu Více.',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          )
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Žádné položky nebyly nalezeny. \n\n Zkus aktualizovat databázi v menu Více.',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                )
               : Scrollbar(
-            thumbVisibility: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListView.separated(
-                itemCount: sortedLocations.length,
-                itemBuilder: _buildListTile,
-                separatorBuilder: (BuildContext context, int index) =>
-                const Divider(),
-              ),
-            ),
-          ),
+                  thumbVisibility: true,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ListView.separated(
+                      itemCount: context
+                          .read<ListSortingBloc>()
+                          .sortedLocations
+                          .length,
+                      itemBuilder: _buildListTile,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          const Divider(),
+                    ),
+                  ),
+                ),
         ),
       ],
     );
   }
 
   Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data = sortedLocations[index];
+    final EUKLocationData data = context.read<ListSortingBloc>().sortedLocations[index];
 
     return ListTile(
       title: Text(data.address),

@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/app/list_screen.dart';
@@ -54,7 +55,10 @@ class _MainAppScreenState extends State<MainAppScreen> {
         onTap: (index) {
           context.read<ScreenNavigationBloc>().add(OnSwitchPage(index));
           if (index == ScreenType.map.index) locationBloc.add(OnFocusOnUserPosition());
-          if (index == ScreenType.list.index) locationBloc.add(OnRecalculateLocationsDistance());
+          if (index == ScreenType.list.index) {
+            locationBloc.add(OnRecalculateLocationsDistance());
+            context.read<ListSortingBloc>().add(OnSortByLocationDistance());
+          }
         },
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
