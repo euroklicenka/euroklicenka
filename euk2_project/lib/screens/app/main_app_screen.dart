@@ -17,6 +17,8 @@ class MainAppScreen extends StatefulWidget {
 class _MainAppScreenState extends State<MainAppScreen> {
   @override
   Widget build(BuildContext context) {
+    final LocationManagementBloc locationBloc = context.read<LocationManagementBloc>();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(58),
@@ -51,7 +53,8 @@ class _MainAppScreenState extends State<MainAppScreen> {
         currentIndex: context.watch<ScreenNavigationBloc>().currentScreen.index,
         onTap: (index) {
           context.read<ScreenNavigationBloc>().add(OnSwitchPage(index));
-          if (index == ScreenType.map.index) context.read<LocationManagementBloc>().add(OnFocusOnUserPosition());
+          if (index == ScreenType.map.index) locationBloc.add(OnFocusOnUserPosition());
+          if (index == ScreenType.list.index) locationBloc.add(OnRecalculateLocationsDistance());
         },
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[

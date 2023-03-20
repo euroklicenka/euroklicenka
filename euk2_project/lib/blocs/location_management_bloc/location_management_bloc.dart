@@ -9,6 +9,7 @@ import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:euk2_project/features/location_data/user_pos_locator.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart' as d;
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
@@ -17,6 +18,7 @@ part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
+  final d.Distance _distance = const d.Distance();
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
@@ -31,6 +33,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
     on<OnMapIsReady>(_onMapIsReady);
     on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
+    on<OnRecalculateLocationsDistance>(_onRecalculateLocationsDistance);
   }
 
   ///Async constructor for [LocationManagementBloc].
@@ -76,8 +79,17 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     locationManager.reloadFromDatabase();
   }
 
+  void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
+    for (final EUKLocationData data in locationManager.locations) {
+      final d.LatLng posLocation = d.LatLng(data.lat, data.long);
+      final d.LatLng posUser = d.LatLng(_userLocation.currentPosition.latitude, _userLocation.currentPosition.longitude);
+      data.updateDistanceFromDevice(_distance.as(d.LengthUnit.Meter, posLocation, posUser) / 1000);
+    }
+  }
+
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
-  UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
+
+
 }

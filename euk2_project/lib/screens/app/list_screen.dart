@@ -3,8 +3,6 @@ import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:latlong/latlong.dart' as d;
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -16,27 +14,10 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   List<EUKLocationData> sortedLocations = [];
 
-  List<EUKLocationData> sortLocationsByDistance() {
-    final LatLng userLocation = context.read<LocationManagementBloc>().userLocation.currentPosition;
-    final List<EUKLocationData> locations = List.from(context.read<LocationManagementBloc>().locationManager.locations);
-    const d.Distance distance = d.Distance();
-
-    locations.sort((a, b) {
-      final d.LatLng posUser = d.LatLng(userLocation.latitude, userLocation.longitude);
-      final d.LatLng posA = d.LatLng(a.lat, a.long);
-      final d.LatLng posB = d.LatLng(b.lat, b.long);
-      final double aDistance = distance.as(d.LengthUnit.Kilometer, posUser, posA) as double;
-      final double bDistance = distance.as(d.LengthUnit.Kilometer, posUser, posB) as double;
-      return aDistance.compareTo(bDistance);
-    });
-
-    return locations;
-  }
-
   @override
   void initState() {
     super.initState();
-    sortedLocations = sortLocationsByDistance();
+    sortedLocations = context.read<LocationManagementBloc>().locationManager.locations..sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
   }
 
   @override
@@ -75,21 +56,14 @@ class _ListScreenState extends State<ListScreen> {
   Widget _buildListTile(BuildContext context, int index) {
     final EUKLocationData data = sortedLocations[index];
 
-    final double distance = Geolocator.distanceBetween(
-      context.read<LocationManagementBloc>().userLocation.currentPosition.latitude,
-      context.read<LocationManagementBloc>().userLocation.currentPosition.longitude,
-      data.location.latitude,
-      data.location.longitude,
-    );
-
     return ListTile(
       title: Text(data.address),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('${data.city}, ${data.ZIP}'),
-          SizedBox(height: 4),
-          Text('${distance.toStringAsFixed(2)} km'),
+          const SizedBox(height: 4),
+          Text('${data.distanceFromDevice.toStringAsFixed(2)} km'),
         ],
       ),
       trailing: getIconByType(data.type),
