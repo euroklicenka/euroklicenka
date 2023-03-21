@@ -15,11 +15,10 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
-    final bloc = context.watch<LocationManagementBloc>();
     return Column(
       children: [
         Expanded(
-          child: bloc.locationManager.locations.isEmpty
+          child: context.read<ListSortingBloc>().sortedLocations.isEmpty
               ? const Center(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
