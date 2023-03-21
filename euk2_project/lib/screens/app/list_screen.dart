@@ -33,10 +33,7 @@ class _ListScreenState extends State<ListScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: ListView.separated(
-                      itemCount: context
-                          .read<ListSortingBloc>()
-                          .sortedLocations
-                          .length,
+                      itemCount: context.read<ListSortingBloc>().sortedLocations.length,
                       itemBuilder: _buildListTile,
                       separatorBuilder: (BuildContext context, int index) =>
                           const Divider(),
@@ -53,15 +50,19 @@ class _ListScreenState extends State<ListScreen> {
 
     return ListTile(
       title: Text(data.address),
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      subtitle: Text('${data.city}, ${data.ZIP}'),
+      trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text('${data.city}, ${data.ZIP}'),
-          const SizedBox(height: 4),
-          Text('${data.distanceFromDevice.toStringAsFixed(2)} km'),
+          getIconByType(data.type),
+          const SizedBox(height: 4,),
+          Text(
+            '${data.distanceFromDevice.toStringAsFixed(2)} Km',
+            style: const TextStyle(fontStyle: FontStyle.italic),
+          ),
         ],
       ),
-      trailing: getIconByType(data.type),
       onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnEUKLocation(data.id, zoom: 17)),
     );
   }
