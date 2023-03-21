@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
-///A popup window, that shows information about a specific eurokey location.
 Widget EUKPopupWindow({
   required String address,
   required String region,
@@ -15,18 +14,6 @@ Widget EUKPopupWindow({
   const double textSize = 16;
   const double elementSpace = 4;
   final Color? iconColor = Colors.amber[900];
-
-  Future<void> launchNavigationApp() async {
-    Uri url = Uri.https('www.google.com', '/maps/dir/' {
-      'api': '1',
-    'destination': '$lat, $long',
-    });
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'could not launch $url';
-    }
-  }
 
   return Container(
     width: 300,
@@ -105,7 +92,6 @@ Widget EUKPopupWindow({
                           ),
                         ],
                       ),
-                      // _PopupWindowImage(imageURL),
                     ],
                   ),
                 ),
@@ -117,12 +103,13 @@ Widget EUKPopupWindow({
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                onPressed: (){
-                  //TODO Add functionality.
+                onPressed: () {
+                  MapsLauncher.launchCoordinates(lat, long, address);
                 },
                 child: const Text(
                   'Navigovat',
-                  style: TextStyle(fontSize: 16),),
+                  style: TextStyle(fontSize: 16),
+                ),
               )
             ],
           ),
