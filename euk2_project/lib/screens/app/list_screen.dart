@@ -32,11 +32,18 @@ class _ListScreenState extends State<ListScreen> {
                   thumbVisibility: true,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: ListView.separated(
-                      itemCount: context.read<ListSortingBloc>().sortedLocations.length,
-                      itemBuilder: _buildListTile,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          const Divider(),
+                    child: Column(
+                      children: [
+                        const Divider(),
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: context.read<ListSortingBloc>().sortedLocations.length,
+                            itemBuilder: _buildListTile,
+                            separatorBuilder: (BuildContext context, int index) =>
+                                const Divider(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
