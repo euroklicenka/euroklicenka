@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:http/http.dart';
 
 ///Processes the connection between the app and Excel file'S URL address.
@@ -9,7 +10,7 @@ class HTTPLoader {
       final response = await get(Uri.parse(url));
       if (response.statusCode == 200) { return response.bodyBytes;}
     } on SocketException {
-      //TODO Throw error to user when loading was not successful.
+      showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později.');
     }
     return [];
   }

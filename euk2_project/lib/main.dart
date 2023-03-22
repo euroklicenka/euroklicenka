@@ -1,6 +1,7 @@
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         theme: yellowTheme,
         darkTheme: darkTheme,
         themeMode: _themeManager.themeMode,
+        scaffoldMessengerKey: snackBarKey,
         home: const MainScreen(),
       ),
     );
