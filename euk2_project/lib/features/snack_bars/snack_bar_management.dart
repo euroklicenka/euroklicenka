@@ -7,7 +7,6 @@ final GlobalKey<ScaffoldMessengerState> snackBarKey =
 ///Shows a [SnackBar] on the screen, displaying the text from [message].
 void showSnackBar({required String message}) {
   final SnackBar snackBar = SnackBar(
-    duration: const Duration(seconds: 5),
     content: Text(message),
     action: SnackBarAction(
         label: 'OK',

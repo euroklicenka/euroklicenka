@@ -73,8 +73,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     _zoomInfo.clear();
   }
 
-  Future<void> _onLoadFromDatabase(
-      OnLoadLocationsFromDatabase event, emit) async {
+  Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
     locationManager.reloadFromDatabase();
   }
 
