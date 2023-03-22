@@ -6,9 +6,10 @@ import 'package:location/location.dart';
 
 ///Tracks users current position.
 class UserPositionLocator {
+
   final Location _loc = Location();
-  final double zoomAmount = 15;
-  final LatLng _defaultPos = const LatLng(50.073658, 14.418540);
+  final LatLng _defaultPos = const LatLng(50.073658, 15.4);
+  final double _zoomAmount = 15;
 
   late bool _serviceEnabled;
   LocationData? _locData;
@@ -16,15 +17,14 @@ class UserPositionLocator {
 
   ///Initializes the location service.
   Future<void> initLocation() async {
-    _serviceEnabled = await _loc.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _loc.requestService();
-      if (!_serviceEnabled) {
-        showSnackBar(message: 'Musíš aktivovat sledování polohy, aby aplikace mohla správně fungovat.');
-      }
-    }
-
     try {
+      _serviceEnabled = await _loc.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await _loc.requestService();
+        if (!_serviceEnabled) {
+          showSnackBar(message: 'Musíš aktivovat sledování polohy, aby aplikace mohla správně fungovat.');
+        }
+      }
       _locData = await _loc.getLocation();
     } on PlatformException {
       showSnackBar(message: 'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.');
@@ -41,4 +41,5 @@ class UserPositionLocator {
   }
 
   LatLng get currentPosition => _currentPosition;
+  double get zoomAmount => (currentPosition == _defaultPos) ? 6.25 : _zoomAmount;
 }
