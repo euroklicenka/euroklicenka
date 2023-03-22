@@ -1,4 +1,5 @@
 
+import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
@@ -18,6 +19,7 @@ class UserPositionLocator {
     if (!_serviceEnabled) {
       _serviceEnabled = await _loc.requestService();
       if (!_serviceEnabled) {
+        showSnackBar(message: 'Musíš aktivovat sledování polohy, aby aplikace mohla správně fungovat.');
         return;
       }
     }
@@ -26,6 +28,7 @@ class UserPositionLocator {
     if (_permissionGranted == PermissionStatus.denied) {
       _permissionGranted = await _loc.requestPermission();
       if (_permissionGranted != PermissionStatus.granted) {
+        showSnackBar(message: 'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.');
         return;
       }
     }
