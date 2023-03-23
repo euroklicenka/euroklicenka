@@ -12,6 +12,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
   late String _ZIP;
   late String _info;
   late EUKLocationType _type;
+  double _distanceFromDevice = 0;
 
   EUKLocationData(
       {required String id, required double lat, required double long, required String address, required String region, required String city,
@@ -37,6 +38,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
     _ZIP = data.ZIP;
     _info = data.info;
     _type = data.type;
+    _distanceFromDevice = data.distanceFromDevice;
   }
 
   EUKLocationData.latLng({
@@ -73,6 +75,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
     );
   }
 
+  ///Update the current distance from device to a new value ([newDistance]).
+  void updateDistanceFromDevice(double newDistance) => _distanceFromDevice = newDistance;
+
+  ///Convert the location data into a JSON format.
   Map<String, dynamic> toMap() => {
         'id': id,
         'lat': lat,
@@ -102,6 +108,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
   String get ZIP => _ZIP;
 
   EUKLocationType get type => _type;
+
+  double get distanceFromDevice => _distanceFromDevice;
 
   @override
   LatLng get location => LatLng(_lat, _long);

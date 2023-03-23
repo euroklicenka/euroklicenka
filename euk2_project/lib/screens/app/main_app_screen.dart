@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/screens/app/list_screen.dart';
@@ -17,6 +18,8 @@ class MainAppScreen extends StatefulWidget {
 class _MainAppScreenState extends State<MainAppScreen> {
   @override
   Widget build(BuildContext context) {
+    final LocationManagementBloc locationBloc = context.read<LocationManagementBloc>();
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(58),
@@ -51,7 +54,11 @@ class _MainAppScreenState extends State<MainAppScreen> {
         currentIndex: context.watch<ScreenNavigationBloc>().currentScreen.index,
         onTap: (index) {
           context.read<ScreenNavigationBloc>().add(OnSwitchPage(index));
-          if (index == ScreenType.map.index) context.read<LocationManagementBloc>().add(OnFocusOnUserPosition());
+          if (index == ScreenType.map.index) locationBloc.add(OnFocusOnUserPosition());
+          if (index == ScreenType.list.index) {
+            locationBloc.add(OnRecalculateLocationsDistance());
+            context.read<ListSortingBloc>().add(OnSortByLocationDistance());
+          }
         },
         selectedItemColor: Colors.amber[500],
         items: const <BottomNavigationBarItem>[
