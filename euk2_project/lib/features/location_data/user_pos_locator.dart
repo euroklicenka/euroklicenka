@@ -7,8 +7,8 @@ import 'package:location/location.dart';
 ///Tracks users current position.
 class UserPositionLocator {
 
+  final LatLng defaultPos = const LatLng(50.073658, 15.4);
   final Location _loc = Location();
-  final LatLng _defaultPos = const LatLng(50.073658, 15.4);
   final double _zoomAmount = 15;
 
   late bool _serviceEnabled;
@@ -30,16 +30,19 @@ class UserPositionLocator {
       showSnackBar(message: 'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.');
     }
 
-    _currentPosition = LatLng(_locData?.latitude ?? _defaultPos.latitude, _locData?.longitude ?? _defaultPos.longitude);
+    _currentPosition = LatLng(_locData?.latitude ?? defaultPos.latitude, _locData?.longitude ?? defaultPos.longitude);
   }
 
   ///Updates the current position of the device.
   Future<void> updateLocation() async {
     _loc.onLocationChanged.listen((LocationData loc) {
-      _currentPosition = LatLng(loc.latitude ?? _defaultPos.latitude, loc.longitude ?? _defaultPos.longitude);
+      _currentPosition = LatLng(loc.latitude ?? defaultPos.latitude, loc.longitude ?? defaultPos.longitude);
     });
   }
 
+  ///Returns TRUE if current position is the same as teh default one.
+  bool isSameAsDefaultPos() => currentPosition == defaultPos;
+
   LatLng get currentPosition => _currentPosition;
-  double get zoomAmount => (currentPosition == _defaultPos) ? 6.25 : _zoomAmount;
+  double get zoomAmount => (currentPosition == defaultPos) ? 6.25 : _zoomAmount;
 }

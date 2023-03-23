@@ -54,6 +54,7 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget _buildListTile(BuildContext context, int index) {
     final EUKLocationData data = context.read<ListSortingBloc>().sortedLocations[index];
+    final String distanceText = (context.read<LocationManagementBloc>().userLocation.isSameAsDefaultPos()) ? '---- Km' : '${data.distanceFromDevice.toStringAsFixed(2)} Km';
 
     return ListTile(
       title: Text(data.address),
@@ -65,7 +66,7 @@ class _ListScreenState extends State<ListScreen> {
           getIconByType(data.type),
           const SizedBox(height: 4,),
           Text(
-            '${data.distanceFromDevice.toStringAsFixed(2)} Km',
+            distanceText,
             style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ],

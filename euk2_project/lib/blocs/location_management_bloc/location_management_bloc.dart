@@ -87,8 +87,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
+  UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
-
-
 }
