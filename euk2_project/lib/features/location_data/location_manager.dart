@@ -6,6 +6,7 @@ import 'package:euk2_project/features/location_data/data/euk_location_data.dart'
 import 'package:euk2_project/features/location_data/excel_loading/excel_parser.dart';
 import 'package:euk2_project/features/location_data/excel_loading/http_loader.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
+import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
@@ -49,6 +50,7 @@ class EUKLocationManager {
     _buildMarkers();
 
     _dataManager.saveEUKLocationData(locations);
+    showSnackBar(message: "Databáze míst byla úspěšně aktualizována.");
   }
 
   ///Loads EUK Locations from the current device.
