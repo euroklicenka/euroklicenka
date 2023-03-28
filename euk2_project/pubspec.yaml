@@ -28,6 +28,7 @@ dependencies:
   google_maps_cluster_manager: ^3.0.0+1
   map_launcher: ^2.5.0+1
   latlong2: ^0.8.1
+  flutter_svg: ^1.1.6
 
 
 dev_dependencies:
