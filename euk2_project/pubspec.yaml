@@ -27,13 +27,13 @@ dependencies:
   rxdart: ^0.27.7
   google_maps_cluster_manager: ^3.0.0+1
   maps_launcher: ^2.2.0
+  latlong2: ^0.8.1
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  hive_generator: ^2.0.0
   flutter_lints: ^2.0.0
   lint: ^2.0.1
 
