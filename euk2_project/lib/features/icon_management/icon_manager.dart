@@ -90,26 +90,23 @@ Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
   final Canvas canvas = Canvas(pictureRecorder);
   final double ratio = _clusterIcon!.width / _clusterIcon!.height;
 
-  canvas.drawImageNine(_clusterIcon!, Rect.zero, Rect.fromCenter(center: Offset(size / 2, size / 2), width: size.toDouble() * ratio + 10, height: size.toDouble()), Paint());
+  final textSize = (text != null) ? text.length : 1;
+  final double iconWidth = size.toDouble() * 0.72 * ratio * (1 + (textSize-1) * 0.17);
+  final double iconHeight = size.toDouble() * 0.72 * (1 + (textSize-1) * 0.12);
+  canvas.drawImageNine(_clusterIcon!, Rect.zero, Rect.fromCenter(center: Offset(size / 2, size / 2), width: iconWidth, height: iconHeight), Paint());
 
   if (text != null) {
     final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
     painter.text = TextSpan(
       text: text,
       style: TextStyle(
-          fontSize: size / 3,
+          fontSize: size / 5,
           color: Colors.white,
           fontWeight: FontWeight.bold,
-        shadows: const <Shadow>[
-          Shadow(
-            offset: Offset(1.0, 1.0),
-            color: Color.fromARGB(255, 142, 11, 25),
-          )
-        ],
       ),
     );
     painter.layout();
-    painter.paint(canvas, Offset(size / 2 - painter.width / 2, size / 2));
+    painter.paint(canvas, Offset(size / 2.03 - painter.width / 2, (size / 2) - painter.height + 5));
   }
 
   final img = await pictureRecorder.endRecording().toImage(size, size);
