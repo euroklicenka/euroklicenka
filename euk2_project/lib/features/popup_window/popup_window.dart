@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maps_launcher/maps_launcher.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class EUKPopupWindow extends StatelessWidget {
   late String _address, _region, _city, _ZIP, _info;
@@ -119,8 +119,32 @@ class EUKPopupWindow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    MapsLauncher.launchCoordinates(_lat, _long, _address);
+                  onPressed: () async {
+                    final List<AvailableMap> availableMaps = await MapLauncher.installedMaps;
+
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SafeArea(
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: Wrap(
+                                children: <Widget>[
+                                  for (var map in availableMaps)
+                                    ListTile(
+                                      onTap: () => map.showDirections(
+                                        destination: Coords(_lat, _long),
+                                      ),
+                                      title: Text(map.mapName),
+                                      
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
                   },
                   child: const Text('Navigovat', style: TextStyle(fontSize: 16),
                   ),
