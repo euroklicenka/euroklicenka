@@ -1,22 +1,22 @@
+import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:map_launcher/map_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class EUKPopupWindow extends StatelessWidget {
-  late String _address, _region, _city, _ZIP, _info;
-  late double _lat, _long;
+  final String _address, _region, _city, _ZIP, _info;
+  final double _lat, _long;
 
-  EUKPopupWindow({super.key, required String address, required String region,
+  const EUKPopupWindow({super.key, required String address, required String region,
       required String city, required String ZIP, required String info,
-      required double lat, required double long}) {
-    _address = address;
-    _region = region;
-    _city = city;
-    _ZIP = ZIP;
-    _info = info;
-    _lat = lat;
+      required double lat, required double long,}) :
+    _address = address,
+    _region = region,
+    _city = city,
+    _ZIP = ZIP,
+    _info = info,
+    _lat = lat,
     _long = long;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,37 +120,7 @@ class EUKPopupWindow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: () async {
-                    final List<AvailableMap> availableMaps = await MapLauncher.installedMaps;
-
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SafeArea(
-                          child: SingleChildScrollView(
-                            child: Container(
-                              child: Wrap(
-                                children: <Widget>[
-                                  for (var map in availableMaps)
-                                    ListTile(
-                                      onTap: () => map.showDirections(
-                                        destination: Coords(_lat, _long),
-                                      ),
-                                      title: Text(map.mapName),
-                                      leading: SvgPicture.asset(
-                                        map.icon,
-                                        height: 30.0,
-                                        width: 30.0,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                  onPressed: () => context.read<ExternalMapBloc>().add(OnOpenForNavigation(context: context, lat: _lat, long: _long)),
                   child: const Text('Navigovat', style: TextStyle(fontSize: 16),
                   ),
                 )

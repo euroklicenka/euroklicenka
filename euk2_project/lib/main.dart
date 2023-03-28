@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
@@ -36,7 +37,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => ListSortingBloc(locations: context.read<LocationManagementBloc>().locationManager.locations),
-        )
+        ),
+        BlocProvider(
+          create: (context) => ExternalMapBloc(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
