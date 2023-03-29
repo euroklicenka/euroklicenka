@@ -6,9 +6,14 @@ import 'package:map_launcher/map_launcher.dart';
 
 ///A Selection menu, where the user can pick a Map application from
 ///the ones currently installed on the device.
+///
+/// It displays all [maps] in a grid, shows a [headerText] above the window,
+/// shows a toggle to set the next selected map as a default when [showDefaultSwitch] is on,
+/// allows an action to be taken [onSelect] and when [onSelectNone] has an action assigned,
+/// shows a special button below the window.
 void openMapAppDialog({required BuildContext context,
   required List<AvailableMap> maps, required Function(AvailableMap map) onSelect,
-  bool showDefaultSwitch = true, Function()? onSelectNone}) {
+  String headerText = 'Otevřít v aplikaci', bool showDefaultSwitch = true, Function()? onSelectNone}) {
 
   ///Builds a Grid Tile for a map.
   Widget buildGridTile(BuildContext context, int index) {
@@ -39,9 +44,9 @@ void openMapAppDialog({required BuildContext context,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              const Text(
-                'Otevřít v aplikaci',
-                style: TextStyle(
+              Text(
+                headerText,
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

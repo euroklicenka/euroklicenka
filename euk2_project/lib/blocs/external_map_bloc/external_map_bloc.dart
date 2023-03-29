@@ -75,6 +75,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     openMapAppDialog(
         context: event.context,
         maps: _availableMaps,
+        headerText: 'Změnit výchozí navigaci',
         showDefaultSwitch: false,
         onSelect: (map) => add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: map.mapType.index, mapIcon: map.icon)),
         onSelectNone: () => add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: -1, mapIcon: '')),
