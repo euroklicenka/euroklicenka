@@ -63,6 +63,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       onSelect: (map) {
         if (_nextAppIsDefault == true) {
           _saveMapAppIndex(map.mapType.index);
+          _defaultMapIcon = map.icon;
         }
           Navigator.pop(event.context);
           _showDirections(map, event);
