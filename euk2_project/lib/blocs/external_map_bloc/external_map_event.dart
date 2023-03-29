@@ -13,3 +13,11 @@ class OnOpenForNavigation extends ExternalMapEvent {
     required this.long,
   });
 }
+
+class OnChangeDefaultMapApp extends ExternalMapEvent {
+  final BuildContext context;
+
+  const OnChangeDefaultMapApp({
+    required this.context,
+  });
+}

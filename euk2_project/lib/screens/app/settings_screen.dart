@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       child: Column(
         children: [
+          ListTile(
+            onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
+            title: const Text('Výchozí navigace'),
+          ),
           // ListTile(
           //   onTap: () {},
           //   title: const Text("Informace o aplikaci"),
@@ -30,9 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           // ),
           // const DividerOptions(),
           ListTile(
-            onTap: () {
-              context.read<MainScreenBloc>().add(OnOpenGuideScreen());
-            },
+            onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
             title: const Text("Průvodce"),
             leading: const Icon(Icons.rocket_launch),
             // tileColor: Colors.amber,

@@ -23,6 +23,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefault()) {
     _dataManager = dataManager;
     on<OnOpenForNavigation>(_onNavigate);
+    on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
   }
 
   void updateNextAppIsDefault(bool value) {
@@ -66,4 +67,16 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   void _showDirections(AvailableMap map, OnOpenForNavigation event) => map.showDirections(destination: Coords(event.lat, event.long));
 
   bool get nextAppIsDefault => _nextAppIsDefault;
+
+  Future<void> _onChangeDefaultMapApp(OnChangeDefaultMapApp event, emit) async {
+    await _refreshAvailableMaps();
+    openMapAppDialog(
+        context: event.context,
+        maps: _availableMaps,
+        onSelect: (map) {
+          _dataManager.saveDefaultMapApp(map.mapType.index);
+          Navigator.pop(event.context);
+        },
+    );
+  }
 }
