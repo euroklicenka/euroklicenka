@@ -4,9 +4,7 @@ import 'package:map_launcher/map_launcher.dart';
 
 ///A Selection menu, where the user can pick a Map application from
 ///the ones currently installed on the device.
-Future<void> openMapAppDialog({required BuildContext context, required Function(AvailableMap map) onSelect}) async {
-  final availableMaps = await MapLauncher.installedMaps;
-
+void openMapAppDialog({required BuildContext context, required List<AvailableMap> maps, required Function(AvailableMap map) onSelect}) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -14,7 +12,7 @@ Future<void> openMapAppDialog({required BuildContext context, required Function(
         child: SingleChildScrollView(
           child: Wrap(
             children: <Widget>[
-              for (var map in availableMaps)
+              for (var map in maps)
                 ListTile(
                   onTap: () => onSelect(map),
                   title: Text(map.mapName),

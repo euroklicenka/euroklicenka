@@ -12,18 +12,25 @@ part 'external_map_state.dart';
 
 ///Handles events dealing with external map applications.
 class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
+
+  late List<AvailableMap> _availableMaps;
+
   ExternalMapBloc() : super(ExternalMapInitial()) {
     on<OnOpenForNavigation>(_onNavigate);
   }
 
-  FutureOr<void> _onNavigate(OnOpenForNavigation event, emit) {
+  Future<void> _onNavigate(OnOpenForNavigation event, emit) async {
+    await _refreshAvailableMaps();
+
     openMapAppDialog(
       context: event.context,
-      onSelect: (map) => {
-        map.showDirections(
-          destination: Coords(event.lat, event.long),
-        )
-      },
+      maps: _availableMaps,
+      onSelect: (map) {
+        Navigator.pop(event.context);
+        return map.showDirections(destination: Coords(event.lat, event.long));
+      }
     );
   }
+
+  Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
 }
