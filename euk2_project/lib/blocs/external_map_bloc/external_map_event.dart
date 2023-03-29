@@ -3,6 +3,7 @@ part of 'external_map_bloc.dart';
 @immutable
 abstract class ExternalMapEvent { const ExternalMapEvent(); }
 
+///Request navigation in another supported map app.
 class OnOpenForNavigation extends ExternalMapEvent {
   final BuildContext context;
   final double lat, long;
@@ -14,6 +15,7 @@ class OnOpenForNavigation extends ExternalMapEvent {
   });
 }
 
+///Request to change the default map app.
 class OnChangeDefaultMapApp extends ExternalMapEvent {
   final BuildContext context;
 
@@ -22,6 +24,7 @@ class OnChangeDefaultMapApp extends ExternalMapEvent {
   });
 }
 
+///Assign default map app data directly.
 class OnFinishDefaultMapAppSetting extends ExternalMapEvent {
   final BuildContext context;
   final int mapIndex;
