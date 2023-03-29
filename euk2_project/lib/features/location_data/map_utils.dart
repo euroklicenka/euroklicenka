@@ -17,5 +17,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
       city: data.city,
       info: data.info,
       ZIP: data.ZIP,
+      lat: data.lat,
+      long: data.long,
     );
   }

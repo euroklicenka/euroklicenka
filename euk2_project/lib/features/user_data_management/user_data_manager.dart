@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserDataManager {
 
   static const String _notFirstTimeLaunchPref = 'isFirstTimeLaunch';
+  static const String _defaultMapAppIndexPref = 'defaultMapAppIndex';
   static const String _locationDataPref = 'locationData';
 
   SharedPreferences? _prefs;
@@ -47,6 +48,17 @@ class UserDataManager {
     }
 
     return data;
+  }
+
+  ///Save a map app index.
+  Future<void> saveDefaultMapApp(int index) async {
+    await _prefs!.setInt(_defaultMapAppIndexPref, index);
+  }
+
+  ///Get the currently saved map app index. If there is none, returns -1.
+  int getDefaultMapAppIndex() {
+    final int? defaultMapAppIndex = _prefs!.getInt(_defaultMapAppIndexPref);
+    return (defaultMapAppIndex == null) ? -1 : defaultMapAppIndex;
   }
 
   bool? get notFirstTimeLaunch => _initScreen;
