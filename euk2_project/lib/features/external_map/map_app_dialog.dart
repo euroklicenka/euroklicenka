@@ -11,7 +11,7 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
   ///Builds a Grid Tile for a map.
   Widget buildGridTile(BuildContext context, int index) {
     return MaterialButton(
-      onPressed: () => {}, //onSelect(maps[index]),
+      onPressed: () => onSelect(maps[index]),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -35,43 +35,41 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
       return SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
-          child: Flexible(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Text(
-                  'Otevřít v aplikaci',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Text(
+                'Otevřít v aplikaci',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 16),
-                Expanded(
-                  child: Scrollbar(
-                    thumbVisibility: true,
-                    child: GridView.builder(
-                      itemCount: maps.length,
-                      itemBuilder: buildGridTile,
-                      // shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 16,
-                        childAspectRatio: 1.5,
-                      ),
+              ),
+              const SizedBox(height: 16),
+              Expanded(
+                child: Scrollbar(
+                  thumbVisibility: true,
+                  child: GridView.builder(
+                    itemCount: maps.length,
+                    itemBuilder: buildGridTile,
+                    // shrinkWrap: true,
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 12,
+                      crossAxisSpacing: 16,
+                      childAspectRatio: 1.5,
                     ),
                   ),
                 ),
-                const Divider(),
-                SwitchListTile.adaptive(
-                  title: const Text('Použít vždy'),
-                  value: context.watch<ExternalMapBloc>().nextAppIsDefault,
-                  onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
-                )
-              ],
-            ),
+              ),
+              const Divider(),
+              SwitchListTile.adaptive(
+                title: const Text('Použít vždy'),
+                value: context.watch<ExternalMapBloc>().nextAppIsDefault,
+                onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
+              )
+            ],
           ),
         ),
       );
