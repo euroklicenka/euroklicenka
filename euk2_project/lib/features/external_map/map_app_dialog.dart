@@ -35,6 +35,7 @@ void openMapAppDialog({required BuildContext context,
   }
 
   showModalBottomSheet(
+    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
     builder: (BuildContext context) {
@@ -58,7 +59,6 @@ void openMapAppDialog({required BuildContext context,
                   child: GridView.builder(
                     itemCount: maps.length,
                     itemBuilder: buildGridTile,
-                    // shrinkWrap: true,
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
