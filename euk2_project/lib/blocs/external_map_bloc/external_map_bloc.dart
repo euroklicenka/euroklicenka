@@ -39,6 +39,11 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       return;
     }
 
+    if (_availableMaps.length == 1) {
+      _showDirections(_availableMaps[0], event);
+      return;
+    }
+
     final int savedMapIndex = _dataManager.getDefaultMapAppIndex();
     if (savedMapIndex != -1) {
       final MapType type = MapType.values[savedMapIndex];
