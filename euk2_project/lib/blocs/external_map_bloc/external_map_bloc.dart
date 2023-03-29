@@ -13,10 +13,16 @@ part 'external_map_state.dart';
 ///Handles events dealing with external map applications.
 class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
-  late List<AvailableMap> _availableMaps;
+  List<AvailableMap> _availableMaps = [];
+  bool _nextAppIsDefault = false;
 
-  ExternalMapBloc() : super(ExternalMapInitial()) {
+  ExternalMapBloc() : super(ExternalMapDefault()) {
     on<OnOpenForNavigation>(_onNavigate);
+  }
+
+  void updateNextAppIsDefault(bool value) {
+    _nextAppIsDefault = value;
+    emit(ExternalMapDefault());
   }
 
   Future<void> _onNavigate(OnOpenForNavigation event, emit) async {
@@ -38,4 +44,6 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   }
 
   Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
+
+  bool get nextAppIsDefault => _nextAppIsDefault;
 }
