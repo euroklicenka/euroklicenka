@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:euk2_project/features/external_map/map_app_dialog.dart';
+import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,13 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
   List<AvailableMap> _availableMaps = [];
   bool _nextAppIsDefault = false;
+  String _defaultMapIcon = '';
 
   ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefault()) {
     _dataManager = dataManager;
     on<OnOpenForNavigation>(_onNavigate);
     on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
+    on<OnFinishDefaultMapAppSetting>(_onFinishDefaultMapAppSetting);
   }
 
   void updateNextAppIsDefault(bool value) {
@@ -73,15 +76,16 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
         context: event.context,
         maps: _availableMaps,
         showDefaultSwitch: false,
-        onSelect: (map) {
-          _saveMapAppIndex(map.mapType.index);
-          Navigator.pop(event.context);
-        },
-        onSelectNone: () {
-          _saveMapAppIndex(-1);
-          Navigator.pop(event.context);
-        }
+        onSelect: (map) => add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: map.mapType.index, mapIcon: map.icon)),
+        onSelectNone: () => add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: -1, mapIcon: '')),
     );
+  }
+
+  void _onFinishDefaultMapAppSetting(OnFinishDefaultMapAppSetting event, emit) {
+    _saveMapAppIndex(event.mapIndex);
+    _defaultMapIcon = event.mapIcon;
+    Navigator.pop(event.context);
+    emit(ExternalMapDefault());
   }
 
   Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
@@ -89,4 +93,5 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   void _saveMapAppIndex(int index) => _dataManager.saveDefaultMapApp(index);
 
   bool get nextAppIsDefault => _nextAppIsDefault;
+  String get defaultMapIcon => _defaultMapIcon;
 }

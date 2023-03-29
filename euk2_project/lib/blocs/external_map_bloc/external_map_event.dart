@@ -21,3 +21,15 @@ class OnChangeDefaultMapApp extends ExternalMapEvent {
     required this.context,
   });
 }
+
+class OnFinishDefaultMapAppSetting extends ExternalMapEvent {
+  final BuildContext context;
+  final int mapIndex;
+  final String mapIcon;
+
+  const OnFinishDefaultMapAppSetting({
+    required this.context,
+    required this.mapIndex,
+    required this.mapIcon,
+  });
+}
