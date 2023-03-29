@@ -54,8 +54,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       maps: _availableMaps,
       onSelect: (map) {
         if (_nextAppIsDefault == true) {
-          //Save map index
-          _dataManager.saveDefaultMapApp(map.mapType.index);
+          _saveMapAppIndex(map.mapType.index);
         }
           Navigator.pop(event.context);
           _showDirections(map, event);
@@ -63,20 +62,26 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     );
   }
 
-  Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
-  void _showDirections(AvailableMap map, OnOpenForNavigation event) => map.showDirections(destination: Coords(event.lat, event.long));
-
-  bool get nextAppIsDefault => _nextAppIsDefault;
-
   Future<void> _onChangeDefaultMapApp(OnChangeDefaultMapApp event, emit) async {
     await _refreshAvailableMaps();
     openMapAppDialog(
         context: event.context,
         maps: _availableMaps,
+        showDefaultSwitch: false,
         onSelect: (map) {
-          _dataManager.saveDefaultMapApp(map.mapType.index);
+          _saveMapAppIndex(map.mapType.index);
           Navigator.pop(event.context);
         },
+        onSelectNone: () {
+          _saveMapAppIndex(-1);
+          Navigator.pop(event.context);
+        }
     );
   }
+
+  Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
+  void _showDirections(AvailableMap map, OnOpenForNavigation event) => map.showDirections(destination: Coords(event.lat, event.long));
+  void _saveMapAppIndex(int index) => _dataManager.saveDefaultMapApp(index);
+
+  bool get nextAppIsDefault => _nextAppIsDefault;
 }

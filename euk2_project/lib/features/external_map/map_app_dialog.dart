@@ -6,7 +6,9 @@ import 'package:map_launcher/map_launcher.dart';
 
 ///A Selection menu, where the user can pick a Map application from
 ///the ones currently installed on the device.
-void openMapAppDialog({required BuildContext context, required List<AvailableMap> maps, required Function(AvailableMap map) onSelect}) {
+void openMapAppDialog({required BuildContext context,
+  required List<AvailableMap> maps, required Function(AvailableMap map) onSelect,
+  bool showDefaultSwitch = true, Function()? onSelectNone}) {
 
   ///Builds a Grid Tile for a map.
   Widget buildGridTile(BuildContext context, int index) {
@@ -28,7 +30,6 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
   }
 
   showModalBottomSheet(
-
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
     builder: (BuildContext context) {
@@ -64,11 +65,27 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                 ),
               ),
               const Divider(),
-              SwitchListTile.adaptive(
+              if (showDefaultSwitch) SwitchListTile.adaptive(
                 title: const Text('Použít vždy'),
                 value: context.watch<ExternalMapBloc>().nextAppIsDefault,
                 onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
-              )
+              ),
+              if (onSelectNone != null) ListTile(
+                onTap: onSelectNone,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.cancel_outlined),
+                    SizedBox(width: 8,),
+                    Text(
+                      'Zrušit výchozí',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

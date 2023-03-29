@@ -27,6 +27,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
             title: const Text('Výchozí navigace'),
           ),
+          const Divider(),
           // ListTile(
           //   onTap: () {},
           //   title: const Text("Informace o aplikaci"),
