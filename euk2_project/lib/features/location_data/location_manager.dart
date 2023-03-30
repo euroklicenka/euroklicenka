@@ -48,7 +48,6 @@ class EUKLocationManager {
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
     _buildMarkers();
-
     _dataManager.saveEUKLocationData(locations);
     onFinish?.call();
   }
@@ -67,7 +66,7 @@ class EUKLocationManager {
   }
 
   ///Builds are markers based data from [_locations].
-  Future<void> _buildMarkers() async {
+  void _buildMarkers() {
     _markers.clear();
     _initClusterManager();
 

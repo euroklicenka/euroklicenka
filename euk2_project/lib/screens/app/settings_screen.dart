@@ -14,7 +14,26 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
+ late final AnimationController _animController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _animController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    )..repeat();
+  }
+
+
+  @override
+  void dispose() {
+    _animController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -106,7 +125,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           borderRadius: BorderRadius.circular(10),
         ),
       ),
-      icon: const Icon(Icons.refresh),
+      icon: RotationTransition(
+        turns: _animController,
+        child: const Icon(Icons.refresh),
+      ),
       label: const Text('Aktualizace databáze'),
     );
   }

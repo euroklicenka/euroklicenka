@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_zoom_info.dart';
@@ -80,7 +81,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     locationManager.reloadFromDatabase(onFinish: () => add(OnLoadLocationsFromDatabaseFinished()));
   }
 
-  void _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) {
+  Future<void> _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) async {
+    await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(25)));
     emit(const LocationManagementDefault());
   }
 
