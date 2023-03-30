@@ -57,34 +57,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
                   builder: (context, state) {
-                    if (state is LocationManagementUpdatingDatabase) {
-                      return OutlinedButton.icon(
-                        onPressed: null,
-                        style: ElevatedButton.styleFrom(
-                          disabledForegroundColor: Colors.black87,
-                          minimumSize: const Size.fromHeight(48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Aktualizace databáze'),
-                      );
-                    } else {
-                      return ElevatedButton.icon(
-                        onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white70,
-                          backgroundColor: Colors.deepOrangeAccent,
-                          minimumSize: const Size.fromHeight(50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        icon: const Icon(Icons.refresh),
-                        label: const Text('Aktualizace databáze'),
-                      );
-                    }
+                    return AnimatedCrossFade(
+                      duration: const Duration(milliseconds: 100),
+                      firstCurve: Curves.bounceIn,
+                      secondCurve: Curves.bounceOut,
+                      firstChild: databaseButton(),
+                      secondChild: databaseButtonDisabled(),
+                      crossFadeState:
+                          (state is LocationManagementUpdatingDatabase)
+                              ? CrossFadeState.showSecond
+                              : CrossFadeState.showFirst,
+                    );
                   },
                 ),
               ),
@@ -94,6 +77,40 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
+  ///Big red button that updates the database.
+  Widget databaseButton() {
+    return ElevatedButton.icon(
+      onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: Colors.white70,
+        backgroundColor: Colors.deepOrangeAccent,
+        minimumSize: const Size.fromHeight(50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      icon: const Icon(Icons.refresh),
+      label: const Text('Aktualizace databáze'),
+    );
+  }
+
+  ///Disabled version of Database Button.
+  Widget databaseButtonDisabled() {
+    return OutlinedButton.icon(
+      onPressed: null,
+      style: ElevatedButton.styleFrom(
+        disabledForegroundColor: Colors.black87,
+        minimumSize: const Size.fromHeight(45),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      icon: const Icon(Icons.refresh),
+      label: const Text('Aktualizace databáze'),
+    );
+  }
+
 }
 
 ///The AppBar for the Settings Screen.
