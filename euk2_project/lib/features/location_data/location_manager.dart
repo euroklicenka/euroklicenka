@@ -50,7 +50,6 @@ class EUKLocationManager {
     _buildMarkers();
 
     _dataManager.saveEUKLocationData(locations);
-    showSnackBar(message: "Databáze míst byla úspěšně aktualizována.");
   }
 
   ///Loads EUK Locations from the current device.
