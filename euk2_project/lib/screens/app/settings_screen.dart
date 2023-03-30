@@ -15,8 +15,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
- late final AnimationController _animController;
-
+  late final AnimationController _animController;
 
   @override
   void initState() {
@@ -26,7 +25,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       vsync: this,
     )..repeat();
   }
-
 
   @override
   void dispose() {
@@ -76,16 +74,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
                   builder: (context, state) {
-                    return AnimatedCrossFade(
-                      duration: const Duration(milliseconds: 100),
-                      firstCurve: Curves.bounceIn,
-                      secondCurve: Curves.bounceOut,
-                      firstChild: databaseButton(),
-                      secondChild: databaseButtonDisabled(),
-                      crossFadeState:
-                          (state is LocationManagementUpdatingDatabase)
-                              ? CrossFadeState.showSecond
-                              : CrossFadeState.showFirst,
+                    return AnimatedSize(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.bounceOut,
+                      child: (state is LocationManagementUpdatingFinished)
+                          ? databaseButtonFinished()
+                          : (state is LocationManagementUpdatingDatabase)
+                              ? databaseButtonDisabled()
+                              : databaseButton(),
                     );
                   },
                 ),
@@ -120,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       onPressed: null,
       style: ElevatedButton.styleFrom(
         disabledForegroundColor: Colors.black87,
-        minimumSize: const Size.fromHeight(45),
+        minimumSize: const Size.fromHeight(47.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -133,6 +129,22 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
     );
   }
 
+  ///Big red button that updates the database.
+  Widget databaseButtonFinished() {
+    return ElevatedButton.icon(
+      onPressed: null,
+      style: ElevatedButton.styleFrom(
+        disabledForegroundColor: Colors.white70,
+        disabledBackgroundColor: Colors.green,
+        minimumSize: const Size.fromHeight(70),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      icon: const Icon(Icons.check),
+      label: const Text('Aktualizace dokončena'),
+    );
+  }
 }
 
 ///The AppBar for the Settings Screen.

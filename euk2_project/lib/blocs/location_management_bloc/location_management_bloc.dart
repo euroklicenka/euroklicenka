@@ -83,6 +83,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   Future<void> _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) async {
     await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(25)));
+    emit(const LocationManagementUpdatingFinished());
+    await Future.delayed(const Duration(seconds: 3));
     emit(const LocationManagementDefault());
   }
 
