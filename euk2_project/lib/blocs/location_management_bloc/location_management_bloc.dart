@@ -33,6 +33,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
     on<OnMapIsReady>(_onMapIsReady);
     on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
+    on<OnLoadLocationsFromDatabaseFinished>(_onLoadFromDatabaseFinished);
     on<OnRecalculateLocationsDistance>(_onRecalculateLocationsDistance);
   }
 
@@ -75,7 +76,12 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
-    locationManager.reloadFromDatabase();
+    emit(const LocationManagementUpdatingDatabase());
+    locationManager.reloadFromDatabase(onFinish: () => add(OnLoadLocationsFromDatabaseFinished()));
+  }
+
+  void _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) {
+    emit(const LocationManagementDefault());
   }
 
   void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
@@ -90,4 +96,6 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
+
+
 }

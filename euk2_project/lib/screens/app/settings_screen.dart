@@ -24,16 +24,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ListTile(
             onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
             title: const Text('Výchozí navigace'),
-            // leading: Icon(Icons.location_on),
             trailing: Padding(
               padding: const EdgeInsets.only(right: 8),
               child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
                   ? const Icon(Icons.cancel_outlined)
                   : ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: SvgPicture.asset(context.watch<ExternalMapBloc>().defaultMapIcon, width: 32,
+                      borderRadius: BorderRadius.circular(10),
+                      child: SvgPicture.asset(
+                        context.watch<ExternalMapBloc>().defaultMapIcon,
+                        width: 32,
+                      ),
                     ),
-                  ),
             ),
           ),
           const DividerOptions(),
@@ -47,7 +48,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
             title: const Text("Průvodce"),
             leading: const Icon(Icons.rocket_launch),
-            // tileColor: Colors.amber,
           ),
           const DividerOptions(),
           Expanded(
@@ -55,16 +55,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: ElevatedButton.icon(
-                  onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white70,
-                    backgroundColor: Colors.deepOrangeAccent,
-                    minimumSize: const Size.fromHeight(50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  ),
-                  icon: const Icon(Icons.refresh),
-                  label: const Text('Aktualizace databáze'),
+                child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
+                  builder: (context, state) {
+                    if (state is LocationManagementUpdatingDatabase) {
+                      return OutlinedButton.icon(
+                        onPressed: null,
+                        style: ElevatedButton.styleFrom(
+                          disabledForegroundColor: Colors.black87,
+                          minimumSize: const Size.fromHeight(48),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Aktualizace databáze'),
+                      );
+                    } else {
+                      return ElevatedButton.icon(
+                        onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white70,
+                          backgroundColor: Colors.deepOrangeAccent,
+                          minimumSize: const Size.fromHeight(50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        icon: const Icon(Icons.refresh),
+                        label: const Text('Aktualizace databáze'),
+                      );
+                    }
+                  },
                 ),
               ),
             ),

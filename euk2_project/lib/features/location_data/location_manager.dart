@@ -43,13 +43,14 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the built-in URL link and stores them
   ///in the internal list.
-  Future<void> reloadFromDatabase() async {
+  Future<void> reloadFromDatabase({Function()? onFinish}) async {
     final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
     _buildMarkers();
 
     _dataManager.saveEUKLocationData(locations);
+    onFinish?.call();
   }
 
   ///Loads EUK Locations from the current device.
