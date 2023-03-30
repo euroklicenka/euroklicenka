@@ -136,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       style: ElevatedButton.styleFrom(
         disabledForegroundColor: Colors.white70,
         disabledBackgroundColor: Colors.green,
-        minimumSize: const Size.fromHeight(70),
+        minimumSize: const Size.fromHeight(62),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
