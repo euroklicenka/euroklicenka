@@ -67,7 +67,6 @@ class _ListScreenState extends State<ListScreen> {
           const SizedBox(height: 4,),
           Text(
             distanceText,
-            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ],
       ),
@@ -82,8 +81,19 @@ class AppBarListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('List lokací'),
-      centerTitle: true,
+      backgroundColor: Colors.deepOrangeAccent, // Background color of AppBar
+      title: const Text('Seznam míst'),
+      centerTitle: true, // Center the title
+      elevation: 2, // Add a shadow to the AppBar
+      shape: RoundedRectangleBorder( // Add a border to the AppBar
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(12),
+        ),
+        side: BorderSide(
+          color: Colors.grey, // Border color
+          width: 2, // Border width
+        ),
+      ),
     );
   }
 }
