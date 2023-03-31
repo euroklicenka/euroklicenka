@@ -8,6 +8,7 @@ import 'package:euk2_project/features/location_data/data/euk_location_data.dart'
 import 'package:euk2_project/features/location_data/location_manager.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:euk2_project/features/location_data/user_pos_locator.dart';
+import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:latlong2/latlong.dart' as d;
@@ -82,6 +83,12 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) async {
+    if (locationManager.hasThrownError) {
+      emit(const LocationManagementDefault());
+      showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později.');
+      return;
+    }
+
     await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(25)));
     emit(const LocationManagementUpdatingFinished());
     await Future.delayed(const Duration(seconds: 3));
@@ -100,6 +107,4 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
-
-
 }
