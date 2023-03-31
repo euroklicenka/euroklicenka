@@ -84,8 +84,9 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   Future<void> _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) async {
     if (locationManager.hasThrownError) {
+      showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později nebo zkontrolujte své nastavení internetu.');
+      await Future.delayed(const Duration(milliseconds: 200));
       emit(const LocationManagementDefault());
-      showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později.');
       return;
     }
 
