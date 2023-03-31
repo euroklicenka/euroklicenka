@@ -1,6 +1,7 @@
 import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:euk2_project/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,12 +47,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
                   ? const Icon(Icons.cancel_outlined)
                   : ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: SvgPicture.asset(
-                        context.watch<ExternalMapBloc>().defaultMapIcon,
-                        width: 32,
-                      ),
-                    ),
+                borderRadius: BorderRadius.circular(10),
+                child: SvgPicture.asset(
+                  context.watch<ExternalMapBloc>().defaultMapIcon,
+                  width: 32,
+                ),
+              ),
             ),
           ),
           const DividerOptions(),
@@ -80,8 +81,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       child: (state is LocationManagementUpdatingFinished)
                           ? databaseButtonFinished()
                           : (state is LocationManagementUpdatingDatabase)
-                              ? databaseButtonDisabled()
-                              : databaseButton(),
+                          ? databaseButtonDisabled(animController: _animController)
+                          : databaseButton(context: context),
                     );
                   },
                 ),
@@ -90,59 +91,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           ),
         ],
       ),
-    );
-  }
-
-  ///Big red button that updates the database.
-  Widget databaseButton() {
-    return ElevatedButton.icon(
-      onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
-      style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.white70,
-        backgroundColor: Colors.deepOrangeAccent,
-        minimumSize: const Size.fromHeight(50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      icon: const Icon(Icons.refresh),
-      label: const Text('Aktualizace databáze'),
-    );
-  }
-
-  ///Disabled version of Database Button.
-  Widget databaseButtonDisabled() {
-    return OutlinedButton.icon(
-      onPressed: null,
-      style: ElevatedButton.styleFrom(
-        disabledForegroundColor: Colors.black87,
-        minimumSize: const Size.fromHeight(47.5),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      icon: RotationTransition(
-        turns: _animController,
-        child: const Icon(Icons.refresh),
-      ),
-      label: const Text('Aktualizace databáze'),
-    );
-  }
-
-  ///Big red button that updates the database.
-  Widget databaseButtonFinished() {
-    return ElevatedButton.icon(
-      onPressed: null,
-      style: ElevatedButton.styleFrom(
-        disabledForegroundColor: Colors.white70,
-        disabledBackgroundColor: Colors.green,
-        minimumSize: const Size.fromHeight(62),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      icon: const Icon(Icons.check),
-      label: const Text('Aktualizace dokončena'),
     );
   }
 }
