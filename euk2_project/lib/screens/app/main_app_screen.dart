@@ -60,7 +60,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
             context.read<ListSortingBloc>().add(OnSortByLocationDistance());
           }
         },
-        selectedItemColor: Colors.amber[500],
+        selectedItemColor: Theme.of(context).primaryColor,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.view_list),

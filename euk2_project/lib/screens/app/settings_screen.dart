@@ -102,19 +102,8 @@ class AppBarSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.deepOrangeAccent, // Background color of AppBar
       title: const Text('Nastavení a Informace'),
-      centerTitle: true, // Center the title
-      elevation: 2, // Add a shadow to the AppBar
-      shape: RoundedRectangleBorder( // Add a border to the AppBar
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(12),
-        ),
-        side: BorderSide(
-          color: Colors.grey, // Border color
-          width: 2, // Border width
-        ),
-      ),
+      centerTitle: true,
     );
   }
 }
