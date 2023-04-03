@@ -7,7 +7,7 @@ ThemeData yellowTheme = ThemeData(
     foregroundColor: Colors.white,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedItemColor: Colors.amber,
+    selectedItemColor: Colors.orange,
   ),
 );
 
