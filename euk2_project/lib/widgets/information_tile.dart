@@ -8,6 +8,7 @@ Widget InfoTile({required Size screenSize, required String title, required Strin
         child: Text(
           title,
           maxLines: 5,
+          style: const TextStyle(fontSize: 15),
         ),
       ),
       const SizedBox(width: 8),
