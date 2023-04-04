@@ -1,3 +1,4 @@
+import 'package:euk2_project/version_label.dart';
 import 'package:euk2_project/widgets/information_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class InformationScreen extends StatelessWidget {
                   width: screenSize.width * 0.25),
               const SizedBox(height: 12),
               const Text(
-                'EuroKlíčenka 1.0.0',
+                'EuroKlíčenka $appVersion',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
