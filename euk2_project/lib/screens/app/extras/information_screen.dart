@@ -38,12 +38,14 @@ class InformationScreen extends StatelessWidget {
                     InfoTile(
                         screenSize: screenSize,
                         title: 'EuroKlíčenka je majetkem přírodověděcké fakulty Ostravské univerzity v Ostravě, Česká Republika.',
-                        imageFilePath: 'assets/images/logo_prf.png'),
+                        imageFilePath: 'assets/images/logo_prf.png',
+                    ),
+                    const Divider(),
                     InfoTile(
                         screenSize: screenSize,
                         title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, \nkde jsou také volně dostupné veřejnosti.',
-                        imageFilePath: 'assets/images/logo_eurokey.png'),
-                    const Divider(),
+                        imageFilePath: 'assets/images/logo_eurokey.png',
+                    ),
                   ],
                 ),
               ),
