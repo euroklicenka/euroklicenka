@@ -8,7 +8,7 @@ Widget databaseButton({required BuildContext context}) {
     onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.white70,
-      backgroundColor: Colors.deepOrangeAccent,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       minimumSize: const Size.fromHeight(50),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

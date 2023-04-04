@@ -23,7 +23,7 @@ class EUKPopupWindow extends StatelessWidget {
     const double headerSize = 18;
     const double textSize = 16;
     const double elementSpace = 4;
-    final Color? iconColor = Colors.amber[900];
+    final Color iconColor = Theme.of(context).colorScheme.secondary;
     return Container(
       width: 300,
       height: 200,
