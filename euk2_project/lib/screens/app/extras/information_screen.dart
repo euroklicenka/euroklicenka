@@ -9,7 +9,7 @@ class InformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Information'),
+        title: const Text('Informace'),
       ),
       body: const Center(
         child: Text('Future Information screen here!!!'),

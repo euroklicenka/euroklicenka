@@ -65,8 +65,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           const DividerOptions(),
           ListTile(
             onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
-            title: const Text("Informace o aplikaci"),
-            leading: const Icon(Icons.bookmarks_outlined),
+            title: const Text("O aplikaci"),
+            leading: const Icon(Icons.info),
           ),
           const DividerOptions(),
           Expanded(
