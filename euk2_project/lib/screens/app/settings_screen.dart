@@ -1,6 +1,7 @@
 import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           ),
           const DividerOptions(),
           ListTile(
-            onTap: () {},
+            onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
             title: const Text("Informace o aplikaci"),
             leading: const Icon(Icons.bookmarks_outlined),
           ),
