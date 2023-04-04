@@ -29,18 +29,23 @@ class InformationScreen extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              const Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Divider(),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const Spacer(),
+                    const Divider(),
+                    InfoTile(
+                        screenSize: screenSize,
+                        title: 'EuroKlíčenka je majetkem přírodověděcké fakulty Ostravské univerzity v Ostravě, Česká Republika.',
+                        imageFilePath: 'assets/images/logo_prf.png'),
+                    InfoTile(
+                        screenSize: screenSize,
+                        title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, \nkde jsou také volně dostupné veřejnosti.',
+                        imageFilePath: 'assets/images/logo_eurokey.png'),
+                    const Divider(),
+                  ],
                 ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: InfoTile(
-                    screenSize: screenSize,
-                    title: 'EuroKlíčenka je majetkem přírodověděcké fakulty Ostravské univerzity v Ostravě, Česká Republika.',
-                    imageFilePath: 'assets/images/prf_logo.png'),
               ),
             ],
           ),
