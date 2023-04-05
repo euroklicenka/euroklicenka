@@ -16,10 +16,9 @@ class InformationScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 24),
+          padding: const EdgeInsets.only(top: 24, bottom: 6, left: 24, right: 24),
           child: Column(
             children: [
-
               const SizedBox(height: 56),
               Image.asset('assets/images/logo_key.png',
                   width: screenSize.width * 0.25),
@@ -33,7 +32,7 @@ class InformationScreen extends StatelessWidget {
               ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 32),
+                  padding: const EdgeInsets.only(top: 64, bottom: 8),
                   child: Scrollbar(
                     thumbVisibility: true,
                     child: SingleChildScrollView(
@@ -61,6 +60,15 @@ class InformationScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                ),
+              ),
+              const Divider(),
+              const SizedBox(height: 4),
+              const Text(
+                'Copyright © 2023, Ostravská universita',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 12,
                 ),
               ),
             ],
