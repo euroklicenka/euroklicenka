@@ -9,3 +9,10 @@ class LocationManagementDefault extends LocationManagementState {
   const LocationManagementDefault();
 }
 
+class LocationManagementUpdatingDatabase extends LocationManagementState {
+  const LocationManagementUpdatingDatabase();
+}
+
+class LocationManagementUpdatingFinished extends LocationManagementState {
+  const LocationManagementUpdatingFinished();
+}

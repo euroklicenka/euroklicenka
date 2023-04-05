@@ -1,18 +1,22 @@
+import 'package:euk2_project/themes/theme_utils.dart';
 import 'package:flutter/material.dart';
 
-ThemeData yellowTheme = ThemeData(
-  primarySwatch: Colors.amber,
+ThemeData defaultLightTheme = ThemeData(
   brightness: Brightness.light,
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: createMaterialColor(Colors.deepOrangeAccent),
+  ).copyWith(
+    secondary: const Color(0xFFE95473),
+  ),
   appBarTheme: const AppBarTheme(
     foregroundColor: Colors.white,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedItemColor: Colors.amber,
+    selectedItemColor: Colors.deepOrangeAccent,
   ),
 );
 
-
-ThemeData darkTheme = ThemeData(
+ThemeData defaultDarkTheme = ThemeData(
   brightness: Brightness.dark,
 );
 

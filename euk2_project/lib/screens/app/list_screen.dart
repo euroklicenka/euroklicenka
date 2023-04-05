@@ -67,7 +67,6 @@ class _ListScreenState extends State<ListScreen> {
           const SizedBox(height: 4,),
           Text(
             distanceText,
-            style: const TextStyle(fontStyle: FontStyle.italic),
           ),
         ],
       ),
@@ -82,8 +81,8 @@ class AppBarListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('List lokací'),
-      centerTitle: true,
+      title: const Text('Seznam míst'),
+      centerTitle: true, // Center the title
     );
   }
 }

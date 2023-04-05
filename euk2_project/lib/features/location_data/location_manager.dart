@@ -27,6 +27,8 @@ class EUKLocationManager {
   late List<EUKLocationData> _locations;
   late Set<Marker> _markers;
 
+  bool _hasThrownError = false;
+
   EUKLocationManager({required UserDataManager dataManager}) {
     _dataManager = dataManager;
     _HTTPloader = HTTPLoader();
@@ -34,6 +36,7 @@ class EUKLocationManager {
     _windowController = CustomInfoWindowController();
     _locations = [];
     _markers = {};
+    _initClusterManager();
   }
 
   ///Disposes of the Popup Window.
@@ -43,14 +46,14 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the built-in URL link and stores them
   ///in the internal list.
-  Future<void> reloadFromDatabase() async {
-    final List<int> bytes = await _HTTPloader.getAsBytes(locationsURL);
+  Future<void> reloadFromDatabase({Function()? onFinish}) async {
+    _hasThrownError = false;
+    final List<int> bytes = await _HTTPloader.getAsBytes(url: locationsURL, onFail: () => {_hasThrownError = true});
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
     _buildMarkers();
-
     _dataManager.saveEUKLocationData(locations);
-    showSnackBar(message: "Databáze míst byla úspěšně aktualizována.");
+    onFinish?.call();
   }
 
   ///Loads EUK Locations from the current device.
@@ -67,7 +70,7 @@ class EUKLocationManager {
   }
 
   ///Builds are markers based data from [_locations].
-  Future<void> _buildMarkers() async {
+  void _buildMarkers() {
     _markers.clear();
     _initClusterManager();
 
@@ -107,23 +110,9 @@ class EUKLocationManager {
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
-
   Set<Marker> get markers => _markers;
-
   Stream<Set<Marker>> get markerStream => _markerStream;
-
   CustomInfoWindowController get windowController => _windowController;
-
   ClusterManager get clusterManager => _clusterManager;
-
-
-
-
-
-
-
-
-
-
+  bool get hasThrownError => _hasThrownError;
 }
-

@@ -18,7 +18,7 @@ dependencies:
   google_maps_flutter: ^2.2.1
   location: ^4.4.0
   onboarding: ^3.1.0
-  introduction_screen: ^2.1.0
+  introduction_screen: ^3.1.1
   shared_preferences: ^2.0.11
   flutter_bloc: ^8.1.1
   csv: ^5.0.1
@@ -31,20 +31,13 @@ dependencies:
   flutter_svg: ^1.1.6
 
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.12.0
 
-  hive_generator: ^2.0.0
   flutter_lints: ^2.0.0
   lint: ^2.0.1
-
-flutter_icons:
-    android: "launcher_icon"
-    ios: true
-    image_path: "assets/images/logo_key.png"
 
 flutter:
 
