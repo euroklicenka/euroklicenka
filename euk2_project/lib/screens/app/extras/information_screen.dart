@@ -16,7 +16,7 @@ class InformationScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 24, bottom: 6, left: 24, right: 24),
+          padding: const EdgeInsets.only(top: 24, bottom: 16, left: 24, right: 24),
           child: Column(
             children: [
               const SizedBox(height: 56),
@@ -41,7 +41,7 @@ class InformationScreen extends StatelessWidget {
                         children: [
                           InfoTile(
                             screenSize: screenSize,
-                            title: 'Za vývojem nové podoby EuroKlíčenky stojí tým studentů OU, do kterého patří Jan Sonnek, Jan Kunetka, Ondřej Sládek a Ondřej Zeman.',
+                            title: 'Vývoj nové podoby EuroKlíčenky provedl tým studentů OU, do kterého patří Jan Sonnek, Jan Kunetka a Ondřej Sládek.',
                             imageFilePath: 'assets/images/logo_ou.png',
                           ),
                           const Divider(),
@@ -53,7 +53,7 @@ class InformationScreen extends StatelessWidget {
                           const Divider(),
                           InfoTile(
                             screenSize: screenSize,
-                            title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, \nkde jsou také volně dostupné veřejnosti.',
+                            title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, \nkde jsou také tyto data volně dostupná veřejnosti.',
                             imageFilePath: 'assets/images/logo_eurokey.png',
                           ),
                         ],
