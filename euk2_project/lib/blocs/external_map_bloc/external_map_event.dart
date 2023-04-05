@@ -36,3 +36,5 @@ class OnFinishDefaultMapAppSetting extends ExternalMapEvent {
     required this.mapIcon,
   });
 }
+
+class OnRedrawDefaultIcon extends ExternalMapEvent {}

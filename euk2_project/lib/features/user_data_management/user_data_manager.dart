@@ -56,7 +56,7 @@ class UserDataManager {
   }
 
   ///Get the currently saved map app index. If there is none, returns -1.
-  int getDefaultMapAppIndex() {
+  int loadDefaultMapAppIndex() {
     final int? defaultMapAppIndex = _prefs!.getInt(_defaultMapAppIndexPref);
     return (defaultMapAppIndex == null) ? -1 : defaultMapAppIndex;
   }

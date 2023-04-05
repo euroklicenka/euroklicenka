@@ -2,7 +2,6 @@ import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Screen that shows the primary map with EUK locations.
@@ -62,8 +61,9 @@ class AppBarMapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Mapa míst'),
+      title: const Text('Mapa'),
       centerTitle: true,
     );
   }
-}
+  }
+
