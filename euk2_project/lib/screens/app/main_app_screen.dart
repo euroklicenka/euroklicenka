@@ -1,3 +1,4 @@
+import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
@@ -58,6 +59,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
           if (index == ScreenType.list.index) {
             locationBloc.add(OnRecalculateLocationsDistance());
             context.read<ListSortingBloc>().add(OnSortByLocationDistance());
+          }
+          if (index == ScreenType.options.index) {
+            context.read<ExternalMapBloc>().add(OnRedrawDefaultIcon());
           }
         },
         selectedItemColor: Colors.amber[500],

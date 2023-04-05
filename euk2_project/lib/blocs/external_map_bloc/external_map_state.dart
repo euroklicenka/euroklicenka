@@ -1,6 +1,6 @@
 part of 'external_map_bloc.dart';
 
 @immutable
-abstract class ExternalMapState { const ExternalMapState(); }
+abstract class ExternalMapState {}
 
-class ExternalMapDefault extends ExternalMapState { const ExternalMapDefault(); }
+class ExternalMapDefault extends ExternalMapState {}

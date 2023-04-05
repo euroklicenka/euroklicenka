@@ -37,4 +37,4 @@ class OnFinishDefaultMapAppSetting extends ExternalMapEvent {
   });
 }
 
-class OnInit extends ExternalMapEvent {}
+class OnRedrawDefaultIcon extends ExternalMapEvent {}

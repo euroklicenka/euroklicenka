@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ListSortingBloc(locations: context.read<LocationManagementBloc>().locationManager.locations),
         ),
         BlocProvider(
-          create: (context) => ExternalMapBloc(dataManager: BlocProvider.of<MainScreenBloc>(context).dataManager)..add(OnInit()),
+          create: (context) => ExternalMapBloc(dataManager: BlocProvider.of<MainScreenBloc>(context).dataManager),
         ),
       ],
       child: MaterialApp(
