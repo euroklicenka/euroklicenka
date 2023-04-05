@@ -65,7 +65,7 @@ class InformationScreen extends StatelessWidget {
               const Divider(),
               const SizedBox(height: 4),
               const Text(
-                'Copyright © 2023, Ostravská universita',
+                copyrightInfo,
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 12,
