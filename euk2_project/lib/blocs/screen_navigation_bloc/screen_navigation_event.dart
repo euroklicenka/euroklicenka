@@ -8,3 +8,8 @@ class OnSwitchPage extends ScreenNavigationEvent {
   OnSwitchPage(int screenIndex) : screen = ScreenType.values[screenIndex];
   OnSwitchPage.screen(this.screen);
 }
+
+class OnOpenInformation extends ScreenNavigationEvent {
+  final BuildContext context;
+  OnOpenInformation({required this.context,});
+}

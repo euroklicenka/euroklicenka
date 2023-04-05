@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:euk2_project/screens/app/extras/information_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
 part 'screen_navigation_event.dart';
@@ -11,6 +15,7 @@ class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationS
 
   ScreenNavigationBloc() : super(const AppScreenMap()) {
     on<OnSwitchPage>(_onSwitchPage);
+    on<OnOpenInformation>(_onOpenNavigation);
   }
 
   void _onSwitchPage(OnSwitchPage event, emit) {
@@ -26,6 +31,10 @@ class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationS
         emit(const AppScreenOptions());
         break;
     }
+  }
+
+  void _onOpenNavigation(OnOpenInformation event, emit) {
+    Navigator.push(event.context, MaterialPageRoute(builder: (context) => const InformationScreen()));
   }
 }
 
