@@ -25,12 +25,17 @@ class _OnBoardScreenState extends State<GuideScreen> {
             decoration: getDecoration()),
         PageViewModel(
             title: 'MAPA',
+            body: "V celé České republice se nachází více jak 1 000 míst, kde se dá použít EuroKlíč." ,
+            image: buildImage('assets/images/cr.png'),
+            decoration: getDecoration()),
+        PageViewModel(
+            title: 'INFORMACE O MÍSTĚ',
             body: "Po kliknutí na jednu z ikon se zobrazí informační okno s možností navigovat k danému místu." ,
             image: buildImage('assets/images/maps.png'),
             decoration: getDecoration()),
         PageViewModel(
           title: 'NEJBLIŽŠÍ MÍSTA',
-          body: "Pomocí  Wi-fi a GPS se v listu lokací zobrazí místa, která jsou od aktuálí polohy uživatele nejblížě.",
+          body: "V listu lokací se zobrazí místa, která jsou od aktuální polohy uživatele nejblížě.",
           image: buildImage('assets/images/list_of_place.png'),
           decoration: getDecoration(),
         ),
