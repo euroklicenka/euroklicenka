@@ -1,16 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:euk2_project/features/external_map/map_app_dialog.dart';
-import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:map_launcher/map_launcher.dart';
-import 'package:collection/collection.dart';
 
 part 'external_map_event.dart';
-
 part 'external_map_state.dart';
 
 ///Handles events dealing with external map applications.
@@ -22,16 +22,17 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   bool _nextAppIsDefault = false;
   String _defaultMapIcon = '';
 
-  ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefault()) {
+  ExternalMapBloc({required UserDataManager dataManager}) : super(const ExternalMapDefault()) {
     _dataManager = dataManager;
     on<OnOpenForNavigation>(_onNavigate);
     on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
     on<OnFinishDefaultMapAppSetting>(_onFinishDefaultMapAppSetting);
+    on<OnInit>(_onInit);
   }
 
   void updateNextAppIsDefault(bool value) {
     _nextAppIsDefault = value;
-    emit(ExternalMapDefault());
+    emit(const ExternalMapDefault());
   }
 
   Future<void> _onNavigate(OnOpenForNavigation event, emit) async {
@@ -47,7 +48,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       return;
     }
 
-    final int savedMapIndex = _dataManager.getDefaultMapAppIndex();
+    final int savedMapIndex = _dataManager.loadDefaultMapAppIndex();
     if (savedMapIndex != -1) {
       final MapType type = MapType.values[savedMapIndex];
       final AvailableMap? map = _availableMaps.firstWhereOrNull((m) => m.mapType == type);
@@ -57,6 +58,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       }
     }
 
+    if (!event.context.mounted) return;
     openMapAppDialog(
       context: event.context,
       maps: _availableMaps,
@@ -73,6 +75,14 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
   Future<void> _onChangeDefaultMapApp(OnChangeDefaultMapApp event, emit) async {
     await _refreshAvailableMaps();
+
+    if (_availableMaps.length <= 1) {
+      showSnackBar(message: 'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.');
+      return;
+    }
+
+    if (!event.context.mounted) return;
+
     openMapAppDialog(
         context: event.context,
         maps: _availableMaps,
@@ -87,7 +97,29 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     _saveMapAppIndex(event.mapIndex);
     _defaultMapIcon = event.mapIcon;
     Navigator.pop(event.context);
-    emit(ExternalMapDefault());
+    emit(const ExternalMapDefault());
+  }
+
+  ///Tries to return the icon of the currently saved map app.
+  Future<String> _tryLoadIcon() async {
+    final int mapIndex = _dataManager.loadDefaultMapAppIndex();
+
+    if (mapIndex <= -1 && _availableMaps.length == 1) {
+      await _dataManager.saveDefaultMapApp(mapIndex);
+      return _availableMaps[0].icon;
+    }
+
+    if (mapIndex < 0 || mapIndex > MapType.values.length) return '';
+
+    final MapType wantedType = MapType.values[mapIndex];
+    final AvailableMap? map = _availableMaps.firstWhereOrNull((m) => m.mapType == wantedType);
+    return (map != null) ? map.icon : '';
+  }
+
+  Future<void> _onInit(OnInit event, emit) async {
+    await _refreshAvailableMaps();
+    _defaultMapIcon = await _tryLoadIcon();
+    emit(const ExternalMapDefault());
   }
 
   Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
