@@ -18,7 +18,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  MyApp({super.key});
 
   final ThemeManager _themeManager = ThemeManager();
 
@@ -44,8 +44,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: yellowTheme,
-        darkTheme: darkTheme,
+        theme: defaultLightTheme,
         themeMode: _themeManager.themeMode,
         scaffoldMessengerKey: snackBarKey,
         home: const MainScreen(),

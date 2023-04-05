@@ -6,8 +6,6 @@ import 'package:euk2_project/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'intro_guide_screen.dart';
-
 /// The Main Screen of the app controls what content is shown.
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

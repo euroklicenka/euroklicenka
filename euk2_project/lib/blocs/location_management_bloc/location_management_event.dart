@@ -21,4 +21,5 @@ class OnMapIsReady extends LocationManagementEvent {
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}
+class OnLoadLocationsFromDatabaseFinished extends LocationManagementEvent {}
 class OnRecalculateLocationsDistance extends LocationManagementEvent {}
