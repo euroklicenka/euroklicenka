@@ -12,11 +12,24 @@ class ListSortingBloc extends Bloc<ListSortingEvent, ListSortingState> {
   ListSortingBloc({required List<EUKLocationData> locations}) : super(ListSortingInitial()) {
     _locations = locations;
     on<OnSortByLocationDistance>(_onSortByLocationDistance);
+    on<OnFilterLocations>(_onFilterLocations);
   }
 
   void _onSortByLocationDistance(OnSortByLocationDistance event, emit) {
     _updateSortedLocations();
     _sortedLocations.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+    emit(ListSortingFinishState());
+  }
+
+  void _onFilterLocations(OnFilterLocations event, emit) {
+    _updateSortedLocations();
+    if (event.searchText.isNotEmpty) {
+      _sortedLocations = _sortedLocations.where((location) {
+        return location.address.toLowerCase().contains(event.searchText.toLowerCase()) ||
+            location.city.toLowerCase().contains(event.searchText.toLowerCase()) ||
+            location.ZIP.toLowerCase().contains(event.searchText.toLowerCase());
+      }).toList();
+    }
     emit(ListSortingFinishState());
   }
 
