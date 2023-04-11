@@ -128,7 +128,7 @@ Future<Uint8List> _getBytesFromAsset(String path, int width) async {
 /// The cluster icon gets initialized if it wasn't already.
 Future<void> _tryInitClusterIcon() async {
   if (_clusterIcon != null) return;
-  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(await ImmutableBuffer.fromAsset("assets/images/map_cluster.png"));
+  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"));
   final ui.Codec codec = await descriptor.instantiateCodec();
   final ui.FrameInfo frame = await codec.getNextFrame();
   _clusterIcon = frame.image;
