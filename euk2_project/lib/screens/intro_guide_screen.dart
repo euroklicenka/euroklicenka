@@ -19,7 +19,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
           pages: [
             PageViewModel(
                 title: 'VÍTEJTE V EUROKLÍČENCE',
-                body: 'Díky mobilní aplikace EuroKlíčenka máte možnost najít všechna nejbližší sociální zařízení, která jsou osazena Eurozámkem.',
+                body: 'Díky této aplikace máte možnost najít \nv České Republice všechna eurozámkem osazená sociální zařízení.',
                 image: InkWell(
                   onTap: () => openURL(url: aboutEuroKeyURL),
                   child: buildImage('assets/images/logo_key.png', context),
@@ -27,17 +27,17 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 decoration: getDecoration()),
             PageViewModel(
                 title: 'MAPA',
-                body: 'V celé České republice se nachází více jak 1 000 míst, kde se dá použít Euroklíč.',
+                body: 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
                 image: buildImage('assets/images/img_guide_map.png', context),
                 decoration: getDecoration()),
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
-                body: 'Po kliknutí na jednu z ikon se zobrazí informační okno s možností navigovat k danému místu.',
+                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat k danému místu.',
                 image: buildImage('assets/images/img_guide_popup.png', context),
                 decoration: getDecoration()),
             PageViewModel(
               title: 'NEJBLIŽŠÍ MÍSTA',
-              body: 'V listu lokací se zobrazí místa, která jsou od aktuální polohy uživatele nejblíže.',
+              body: 'V listu lokací se zobrazí místa, která jsou od aktuální polohy uživatele nejblíže. Volbou položky se dané místo zobrazí na mapě.',
               image: buildImage('assets/images/img_guide_list.png', context),
               decoration: getDecoration(),
             ),
