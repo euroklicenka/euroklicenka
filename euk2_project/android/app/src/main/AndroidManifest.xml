@@ -39,4 +39,23 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://portal.gov.cz/rozcestniky/euroklic-RZC-83" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://prf.osu.cz/" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://prf.osu.cz/kip/" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete" />
+        </intent>
+    </queries>
 </manifest>
