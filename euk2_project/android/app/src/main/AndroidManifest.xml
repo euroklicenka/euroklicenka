@@ -55,6 +55,10 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete" />
         </intent>
     </queries>

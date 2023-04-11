@@ -16,11 +16,10 @@ import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
-  final String locationsURL = 'https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true&download_filename=Pr%C5%AFvodce+po+m%C3%ADstech+%C4%8CR+osazen%C3%BDch+Euroz%C3%A1mky.xlsx';
+  final String locationsURL = 'https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true';
   final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
 
   late UserDataManager _dataManager;
-  late HTTPLoader _HTTPloader;
   late ClusterManager _clusterManager;
   late ExcelParser _excelParser;
   late CustomInfoWindowController _windowController;
@@ -31,7 +30,6 @@ class EUKLocationManager {
 
   EUKLocationManager({required UserDataManager dataManager}) {
     _dataManager = dataManager;
-    _HTTPloader = HTTPLoader();
     _excelParser = ExcelParser();
     _windowController = CustomInfoWindowController();
     _locations = [];
@@ -48,7 +46,7 @@ class EUKLocationManager {
   ///in the internal list.
   Future<void> reloadFromDatabase({Function()? onFinish}) async {
     _hasThrownError = false;
-    final List<int> bytes = await _HTTPloader.getAsBytes(url: locationsURL, onFail: () => {_hasThrownError = true});
+    final List<int> bytes = await getAsBytes(url: locationsURL, onFail: () => {_hasThrownError = true});
     final List<EUKLocationData> locations = await _excelParser.parse(bytes);
     _locations = locations;
     _buildMarkers();
