@@ -19,69 +19,92 @@ class _OnBoardScreenState extends State<GuideScreen> {
           pages: [
             PageViewModel(
                 title: 'VÍTEJTE V EUROKLÍČENCE',
-                body: 'Díky mobilní aplikace EuroKlíčenka máte možnost najít všechna nejbližší sociální zařízení, která jsou osazena Eurozámkem.',
-                image: InkWell(
-                  onTap: () => openURL(url: aboutEuroKeyURL),
-                  child: buildImage('assets/images/logo_key.png', context),
-                ),
-                decoration: getDecoration()),
+                image: _buildImage('assets/images/logo_key.png', context),
+                body: 'Díky této aplikace máte možnost najít \nv České Republice všechna eurozámkem osazená sociální zařízení.',
+                footer: _buildButton(onPressed: () => openURL(url: aboutEuroKeyURL), text: 'Co je to eurozámek?'),
+                decoration: _getDecoration(),
+            ),
             PageViewModel(
                 title: 'MAPA',
-                body: 'V celé České republice se nachází více jak 1 000 míst, kde se dá použít Euroklíč.',
-                image: buildImage('assets/images/img_guide_map.png', context),
-                decoration: getDecoration()),
+                image: _buildImage('assets/images/img_guide_map.png', context),
+                body: 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
+                footer: _buildButton(onPressed: null, text: ''),
+                decoration: _getDecoration(),
+            ),
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
-                body: 'Po kliknutí na jednu z ikon se zobrazí informační okno s možností navigovat k danému místu.',
-                image: buildImage('assets/images/img_guide_popup.png', context),
-                decoration: getDecoration()),
+                image: _buildImage('assets/images/img_guide_popup.png', context),
+                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat k danému místu.',
+                footer: _buildButton(onPressed: null, text: ''),
+                decoration: _getDecoration(),
+            ),
             PageViewModel(
               title: 'NEJBLIŽŠÍ MÍSTA',
-              body: 'V listu lokací se zobrazí místa, která jsou od aktuální polohy uživatele nejblíže.',
-              image: buildImage('assets/images/img_guide_list.png', context),
-              decoration: getDecoration(),
+              body: 'Na listě lokací se zobrazují místa, nejbližší \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
+              image: _buildImage('assets/images/img_guide_list.png', context),
+              footer: _buildButton(onPressed: null, text: ''),
+              decoration: _getDecoration(),
             ),
           ],
           animationDuration: 150,
           done: const Text("Start"),
-          onDone: () => gotoHome(context),
-          showNextButton: true,
+          onDone: () => _gotoHome(context),
           next: const Icon(Icons.arrow_forward),
 
           // showing skip button
           showSkipButton: true,
           skip: const Text("Skip"),
-          onSkip: () => gotoHome(context),
-          dotsDecorator: getDotDecoration(context),
+          onSkip: () => _gotoHome(context),
+          dotsDecorator: _getDotDecoration(context),
           isProgressTap: false,
-
-          nextFlex: 0,
         ),
       );
-}
 
-void gotoHome(BuildContext context) => context.read<MainScreenBloc>().add(OnInitFinish());
+  void _gotoHome(BuildContext context) => context.read<MainScreenBloc>().add(OnInitFinish());
 
-Widget buildImage(String path, BuildContext context) => Center(
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(12),
-        child: Image.asset(path, width: MediaQuery.of(context).size.width * 0.7),
+  Widget _buildImage(String path, BuildContext context) => Center(
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.asset(path, width: MediaQuery.of(context).size.width * 0.7),
+        ),
+      );
+
+  Widget _buildButton({required Function()? onPressed, required String text}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 48),
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: (onPressed == null)
+            ? const ButtonStyle(
+              side: MaterialStatePropertyAll(BorderSide.none),
+        )
+            : OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+        child: Text(text),
       ),
     );
+  }
 
-DotsDecorator getDotDecoration(BuildContext context) => DotsDecorator(
-    size: const Size(10, 10),
-    activeSize: const Size(25, 15),
-    activeColor: Theme.of(context).colorScheme.secondary,
-    activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)));
+  DotsDecorator _getDotDecoration(BuildContext context) => DotsDecorator(
+        size: const Size(10, 10),
+        activeSize: const Size(25, 15),
+        activeColor: Theme.of(context).colorScheme.secondary,
+        activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      );
 
-PageDecoration getDecoration() => const PageDecoration(
-    titleTextStyle: TextStyle(
-      fontSize: 24,
-      color: Colors.black,
-      fontWeight: FontWeight.bold,
-    ),
-    bodyTextStyle: TextStyle(fontSize: 18),
-    bodyPadding: EdgeInsets.all(5),
-    imagePadding: EdgeInsets.all(15),
-    pageColor: Colors.white);
+  PageDecoration _getDecoration() => const PageDecoration(
+        titleTextStyle: TextStyle(
+          fontSize: 24,
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+        bodyTextStyle: TextStyle(fontSize: 18),
+        bodyPadding: EdgeInsets.all(5),
+        imagePadding: EdgeInsets.all(15),
+        imageFlex: 2,
+        bodyFlex: 1,
+        footerFlex: 0,
+        pageColor: Colors.white,
+      );
+}

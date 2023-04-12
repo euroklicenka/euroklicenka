@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
