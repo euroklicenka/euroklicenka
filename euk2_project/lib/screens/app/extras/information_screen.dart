@@ -1,3 +1,4 @@
+import 'package:euk2_project/features/internet_access/allowed_urls.dart';
 import 'package:euk2_project/version_label.dart';
 import 'package:euk2_project/widgets/information_tile.dart';
 import 'package:flutter/material.dart';
@@ -43,18 +44,21 @@ class InformationScreen extends StatelessWidget {
                             screenSize: screenSize,
                             title: 'Vývoj nové podoby EuroKlíčenky provedl tým studentů OU, do kterého patří Jan Sonnek, Jan Kunetka a Ondřej Sládek.',
                             imageFilePath: 'assets/images/logo_ou.png',
+                            launchURL: universityOfOstravaKIPURL,
                           ),
                           const Divider(),
                           InfoTile(
                             screenSize: screenSize,
                             title: 'EuroKlíčenka je majetkem přírodověděcké fakulty Ostravské univerzity v Ostravě, Česká Republika.',
                             imageFilePath: 'assets/images/logo_prf.png',
+                            launchURL: universityOfOstravaURL,
                           ),
                           const Divider(),
                           InfoTile(
                             screenSize: screenSize,
                             title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, \nkde jsou také tyto data volně dostupná veřejnosti.',
                             imageFilePath: 'assets/images/logo_eurokey.png',
+                            launchURL: aboutEuroKeyWebURL,
                           ),
                         ],
                       ),

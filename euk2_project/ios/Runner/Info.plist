@@ -51,5 +51,14 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>https://portal.gov.cz/rozcestniky/euroklic-RZC-83</string>
+      <string>https://prf.osu.cz/</string>
+      <string>https://prf.osu.cz/kip/</string>
+      <string>https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete</string>
+      <string>https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true</string>
+      <string>tel</string>
+    </array>
 </dict>
 </plist>

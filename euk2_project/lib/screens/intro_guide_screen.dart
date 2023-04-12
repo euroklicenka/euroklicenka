@@ -1,4 +1,6 @@
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:euk2_project/features/internet_access/allowed_urls.dart';
+import 'package:euk2_project/features/internet_access/http_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -18,7 +20,10 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
                 title: 'VÍTEJTE V EUROKLÍČENCE',
                 body: 'Díky mobilní aplikace EuroKlíčenka máte možnost najít všechna nejbližší sociální zařízení, která jsou osazena Eurozámkem.',
-                image: buildImage('assets/images/logo_key.png', context),
+                image: InkWell(
+                  onTap: () => openURL(url: aboutEuroKeyURL),
+                  child: buildImage('assets/images/logo_key.png', context),
+                ),
                 decoration: getDecoration()),
             PageViewModel(
                 title: 'MAPA',
