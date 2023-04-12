@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/internet_access/allowed_urls.dart';
-import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/features/location_data/euk_location_data.dart';
 import 'package:euk2_project/features/location_data/excel_loading/excel_parser.dart';
 import 'package:euk2_project/features/internet_access/http_loader.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
