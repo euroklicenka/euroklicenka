@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_zoom_info.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
-import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/features/location_data/euk_location_data.dart';
 import 'package:euk2_project/features/location_data/location_manager.dart';
 import 'package:euk2_project/features/location_data/map_utils.dart';
 import 'package:euk2_project/features/location_data/user_pos_locator.dart';

@@ -1,6 +1,6 @@
 import 'dart:ui' as ui;
 
-import 'package:euk2_project/features/location_data/data/euk_location_data.dart';
+import 'package:euk2_project/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -128,7 +128,7 @@ Future<Uint8List> _getBytesFromAsset(String path, int width) async {
 /// The cluster icon gets initialized if it wasn't already.
 Future<void> _tryInitClusterIcon() async {
   if (_clusterIcon != null) return;
-  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(await ImmutableBuffer.fromAsset("assets/images/map_cluster.png"));
+  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"));
   final ui.Codec codec = await descriptor.instantiateCodec();
   final ui.FrameInfo frame = await codec.getNextFrame();
   _clusterIcon = frame.image;

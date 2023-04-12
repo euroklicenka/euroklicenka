@@ -1,4 +1,6 @@
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:euk2_project/features/internet_access/allowed_urls.dart';
+import 'package:euk2_project/features/internet_access/http_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -18,22 +20,25 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
                 title: 'VÍTEJTE V EUROKLÍČENCE',
                 body: 'Díky mobilní aplikace EuroKlíčenka máte možnost najít všechna nejbližší sociální zařízení, která jsou osazena Eurozámkem.',
-                image: buildImage('assets/images/logo_key.png', context),
+                image: InkWell(
+                  onTap: () => openURL(url: aboutEuroKeyURL),
+                  child: buildImage('assets/images/logo_key.png', context),
+                ),
                 decoration: getDecoration()),
             PageViewModel(
                 title: 'MAPA',
                 body: 'V celé České republice se nachází více jak 1 000 míst, kde se dá použít Euroklíč.',
-                image: buildImage('assets/images/cr.png', context),
+                image: buildImage('assets/images/img_guide_map.png', context),
                 decoration: getDecoration()),
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
                 body: 'Po kliknutí na jednu z ikon se zobrazí informační okno s možností navigovat k danému místu.',
-                image: buildImage('assets/images/maps.png', context),
+                image: buildImage('assets/images/img_guide_popup.png', context),
                 decoration: getDecoration()),
             PageViewModel(
               title: 'NEJBLIŽŠÍ MÍSTA',
               body: 'V listu lokací se zobrazí místa, která jsou od aktuální polohy uživatele nejblíže.',
-              image: buildImage('assets/images/list_of_place.png', context),
+              image: buildImage('assets/images/img_guide_list.png', context),
               decoration: getDecoration(),
             ),
           ],
@@ -62,7 +67,7 @@ Widget buildImage(String path, BuildContext context) => Center(
         borderRadius: BorderRadius.circular(12),
         child: Image.asset(path, width: MediaQuery.of(context).size.width * 0.7),
       ),
-    ); // just use arrow function { => }
+    );
 
 DotsDecorator getDotDecoration(BuildContext context) => DotsDecorator(
     size: const Size(10, 10),
