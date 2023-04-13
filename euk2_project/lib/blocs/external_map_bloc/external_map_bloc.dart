@@ -4,7 +4,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
-import 'package:euk2_project/features/external_map/map_app_dialog.dart';
+import 'package:euk2_project/widgets/dialogs/map_app_dialog.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
