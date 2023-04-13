@@ -6,21 +6,17 @@ import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
-import 'package:euk2_project/themes/theme_manager.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final ThemeManager _themeManager = ThemeManager();
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +41,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: defaultLightTheme,
-        themeMode: _themeManager.themeMode,
+        themeMode: ThemeMode.light,
         scaffoldMessengerKey: snackBarKey,
         home: const MainScreen(),
       ),
