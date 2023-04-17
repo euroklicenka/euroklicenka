@@ -3,14 +3,10 @@ import 'package:euk2_project/blocs/location_management_bloc/location_management_
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
-import 'package:euk2_project/themes/theme_collection.dart';
-import 'package:euk2_project/widgets/dialogs/theme_switching_dialog.dart';
 import 'package:euk2_project/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
 
 ///The Settings screen where the user can adjust various app settings
 ///or look up information.
@@ -48,9 +44,19 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           ListTile(
             onTap: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
             title: const Text('Motiv rozhraní'),
-            trailing: const Padding(
-              padding: EdgeInsets.only(right: 8),
-              child: Icon(Icons.light_mode),
+            trailing: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
+                builder: (context, state) {
+                  if (state is ThemeSwitchingLightState) {
+                    return const Icon(Icons.light_mode);
+                  } else if (state is ThemeSwitchingDarkState) {
+                    return const Icon(Icons.dark_mode);
+                  } else {
+                    return const Icon(Icons.settings);
+                  }
+                },
+              ),
             ),
           ),
           const DividerOptions(),
@@ -62,12 +68,12 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
                   ? const Icon(Icons.cancel_outlined)
                   : ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SvgPicture.asset(
-                  context.watch<ExternalMapBloc>().defaultMapIcon,
-                  width: 32,
-                ),
-              ),
+                      borderRadius: BorderRadius.circular(10),
+                      child: SvgPicture.asset(
+                        context.watch<ExternalMapBloc>().defaultMapIcon,
+                        width: 32,
+                      ),
+                    ),
             ),
           ),
           const DividerOptions(),
@@ -96,8 +102,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       child: (state is LocationManagementUpdatingFinished)
                           ? databaseButtonFinished()
                           : (state is LocationManagementUpdatingDatabase)
-                          ? databaseButtonDisabled(animController: _animController)
-                          : databaseButton(context: context),
+                              ? databaseButtonDisabled(
+                                  animController: _animController)
+                              : databaseButton(context: context),
                     );
                   },
                 ),
@@ -113,7 +120,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
 ///The AppBar for the Settings Screen.
 class AppBarSettingsScreen extends StatelessWidget {
   const AppBarSettingsScreen({super.key});
-
 
   @override
   Widget build(BuildContext context) {
