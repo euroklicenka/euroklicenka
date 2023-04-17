@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 ///
 /// It displays all [themes] in a grid, shows a [headerText] above the window,
 /// allows an action to be taken [onSelect].
-void openThemeSwitchingDialog({required BuildContext context, required Function(int) onSelect, String headerText = 'Switch Theme',}) {
+void openThemeSwitchingDialog({required BuildContext context, required Function(int) onSelect, String headerText = 'Změnit motiv',}) {
   showModalBottomSheet(
     constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
