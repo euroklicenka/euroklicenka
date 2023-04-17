@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:custom_info_window/custom_info_window.dart';
@@ -17,7 +18,8 @@ import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
-  final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
+  final BehaviorSubject<Set<Marker>> _markerStream =
+      BehaviorSubject<Set<Marker>>();
 
   late UserDataManager _dataManager;
   late ClusterManager _clusterManager;
@@ -46,11 +48,16 @@ class EUKLocationManager {
   ///in the internal list.
   Future<void> reloadFromDatabase({Function()? onFinish}) async {
     _hasThrownError = false;
-    final List<int> bytes = await getAsBytes(url: EUKDownloadURL, onFail: () => {_hasThrownError = true});
-    final List<EUKLocationData> locations = await _excelParser.parse(bytes);
-    _locations = locations;
-    _buildMarkers();
-    _dataManager.saveEUKLocationData(locations);
+
+    try {
+      final List<int> bytes = await getAsBytes(url: EUKDownloadURL);
+      final List<EUKLocationData> locations = await _excelParser.parse(bytes);
+      _locations = locations;
+      _buildMarkers();
+      _dataManager.saveEUKLocationData(locations);
+    } on SocketException {
+      _hasThrownError = true;
+    }
     onFinish?.call();
   }
 
@@ -79,7 +86,9 @@ class EUKLocationManager {
 
   ///Initializes the cluster manager.
   void _initClusterManager() {
-    _clusterManager = ClusterManager<EUKLocationData>(_locations, _updateMarkers, markerBuilder: getMarkerBuilder);
+    _clusterManager = ClusterManager<EUKLocationData>(
+        _locations, _updateMarkers,
+        markerBuilder: getMarkerBuilder);
   }
 
   void _updateMarkers(Set<Marker> markers) {
@@ -91,20 +100,26 @@ class EUKLocationManager {
   /// clusters, that need to be built.
   ///
   /// Uses custom icons for individual markers and cluster icons for clusters.
-  Future<Marker>Function(Cluster<EUKLocationData>)? get getMarkerBuilder => (cluster) async {
-    final BitmapDescriptor icon = (cluster.isMultiple) ? await getClusterIcon(270, text:cluster.count.toString()) : await getMarkerIconByType(cluster.items.first.type);
-    final Function() onTap = (cluster.isMultiple) ? (){} : (){
-      final EUKLocationData data = cluster.items.first;
-      windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
-    };
+  Future<Marker> Function(Cluster<EUKLocationData>)? get getMarkerBuilder =>
+      (cluster) async {
+        final BitmapDescriptor icon = (cluster.isMultiple)
+            ? await getClusterIcon(270, text: cluster.count.toString())
+            : await getMarkerIconByType(cluster.items.first.type);
+        final Function() onTap = (cluster.isMultiple)
+            ? () {}
+            : () {
+                final EUKLocationData data = cluster.items.first;
+                windowController.addInfoWindow!(
+                    buildPopUpWindow(data), LatLng(data.lat, data.long));
+              };
 
-    return Marker(
-      markerId: MarkerId(cluster.getId()),
-      position: cluster.location,
-      onTap: onTap,
-      icon: icon,
-    );
-  };
+        return Marker(
+          markerId: MarkerId(cluster.getId()),
+          position: cluster.location,
+          onTap: onTap,
+          icon: icon,
+        );
+      };
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;

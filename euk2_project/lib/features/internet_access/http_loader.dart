@@ -5,16 +5,15 @@ import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///Processes the connection between the app and Excel file'S URL address.
-Future<List<int>> getAsBytes({required String url, Function()? onFail}) async {
-  try {
+///
+/// Throws [SocketException] when it fails to connect.
+Future<List<int>> getAsBytes({required String url}) async {
     final response = await get(Uri.parse(url));
     if (response.statusCode == 200) {
       return response.bodyBytes;
+    } else {
+      return [];
     }
-  } on SocketException {
-    onFail?.call();
-  }
-  return [];
 }
 
 ///Open the [url] in an external browser.
