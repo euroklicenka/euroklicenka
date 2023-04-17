@@ -116,18 +116,7 @@ class AppBarSettingsScreen extends StatelessWidget {
           builder: (context, state) {
             return IconButton(
               icon: const Icon(Icons.expand_circle_down_outlined),
-              onPressed: () {
-                openThemeSwitchingDialog(
-                  context: context,
-                  themes: [defaultLightTheme, defaultDarkTheme],
-                  onSelect: (selectedTheme) {
-                    context.read<ThemeSwitchingBloc>().add(
-                      ThemeChanged(theme: selectedTheme),
-                    );
-                    Navigator.pop(context);
-                  },
-                );
-              },
+              onPressed: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
             );
           },
         ),

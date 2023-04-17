@@ -1,26 +1,36 @@
 import 'dart:async';
 
-
+import 'package:bloc/bloc.dart';
+import 'package:euk2_project/widgets/dialogs/theme_switching_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:meta/meta.dart';
 
 part 'theme_switching_event.dart';
 part 'theme_switching_state.dart';
 
+///Controls the current theme of the app.
 class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> {
-  ThemeData _currentTheme;
+  ThemeMode _currentTheme = ThemeMode.system;
 
-  ThemeSwitchingBloc({required ThemeData initialTheme})
-      : _currentTheme = initialTheme,
-        super(ThemeSwitchingInitial(initialTheme));
-
-  @override
-  Stream<ThemeSwitchingState> mapEventToState(ThemeSwitchingEvent event) async* {
-    if (event is ThemeChanged) {
-      _currentTheme = event.theme;
-      yield ThemeSwitchingInitial(_currentTheme);
-    }
+  ThemeSwitchingBloc() : super(ThemeSwitchingDefault()) {
+    on<OnOpenThemeDialog>(_onOpenThemeDialog);
+    on<OnSwitchTheme>(_onSwitchTheme);
   }
 
-  ThemeData get currentTheme => _currentTheme;
+  void _onSwitchTheme(OnSwitchTheme event, emit) {
+    _currentTheme = event.themeMode;
+    emit(ThemeSwitchingDefault());
+  }
+
+  ThemeMode get currentTheme => _currentTheme;
+
+  void _onOpenThemeDialog(OnOpenThemeDialog event, emit) {
+    openThemeSwitchingDialog(
+        context: event.context,
+        onSelect: (selectedThemeIndex) {
+          add(OnSwitchTheme(ThemeMode.values[selectedThemeIndex]));
+          Navigator.pop(event.context);
+        },
+    );
+  }
 }

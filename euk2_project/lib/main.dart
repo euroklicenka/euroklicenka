@@ -39,23 +39,21 @@ class MyApp extends StatelessWidget {
           create: (context) => ExternalMapBloc(dataManager: BlocProvider.of<MainScreenBloc>(context).dataManager),
         ),
         BlocProvider(
-          create: (context) => ThemeSwitchingBloc(
-            initialTheme: defaultLightTheme,
-          ),
+          create: (context) => ThemeSwitchingBloc(),
         ),
       ],
       child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
         builder: (context, state) {
-          ThemeData theme = (state is ThemeSwitchingInitial) ? state.theme : defaultLightTheme;
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: theme,
-            themeMode: theme.brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
+            theme: defaultLightTheme,
+            darkTheme: defaultDarkTheme,
+            themeMode: context.watch<ThemeSwitchingBloc>().currentTheme,
             scaffoldMessengerKey: snackBarKey,
             home: const MainScreen(),
           );
-        },
-      ),
+  },
+),
     );
   }
 }

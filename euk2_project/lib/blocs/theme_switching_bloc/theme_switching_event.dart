@@ -1,12 +1,16 @@
 part of 'theme_switching_bloc.dart';
 
 @immutable
-abstract class ThemeSwitchingEvent {
-  const ThemeSwitchingEvent();
+abstract class ThemeSwitchingEvent {}
+
+class OnOpenThemeDialog extends ThemeSwitchingEvent {
+  final BuildContext context;
+
+  OnOpenThemeDialog(this.context);
 }
 
-class ThemeChanged extends ThemeSwitchingEvent {
-  final ThemeData theme;
+class OnSwitchTheme extends ThemeSwitchingEvent {
+  final ThemeMode themeMode;
 
-  const ThemeChanged({required this.theme});
+  OnSwitchTheme(this.themeMode);
 }
