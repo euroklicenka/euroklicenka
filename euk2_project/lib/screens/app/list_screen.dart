@@ -4,6 +4,7 @@ import 'package:euk2_project/features/icon_management/icon_manager.dart';
 import 'package:euk2_project/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -36,11 +37,19 @@ class _ListScreenState extends State<ListScreen> {
                       children: [
                         const Divider(),
                         Expanded(
-                          child: ListView.separated(
-                            itemCount: context.read<ListSortingBloc>().sortedLocations.length,
-                            itemBuilder: _buildListTile,
-                            separatorBuilder: (BuildContext context, int index) =>
-                                const Divider(),
+                          child: ScrollWrapper(
+                            alwaysVisibleAtOffset: true,
+                            enabledAtOffset: 40,
+                            promptAlignment: Alignment.bottomCenter,
+                            promptTheme: const PromptButtonTheme(
+                              color: Colors.white,
+                              icon: Icon(Icons.arrow_upward),
+                            ),
+                            builder: (context, properties) => ListView.separated(
+                              itemCount: context.read<ListSortingBloc>().sortedLocations.length,
+                              itemBuilder: _buildListTile,
+                              separatorBuilder: (BuildContext context, int index) => const Divider(),
+                            ),
                           ),
                         ),
                       ],
