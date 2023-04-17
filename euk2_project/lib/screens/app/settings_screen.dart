@@ -46,6 +46,15 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       child: Column(
         children: [
           ListTile(
+            onTap: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
+            title: const Text('Motiv rozhraní'),
+            trailing: const Padding(
+              padding: EdgeInsets.only(right: 8),
+              child: Icon(Icons.light_mode),
+            ),
+          ),
+          const DividerOptions(),
+          ListTile(
             onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
             title: const Text('Výchozí navigace'),
             trailing: Padding(
@@ -111,20 +120,9 @@ class AppBarSettingsScreen extends StatelessWidget {
     return AppBar(
       title: const Text('Nastavení a Informace'),
       centerTitle: true,
-      actions: [
-        BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
-          builder: (context, state) {
-            return IconButton(
-              icon: const Icon(Icons.expand_circle_down_outlined),
-              onPressed: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
-            );
-          },
-        ),
-      ],
     );
   }
 }
-
 
 class DividerOptions extends StatelessWidget {
   const DividerOptions({super.key});
