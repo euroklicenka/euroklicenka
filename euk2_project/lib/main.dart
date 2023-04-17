@@ -3,6 +3,7 @@ import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:euk2_project/screens/main_screen.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
@@ -37,13 +38,23 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ExternalMapBloc(dataManager: BlocProvider.of<MainScreenBloc>(context).dataManager),
         ),
+        BlocProvider(
+          create: (context) => ThemeSwitchingBloc(
+            initialTheme: defaultLightTheme,
+          ),
+        ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: defaultLightTheme,
-        themeMode: ThemeMode.light,
-        scaffoldMessengerKey: snackBarKey,
-        home: const MainScreen(),
+      child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
+        builder: (context, state) {
+          ThemeData theme = (state is ThemeSwitchingInitial) ? state.theme : defaultLightTheme;
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: theme,
+            themeMode: theme.brightness == Brightness.light ? ThemeMode.light : ThemeMode.dark,
+            scaffoldMessengerKey: snackBarKey,
+            home: const MainScreen(),
+          );
+        },
       ),
     );
   }

@@ -2,10 +2,15 @@ import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:euk2_project/themes/theme_collection.dart';
+import 'package:euk2_project/widgets/dialogs/theme_switching_dialog.dart';
 import 'package:euk2_project/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+
 
 ///The Settings screen where the user can adjust various app settings
 ///or look up information.
@@ -100,14 +105,37 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
 class AppBarSettingsScreen extends StatelessWidget {
   const AppBarSettingsScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('Nastavení a Informace'),
       centerTitle: true,
+      actions: [
+        BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
+          builder: (context, state) {
+            return IconButton(
+              icon: const Icon(Icons.expand_circle_down_outlined),
+              onPressed: () {
+                openThemeSwitchingDialog(
+                  context: context,
+                  themes: [defaultLightTheme, defaultDarkTheme],
+                  onSelect: (selectedTheme) {
+                    context.read<ThemeSwitchingBloc>().add(
+                      ThemeChanged(theme: selectedTheme),
+                    );
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            );
+          },
+        ),
+      ],
     );
   }
 }
+
 
 class DividerOptions extends StatelessWidget {
   const DividerOptions({super.key});
