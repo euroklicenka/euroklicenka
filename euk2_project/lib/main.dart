@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           create: (context) => MainScreenBloc(locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
         ),
         BlocProvider(
-          create: (context) => ListSortingBloc(locations: context.read<LocationManagementBloc>().locationManager.locations),
+          create: (context) => ListSortingBloc(locManager: BlocProvider.of<LocationManagementBloc>(context).locationManager),
         ),
         BlocProvider(
           create: (context) => ExternalMapBloc(dataManager: BlocProvider.of<MainScreenBloc>(context).dataManager),
