@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:euk2_project/features/internet_access/allowed_urls.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:http/http.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,5 +21,14 @@ Future<List<int>> getAsBytes({required String url}) async {
 Future<void> openURL({required String url}) async {
   if (!await launchUrl(Uri.parse(url))) {
     showSnackBar(message: "'$url' nemohla být otevřena.");
+  }
+}
+
+///Checks if the device is connected to the internet. If not, shows a warning SnackBar.
+Future<void> checkInternetAccess() async {
+  try {
+    await InternetAddress.lookup(universityOfOstravaURL);
+  } on SocketException {
+    showSnackBar(message: 'Zařízení není připojené k internetu.\nAplikace nemusí fungovat správně');
   }
 }

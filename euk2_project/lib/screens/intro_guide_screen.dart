@@ -1,6 +1,6 @@
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/features/internet_access/allowed_urls.dart';
-import 'package:euk2_project/features/internet_access/http_loader.dart';
+import 'package:euk2_project/features/internet_access/http_communicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
