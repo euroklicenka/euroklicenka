@@ -41,7 +41,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
 
   FutureOr<void> _onInitFinish(event, emit) async {
     if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
-      await checkInternetAccess();
+      await checkInternetAccess(errorMessage: 'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.');
     }
     emit(const MainScreenAppContentState());
   }

@@ -25,10 +25,10 @@ Future<void> openURL({required String url}) async {
 }
 
 ///Checks if the device is connected to the internet. If not, shows a warning SnackBar.
-Future<void> checkInternetAccess() async {
+Future<void> checkInternetAccess({required String errorMessage}) async {
   try {
     await InternetAddress.lookup(universityOfOstravaURL);
   } on SocketException {
-    showSnackBar(message: 'Zařízení není připojené k internetu.\nAplikace nemusí fungovat správně');
+    showSnackBar(message: errorMessage);
   }
 }
