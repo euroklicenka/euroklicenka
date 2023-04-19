@@ -1,6 +1,7 @@
 import 'package:euk2_project/themes/theme_utils.dart';
 import 'package:flutter/material.dart';
 
+
 ThemeData defaultLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.light,
@@ -20,12 +21,12 @@ ThemeData defaultDarkTheme = ThemeData(
   canvasColor: const Color(0xFF111111),
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.dark,
-    primarySwatch: createMaterialColor(Colors.deepOrangeAccent),
+    primarySwatch: createMaterialColor(Colors.red),
   ).copyWith(
-    secondary: const Color(0xFFD6568B),
+    secondary: Colors.red,
     surface: const Color(0xFF111111),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedItemColor: Colors.deepOrangeAccent,
+    selectedItemColor: Colors.red,
   ),
 );

@@ -3,6 +3,8 @@ import 'package:euk2_project/blocs/location_management_bloc/location_management_
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:euk2_project/utils/build_context_extensions.dart';
+import 'package:euk2_project/widgets/theme_dependent_icon.dart';
 import 'package:euk2_project/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,11 +51,11 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
               child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
                 builder: (context, state) {
                   if (state is ThemeSwitchingLightState) {
-                    return const Icon(Icons.light_mode);
+                    return const ThemeDependentIcon(Icons.light_mode);
                   } else if (state is ThemeSwitchingDarkState) {
-                    return const Icon(Icons.dark_mode);
+                    return const ThemeDependentIcon(Icons.dark_mode);
                   } else {
-                    return const Icon(Icons.settings);
+                    return const ThemeDependentIcon(Icons.settings);
                   }
                 },
               ),
@@ -66,7 +68,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             trailing: Padding(
               padding: const EdgeInsets.only(right: 8),
               child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
-                  ? const Icon(Icons.cancel_outlined)
+                  ? const ThemeDependentIcon(Icons.cancel_outlined)
                   : ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: SvgPicture.asset(
@@ -80,13 +82,13 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
           ListTile(
             onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
             title: const Text("Průvodce"),
-            leading: const Icon(Icons.rocket_launch),
+            leading: const ThemeDependentIcon(Icons.rocket_launch),
           ),
           const DividerOptions(),
           ListTile(
             onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
             title: const Text("O aplikaci"),
-            leading: const Icon(Icons.info),
+            leading: const ThemeDependentIcon(Icons.info),
           ),
           const DividerOptions(),
           Expanded(
