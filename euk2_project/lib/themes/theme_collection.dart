@@ -19,14 +19,14 @@ ThemeData defaultLightTheme = ThemeData(
 ThemeData defaultDarkTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
   brightness: Brightness.dark,
-    primarySwatch: Colors.teal,
+    primarySwatch: createMaterialColor(Colors.deepOrangeAccent),
   ).copyWith(
-    secondary: const Color(0xFF7CE3CB),
+    secondary: const Color(0xFFD6568B),
   ),
   appBarTheme: const AppBarTheme(
     foregroundColor: Colors.white,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedItemColor: Colors.teal,
+    selectedItemColor: Colors.deepOrangeAccent,
   ),
 );
