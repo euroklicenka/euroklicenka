@@ -34,7 +34,7 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
     _dataManager.saveDefaultTheme(event.themeMode.index);
     switch (_currentTheme) {
       case ThemeMode.system:
-        _currentMapTheme = (isDarkModeActive()) ? await _mapThemes.darkTheme : await _mapThemes.lightTheme;
+        _currentMapTheme = (isSystemDarkModeActive()) ? await _mapThemes.darkTheme : await _mapThemes.lightTheme;
         emit(ThemeSwitchingSystemState());
         break;
       case ThemeMode.light:
