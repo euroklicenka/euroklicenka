@@ -8,7 +8,7 @@ class UserDataManager {
 
   static const String _notFirstTimeLaunchPref = 'isFirstTimeLaunch';
   static const String _defaultMapAppIndexPref = 'defaultMapAppIndex';
-  static const String _defaultThemeIndexPref = 'defaultMapAppIndex';
+  static const String _defaultThemeIndexPref = 'defaultThemeIndex';
   static const String _locationDataPref = 'locationData';
 
   SharedPreferences? _prefs;
