@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           create: (context) => MainScreenBloc(dataManager: _dataManager, locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
         ),
         BlocProvider(
-          create: (context) => ListSortingBloc(locations: context.read<LocationManagementBloc>().locationManager.locations),
+          create: (context) => ListSortingBloc(locManager: BlocProvider.of<LocationManagementBloc>(context).locationManager),
         ),
         BlocProvider(
           create: (context) => ThemeSwitchingBloc(dataManager: _dataManager),

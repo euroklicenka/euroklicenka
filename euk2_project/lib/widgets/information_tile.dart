@@ -1,4 +1,4 @@
-import 'package:euk2_project/features/internet_access/http_loader.dart';
+import 'package:euk2_project/features/internet_access/http_communicator.dart';
 import 'package:flutter/material.dart';
 
 ///A tile showing information on the left and a logo on the right.

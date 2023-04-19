@@ -1,16 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:euk2_project/features/location_data/euk_location_data.dart';
+import 'package:euk2_project/features/location_data/location_manager.dart';
 import 'package:meta/meta.dart';
 
 part 'list_sorting_event.dart';
 part 'list_sorting_state.dart';
 
 class ListSortingBloc extends Bloc<ListSortingEvent, ListSortingState> {
-  late List<EUKLocationData> _locations;  //Do NOT use for sorting. Is only a reference. Use sortedLocations instead.
+  late EUKLocationManager _manager;  //Do NOT use for sorting. Is only a reference. Use sortedLocations instead.
   List<EUKLocationData> _sortedLocations = [];
 
-  ListSortingBloc({required List<EUKLocationData> locations}) : super(ListSortingInitial()) {
-    _locations = locations;
+  ListSortingBloc({required EUKLocationManager locManager}) : super(ListSortingInitial()) {
+    _manager = locManager;
     on<OnSortByLocationDistance>(_onSortByLocationDistance);
   }
 
@@ -20,7 +21,7 @@ class ListSortingBloc extends Bloc<ListSortingEvent, ListSortingState> {
     emit(ListSortingFinishState());
   }
 
-  void _updateSortedLocations() => _sortedLocations = List.from(_locations);
+  void _updateSortedLocations() => _sortedLocations = List.from(_manager.locations);
 
   List<EUKLocationData> get sortedLocations => _sortedLocations;
 }

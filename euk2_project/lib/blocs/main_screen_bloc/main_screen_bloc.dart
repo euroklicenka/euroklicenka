@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:euk2_project/features/internet_access/http_communicator.dart';
 import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -28,17 +29,20 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
     await _locationBloc.create(dataManager: _dataManager);
 
     if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
-      _onOpenGuideScreen(event, emit);
+      add(OnOpenGuideScreen());
     } else {
 
       emit(const MainScreenAppContentState());
       await Future.delayed(const Duration(milliseconds: 500));
       _locationBloc.add(OnFocusOnUserPosition());
-      _onInitFinish(event, emit);
+      add(OnInitFinish());
     }
   }
 
-  FutureOr<void> _onInitFinish(event, emit) {
+  FutureOr<void> _onInitFinish(event, emit) async {
+    if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
+      await checkInternetAccess(errorMessage: 'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.');
+    }
     emit(const MainScreenAppContentState());
   }
 
