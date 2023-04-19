@@ -1,5 +1,6 @@
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +17,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LocationManagementBloc>();
+    final String mapStyle = context.watch<ThemeSwitchingBloc>().currentMapTheme;
     return Stack(
       children: <Widget>[
         StreamBuilder<Set<Marker>>(
@@ -25,6 +27,7 @@ class _MapScreenState extends State<MapScreen> {
             return GoogleMap(
               myLocationEnabled: true,
               onMapCreated: (GoogleMapController controller) {
+                controller.setMapStyle(mapStyle);
                 bloc.locationManager.windowController.googleMapController = controller;
                 bloc.add(OnMapIsReady(controller));
               },
