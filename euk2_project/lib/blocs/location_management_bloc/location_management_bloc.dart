@@ -73,8 +73,10 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
-    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!);
-    _zoomInfo.clear();
+    Future.delayed(const Duration(milliseconds: 400), () => {
+    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
+      _zoomInfo.clear()
+    });
   }
 
   Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
