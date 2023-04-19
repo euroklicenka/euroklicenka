@@ -27,6 +27,11 @@ ThemeData defaultDarkTheme = ThemeData(
     surface: const Color(0xFF111111),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-    selectedItemColor: Colors.red,
+  ),
+  snackBarTheme: const SnackBarThemeData(
+      backgroundColor: Colors.black,
+    contentTextStyle: TextStyle(
+      color: Colors.white70,
+    ),
   ),
 );
