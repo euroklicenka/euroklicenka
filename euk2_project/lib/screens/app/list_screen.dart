@@ -41,9 +41,9 @@ class _ListScreenState extends State<ListScreen> {
                             alwaysVisibleAtOffset: true,
                             enabledAtOffset: 40,
                             promptAlignment: Alignment.bottomCenter,
-                            promptTheme: const PromptButtonTheme(
-                              color: Colors.white,
-                              icon: Icon(Icons.arrow_upward),
+                            promptTheme: PromptButtonTheme(
+                              color: Theme.of(context).colorScheme.surface,
+                              icon: const Icon(Icons.arrow_upward),
                             ),
                             builder: (context, properties) => ListView.separated(
                               itemCount: context.read<ListSortingBloc>().sortedLocations.length,
