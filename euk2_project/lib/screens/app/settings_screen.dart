@@ -104,8 +104,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       child: (state is LocationManagementUpdatingFinished)
                           ? databaseButtonFinished()
                           : (state is LocationManagementUpdatingDatabase)
-                              ? databaseButtonDisabled(
-                                  animController: _animController)
+                              ? databaseButtonDisabled(context,
+                                  animController: _animController,
+                                )
                               : databaseButton(context: context),
                     );
                   },
