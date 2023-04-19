@@ -16,10 +16,31 @@ ThemeData defaultLightTheme = ThemeData(
   ),
 );
 
-ThemeData defaultDarkTheme = ThemeData(
+/*ThemeData defaultDarkTheme = ThemeData(
   brightness: Brightness.dark,
   primarySwatch: createMaterialColor(Colors.redAccent),
+  appBarTheme: const AppBarTheme(
+    foregroundColor: Colors.white,
+  ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: Colors.redAccent,
+  ),
+);*/
+
+
+// try dark theme with shade of teal
+
+ThemeData defaultDarkTheme = ThemeData(
+  brightness: Brightness.dark,
+  colorScheme: ColorScheme.fromSwatch(
+    primarySwatch: createMaterialColor(Colors.teal),
+  ).copyWith(
+    secondary: const Color(0xFF7CE3CB),
+  ),
+  appBarTheme: const AppBarTheme(
+    foregroundColor: Colors.white,
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    selectedItemColor: Colors.teal,
   ),
 );
