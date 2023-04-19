@@ -33,6 +33,15 @@
     ]
   },
   {
+    "featureType": "landscape",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#070305"
+      }
+    ]
+  },
+  {
     "featureType": "poi",
     "elementType": "labels.text.fill",
     "stylers": [
@@ -128,6 +137,14 @@
     "stylers": [
       {
         "color": "#d59563"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "stylers": [
+      {
+        "color": "#be2773"
       }
     ]
   },
