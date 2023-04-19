@@ -96,7 +96,6 @@ class _OnBoardScreenState extends State<GuideScreen> {
   PageDecoration _getDecoration() => const PageDecoration(
         titleTextStyle: TextStyle(
           fontSize: 24,
-          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
         bodyTextStyle: TextStyle(fontSize: 18),
@@ -105,6 +104,5 @@ class _OnBoardScreenState extends State<GuideScreen> {
         imageFlex: 2,
         bodyFlex: 1,
         footerFlex: 0,
-        pageColor: Colors.white,
       );
 }
