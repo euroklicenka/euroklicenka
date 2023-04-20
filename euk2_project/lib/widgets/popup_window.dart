@@ -1,4 +1,5 @@
 import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
+import 'package:euk2_project/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,8 +29,8 @@ class EUKPopupWindow extends StatelessWidget {
       width: 300,
       height: 200,
       decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: Colors.grey),
+        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(color: context.isAppInDarkMode ? Colors.white12 : Colors.grey),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(

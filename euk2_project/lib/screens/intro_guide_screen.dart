@@ -1,5 +1,6 @@
 import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:euk2_project/features/internet_access/allowed_urls.dart';
+import 'package:euk2_project/utils/build_context_extensions.dart';
 import 'package:euk2_project/features/internet_access/http_communicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,14 +27,14 @@ class _OnBoardScreenState extends State<GuideScreen> {
             ),
             PageViewModel(
                 title: 'MAPA',
-                image: _buildImage('assets/images/img_guide_map.png', context),
+                image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_map_dark.jpg' : 'assets/images/img_guide_map_light.jpg', context),
                 body: 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
                 footer: _buildButton(onPressed: null, text: ''),
                 decoration: _getDecoration(),
             ),
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
-                image: _buildImage('assets/images/img_guide_popup.png', context),
+                image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_popup_dark.jpg' : 'assets/images/img_guide_popup_light.jpg', context),
                 body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat k danému místu.',
                 footer: _buildButton(onPressed: null, text: ''),
                 decoration: _getDecoration(),
@@ -41,7 +42,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
               title: 'NEJBLIŽŠÍ MÍSTA',
               body: 'Na listě lokací se zobrazují místa, nejbližší \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
-              image: _buildImage('assets/images/img_guide_list.png', context),
+              image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_list_dark.jpg' : 'assets/images/img_guide_list_light.jpg', context),
               footer: _buildButton(onPressed: null, text: ''),
               decoration: _getDecoration(),
             ),
@@ -96,7 +97,6 @@ class _OnBoardScreenState extends State<GuideScreen> {
   PageDecoration _getDecoration() => const PageDecoration(
         titleTextStyle: TextStyle(
           fontSize: 24,
-          color: Colors.black,
           fontWeight: FontWeight.bold,
         ),
         bodyTextStyle: TextStyle(fontSize: 18),
@@ -105,6 +105,5 @@ class _OnBoardScreenState extends State<GuideScreen> {
         imageFlex: 2,
         bodyFlex: 1,
         footerFlex: 0,
-        pageColor: Colors.white,
       );
 }

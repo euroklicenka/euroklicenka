@@ -14,7 +14,8 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   late LocationManagementBloc _locationBloc;
   late UserDataManager _dataManager;
 
-  MainScreenBloc({required LocationManagementBloc locationBloc}) : super(const MainScreenInitialState()) {
+  MainScreenBloc({required UserDataManager dataManager, required LocationManagementBloc locationBloc}) : super(const MainScreenInitialState()) {
+    _dataManager = dataManager;
     _locationBloc = locationBloc;
     on<OnAppInit>(_onAppInit);
     on<OnInitFinish>(_onInitFinish);
@@ -25,7 +26,6 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _onAppInit(event, emit) async {
     emit(const MainScreenInitialState());
 
-    _dataManager = await UserDataManager.create();
     await _locationBloc.create(dataManager: _dataManager);
 
     if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
@@ -51,5 +51,4 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   }
 
   LocationManagementBloc get locationBloc => _locationBloc;
-  UserDataManager get dataManager => _dataManager;
 }

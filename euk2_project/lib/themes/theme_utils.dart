@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 MaterialColor createMaterialColor(Color color) {
   final List<double> strengths = [.05];
@@ -19,4 +20,9 @@ MaterialColor createMaterialColor(Color color) {
     );
   }
   return MaterialColor(color.value, swatch);
+}
+
+///Returns TRUE if system dark mode is currently active.
+bool isSystemDarkModeActive() {
+  return SchedulerBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
 }
