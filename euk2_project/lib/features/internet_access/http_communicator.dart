@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:euk2_project/features/internet_access/allowed_urls.dart';
 import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
 import 'package:http/http.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 ///Processes the connection between the app and Excel file'S URL address.
@@ -26,9 +27,6 @@ Future<void> openURL({required String url}) async {
 
 ///Checks if the device is connected to the internet. If not, shows a warning SnackBar.
 Future<void> checkInternetAccess({required String errorMessage}) async {
-  try {
-    await InternetAddress.lookup(universityOfOstravaURL);
-  } on SocketException {
-    showSnackBar(message: errorMessage);
-  }
+    final bool result = await InternetConnectionChecker().hasConnection;
+    if (!result) showSnackBar(message: errorMessage);
 }
