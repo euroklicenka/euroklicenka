@@ -8,6 +8,7 @@ class UserDataManager {
 
   static const String _notFirstTimeLaunchPref = 'isFirstTimeLaunch';
   static const String _defaultMapAppIndexPref = 'defaultMapAppIndex';
+  static const String _defaultThemeIndexPref = 'defaultThemeIndex';
   static const String _locationDataPref = 'locationData';
 
   SharedPreferences? _prefs;
@@ -59,6 +60,17 @@ class UserDataManager {
   int loadDefaultMapAppIndex() {
     final int? defaultMapAppIndex = _prefs!.getInt(_defaultMapAppIndexPref);
     return (defaultMapAppIndex == null) ? -1 : defaultMapAppIndex;
+  }
+
+  ///Save an app theme index.
+  Future<void> saveDefaultTheme(int index) async {
+    await _prefs!.setInt(_defaultThemeIndexPref, index);
+  }
+
+  ///Get the currently saved app theme index. If there is none, returns -1.
+  int loadDefaultThemeIndex() {
+    final int? defaultThemeIndex = _prefs!.getInt(_defaultThemeIndexPref);
+    return (defaultThemeIndex == null) ? -1 : defaultThemeIndex;
   }
 
   bool? get notFirstTimeLaunch => _initScreen;
