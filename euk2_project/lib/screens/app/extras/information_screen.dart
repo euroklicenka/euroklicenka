@@ -15,7 +15,7 @@ class InformationScreen extends StatelessWidget {
     final screenSize = MediaQuery.of(context).size;
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Informace'),
+          title: const Text('O aplikaci'),
         ),
         body: Center(
           child: Padding(
@@ -44,21 +44,21 @@ class InformationScreen extends StatelessWidget {
                           children: [
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'EuroKlíčenka je majetkem přírodověděcké fakulty Ostravské univerzity v Ostravě, Česká Republika.',
+                              title: 'EuroKlíčenka je majetkem Přírodověděcké fakulty Ostravské univerzity v Ostravě.',
                               imageFilePath: context.isAppInDarkMode ? 'assets/images/logo_prf_dark.png' : 'assets/images/logo_prf_light.png',
                               launchURL: universityOfOstravaURL,
                             ),
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Vývoj provedl tým studentů z katedry informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka a Ondřej Sládek.',
+                              title: 'Vývoj provedl tým studentů z katedry informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka \n\n a Ondřej Sládek.',
                               imageFilePath: 'assets/images/logo_kip.png',
                               launchURL: universityOfOstravaKIPURL,
                             ),
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Data o místech, osazena Euroklíčem poskytují oficiální stránky Euroklíče, kde jsou také tyto data volně dostupná veřejnosti.',
+                              title: 'Informace o místech, která jsou označena Euroklíčem, jsou k dispozici na oficiálních stránkách Euroklíče a jsou volně dostupné veřejnosti.',
                               imageFilePath: 'assets/images/logo_eurokey.png',
                               launchURL: aboutEuroKeyWebURL,
                             ),
