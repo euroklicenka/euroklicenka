@@ -35,7 +35,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
                 image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_popup_dark.jpg' : 'assets/images/img_guide_popup_light.jpg', context),
-                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat k danému místu.',
+                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
                 footer: _buildButton(onPressed: null, text: ''),
                 decoration: _getDecoration(),
             ),

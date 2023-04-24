@@ -51,14 +51,14 @@ class InformationScreen extends StatelessWidget {
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Vývoj provedl tým studentů z katedry informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka \n\n a Ondřej Sládek.',
+                              title: 'Vývoj provedl tým studentů z katedry informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka\na Ondřej Sládek.',
                               imageFilePath: 'assets/images/logo_kip.png',
                               launchURL: universityOfOstravaKIPURL,
                             ),
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Informace o místech, která jsou označena Euroklíčem, jsou k dispozici na oficiálních stránkách Euroklíče a jsou volně dostupné veřejnosti.',
+                              title: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná\nna oficiálních stránkách Euroklíče.',
                               imageFilePath: 'assets/images/logo_eurokey.png',
                               launchURL: aboutEuroKeyWebURL,
                             ),
