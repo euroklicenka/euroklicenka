@@ -1,12 +1,12 @@
 
 # About
 
-This guide helps your setup the Eurokey 2.0 project development environmetn on your PC (Windows, MAC)
-> ❗ Make sure to have Java JRE & JDK installed.
+This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
+> ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
 # 1. Flutter Install
 
-This section shows how to install FLutter and Dart onto your computer.
+This section shows you how to install FLutter and Dart onto your computer.
 \
 For more information visit the [Official Flutter site](https://docs.flutter.dev/get-started/install).
 
