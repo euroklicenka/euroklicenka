@@ -21,7 +21,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
                 title: 'VÍTEJTE V EUROKLÍČENCE',
                 image: _buildImage('assets/images/logo_key.png', context),
-                body: 'Díky této aplikace máte možnost najít \nv České Republice všechna eurozámkem osazená sociální zařízení.',
+                body: 'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
                 footer: _buildButton(onPressed: () => openURL(url: aboutEuroKeyURL), text: 'Co je to eurozámek?'),
                 decoration: _getDecoration(),
             ),
@@ -35,7 +35,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             PageViewModel(
                 title: 'INFORMACE O MÍSTĚ',
                 image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_popup_dark.jpg' : 'assets/images/img_guide_popup_light.jpg', context),
-                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat k danému místu.',
+                body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
                 footer: _buildButton(onPressed: null, text: ''),
                 decoration: _getDecoration(),
             ),
