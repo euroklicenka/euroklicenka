@@ -53,7 +53,11 @@ class EUKLocationManager {
       _dataManager.saveEUKLocationData(locations);
     } on SocketException {
       _hasThrownError = true;
+    } on FormatException {
+      _hasThrownError = true;
     }
+
+
     onFinish?.call();
   }
 
