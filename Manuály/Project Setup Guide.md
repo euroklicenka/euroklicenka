@@ -2,7 +2,7 @@
 # About
 
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
-> ❗ Make sure to have Java (JRE & JDK) installed on your computer.
+    > ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
 # 1. Install Flutter
 
@@ -16,9 +16,9 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 
 2. Store ZIP content anywhere on your computer.
 
-> ❗ Your path must not contain any special characters or spaces.
-> \
-> ❗ Your path must not require elevated privileges.
+    > ❗ Your path must not contain any special characters or spaces.
+    > \
+    > ❗ Your path must not require elevated privileges.
 
 3. Add flutter to your path by going to **Edit environment variables** -> **Enviromental variables** -> **PATH** -> **add** path to flutter/bin as a new variable.
 ![windows_edit_path](img/01_windows_edit_path.png)
@@ -48,7 +48,7 @@ This section explains how to prepare the Android Studio IDE for flutter developm
 
 2. When Android Studio asks you, make sure to install **Android SDK**.
 
-> ❗ You can also later install Android SDK by going into **Settings -> Appearance & Behaviour -> System Settings -> Android SDK** and selecting the version you want there (Android 11).
+    > ❗ You can also later install Android SDK by going into **Settings -> Appearance & Behaviour -> System Settings -> Android SDK** and selecting the version you want there (Android 11).
 
 3. (MAC ONLY)
 \
@@ -58,14 +58,14 @@ Now write `export ANDROID_HOME=$Android SDK Location$` and press **CONTROL+X** t
 \
 Now restart the terminal and type in `echo $ANDROID_HOME` to check if Android SDK has been registered successfully.
 
-> ❗ Android SDK location can be found in Android Studio **Settings -> Appearance & Behaviour -> System Settings -> Android SDK**.
+    > ❗ Android SDK location can be found in Android Studio **Settings -> Appearance & Behaviour -> System Settings -> Android SDK**.
 
 4. In Android Studio, go to **Settings -> Appearance & Behaviour -> System Settings -> Android SDK**, here, select tab **SDK Tools** and make sure that **Android SDK Command-line Tools (latest)** is installed.
 ![command_line_tools_install](img/02_command_line_tools_download.jpg)
 
 5. Run `flutter doctor --android-licenses` in console and accept all licenses with `y`.
 
-> ❗ if the error 'JAVA_HOME is set to an invalid directory' shows up, make sure you have a system variable in **Edit environment variables** -> **Enviromental variables** JAVA_HOME set to the path of your JDK.
+    > ❗ if the error 'JAVA_HOME is set to an invalid directory' shows up, make sure you have a system variable in **Edit environment variables** -> **Enviromental variables** JAVA_HOME set to the path of your JDK.
 
 6. (MAC Only)
 \
@@ -81,7 +81,7 @@ This section explains how to get your own copy of the project files onto your co
 
 1. Clone the [EuroKey 2.0 Repository](https://github.com/ondrej66/RPR1) from GitHub onto your computer.
 
-> ❗ The team uses [GitHub Desktop](https://desktop.github.com/), but you are can use anything tha clones Git repositories (Git, Android Studio's built-in source control).
+    > ❗ The team uses [GitHub Desktop](https://desktop.github.com/), but you are can use anything tha clones Git repositories (Git, Android Studio's built-in source control).
 
 2. For the most up-to-date project version, make sure to switch branch to **develop**.
 
@@ -89,7 +89,7 @@ This section explains how to get your own copy of the project files onto your co
 
 4. In project's console run `pub get` to update all dependencies for your machine.
 
->❗ Alternatively you can open pubspec.yaml from project root and click "pub get" on the top right.
+    >❗ Alternatively you can open pubspec.yaml from project root and click "pub get" on the top right.
 
 # 4. Test on a real device
 
@@ -103,7 +103,7 @@ This section explains how to test the project on a real device.
 
 3. Connect your device to the computer, wait until Android Studio recongnizes it after which you can hit "Run" to start the app on your device.
 
-> ❗ If the error "The supplied javaHome seems to be invalid. I cannot find the java executable" shows up, delete **%Path to Android Studio%/jre** folder and restart Android Studio.
+    > ❗ If the error "The supplied javaHome seems to be invalid. I cannot find the java executable" shows up, delete **%Path to Android Studio%/jre** folder and restart Android Studio.
 
 # 5. Test on an emulator
 
@@ -144,9 +144,9 @@ This section explains how to build a signed APK of app.
 
     These details are the same ones used ffrom your .jks file. More about this file can be found [here](https://docs.flutter.dev/deployment/android#create-an-upload-keystore).
 
-> ❗ **key.properties** is ignored by Git and can never appear on the repository due to containing private information.
+    > ❗ **key.properties** is ignored by Git and can never appear on the repository due to containing private information.
 
 3. In project's console run `flutter build apk`.
 4. This will build your APK file. The default path is **root\build\app\outputs\flutter-apk\app-release.apk**.
 
-> ❗ To check if your APK was signed properly, run in console `jarsigner -verify -verbose -certs %Path to app-release.apk%`.
+    > ❗ To check if your APK was signed properly, run in console `jarsigner -verify -verbose -certs %Path to app-release.apk%`.
