@@ -1,4 +1,4 @@
-import 'package:euk2_project/themes/theme_utils.dart';
+import 'package:eurokey2/themes/theme_utils.dart';
 import 'package:flutter/material.dart';
 
 

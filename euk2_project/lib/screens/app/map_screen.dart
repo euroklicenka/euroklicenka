@@ -1,6 +1,6 @@
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';

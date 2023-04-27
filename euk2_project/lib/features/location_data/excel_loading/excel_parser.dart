@@ -1,4 +1,4 @@
-import 'package:euk2_project/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:spreadsheet_decoder/spreadsheet_decoder.dart';
 
 ///Parses EUK data from an excel table.

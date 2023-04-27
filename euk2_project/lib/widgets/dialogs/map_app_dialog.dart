@@ -1,4 +1,4 @@
-import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
+import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';

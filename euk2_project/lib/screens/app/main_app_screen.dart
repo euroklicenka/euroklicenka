@@ -1,10 +1,10 @@
-import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
-import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
-import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
-import 'package:euk2_project/screens/app/list_screen.dart';
-import 'package:euk2_project/screens/app/map_screen.dart';
-import 'package:euk2_project/screens/app/settings_screen.dart';
+import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
+import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
+import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:eurokey2/screens/app/list_screen.dart';
+import 'package:eurokey2/screens/app/map_screen.dart';
+import 'package:eurokey2/screens/app/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

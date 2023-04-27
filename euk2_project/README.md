@@ -1,4 +1,4 @@
-# euk2_project
+# eurokey2
 
 The EUK2 main project.
 
