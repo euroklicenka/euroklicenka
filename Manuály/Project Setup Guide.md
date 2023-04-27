@@ -4,7 +4,7 @@
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
 > ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
-# 1. Flutter Install
+# 1. Install Flutter
 
 This section shows you how to install FLutter and Dart onto your computer.
 \
@@ -38,7 +38,7 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 
 ---
 
-# 2. Android Studio Install
+# 2. Install Android Studio
 
 This section explains how to prepare the Android Studio IDE for flutter development.
 
@@ -50,7 +50,7 @@ This section explains how to prepare the Android Studio IDE for flutter developm
 
 > ❗ You can also later install Android SDK by going into **Settings -> Appearance & Behaviour -> System Settings -> Android SDK** and selecting the version you want there (Android 11).
 
-3. **(MAC ONLY)**
+3. (MAC ONLY)
 \
 To register Android SDK in the OS run `cd $HOME`, then `nano .zshrc` in the terminal.
 \
@@ -73,7 +73,7 @@ If flutter doctor says CocoaPods is not installed, open the terminal and run `br
 
 7. In Android Studio go to **settings -> plugins** and make sure you have the **FLutter** and **Dart** packages on their latest versions.
 
-# 3. Project Setup
+# 3. Get project on your computer
 
 This section explains how to get your own copy of the project files onto your computer.
 
@@ -91,7 +91,7 @@ This section explains how to get your own copy of the project files onto your co
 
 >❗ Alternatively you can open pubspec.yaml from project root and click "pub get" on the top right.
 
-# 4. Run on a real device
+# 4. Test on a real device
 
 This section explains how to test the project on a real device.
 
@@ -105,7 +105,7 @@ This section explains how to test the project on a real device.
 
 > ❗ If the error "The supplied javaHome seems to be invalid. I cannot find the java executable" shows up, delete **%Path to Android Studio%/jre** folder and restart Android Studio.
 
-# 5. Run on an emulator
+# 5. Test on an emulator
 
 This section explains how to test the project on a simulated device.
 
