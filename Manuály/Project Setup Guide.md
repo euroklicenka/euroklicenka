@@ -4,6 +4,8 @@
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
 > ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
+&nbsp;
+
 # 1. Install Flutter
 
 This section shows you how to install FLutter and Dart onto your computer.
@@ -36,7 +38,7 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 
 4. Run `brew install --cask flutter` in the terminal to install flutter and add it to the PATH.
 
----
+&nbsp;
 
 # 2. Install Android Studio
 
@@ -73,6 +75,8 @@ If flutter doctor says CocoaPods is not installed, open the terminal and run `br
 
 7. In Android Studio go to **settings -> plugins** and make sure you have the **FLutter** and **Dart** packages on their latest versions.
 
+&nbsp;
+
 # 3. Get project on your computer
 
 This section explains how to get your own copy of the project files onto your computer.
@@ -91,6 +95,8 @@ This section explains how to get your own copy of the project files onto your co
 
     >❗ Alternatively you can open pubspec.yaml from project root and click "pub get" on the top right.
 
+&nbsp;
+
 # 4. Test on a real device
 
 This section explains how to test the project on a real device.
@@ -104,6 +110,8 @@ This section explains how to test the project on a real device.
 3. Connect your device to the computer, wait until Android Studio recongnizes it after which you can hit "Run" to start the app on your device.
 
     > ❗ If the error "The supplied javaHome seems to be invalid. I cannot find the java executable" shows up, delete **%Path to Android Studio%/jre** folder and restart Android Studio.
+
+&nbsp;
 
 # 5. Test on an emulator
 
@@ -129,6 +137,8 @@ This section explains how to test the project on a simulated device.
 
 1. Open **Simulator.app**.
 2. The default iOS device boots when the simulator starts. Android studio should now detect that device for testing the app.
+
+&nbsp;
 
 # Build APK
 
