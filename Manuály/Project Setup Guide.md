@@ -2,7 +2,7 @@
 # About
 
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
-    > ❗ Make sure to have Java (JRE & JDK) installed on your computer.
+> ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
 # 1. Install Flutter
 
