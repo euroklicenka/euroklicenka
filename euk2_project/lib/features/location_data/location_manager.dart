@@ -55,7 +55,7 @@ class EUKLocationManager {
         _hasThrownError = true;
       }
     }
-    
+
     onFinish?.call();
   }
 

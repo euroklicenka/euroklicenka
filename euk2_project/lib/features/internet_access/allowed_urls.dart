@@ -1,3 +1,6 @@
+//When you add a new URL here, make sure to place it in AndroidManifest.xml
+//and plist.info next to other links as well (so it can be allowed by the device).
+
 const String EUKDownloadURL = 'https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true';
 const String EUKDownloadMirrorURL = 'https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx';
 const String aboutEuroKeyURL = 'https://portal.gov.cz/rozcestniky/euroklic-RZC-83';
