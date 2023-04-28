@@ -14,8 +14,7 @@ import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
-  final BehaviorSubject<Set<Marker>> _markerStream =
-      BehaviorSubject<Set<Marker>>();
+  final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
 
   late UserDataManager _dataManager;
   late ClusterManager _clusterManager;
@@ -46,18 +45,17 @@ class EUKLocationManager {
     _hasThrownError = false;
 
     try {
-      final List<int> bytes = await getAsBytes(url: EUKDownloadURL);
-      final List<EUKLocationData> locations = await _excelParser.parse(bytes);
-      _locations = locations;
-      _buildMarkers();
-      _dataManager.saveEUKLocationData(locations);
-    } on SocketException {
-      _hasThrownError = true;
-    } on FormatException {
-      _hasThrownError = true;
+      await _loadDataFromURL(url: EUKDownloadURL);
+    } catch(e) {
+      try {
+        await _loadDataFromURL(url: EUKDownloadMirrorURL);
+      } on SocketException {
+        _hasThrownError = true;
+      } on FormatException {
+        _hasThrownError = true;
+      }
     }
-
-
+    
     onFinish?.call();
   }
 
@@ -72,6 +70,14 @@ class EUKLocationManager {
       return;
     }
     _buildMarkers();
+  }
+
+  Future<void> _loadDataFromURL({required String url}) async {
+    final List<int> bytes = await getAsBytes(url: url);
+    final List<EUKLocationData> locations = await _excelParser.parse(bytes);
+    _locations = locations;
+    _buildMarkers();
+    _dataManager.saveEUKLocationData(locations);
   }
 
   ///Builds are markers based data from [_locations].

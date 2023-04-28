@@ -59,6 +59,10 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
             <data android:scheme="https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete" />
         </intent>
     </queries>
