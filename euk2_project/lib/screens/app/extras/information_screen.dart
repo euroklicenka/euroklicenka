@@ -23,8 +23,7 @@ class InformationScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 56),
-                Image.asset('assets/images/logo_key.png',
-                    width: screenSize.width * 0.25),
+                Image.asset('assets/images/logo_key.png', width: screenSize.width * 0.25),
                 const SizedBox(height: 12),
                 const Text(
                   'EuroKlíčenka $appVersion',
@@ -44,21 +43,27 @@ class InformationScreen extends StatelessWidget {
                           children: [
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'EuroKlíčenka je majetkem Přírodovědecké fakulty Ostravské univerzity v Ostravě.',
+                              leadingText: 'EuroKlíčenka je majetkem Přírodovědecké fakulty Ostravské ',
+                              hyperText: 'univerzity',
+                              trailingText: ' v Ostravě.',
                               imageFilePath: context.isAppInDarkMode ? 'assets/images/logo_prf_dark.png' : 'assets/images/logo_prf_light.png',
                               launchURL: universityOfOstravaURL,
                             ),
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Vývoj provedl tým studentů z katedry informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka\na Ondřej Sládek.',
+                              leadingText: 'Vývoj provedl tým studentů z ',
+                              hyperText: 'katedry',
+                              trailingText: ' informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka\na Ondřej Sládek.',
                               imageFilePath: 'assets/images/logo_kip.png',
                               launchURL: universityOfOstravaKIPURL,
                             ),
                             const Divider(),
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná\nna oficiálních stránkách Euroklíče.',
+                              leadingText: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná \nna oficiálních stránkách ',
+                              hyperText: 'Euroklíče',
+                              trailingText: '.',
                               imageFilePath: 'assets/images/logo_eurokey.png',
                               launchURL: aboutEuroKeyWebURL,
                             ),
