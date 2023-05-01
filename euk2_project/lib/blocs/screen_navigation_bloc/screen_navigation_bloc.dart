@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:euk2_project/screens/app/extras/information_screen.dart';
+import 'package:eurokey2/screens/app/extras/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 

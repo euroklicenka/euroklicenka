@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:euk2_project/features/internet_access/allowed_urls.dart';
-import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
+import 'package:eurokey2/features/internet_access/allowed_urls.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:url_launcher/url_launcher.dart';

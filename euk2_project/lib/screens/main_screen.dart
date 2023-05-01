@@ -1,8 +1,8 @@
-import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/screens/app/main_app_screen.dart';
-import 'package:euk2_project/screens/intro_guide_screen.dart';
-import 'package:euk2_project/screens/splash_screen.dart';
+import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:eurokey2/screens/app/main_app_screen.dart';
+import 'package:eurokey2/screens/intro_guide_screen.dart';
+import 'package:eurokey2/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

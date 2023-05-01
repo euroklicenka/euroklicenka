@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:euk2_project/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Manages all of user's saved data.

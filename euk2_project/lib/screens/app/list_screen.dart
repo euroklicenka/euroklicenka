@@ -1,7 +1,7 @@
-import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
-import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/features/icon_management/icon_manager.dart';
-import 'package:euk2_project/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
+import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/features/icon_management/icon_manager.dart';
+import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';

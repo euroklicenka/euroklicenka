@@ -1,4 +1,4 @@
-import 'package:euk2_project/utils/build_context_extensions.dart';
+import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ThemeDependentIcon extends StatelessWidget {

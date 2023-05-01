@@ -1,21 +1,20 @@
 import 'dart:io';
 
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:euk2_project/features/icon_management/icon_manager.dart';
-import 'package:euk2_project/features/internet_access/allowed_urls.dart';
-import 'package:euk2_project/features/internet_access/http_communicator.dart';
-import 'package:euk2_project/features/location_data/euk_location_data.dart';
-import 'package:euk2_project/features/location_data/excel_loading/excel_parser.dart';
-import 'package:euk2_project/features/location_data/map_utils.dart';
-import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
+import 'package:eurokey2/features/icon_management/icon_manager.dart';
+import 'package:eurokey2/features/internet_access/allowed_urls.dart';
+import 'package:eurokey2/features/internet_access/http_communicator.dart';
+import 'package:eurokey2/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/features/location_data/excel_loading/excel_parser.dart';
+import 'package:eurokey2/features/location_data/map_utils.dart';
+import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
-  final BehaviorSubject<Set<Marker>> _markerStream =
-      BehaviorSubject<Set<Marker>>();
+  final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
 
   late UserDataManager _dataManager;
   late ClusterManager _clusterManager;
@@ -46,14 +45,17 @@ class EUKLocationManager {
     _hasThrownError = false;
 
     try {
-      final List<int> bytes = await getAsBytes(url: EUKDownloadURL);
-      final List<EUKLocationData> locations = await _excelParser.parse(bytes);
-      _locations = locations;
-      _buildMarkers();
-      _dataManager.saveEUKLocationData(locations);
-    } on SocketException {
-      _hasThrownError = true;
+      await _loadDataFromURL(url: EUKDownloadURL);
+    } catch(e) {
+      try {
+        await _loadDataFromURL(url: EUKDownloadMirrorURL);
+      } on SocketException {
+        _hasThrownError = true;
+      } on FormatException {
+        _hasThrownError = true;
+      }
     }
+
     onFinish?.call();
   }
 
@@ -68,6 +70,14 @@ class EUKLocationManager {
       return;
     }
     _buildMarkers();
+  }
+
+  Future<void> _loadDataFromURL({required String url}) async {
+    final List<int> bytes = await getAsBytes(url: url);
+    final List<EUKLocationData> locations = await _excelParser.parse(bytes);
+    _locations = locations;
+    _buildMarkers();
+    _dataManager.saveEUKLocationData(locations);
   }
 
   ///Builds are markers based data from [_locations].

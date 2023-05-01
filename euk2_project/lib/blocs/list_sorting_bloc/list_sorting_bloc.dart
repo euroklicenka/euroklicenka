@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:euk2_project/features/location_data/euk_location_data.dart';
-import 'package:euk2_project/features/location_data/location_manager.dart';
+import 'package:eurokey2/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/features/location_data/location_manager.dart';
 import 'package:meta/meta.dart';
 
 part 'list_sorting_event.dart';

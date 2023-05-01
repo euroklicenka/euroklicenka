@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
-import 'package:euk2_project/themes/map_theme_manager.dart';
-import 'package:euk2_project/themes/theme_utils.dart';
-import 'package:euk2_project/widgets/dialogs/theme_switching_dialog.dart';
+import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
+import 'package:eurokey2/themes/map_theme_manager.dart';
+import 'package:eurokey2/themes/theme_utils.dart';
+import 'package:eurokey2/widgets/dialogs/theme_switching_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:meta/meta.dart';

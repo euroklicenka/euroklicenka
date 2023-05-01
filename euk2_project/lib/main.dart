@@ -1,13 +1,13 @@
-import 'package:euk2_project/blocs/external_map_bloc/external_map_bloc.dart';
-import 'package:euk2_project/blocs/list_sorting_bloc/list_sorting_bloc.dart';
-import 'package:euk2_project/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:euk2_project/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:euk2_project/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
-import 'package:euk2_project/blocs/theme_switching_bloc/theme_switching_bloc.dart';
-import 'package:euk2_project/features/snack_bars/snack_bar_management.dart';
-import 'package:euk2_project/features/user_data_management/user_data_manager.dart';
-import 'package:euk2_project/screens/main_screen.dart';
-import 'package:euk2_project/themes/theme_collection.dart';
+import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
+import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
+import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
+import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
+import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
+import 'package:eurokey2/screens/main_screen.dart';
+import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

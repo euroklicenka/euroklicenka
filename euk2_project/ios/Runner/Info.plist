@@ -17,7 +17,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>euk2_project</string>
+	<string>eurokey2</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -58,6 +58,7 @@
       <string>https://prf.osu.cz/kip/</string>
       <string>https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete</string>
       <string>https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true</string>
+      <string>https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx</string>
       <string>tel</string>
     </array>
 </dict>
