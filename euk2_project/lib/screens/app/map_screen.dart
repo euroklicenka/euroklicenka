@@ -62,7 +62,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           CustomInfoWindow(
             controller: context.watch<LocationManagementBloc>().locationManager.windowController,
-            height: MediaQuery.of(context).size.height * 0.32,
+            height: 250,
             width: MediaQuery.of(context).size.width * 0.8,
             offset: 70,
           ),
