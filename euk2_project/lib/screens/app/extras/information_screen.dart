@@ -22,53 +22,55 @@ class InformationScreen extends StatelessWidget {
             padding: const EdgeInsets.only(top: 24, bottom: 16, left: 24, right: 24),
             child: Column(
               children: [
-                const SizedBox(height: 56),
-                Image.asset('assets/images/logo_key.png', width: screenSize.width * 0.25),
-                const SizedBox(height: 12),
-                const Text(
-                  'EuroKlíčenka $appVersion',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 64, bottom: 8),
-                    child: Scrollbar(
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        reverse: true,
-                        child: Column(
-                          children: [
-                            InfoTile(
-                              screenSize: screenSize,
-                              leadingText: 'EuroKlíčenka je majetkem Přírodovědecké fakulty Ostravské ',
-                              hyperText: 'univerzity',
-                              trailingText: ' v Ostravě.',
-                              imageFilePath: context.isAppInDarkMode ? 'assets/images/logo_prf_dark.png' : 'assets/images/logo_prf_light.png',
-                              launchURL: universityOfOstravaURL,
+                  child: Scrollbar(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          const SizedBox(height: 56),
+                          Image.asset('assets/images/logo_key.png', width: screenSize.width * 0.25),
+                          const SizedBox(height: 12),
+                          const Text(
+                            'EuroKlíčenka $appVersion',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
                             ),
-                            const Divider(),
-                            InfoTile(
-                              screenSize: screenSize,
-                              leadingText: 'Vývoj provedl tým studentů z ',
-                              hyperText: 'katedry',
-                              trailingText: ' informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka\na Ondřej Sládek.',
-                              imageFilePath: 'assets/images/logo_kip.png',
-                              launchURL: universityOfOstravaKIPURL,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 64, bottom: 8),
+                            child: Column(
+                              children: [
+                                InfoTile(
+                                  screenSize: screenSize,
+                                  leadingText: 'EuroKlíčenka je majetkem Přírodovědecké fakulty Ostravské ',
+                                  hyperText: 'univerzity',
+                                  trailingText: ' v Ostravě.',
+                                  imageFilePath: context.isAppInDarkMode ? 'assets/images/logo_prf_dark.png' : 'assets/images/logo_prf_light.png',
+                                  launchURL: universityOfOstravaURL,
+                                ),
+                                const Divider(),
+                                InfoTile(
+                                  screenSize: screenSize,
+                                  leadingText: 'Vývoj provedl tým studentů z ',
+                                  hyperText: 'katedry',
+                                  trailingText: ' informatiky a počítačů OU, do kterého patří Jan Sonnek, Jan Kunetka\na Ondřej Sládek.',
+                                  imageFilePath: 'assets/images/logo_kip.png',
+                                  launchURL: universityOfOstravaKIPURL,
+                                ),
+                                const Divider(),
+                                InfoTile(
+                                  screenSize: screenSize,
+                                  leadingText: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná \nna oficiálních stránkách ',
+                                  hyperText: 'Euroklíče',
+                                  trailingText: '.',
+                                  imageFilePath: 'assets/images/logo_eurokey.png',
+                                  launchURL: aboutEuroKeyWebURL,
+                                ),
+                              ],
                             ),
-                            const Divider(),
-                            InfoTile(
-                              screenSize: screenSize,
-                              leadingText: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná \nna oficiálních stránkách ',
-                              hyperText: 'Euroklíče',
-                              trailingText: '.',
-                              imageFilePath: 'assets/images/logo_eurokey.png',
-                              launchURL: aboutEuroKeyWebURL,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
