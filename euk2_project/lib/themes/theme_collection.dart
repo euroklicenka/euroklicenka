@@ -1,7 +1,6 @@
 import 'package:eurokey2/themes/theme_utils.dart';
 import 'package:flutter/material.dart';
 
-
 ThemeData defaultLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.light,
@@ -19,17 +18,17 @@ ThemeData defaultLightTheme = ThemeData(
 
 ThemeData defaultDarkTheme = ThemeData(
   canvasColor: const Color(0xFF111111),
+  scrollbarTheme: const ScrollbarThemeData().copyWith(thumbColor: MaterialStateProperty.all(const Color(0xFF464646))),
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.dark,
-    primarySwatch: createMaterialColor(Colors.red),
+    primarySwatch: Colors.red,
   ).copyWith(
     secondary: Colors.red,
     surface: const Color(0xFF111111),
   ),
-  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
   snackBarTheme: const SnackBarThemeData(
-      backgroundColor: Colors.black,
+    backgroundColor: Colors.black,
     contentTextStyle: TextStyle(
       color: Colors.white70,
     ),
