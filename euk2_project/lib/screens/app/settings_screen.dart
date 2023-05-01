@@ -43,74 +43,83 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       child: Column(
         children: [
-          ListTile(
-            onTap: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
-            title: const Text('Motiv rozhraní'),
-            trailing: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
-                builder: (context, state) {
-                  if (state is ThemeSwitchingLightState) {
-                    return const ThemeDependentIcon(Icons.light_mode);
-                  } else if (state is ThemeSwitchingDarkState) {
-                    return const ThemeDependentIcon(Icons.dark_mode);
-                  } else {
-                    return const ThemeDependentIcon(Icons.settings);
-                  }
-                },
+          Expanded(
+            child: Scrollbar(
+              thumbVisibility: true,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListTile(
+                      onTap: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
+                      title: const Text('Motiv rozhraní'),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
+                          builder: (context, state) {
+                            if (state is ThemeSwitchingLightState) {
+                              return const ThemeDependentIcon(Icons.light_mode);
+                            } else if (state is ThemeSwitchingDarkState) {
+                              return const ThemeDependentIcon(Icons.dark_mode);
+                            } else {
+                              return const ThemeDependentIcon(Icons.settings);
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                    const DividerOptions(),
+                    ListTile(
+                      onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
+                      title: const Text('Výchozí navigace'),
+                      trailing: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
+                            ? const ThemeDependentIcon(Icons.cancel_outlined)
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: SvgPicture.asset(
+                                  context.watch<ExternalMapBloc>().defaultMapIcon,
+                                  width: 32,
+                                ),
+                              ),
+                      ),
+                    ),
+                    const DividerOptions(),
+                    ListTile(
+                      onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
+                      title: const Text("Průvodce"),
+                      leading: const ThemeDependentIcon(Icons.rocket_launch),
+                    ),
+                    const DividerOptions(),
+                    ListTile(
+                      onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
+                      title: const Text("O aplikaci"),
+                      leading: const ThemeDependentIcon(Icons.info),
+                    ),
+                    const DividerOptions(),
+                  ],
+                ),
               ),
             ),
           ),
-          const DividerOptions(),
-          ListTile(
-            onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
-            title: const Text('Výchozí navigace'),
-            trailing: Padding(
-              padding: const EdgeInsets.only(right: 8),
-              child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
-                  ? const ThemeDependentIcon(Icons.cancel_outlined)
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: SvgPicture.asset(
-                        context.watch<ExternalMapBloc>().defaultMapIcon,
-                        width: 32,
-                      ),
-                    ),
-            ),
-          ),
-          const DividerOptions(),
-          ListTile(
-            onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
-            title: const Text("Průvodce"),
-            leading: const ThemeDependentIcon(Icons.rocket_launch),
-          ),
-          const DividerOptions(),
-          ListTile(
-            onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
-            title: const Text("O aplikaci"),
-            leading: const ThemeDependentIcon(Icons.info),
-          ),
-          const DividerOptions(),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
-                  builder: (context, state) {
-                    return AnimatedSize(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.bounceOut,
-                      child: (state is LocationManagementUpdatingFinished)
-                          ? databaseButtonFinished()
-                          : (state is LocationManagementUpdatingDatabase)
-                              ? databaseButtonDisabled(context,
-                                  animController: _animController,
-                                )
-                              : databaseButton(context: context),
-                    );
-                  },
-                ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
+                builder: (context, state) {
+                  return AnimatedSize(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.bounceOut,
+                    child: (state is LocationManagementUpdatingFinished)
+                        ? databaseButtonFinished()
+                        : (state is LocationManagementUpdatingDatabase)
+                            ? databaseButtonDisabled(context,
+                                animController: _animController,
+                              )
+                            : databaseButton(context: context),
+                  );
+                },
               ),
             ),
           ),
