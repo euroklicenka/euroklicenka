@@ -10,17 +10,16 @@ class EUKSplashScreen extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-          child: Container(
+          child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 64, horizontal: 32),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Image.asset('assets/images/logo_key.png', height: screenHeight * 0.25,),
-                const SizedBox(height: 16,),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                if (MediaQuery.of(context).size.height > 310) Image.asset('assets/images/logo_key.png', height: screenHeight * 0.25,),
+                SizedBox(height: screenHeight * 0.03),
                 const Text('EuroKlíčenka', textScaleFactor: 2,),
-                const SizedBox(height: 86,),
+                SizedBox(height: screenHeight * 0.1),
                 const CircularProgressIndicator(),
-                SizedBox(height: screenHeight * 0.15)
               ],
             ),
           ),
