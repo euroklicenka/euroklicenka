@@ -24,10 +24,7 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: SvgPicture.asset(
-              maps[index].icon,
-              width: 64,
-            ),
+            child: SvgPicture.asset(maps[index].icon, width: 64,),
           ),
           const SizedBox(height: 8),
           Text(maps[index].mapName),
@@ -66,7 +63,6 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 16,
-                      childAspectRatio: 1.5,
                     ),
                   ),
                 ),
