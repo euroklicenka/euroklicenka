@@ -22,26 +22,28 @@ void openThemeSwitchingDialog({required BuildContext context, required Function(
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text('Světlý'),
-                      leading: const Icon(Icons.light_mode),
-                      onTap: () => onSelect.call(1),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      title: const Text('Tmavý'),
-                      leading: const Icon(Icons.dark_mode),
-                      onTap: () => onSelect.call(2),
-                    ),
-                    const Divider(),
-                    ListTile(
-                      title: const Text('Systém'),
-                      leading: const Icon(Icons.settings),
-                      onTap: () => onSelect.call(0),
-                    ),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ListTile(
+                        title: const Text('Světlý'),
+                        leading: const Icon(Icons.light_mode),
+                        onTap: () => onSelect.call(1),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        title: const Text('Tmavý'),
+                        leading: const Icon(Icons.dark_mode),
+                        onTap: () => onSelect.call(2),
+                      ),
+                      const Divider(),
+                      ListTile(
+                        title: const Text('Systém'),
+                        leading: const Icon(Icons.settings),
+                        onTap: () => onSelect.call(0),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

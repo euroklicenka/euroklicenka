@@ -44,7 +44,7 @@ class InformationScreen extends StatelessWidget {
                           children: [
                             InfoTile(
                               screenSize: screenSize,
-                              title: 'EuroKlíčenka je majetkem Přírodověděcké fakulty Ostravské univerzity v Ostravě.',
+                              title: 'EuroKlíčenka je majetkem Přírodovědecké fakulty Ostravské univerzity v Ostravě.',
                               imageFilePath: context.isAppInDarkMode ? 'assets/images/logo_prf_dark.png' : 'assets/images/logo_prf_light.png',
                               launchURL: universityOfOstravaURL,
                             ),
