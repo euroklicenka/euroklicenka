@@ -11,9 +11,8 @@ import 'package:map_launcher/map_launcher.dart';
 /// shows a toggle to set the next selected map as a default when [showDefaultSwitch] is on,
 /// allows an action to be taken [onSelect] and when [onSelectNone] has an action assigned,
 /// shows a special button below the window.
-void openMapAppDialog({required BuildContext context,
-  required List<AvailableMap> maps, required Function(AvailableMap map) onSelect,
-  String headerText = 'Otevřít v aplikaci', bool showDefaultSwitch = true, Function()? onSelectNone}) {
+void openMapAppDialog({required BuildContext context, required List<AvailableMap> maps, required Function(AvailableMap map) onSelect, String headerText = 'Otevřít v aplikaci', bool showDefaultSwitch = true, Function()? onSelectNone}) {
+  final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.3;
 
   ///Builds a Grid Tile for a map.
   Widget buildGridTile(BuildContext context, int index) {
@@ -25,7 +24,10 @@ void openMapAppDialog({required BuildContext context,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-              child: SvgPicture.asset(maps[index].icon, width: 64,),
+            child: SvgPicture.asset(
+              maps[index].icon,
+              width: 64,
+            ),
           ),
           const SizedBox(height: 8),
           Text(maps[index].mapName),
@@ -35,7 +37,7 @@ void openMapAppDialog({required BuildContext context,
   }
 
   showModalBottomSheet(
-    constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
+    constraints: BoxConstraints(maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight),
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
     builder: (BuildContext context) {
@@ -70,27 +72,31 @@ void openMapAppDialog({required BuildContext context,
                 ),
               ),
               const Divider(),
-              if (showDefaultSwitch) SwitchListTile.adaptive(
-                title: const Text('Použít vždy'),
-                value: context.watch<ExternalMapBloc>().nextAppIsDefault,
-                onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
-              ),
-              if (onSelectNone != null) ListTile(
-                onTap: onSelectNone,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(Icons.cancel_outlined),
-                    SizedBox(width: 8,),
-                    Text(
-                      'Zrušit výchozí',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+              if (showDefaultSwitch)
+                SwitchListTile.adaptive(
+                  title: const Text('Použít vždy'),
+                  value: context.watch<ExternalMapBloc>().nextAppIsDefault,
+                  onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
                 ),
-              ),
+              if (onSelectNone != null)
+                ListTile(
+                  onTap: onSelectNone,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(Icons.cancel_outlined),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Text(
+                        'Zrušit výchozí',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ),

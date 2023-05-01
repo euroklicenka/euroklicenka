@@ -14,18 +14,18 @@ void openThemeSwitchingDialog(
       return SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
-          child: Column(
-            children: [
-              Center(
-                child: Text(
-                  headerText,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Expanded(
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  child: SingleChildScrollView(
+          child: Scrollbar(
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+              child: Wrap(
+                children: [
+                  Center(
+                    child: Text(
+                      headerText,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SingleChildScrollView(
                     child: Wrap(
                       children: <Widget>[
                         const SizedBox(height: 16),
@@ -49,9 +49,9 @@ void openThemeSwitchingDialog(
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       );
