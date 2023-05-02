@@ -38,6 +38,7 @@ class _ListScreenState extends State<ListScreen> {
                         const Divider(),
                         Expanded(
                           child: RefreshIndicator(
+                            displacement: 5,
                             onRefresh: () async {
                               setState(() {
                                 context.read<LocationManagementBloc>().add(OnRecalculateLocationsDistance());
@@ -83,9 +84,7 @@ class _ListScreenState extends State<ListScreen> {
         children: [
           getIconByType(data.type),
           const SizedBox(height: 4,),
-          Text(
-            distanceText,
-          ),
+          Text(distanceText),
         ],
       ),
       onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnEUKLocation(data.id, zoom: 17)),
