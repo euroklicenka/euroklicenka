@@ -3,7 +3,6 @@ import 'package:spreadsheet_decoder/spreadsheet_decoder.dart';
 
 ///Parses EUK data from an excel table.
 class ExcelParser {
-
   ///Parses data from an excel file and returns it as a list.
   Future<List<EUKLocationData>> parse(List<int> fileBytes) async {
     if (fileBytes.isEmpty) return [];
@@ -11,24 +10,26 @@ class ExcelParser {
     final List<EUKLocationData> locations = [];
 
     final SpreadsheetDecoder decoder = SpreadsheetDecoder.decodeBytes(fileBytes, update: true);
-    for (final String table in decoder.tables.keys) {
-      for (int i = 1; i < decoder.tables[table]!.rows.length; i++) {
-        final List row = decoder.tables[table]!.rows[i];
+    final String table = decoder.tables.keys.first;
 
-        if (row[3] == null) continue;
-        final List<String> latlng = _toString(row[3]).split(',');
+    for (int i = 1; i < decoder.tables[table]!.rows.length; i++) {
+      final List row = decoder.tables[table]!.rows[i];
+      if (row[4].toString().isEmpty) continue;
+      final List<String> latlng = _toString(row[4]).split(',');
 
-        locations.add(EUKLocationData(
-            id: (i - 1).toString(),
-            lat: _fromDegreesToDecimals(latlng[0].trim()),
-            long: _fromDegreesToDecimals(latlng[1].trim()),
-            address: _extractAddress(row[2].toString()),
-            region: _toString(row[0]),
-            city: _toString(row[1]),
-            info: _toString(row[4]),
-            ZIP: _extractZipCode(row[2].toString()),
-            type: _extractLocationType(_toString(row[2]))));
-      }
+      locations.add(
+        EUKLocationData(
+          id: _toString(row[0]),
+          lat: _fromDegreesToDecimals(latlng[0].trim()),
+          long: _fromDegreesToDecimals(latlng[1].trim()),
+          address: _extractAddress(_toString(row[3])),
+          region: _toString(row[1]),
+          city: _toString(row[2]),
+          info: _toString(row[4]).replaceAll(RegExp('"'), ''),
+          ZIP: _extractZipCode(_toString(row[3])),
+          type: _extractLocationType(_toString(row[3])),
+        ),
+      );
     }
     return locations;
   }
@@ -73,5 +74,5 @@ class ExcelParser {
   }
 
   ///Returns the object as a string, but if it is null, returns a default symbol.
-  String _toString(dynamic s) => (s == null) ? '---' : s.toString();
+  String _toString(dynamic s) => (s == null || s.toString().isEmpty) ? '---' : s.toString();
 }

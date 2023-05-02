@@ -47,13 +47,17 @@ class EUKLocationManager {
     try {
       await _loadDataFromURL(url: EUKDownloadURL);
     } catch(e) {
-      try {
-        await _loadDataFromURL(url: EUKDownloadMirrorURL);
-      } on SocketException {
-        _hasThrownError = true;
-      } on FormatException {
-        _hasThrownError = true;
+      if (e is SocketException || e is FormatException) {
+        try {
+          await _loadDataFromURL(url: EUKDownloadMirrorURL);
+        } catch(e) {
+          if (e is SocketException || e is FormatException) {
+            _hasThrownError = true;
+          }
+          else { rethrow; }
+        }
       }
+      else { rethrow; }
     }
 
     onFinish?.call();
