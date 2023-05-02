@@ -42,11 +42,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   ///Async constructor for [LocationManagementBloc].
   Future<void> create({required UserDataManager dataManager}) async {
     locationManager = EUKLocationManager(dataManager: dataManager);
-    locationManager.reloadFromLocalStorage();
+    add(OnLoadLocationsFromDatabase());
     await _userLocation.initLocation();
     Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
     await _userLocation.updateLocation();
-    await _onFocusOnUserPosition(OnFocusOnUserPosition(), emit);
+    add(OnFocusOnUserPosition());
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
@@ -60,11 +60,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
     final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
     _zoomInfo.popupWindow = buildPopUpWindow(data);
-    await _onFocusOnLocation(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom), emit);
+    add(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom));
   }
 
   Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
-    await _onFocusOnLocation(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount), emit);
+    add(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount));
   }
 
   Future<void> _onMapIsReady(OnMapIsReady event, emit) async {
@@ -74,9 +74,10 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.popupWindow == null) return;
 
     Future.delayed(const Duration(milliseconds: 400), () => {
-    locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
-      _zoomInfo.clear()
-    });
+      locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
+        _zoomInfo.clear()
+      },
+    );
   }
 
   Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {

@@ -53,6 +53,7 @@ class EUKLocationManager {
         } catch(e) {
           if (e is SocketException || e is FormatException) {
             _hasThrownError = true;
+            _reloadFromLocalStorage();
           }
           else { rethrow; }
         }
@@ -65,14 +66,9 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the current device.
   ///If no save data is found, tries to load data from the internet.
-  void reloadFromLocalStorage() {
+  void _reloadFromLocalStorage() {
     _locations.clear();
     _locations = _dataManager.loadEUKLocationData();
-
-    if (_locations.isEmpty) {
-      reloadFromDatabase();
-      return;
-    }
     _buildMarkers();
   }
 
