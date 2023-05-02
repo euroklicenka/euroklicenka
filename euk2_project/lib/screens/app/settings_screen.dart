@@ -111,9 +111,9 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                   return AnimatedSize(
                     duration: const Duration(milliseconds: 300),
                     curve: Curves.bounceOut,
-                    child: (state is LocationManagementUpdatingFinished)
+                    child: (state is LocationManagementUpdatingFinishedState)
                         ? databaseButtonFinished()
-                        : (state is LocationManagementUpdatingDatabase)
+                        : (state is LocationManagementUpdatingDatabaseState)
                             ? databaseButtonDisabled(context,
                                 animController: _animController,
                               )

@@ -13,7 +13,7 @@ part 'screen_navigation_state.dart';
 class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationState> {
   ScreenType currentScreen = ScreenType.map;
 
-  ScreenNavigationBloc() : super(const AppScreenMap()) {
+  ScreenNavigationBloc() : super(const AppScreenMapState()) {
     on<OnSwitchPage>(_onSwitchPage);
     on<OnOpenInformation>(_onOpenNavigation);
   }
@@ -22,13 +22,13 @@ class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationS
     currentScreen = event.screen;
     switch (currentScreen) {
       case ScreenType.list:
-        emit(const AppScreenList());
+        emit(const AppScreenListState());
         break;
       case ScreenType.map:
-        emit(const AppScreenMap());
+        emit(const AppScreenMapState());
         break;
       case ScreenType.options:
-        emit(const AppScreenOptions());
+        emit(const AppScreenOptionsState());
         break;
     }
   }

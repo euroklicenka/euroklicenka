@@ -26,11 +26,11 @@ class _MainAppScreenState extends State<MainAppScreen> {
         preferredSize: const Size.fromHeight(58),
         child: BlocBuilder<ScreenNavigationBloc, ScreenNavigationState>(
           builder: (context, state) {
-            if (state is AppScreenMap) {
+            if (state is AppScreenMapState) {
               return const AppBarMapScreen();
-            } else if (state is AppScreenList) {
+            } else if (state is AppScreenListState) {
               return const AppBarListScreen();
-            } else if (state is AppScreenOptions) {
+            } else if (state is AppScreenOptionsState) {
               return const AppBarSettingsScreen();
             } else {
               return const MapScreen();
@@ -40,11 +40,11 @@ class _MainAppScreenState extends State<MainAppScreen> {
       ),
       body: BlocBuilder<ScreenNavigationBloc, ScreenNavigationState>(
         builder: (context, state) {
-          if (state is AppScreenMap) {
+          if (state is AppScreenMapState) {
             return const MapScreen();
-          } else if (state is AppScreenList) {
+          } else if (state is AppScreenListState) {
             return const ListScreen();
-          } else if (state is AppScreenOptions) {
+          } else if (state is AppScreenOptionsState) {
             return const SettingsScreen();
           } else {
             return const MapScreen();

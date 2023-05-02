@@ -1,18 +1,8 @@
 part of 'location_management_bloc.dart';
 
 @immutable
-abstract class LocationManagementState {
-  const LocationManagementState();
-}
+abstract class LocationManagementState {}
 
-class LocationManagementDefault extends LocationManagementState {
-  const LocationManagementDefault();
-}
-
-class LocationManagementUpdatingDatabase extends LocationManagementState {
-  const LocationManagementUpdatingDatabase();
-}
-
-class LocationManagementUpdatingFinished extends LocationManagementState {
-  const LocationManagementUpdatingFinished();
-}
+class LocationManagementDefaultState extends LocationManagementState {}
+class LocationManagementUpdatingDatabaseState extends LocationManagementState {}
+class LocationManagementUpdatingFinishedState extends LocationManagementState {}

@@ -10,15 +10,16 @@ class ListSortingBloc extends Bloc<ListSortingEvent, ListSortingState> {
   late EUKLocationManager _manager;  //Do NOT use for sorting. Is only a reference. Use sortedLocations instead.
   List<EUKLocationData> _sortedLocations = [];
 
-  ListSortingBloc({required EUKLocationManager locManager}) : super(ListSortingInitial()) {
+  ListSortingBloc({required EUKLocationManager locManager}) : super(ListSortingDefaultState()) {
     _manager = locManager;
     on<OnSortByLocationDistance>(_onSortByLocationDistance);
   }
 
   void _onSortByLocationDistance(OnSortByLocationDistance event, emit) {
+    emit(ListSortingSortingState());
     _updateSortedLocations();
     _sortedLocations.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
-    emit(ListSortingFinishState());
+    emit(ListSortingDefaultState());
   }
 
   void _updateSortedLocations() => _sortedLocations = List.from(_manager.locations);

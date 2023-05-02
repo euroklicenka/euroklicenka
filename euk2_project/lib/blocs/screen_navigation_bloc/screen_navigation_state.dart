@@ -5,14 +5,14 @@ abstract class ScreenNavigationState {
   const ScreenNavigationState();
 }
 
-class AppScreenMap extends ScreenNavigationState {
-  const AppScreenMap();
+class AppScreenMapState extends ScreenNavigationState {
+  const AppScreenMapState();
 }
 
-class AppScreenList extends ScreenNavigationState {
-  const AppScreenList();
+class AppScreenListState extends ScreenNavigationState {
+  const AppScreenListState();
 }
 
-class AppScreenOptions extends ScreenNavigationState {
-  const AppScreenOptions();
+class AppScreenOptionsState extends ScreenNavigationState {
+  const AppScreenOptionsState();
 }

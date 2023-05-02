@@ -37,18 +37,27 @@ class _ListScreenState extends State<ListScreen> {
                       children: [
                         const Divider(),
                         Expanded(
-                          child: ScrollWrapper(
-                            alwaysVisibleAtOffset: true,
-                            enabledAtOffset: 40,
-                            promptAlignment: Alignment.bottomCenter,
-                            promptTheme: PromptButtonTheme(
-                              color: Theme.of(context).colorScheme.surface,
-                              icon: const Icon(Icons.arrow_upward),
-                            ),
-                            builder: (context, properties) => ListView.separated(
-                              itemCount: context.read<ListSortingBloc>().sortedLocations.length,
-                              itemBuilder: _buildListTile,
-                              separatorBuilder: (BuildContext context, int index) => const Divider(),
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              setState(() {
+                                context.read<LocationManagementBloc>().add(OnRecalculateLocationsDistance());
+                                context.read<ListSortingBloc>().add(OnSortByLocationDistance());
+                              });
+                              await Future.delayed(const Duration(milliseconds: 250));
+                            },
+                            child: ScrollWrapper(
+                              alwaysVisibleAtOffset: true,
+                              enabledAtOffset: 40,
+                              promptAlignment: Alignment.bottomCenter,
+                              promptTheme: PromptButtonTheme(
+                                color: Theme.of(context).colorScheme.surface,
+                                icon: const Icon(Icons.arrow_upward),
+                              ),
+                              builder: (context, properties) => ListView.separated(
+                                itemCount: context.read<ListSortingBloc>().sortedLocations.length,
+                                itemBuilder: _buildListTile,
+                                separatorBuilder: (BuildContext context, int index) => const Divider(),
+                              ),
                             ),
                           ),
                         ),

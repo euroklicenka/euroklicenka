@@ -28,7 +28,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   late EUKLocationManager locationManager;
 
 
-  LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(const LocationManagementDefault()) {
+  LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
@@ -81,7 +81,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
-    emit(const LocationManagementUpdatingDatabase());
+    emit(LocationManagementUpdatingDatabaseState());
     locationManager.reloadFromDatabase(onFinish: () => add(OnLoadLocationsFromDatabaseFinished()));
   }
 
@@ -89,14 +89,14 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (locationManager.hasThrownError) {
       showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později nebo zkontrolujte své nastavení internetu.');
       await Future.delayed(const Duration(milliseconds: 200));
-      emit(const LocationManagementDefault());
+      emit(LocationManagementDefaultState());
       return;
     }
 
     await Future.delayed(Duration(milliseconds: 100 + Random().nextInt(25)));
-    emit(const LocationManagementUpdatingFinished());
+    emit(LocationManagementUpdatingFinishedState());
     await Future.delayed(const Duration(seconds: 3));
-    emit(const LocationManagementDefault());
+    emit(LocationManagementDefaultState());
   }
 
   void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
@@ -105,6 +105,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
       final d.LatLng posUser = d.LatLng(_userLocation.currentPosition.latitude, _userLocation.currentPosition.longitude);
       data.updateDistanceFromDevice(_distance.as(d.LengthUnit.Meter, posLocation, posUser) / 1000);
     }
+    emit(LocationManagementDefaultState());
   }
 
   ScreenNavigationBloc get navigationBloc => _navigationBloc;

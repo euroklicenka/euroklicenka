@@ -22,7 +22,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   bool _nextAppIsDefault = false;
   String _defaultMapIcon = '';
 
-  ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefault()) {
+  ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefaultState()) {
     _dataManager = dataManager;
     on<OnOpenForNavigation>(_onNavigate);
     on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
@@ -32,7 +32,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
   void updateNextAppIsDefault(bool value) {
     _nextAppIsDefault = value;
-    emit(ExternalMapDefault());
+    emit(ExternalMapDefaultState());
   }
 
   Future<void> _onNavigate(OnOpenForNavigation event, emit) async {
@@ -79,7 +79,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     if (_availableMaps.length <= 1) {
       showSnackBar(message: 'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.');
       _defaultMapIcon = _availableMaps[0].icon;
-      emit(ExternalMapDefault());
+      emit(ExternalMapDefaultState());
       return;
     }
 
@@ -104,7 +104,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   void _onFinishDefaultMapAppSetting(OnFinishDefaultMapAppSetting event, emit) {
     _saveMapAppIndex(event.mapIndex);
     _defaultMapIcon = event.mapIcon;
-    emit(ExternalMapDefault());
+    emit(ExternalMapDefaultState());
   }
 
   ///Tries to return the icon of the currently saved map app.
@@ -122,7 +122,7 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   Future<void> _onInit(OnRedrawDefaultIcon event, emit) async {
     await _refreshAvailableMaps();
     _defaultMapIcon = _tryLoadIcon();
-    emit(ExternalMapDefault());
+    emit(ExternalMapDefaultState());
   }
 
   Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
