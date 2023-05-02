@@ -55,7 +55,7 @@
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://www.euroklic.cz/element/simple/documents-to-download/4/0/ccff3b38583129f3.xlsx?download=true" />
+            <data android:scheme="https://www.euroklic.cz/element/simple/documents-to-download/d/0/b828501d0553497b.xlsx?download=true" />
         </intent>
         <intent>
             <action android:name="android.intent.action.VIEW" />
