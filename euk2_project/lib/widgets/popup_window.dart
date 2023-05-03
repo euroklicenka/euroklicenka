@@ -90,24 +90,6 @@ class EUKPopupWindow extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(height: elementSpace),
-                        Row(
-                          children: [
-                            Tooltip(
-                              message: 'Info',
-                              triggerMode: TooltipTriggerMode.tap,
-                              child: Icon(Icons.info_outline, color: iconColor,),
-                            ),
-                            const SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                _info,
-                                style: const TextStyle(fontSize: textSize),
-                                maxLines: 3,
-                              ),
-                            ),
-                          ],
-                        ),
                       ],
                     ),
                   ),

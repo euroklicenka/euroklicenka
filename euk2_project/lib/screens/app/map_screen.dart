@@ -20,7 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     final bloc = context.read<LocationManagementBloc>();
     final String mapStyle = context.watch<ThemeSwitchingBloc>().currentMapTheme;
-    final double popupWindowFlexibleHeight = MediaQuery.of(context).size.height * 0.32;
+    final double popupWindowFlexibleHeight = MediaQuery.of(context).size.height * 0.27;
+
     return ColoredBox(
       color: Colors.black,
       child: Stack(
@@ -63,7 +64,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           CustomInfoWindow(
             controller: context.watch<LocationManagementBloc>().locationManager.windowController,
-            height: (popupWindowFlexibleHeight < 210) ? 210 : popupWindowFlexibleHeight,
+            height: (popupWindowFlexibleHeight < 180) ? 180 : popupWindowFlexibleHeight,
             width: MediaQuery.of(context).size.width * 0.8,
             offset: 70,
           ),
