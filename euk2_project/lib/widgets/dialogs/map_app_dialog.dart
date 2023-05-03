@@ -63,6 +63,7 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 16,
+                      childAspectRatio: 1.37,
                     ),
                   ),
                 ),
