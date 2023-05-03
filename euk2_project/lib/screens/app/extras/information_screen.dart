@@ -61,7 +61,7 @@ class InformationScreen extends StatelessWidget {
                                 const Divider(),
                                 InfoTile(
                                   screenSize: screenSize,
-                                  leadingText: 'Data o eurozámkem osazených lokacích jsou veřejné dostupná \nna oficiálních stránkách ',
+                                  leadingText: 'Data o eurozámkem osazených lokacích jsou veřejně dostupná \nna oficiálních stránkách ',
                                   hyperText: 'Euroklíče',
                                   trailingText: '.',
                                   imageFilePath: 'assets/images/logo_eurokey.png',

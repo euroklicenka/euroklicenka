@@ -42,7 +42,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
           ),
           PageViewModel(
             title: 'NEJBLIŽŠÍ MÍSTA',
-            body: 'Na listě lokací se zobrazují místa, nejbližší \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
+            body: 'Na listě lokací se zobrazují nejbližší místa \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
             image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_list_dark.jpg' : 'assets/images/img_guide_list_light.jpg', context),
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
