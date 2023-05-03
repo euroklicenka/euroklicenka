@@ -12,7 +12,7 @@ dependencies:
 
   custom_info_window: ^1.0.1
   cupertino_icons: ^1.0.5
-  google_maps_flutter: ^2.2.5
+  google_maps_flutter: 2.0.5
   location: ^4.4.0
   onboarding: ^3.1.0
   introduction_screen: ^3.1.8
