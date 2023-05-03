@@ -10,8 +10,8 @@ import 'package:eurokey2/features/location_data/map_utils.dart';
 import 'package:eurokey2/features/location_data/user_pos_locator.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:latlong2/latlong.dart' as d;
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
@@ -20,7 +20,6 @@ part 'location_management_state.dart';
 
 ///Stores location data.
 class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
-  final d.Distance _distance = const d.Distance();
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
@@ -100,9 +99,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
     userLocation.refreshLocation();
     for (final EUKLocationData data in locationManager.locations) {
-      final d.LatLng posLocation = d.LatLng(data.lat, data.long);
-      final d.LatLng posUser = d.LatLng(_userLocation.currentPosition.latitude, _userLocation.currentPosition.longitude);
-      data.updateDistanceFromDevice(_distance.as(d.LengthUnit.Meter, posLocation, posUser) / 1000);
+      final LatLng userLoc = userLocation.currentPosition;
+      data.updateDistanceFromDevice(Geolocator.distanceBetween(data.lat, data.long, userLoc.latitude, userLoc.longitude) / 1000);
     }
     emit(LocationManagementDefaultState());
   }
