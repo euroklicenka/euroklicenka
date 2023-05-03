@@ -43,9 +43,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   Future<void> create({required UserDataManager dataManager}) async {
     locationManager = EUKLocationManager(dataManager: dataManager);
     add(OnLoadLocationsFromDatabase());
-    await _userLocation.initLocation();
-    Timer.periodic(const Duration(seconds: 10), (timer) => _userLocation.updateLocation());
-    await _userLocation.updateLocation();
+    await _userLocation.refreshLocation();
     add(OnFocusOnUserPosition());
   }
 
@@ -100,6 +98,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
+    userLocation.refreshLocation();
     for (final EUKLocationData data in locationManager.locations) {
       final d.LatLng posLocation = d.LatLng(data.lat, data.long);
       final d.LatLng posUser = d.LatLng(_userLocation.currentPosition.latitude, _userLocation.currentPosition.longitude);
