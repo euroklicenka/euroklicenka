@@ -12,7 +12,7 @@ import 'package:map_launcher/map_launcher.dart';
 /// allows an action to be taken [onSelect] and when [onSelectNone] has an action assigned,
 /// shows a special button below the window.
 void openMapAppDialog({required BuildContext context, required List<AvailableMap> maps, required Function(AvailableMap map) onSelect, String headerText = 'Otevřít v aplikaci', bool showDefaultSwitch = true, Function()? onSelectNone}) {
-  final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.3;
+  final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.355;
 
   ///Builds a Grid Tile for a map.
   Widget buildGridTile(BuildContext context, int index) {
@@ -63,7 +63,6 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 16,
-                      childAspectRatio: 1.37,
                     ),
                   ),
                 ),
