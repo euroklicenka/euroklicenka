@@ -36,7 +36,7 @@ class _MapScreenState extends State<MapScreen> {
                   controller.setMapStyle(mapStyle);
                   bloc.locationManager.windowController.googleMapController = controller;
                   bloc.add(OnMapIsReady(controller));
-                  Future.delayed(const Duration(milliseconds: 400), () {
+                  Future.delayed(const Duration(milliseconds: 610), () {
                     if (!mounted) return;
                     setState(() => _mapState = MapLoadingState.loading);
                   });
