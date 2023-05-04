@@ -1,4 +1,4 @@
-package cz.osu.eurokey
+package com.osu.eurokey
 
 import io.flutter.embedding.android.FlutterActivity
 
