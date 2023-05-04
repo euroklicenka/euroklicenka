@@ -19,6 +19,11 @@ class OnMapIsReady extends LocationManagementEvent {
   OnMapIsReady(this.mapController);
 }
 
+class OnChangeOnlineCheckDecision extends LocationManagementEvent {
+  final bool decision;
+  OnChangeOnlineCheckDecision({required this.decision});
+}
+
 class OnFocusOnUserPosition extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabaseFinished extends LocationManagementEvent {}
