@@ -136,7 +136,7 @@ class AppBarSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Nastavení a Informace'),
+      title: const Text('Nastavení a informace'),
       centerTitle: true,
     );
   }
