@@ -10,6 +10,7 @@ class UserDataManager {
   static const String _defaultMapAppIndexPref = 'defaultMapAppIndex';
   static const String _defaultThemeIndexPref = 'defaultThemeIndex';
   static const String _locationDataPref = 'locationData';
+  static const String _searchOnlineOnStartupPref = 'searchOnlineOnStartup';
 
   SharedPreferences? _prefs;
   bool? _initScreen;
@@ -71,6 +72,16 @@ class UserDataManager {
   int loadDefaultThemeIndex() {
     final int? defaultThemeIndex = _prefs!.getInt(_defaultThemeIndexPref);
     return (defaultThemeIndex == null) ? -1 : defaultThemeIndex;
+  }
+
+  ///Save the current decision about checking for data online.
+  Future<void> saveOnlineCheckDecision(bool checkOnStartup) async {
+    await _prefs!.setBool(_searchOnlineOnStartupPref, checkOnStartup);
+  }
+
+  ///Get the saved decision about check for data at startup. Returns TRUE when save is found.
+  bool loadOnlineCheckDecision() {
+    return _prefs!.getBool(_searchOnlineOnStartupPref) ?? true;
   }
 
   bool? get notFirstTimeLaunch => _initScreen;
