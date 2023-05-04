@@ -41,7 +41,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   ///Async constructor for [LocationManagementBloc].
   Future<void> create({required UserDataManager dataManager}) async {
     locationManager = EUKLocationManager(dataManager: dataManager);
-    add(OnLoadLocationsFromDatabase());
+    await locationManager.reloadFromDatabase();
     await _userLocation.refreshLocation();
     add(OnFocusOnUserPosition());
   }
