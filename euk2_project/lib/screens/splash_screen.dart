@@ -22,7 +22,7 @@ class EUKSplashScreen extends StatelessWidget {
                 const Text('EuroKlíčenka', textScaleFactor: 2,),
                 SizedBox(height: screenHeight * 0.1),
                 const CircularProgressIndicator(),
-                SizedBox(height: screenHeight * 0.02),
+                const SizedBox(height: 20),
                 BlocBuilder<LocationManagementBloc, LocationManagementState>(
                   builder: (context, state) {
                     if (state is LocationManagementUpdatingDatabaseState) {
