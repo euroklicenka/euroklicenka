@@ -67,7 +67,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         ),
                       ),
                     ),
-                    const DividerOptions(),
+                    const SizedBox(height: 8,),
                     ListTile(
                       onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
                       title: const Text('Výchozí navigace'),
@@ -84,7 +84,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                               ),
                       ),
                     ),
-                    const DividerOptions(),
+                    const SizedBox(height: 8,),
                     Tooltip(
                       message: 'Pokusí se aplikace aktualizovat lokace z internetu při spuštění?',
                       showDuration: const Duration(milliseconds: 3000),
