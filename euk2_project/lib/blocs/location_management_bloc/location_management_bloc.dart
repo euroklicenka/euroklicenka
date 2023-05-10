@@ -4,18 +4,17 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_zoom_info.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
 import 'package:eurokey2/features/location_data/map_utils.dart';
 import 'package:eurokey2/features/location_data/user_pos_locator.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
-
 part 'location_management_state.dart';
 
 ///Stores location data.

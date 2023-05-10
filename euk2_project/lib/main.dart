@@ -4,8 +4,8 @@ import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc
 import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:eurokey2/screens/main_screen.dart';
 import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';

@@ -1,8 +1,9 @@
 import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:flutter/material.dart';
 
 part 'main_screen_event.dart';
