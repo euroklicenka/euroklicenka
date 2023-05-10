@@ -10,12 +10,19 @@ class UserPositionLocator {
   final double _zoomAmount = 15;
   LatLng _currentPosition = const LatLng(0, 0);
 
-  Future<void> refreshLocation() async {
+  Future<void> activate() async {
     _currentPosition = await _getDevicePosition();
-    print(_currentPosition);
+    const LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 1,
+    );
+
+    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) {
+      _currentPosition = LatLng(position?.latitude ?? defaultPos.latitude, position?.longitude ?? defaultPos.longitude);
+    });
   }
 
-  ///Returns TRUE if current position is the same as teh default one.
+  ///Returns TRUE if current position is the same as the default one.
   bool isSameAsDefaultPos() => currentPosition == defaultPos;
 
   ///Get the position of the device in [LatLng].
