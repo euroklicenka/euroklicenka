@@ -23,9 +23,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
+  late UserDataManager _dataManager;
   late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
 
+  bool _checkForDataOnline = true;
 
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
@@ -36,13 +38,16 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
     on<OnLoadLocationsFromDatabaseFinished>(_onLoadFromDatabaseFinished);
     on<OnRecalculateLocationsDistance>(_onRecalculateLocationsDistance);
+    on<OnChangeOnlineCheckDecision>(_onChangeOnlineCheckDecision);
   }
 
   ///Async constructor for [LocationManagementBloc].
   Future<void> create({required UserDataManager dataManager}) async {
+    _dataManager = dataManager;
+    _checkForDataOnline = dataManager.loadOnlineCheckDecision();
     locationManager = EUKLocationManager(dataManager: dataManager);
-    await locationManager.reloadFromDatabase();
-    await _userLocation.refreshLocation();
+    await locationManager.reloadFromDatabase(offlineOnly: !_checkForDataOnline);
+    await _userLocation.activate();
     add(OnFocusOnUserPosition());
   }
 
@@ -97,7 +102,6 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
-    userLocation.refreshLocation();
     for (final EUKLocationData data in locationManager.locations) {
       final LatLng userLoc = userLocation.currentPosition;
       data.updateDistanceFromDevice(Geolocator.distanceBetween(data.lat, data.long, userLoc.latitude, userLoc.longitude) / 1000);
@@ -105,8 +109,15 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     emit(LocationManagementDefaultState());
   }
 
+  void _onChangeOnlineCheckDecision(OnChangeOnlineCheckDecision event, emit) {
+    _checkForDataOnline = event.decision;
+    _dataManager.saveOnlineCheckDecision(_checkForDataOnline);
+    emit(LocationManagementDefaultState());
+  }
+
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
   UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
+  bool get checkForDataOnline => _checkForDataOnline;
 }
