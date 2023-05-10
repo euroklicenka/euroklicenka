@@ -19,6 +19,13 @@ class OnMapIsReady extends LocationManagementEvent {
   OnMapIsReady(this.mapController);
 }
 
+class OnInitialize extends LocationManagementEvent {
+  final Function()? onFinish;
+  final UserDataManager dataManager;
+
+  OnInitialize({required this.dataManager, this.onFinish});
+}
+
 class OnFocusOnUserPosition extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}
 class OnLoadLocationsFromDatabaseFinished extends LocationManagementEvent {}

@@ -26,9 +26,9 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
 
-
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
+    on<OnInitialize>(_onInitialize);
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
@@ -39,11 +39,18 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ///Async constructor for [LocationManagementBloc].
-  Future<void> create({required UserDataManager dataManager}) async {
-    locationManager = EUKLocationManager(dataManager: dataManager);
+  Future<void> _onInitialize(OnInitialize event, emit) async {
+    emit(LocationManagementDefaultState());
+    locationManager = EUKLocationManager(dataManager: event.dataManager);
+
+    emit(LocationManagementUpdatingDatabaseState());
     await locationManager.reloadFromDatabase();
+
+    emit(LocationManagementLoadingPositionState());
     await _userLocation.activate();
     add(OnFocusOnUserPosition());
+
+    event.onFinish?.call();
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
@@ -71,7 +78,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.popupWindow == null) return;
 
     Future.delayed(const Duration(milliseconds: 400), () => {
-      locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
+        locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
         _zoomInfo.clear()
       },
     );

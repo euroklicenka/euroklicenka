@@ -10,7 +10,6 @@ part 'main_screen_state.dart';
 
 ///Controls the data on the screen.
 class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
-
   late LocationManagementBloc _locationBloc;
   late UserDataManager _dataManager;
 
@@ -26,17 +25,18 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _onAppInit(event, emit) async {
     emit(const MainScreenInitialState());
 
-    await _locationBloc.create(dataManager: _dataManager);
-
-    if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
-      add(OnOpenGuideScreen());
-    } else {
-
-      emit(const MainScreenAppContentState());
-      await Future.delayed(const Duration(milliseconds: 500));
-      _locationBloc.add(OnFocusOnUserPosition());
-      add(OnInitFinish());
-    }
+    _locationBloc.add(OnInitialize(
+      dataManager: _dataManager,
+      onFinish: () async {
+        if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
+          add(OnOpenGuideScreen());
+        } else {
+          await Future.delayed(const Duration(milliseconds: 500));
+          _locationBloc.add(OnFocusOnUserPosition());
+          add(OnInitFinish());
+        }
+      },
+    ));
   }
 
   FutureOr<void> _onInitFinish(event, emit) async {
