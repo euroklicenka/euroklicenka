@@ -1,0 +1,12 @@
+# When you add a new URL here, make sure to place it in AndroidManifest.xml
+# and plist.info next to other links as well (so it can be allowed by the device).
+
+download_urls:
+  - 'https://www.euroklic.cz/element/simple/documents-to-download/d/0/b828501d0553497b.xlsx?download=true'
+  - 'https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx'
+
+about_eurokey_url: 'https://portal.gov.cz/rozcestniky/euroklic-RZC-83'
+
+university_of_ostrava_url: 'https://prf.osu.cz/'
+university_of_ostrava_kip_url: 'https://prf.osu.cz/kip/'
+about_eurokey_web_url: 'https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete'

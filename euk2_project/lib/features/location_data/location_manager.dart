@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/internet_access/allowed_urls.dart';
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/excel_loading/excel_parser.dart';
 import 'package:eurokey2/features/location_data/map_utils.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rxdart/rxdart.dart';
@@ -41,25 +41,28 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the built-in URL link and stores them
   ///in the internal list.
-  Future<void> reloadFromDatabase({Function()? onFinish}) async {
+  Future<void> reloadFromDatabase({Function()? onFinish, bool offlineOnly = false}) async {
     _hasThrownError = false;
 
-    try {
-      await _loadDataFromURL(url: EUKDownloadURL);
-    } catch(e) {
-      if (e is SocketException || e is FormatException) {
+    if (downloadURLs.isEmpty) throw StateError('List of download URLs cannot be empty.');
+
+    if (!offlineOnly) {
+      for (final String url in downloadURLs) {
         try {
-          await _loadDataFromURL(url: EUKDownloadMirrorURL);
-        } catch(e) {
-          if (e is SocketException || e is FormatException) {
-            _hasThrownError = true;
-            _reloadFromLocalStorage();
-          }
-          else { rethrow; }
+          await _loadDataFromURL(url: url);
+          _hasThrownError = false;
+          break;
+        } on SocketException {
+          _hasThrownError = true;
+          continue;
+        } on FormatException {
+          _hasThrownError = true;
+          continue;
         }
       }
-      else { rethrow; }
     }
+
+    if (_hasThrownError || offlineOnly) _reloadFromLocalStorage();
 
     onFinish?.call();
   }
@@ -92,9 +95,7 @@ class EUKLocationManager {
 
   ///Initializes the cluster manager.
   void _initClusterManager() {
-    _clusterManager = ClusterManager<EUKLocationData>(
-        _locations, _updateMarkers,
-        markerBuilder: getMarkerBuilder);
+    _clusterManager = ClusterManager<EUKLocationData>(_locations, _updateMarkers, markerBuilder: getMarkerBuilder);
   }
 
   void _updateMarkers(Set<Marker> markers) {
@@ -106,8 +107,7 @@ class EUKLocationManager {
   /// clusters, that need to be built.
   ///
   /// Uses custom icons for individual markers and cluster icons for clusters.
-  Future<Marker> Function(Cluster<EUKLocationData>)? get getMarkerBuilder =>
-      (cluster) async {
+  Future<Marker> Function(Cluster<EUKLocationData>)? get getMarkerBuilder => (cluster) async {
         final BitmapDescriptor icon = (cluster.isMultiple)
             ? await getClusterIcon(270, text: cluster.count.toString())
             : await getMarkerIconByType(cluster.items.first.type);
@@ -115,8 +115,7 @@ class EUKLocationManager {
             ? () {}
             : () {
                 final EUKLocationData data = cluster.items.first;
-                windowController.addInfoWindow!(
-                    buildPopUpWindow(data), LatLng(data.lat, data.long));
+                windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
               };
 
         return Marker(
@@ -129,9 +128,14 @@ class EUKLocationManager {
 
   ///Returns the list of all EUK locations.
   List<EUKLocationData> get locations => _locations;
+
   Set<Marker> get markers => _markers;
+
   Stream<Set<Marker>> get markerStream => _markerStream;
+
   CustomInfoWindowController get windowController => _windowController;
+
   ClusterManager get clusterManager => _clusterManager;
+
   bool get hasThrownError => _hasThrownError;
 }

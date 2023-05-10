@@ -28,6 +28,7 @@ dependencies:
   url_launcher: ^6.1.10
   flutter_scroll_to_top: ^2.3.0
   internet_connection_checker: ^1.0.0+1
+  yaml: ^3.1.2
 
 
 dev_dependencies:
@@ -44,5 +45,4 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
-    - assets/map_styles/
+    - assets/

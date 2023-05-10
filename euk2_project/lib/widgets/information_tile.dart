@@ -1,8 +1,11 @@
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
 import 'package:flutter/material.dart';
 
-///A tile showing information on the left and a logo on the right.
-Widget InfoTile({required Size screenSize, required String leadingText, required String imageFilePath, String launchURL = '', String hyperText = '', String trailingText = ''}) {
+/// A tile showing information on the left and a logo on the right.
+/// Shows the text on the left side comprised of [leadingText], [hyperText] (only visual) and [trailingText].
+/// Draws an image located under [imageFilePath] to the right of the tile.
+/// Launches a URL when tapped that is assigned to [launchURL].
+Widget InfoTile({required BuildContext context, required String leadingText, required String imageFilePath, String launchURL = '', String hyperText = '', String trailingText = '',}) {
   return InkWell(
     onTap: () {
       if (launchURL.isEmpty) return;
@@ -13,11 +16,12 @@ Widget InfoTile({required Size screenSize, required String leadingText, required
         Flexible(
           child: RichText(
             text: TextSpan(
-              style: const TextStyle(fontSize: 15),
+              style: TextStyle(
+                fontSize: 15,
+                color: Theme.of(context).textTheme.bodyLarge!.color,
+              ),
               children: [
-                TextSpan(
-                  text: leadingText,
-                ),
+                TextSpan(text: leadingText),
                 TextSpan(
                   text: hyperText,
                   style: const TextStyle(
@@ -25,9 +29,7 @@ Widget InfoTile({required Size screenSize, required String leadingText, required
                     decoration: TextDecoration.underline,
                   ),
                 ),
-                TextSpan(
-                  text: trailingText,
-                ),
+                TextSpan(text: trailingText),
               ],
             ),
           ),
@@ -35,7 +37,7 @@ Widget InfoTile({required Size screenSize, required String leadingText, required
         const SizedBox(width: 8),
         Image.asset(
           imageFilePath,
-          width: screenSize.width * 0.25,
+          width: MediaQuery.of(context).size.width * 0.25,
         ),
       ],
     ),

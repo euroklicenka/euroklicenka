@@ -3,6 +3,13 @@ part of 'location_management_bloc.dart';
 @immutable
 abstract class LocationManagementEvent {}
 
+class OnInitialize extends LocationManagementEvent {
+  final Function()? onFinish;
+  final UserDataManager dataManager;
+
+  OnInitialize({required this.dataManager, this.onFinish});
+}
+
 class OnFocusOnLocation extends LocationManagementEvent {
   final LatLng location;
   final double zoom;
@@ -19,11 +26,9 @@ class OnMapIsReady extends LocationManagementEvent {
   OnMapIsReady(this.mapController);
 }
 
-class OnInitialize extends LocationManagementEvent {
-  final Function()? onFinish;
-  final UserDataManager dataManager;
-
-  OnInitialize({required this.dataManager, this.onFinish});
+class OnChangeOnlineCheckDecision extends LocationManagementEvent {
+  final bool decision;
+  OnChangeOnlineCheckDecision({required this.decision});
 }
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}

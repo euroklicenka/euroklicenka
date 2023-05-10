@@ -4,18 +4,17 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_zoom_info.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
 import 'package:eurokey2/features/location_data/map_utils.dart';
 import 'package:eurokey2/features/location_data/user_pos_locator.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
-
 part 'location_management_state.dart';
 
 ///Stores location data.
@@ -23,8 +22,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
+  late UserDataManager _dataManager;
   late ScreenNavigationBloc _navigationBloc;
   late EUKLocationManager locationManager;
+
+  bool _checkForDataOnline = true;
 
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
@@ -36,6 +38,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     on<OnLoadLocationsFromDatabase>(_onLoadFromDatabase);
     on<OnLoadLocationsFromDatabaseFinished>(_onLoadFromDatabaseFinished);
     on<OnRecalculateLocationsDistance>(_onRecalculateLocationsDistance);
+    on<OnChangeOnlineCheckDecision>(_onChangeOnlineCheckDecision);
   }
 
   ///Async constructor for [LocationManagementBloc].
@@ -44,6 +47,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     locationManager = EUKLocationManager(dataManager: event.dataManager);
 
     emit(LocationManagementUpdatingDatabaseState());
+    _checkForDataOnline = dataManager.loadOnlineCheckDecision();
     await locationManager.reloadFromDatabase();
 
     emit(LocationManagementLoadingPositionState());
@@ -111,8 +115,15 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     emit(LocationManagementDefaultState());
   }
 
+  void _onChangeOnlineCheckDecision(OnChangeOnlineCheckDecision event, emit) {
+    _checkForDataOnline = event.decision;
+    _dataManager.saveOnlineCheckDecision(_checkForDataOnline);
+    emit(LocationManagementDefaultState());
+  }
+
   ScreenNavigationBloc get navigationBloc => _navigationBloc;
   UserPositionLocator get userLocation => _userLocation;
   LatLng? get wantedPosition => _zoomInfo.wantedPosition;
   double? get wantedZoom => _zoomInfo.wantedZoom;
+  bool get checkForDataOnline => _checkForDataOnline;
 }

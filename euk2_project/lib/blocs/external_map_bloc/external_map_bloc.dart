@@ -4,9 +4,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
-import 'package:eurokey2/widgets/dialogs/map_app_dialog.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
+import 'package:eurokey2/widgets/dialogs/map_app_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:map_launcher/map_launcher.dart';
 
