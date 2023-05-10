@@ -87,7 +87,14 @@ class _MapScreenState extends State<MapScreen> {
         child: ColoredBox(
           color: Theme.of(context).colorScheme.surface,
           child: const Center(
-            child: CircularProgressIndicator(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16,),
+                Text('Vykreslování mapy'),
+              ],
+            ),
           ),
         ),
       ),
