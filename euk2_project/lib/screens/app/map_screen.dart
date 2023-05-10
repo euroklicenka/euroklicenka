@@ -91,7 +91,7 @@ class _MapScreenState extends State<MapScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(),
-                SizedBox(height: 20,),
+                SizedBox(height: 16,),
                 Text('Vykreslování mapy'),
               ],
             ),
