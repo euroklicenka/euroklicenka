@@ -85,6 +85,17 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       ),
                     ),
                     const DividerOptions(),
+                    Tooltip(
+                      message: 'Pokusí se aplikace aktualizovat lokace z internetu při spuštění?',
+                      showDuration: const Duration(milliseconds: 3000),
+                      triggerMode: TooltipTriggerMode.longPress,
+                      child: SwitchListTile.adaptive(
+                        title: const Text('Aktualizovat při spuštění'),
+                        value: context.watch<LocationManagementBloc>().checkForDataOnline,
+                        onChanged: (value) => context.read<LocationManagementBloc>().add(OnChangeOnlineCheckDecision(decision: value)),
+                      ),
+                    ),
+                    const DividerOptions(),
                     ListTile(
                       onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
                       title: const Text("Průvodce"),
@@ -136,7 +147,7 @@ class AppBarSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Nastavení a Informace'),
+      title: const Text('Nastavení a informace'),
       centerTitle: true,
     );
   }
