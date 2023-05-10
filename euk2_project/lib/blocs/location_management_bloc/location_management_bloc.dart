@@ -44,10 +44,11 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   ///Async constructor for [LocationManagementBloc].
   Future<void> _onInitialize(OnInitialize event, emit) async {
     emit(LocationManagementDefaultState());
-    locationManager = EUKLocationManager(dataManager: event.dataManager);
+    _dataManager = event.dataManager;
+    locationManager = EUKLocationManager(dataManager: _dataManager);
 
     emit(LocationManagementUpdatingDatabaseState());
-    _checkForDataOnline = dataManager.loadOnlineCheckDecision();
+    _checkForDataOnline = event.dataManager.loadOnlineCheckDecision();
     await locationManager.reloadFromDatabase();
 
     emit(LocationManagementLoadingPositionState());
