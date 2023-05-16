@@ -86,13 +86,13 @@ class _MapScreenState extends State<MapScreen> {
         onEnd: () => setState(() => _mapState == MapLoadingState.finished),
         child: ColoredBox(
           color: Theme.of(context).colorScheme.surface,
-          child: const Center(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16,),
-                Text('Vykreslování mapy'),
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16,),
+                const Text('Vykreslování mapy'),
               ],
             ),
           ),
