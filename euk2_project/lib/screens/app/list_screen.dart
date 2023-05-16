@@ -5,6 +5,7 @@ import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
+import 'package:geolocator/geolocator.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -73,8 +74,18 @@ class _ListScreenState extends State<ListScreen> {
 
   Widget _buildListTile(BuildContext context, int index) {
     final EUKLocationData data = context.read<ListSortingBloc>().sortedLocations[index];
-    final String distanceText = (context.read<LocationManagementBloc>().userLocation.isSameAsDefaultPos()) ? '---- km' : '${data.distanceFromDevice.toStringAsFixed(2)} km';
-
+    String distanceText;
+    switch(context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
+      case LocationAccuracyStatus.precise:
+        distanceText = '${data.distanceFromDevice.toStringAsFixed(2)} km';
+        break;
+      case LocationAccuracyStatus.reduced:
+        distanceText = '~${data.distanceFromDevice.toStringAsFixed(2)} km';
+        break;
+      default:
+        distanceText = '---- km';
+        break;
+    }
     return ListTile(
       title: Text(data.address),
       subtitle: Text('${data.city}, ${data.ZIP}'),
