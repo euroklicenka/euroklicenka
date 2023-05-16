@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Tracks users current position.
