@@ -24,6 +24,7 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
     _mapThemes = MapThemeManager();
     on<OnOpenThemeDialog>(_onOpenThemeDialog);
     on<OnSwitchTheme>(_onSwitchTheme);
+    _activeThemeRefresh();
     _loadThemeFromStorage();
   }
 
@@ -60,6 +61,15 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
   void _loadThemeFromStorage() {
     final int index = _dataManager.loadDefaultThemeIndex();
     add(OnSwitchTheme(ThemeMode.values[(index != -1) ? index : 0]));
+  }
+
+  /// Activates in-app theme refreshing when the system theme changes.
+  void _activeThemeRefresh() {
+    WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged = (){
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      if (_currentTheme != ThemeMode.system) return;
+      add(OnSwitchTheme(_currentTheme));
+    };
   }
 
   ThemeMode get currentTheme => _currentTheme;
