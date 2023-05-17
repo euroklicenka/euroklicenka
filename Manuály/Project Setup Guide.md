@@ -5,8 +5,6 @@ This guide helps you with setting up the EuroKey 2.0 project on your machine (Wi
 
 ## Table of Contents
 
-- [About](#about)
-  - [Table of Contents](#table-of-contents)
 - [1. Install Flutter](#1-install-flutter)
   - [For Windows](#for-windows)
   - [For MAC](#for-mac)
@@ -148,9 +146,9 @@ This section explains how to test the project on a simulated device.
 4. Select OS for the device. Download it with the download icon.
 ![virtual_device_os](img/04_virtual_device_os.jpg)
 
-1. Name your device and click **Finish**. It will now show up in the device manager.
+5. Name your device and click **Finish**. It will now show up in the device manager.
 
-2. Hit Play on the device in the Device Manager. This will start up the emulator and allow the emulated device to be detected for app testing.
+6. Hit Play on the device in the Device Manager. This will start up the emulator and allow the emulated device to be detected for app testing.
 
 ## For iOS
 
