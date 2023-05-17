@@ -2,7 +2,24 @@
 # About
 
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
-> ❗ Make sure to have Java (JRE & JDK) installed on your computer.
+
+## Table of Contents
+
+- [About](#about)
+  - [Table of Contents](#table-of-contents)
+- [1. Install Flutter](#1-install-flutter)
+  - [For Windows](#for-windows)
+  - [For MAC](#for-mac)
+- [2. Install Android Studio](#2-install-android-studio)
+  - [For Windows \& MAC](#for-windows--mac)
+- [3. Get project onto your computer](#3-get-project-onto-your-computer)
+  - [For Windows \& MAC](#for-windows--mac-1)
+- [4. Test on a real device](#4-test-on-a-real-device)
+  - [For Android](#for-android)
+- [5. Test on an emulator](#5-test-on-an-emulator)
+  - [For Android](#for-android-1)
+  - [For iOS](#for-ios)
+- [6. Build APK for release](#6-build-apk-for-release)
 
 &nbsp;
 
@@ -11,6 +28,8 @@ This guide helps you with setting up the EuroKey 2.0 project on your machine (Wi
 This section shows you how to install FLutter and Dart onto your computer.
 \
 For more information visit the [Official Flutter site](https://docs.flutter.dev/get-started/install).
+
+> ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
 ## For Windows
 
@@ -77,7 +96,7 @@ If flutter doctor says CocoaPods is not installed, open the terminal and run `br
 
 &nbsp;
 
-# 3. Get project on your computer
+# 3. Get project onto your computer
 
 This section explains how to get your own copy of the project files onto your computer.
 
@@ -140,7 +159,7 @@ This section explains how to test the project on a simulated device.
 
 &nbsp;
 
-# Build APK
+# 6. Build APK for release
 
 This section explains how to build a signed APK of the app.
 
