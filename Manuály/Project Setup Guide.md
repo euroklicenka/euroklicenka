@@ -142,9 +142,9 @@ This section explains how to test the project on a simulated device.
 
 # Build APK
 
-This section explains how to build a signed APK of app.
+This section explains how to build a signed APK of the app.
 
-1. Create a new file called **key.properties** in project **root/android/**.
+1. Create a new file called **key.properties** in project's  **root/android/** folder.
 2. Paste this template into the new file and fill out the missing details:
 
         storePassword=
@@ -152,11 +152,12 @@ This section explains how to build a signed APK of app.
         keyAlias=upload
         storeFile=
 
-    These details are the same ones used ffrom your .jks file. More about this file can be found [here](https://docs.flutter.dev/deployment/android#create-an-upload-keystore).
+    The values are the same ones used in your .jks file. More about it can be found [here](https://docs.flutter.dev/deployment/android#create-an-upload-keystore).
 
-    > ❗ **key.properties** is ignored by Git and can never appear on the repository due to containing private information.
+    > ❗ **key.properties** is ignored by Git by default and will never appear on the repository. (Contains private information, so that should never happen anyway.)
 
-3. In project's console run `flutter build apk`.
-4. This will build your APK file. The default path is **root\build\app\outputs\flutter-apk\app-release.apk**.
+3. In project's console run the `flutter build apk` command.
+4. This will build your APK file. It's default path is **root\build\app\outputs\flutter-apk\app-release.apk**.
 
-    > ❗ To check if your APK was signed properly, run in console `jarsigner -verify -verbose -certs %Path to app-release.apk%`.
+    > ❗ To check if your APK was signed properly, run in console: \
+    `jarsigner -verify -verbose -certs %Path to app-release.apk%`.
