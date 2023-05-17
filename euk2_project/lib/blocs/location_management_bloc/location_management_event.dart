@@ -3,6 +3,13 @@ part of 'location_management_bloc.dart';
 @immutable
 abstract class LocationManagementEvent {}
 
+class OnInitialize extends LocationManagementEvent {
+  final Function()? onFinish;
+  final UserDataManager dataManager;
+
+  OnInitialize({required this.dataManager, this.onFinish});
+}
+
 class OnFocusOnLocation extends LocationManagementEvent {
   final LatLng location;
   final double zoom;

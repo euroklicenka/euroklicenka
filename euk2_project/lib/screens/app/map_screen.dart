@@ -19,7 +19,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LocationManagementBloc>();
-    final String mapStyle = context.watch<ThemeSwitchingBloc>().currentMapTheme;
+    final ThemeSwitchingBloc themeBloc = context.watch<ThemeSwitchingBloc>();
     final double popupWindowFlexibleHeight = MediaQuery.of(context).size.height * 0.27;
 
     return ColoredBox(
@@ -33,7 +33,8 @@ class _MapScreenState extends State<MapScreen> {
               return GoogleMap(
                 myLocationEnabled: true,
                 onMapCreated: (GoogleMapController controller) {
-                  controller.setMapStyle(mapStyle);
+                  themeBloc.mapController = controller;
+                  controller.setMapStyle(themeBloc.currentMapTheme);
                   bloc.locationManager.windowController.googleMapController = controller;
                   bloc.add(OnMapIsReady(controller));
                   Future.delayed(const Duration(milliseconds: 610), () {
@@ -87,7 +88,14 @@ class _MapScreenState extends State<MapScreen> {
         child: ColoredBox(
           color: Theme.of(context).colorScheme.surface,
           child: const Center(
-            child: CircularProgressIndicator(),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16,),
+                Text('Vykreslování mapy'),
+              ],
+            ),
           ),
         ),
       ),
@@ -102,7 +110,7 @@ class AppBarMapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Mapa'),
+      title: const Text('Mapa Euroklíč lokací'),
       centerTitle: true,
     );
   }

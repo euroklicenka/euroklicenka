@@ -4,18 +4,17 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_zoom_info.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
 import 'package:eurokey2/features/location_data/map_utils.dart';
 import 'package:eurokey2/features/location_data/user_pos_locator.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 
 part 'location_management_event.dart';
-
 part 'location_management_state.dart';
 
 ///Stores location data.
@@ -31,6 +30,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
+    on<OnInitialize>(_onInitialize);
     on<OnFocusOnLocation>(_onFocusOnLocation);
     on<OnFocusOnEUKLocation>(_onFocusOnEUKLocation);
     on<OnFocusOnUserPosition>(_onFocusOnUserPosition);
@@ -42,13 +42,20 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   ///Async constructor for [LocationManagementBloc].
-  Future<void> create({required UserDataManager dataManager}) async {
-    _dataManager = dataManager;
-    _checkForDataOnline = dataManager.loadOnlineCheckDecision();
-    locationManager = EUKLocationManager(dataManager: dataManager);
-    await locationManager.reloadFromDatabase(offlineOnly: !_checkForDataOnline);
+  Future<void> _onInitialize(OnInitialize event, emit) async {
+    emit(LocationManagementDefaultState());
+    _dataManager = event.dataManager;
+    locationManager = EUKLocationManager(dataManager: _dataManager);
+
+    emit(LocationManagementUpdatingDatabaseState());
+    _checkForDataOnline = event.dataManager.loadOnlineCheckDecision();
+    await locationManager.reloadFromDatabase();
+
+    emit(LocationManagementLoadingPositionState());
     await _userLocation.activate();
     add(OnFocusOnUserPosition());
+
+    event.onFinish?.call();
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
@@ -76,7 +83,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.popupWindow == null) return;
 
     Future.delayed(const Duration(milliseconds: 400), () => {
-      locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
+        locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
         _zoomInfo.clear()
       },
     );

@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:eurokey2/features/user_data_management/user_data_manager.dart';
+import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/themes/map_theme_manager.dart';
 import 'package:eurokey2/themes/theme_utils.dart';
 import 'package:eurokey2/widgets/dialogs/theme_switching_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:meta/meta.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'theme_switching_event.dart';
 part 'theme_switching_state.dart';
@@ -20,12 +19,14 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
 
   ThemeMode _currentTheme = ThemeMode.system;
   String _currentMapTheme = '';
+  GoogleMapController? _mapController;
 
   ThemeSwitchingBloc({required UserDataManager dataManager}) : super(ThemeSwitchingSystemState()) {
     _dataManager = dataManager;
     _mapThemes = MapThemeManager();
     on<OnOpenThemeDialog>(_onOpenThemeDialog);
     on<OnSwitchTheme>(_onSwitchTheme);
+    _activeThemeRefresh();
     _loadThemeFromStorage();
   }
 
@@ -46,6 +47,8 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
         emit(ThemeSwitchingDarkState());
         break;
     }
+
+    _mapController?.setMapStyle(_currentMapTheme);
   }
 
   void _onOpenThemeDialog(OnOpenThemeDialog event, emit) {
@@ -63,6 +66,18 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
     final int index = _dataManager.loadDefaultThemeIndex();
     add(OnSwitchTheme(ThemeMode.values[(index != -1) ? index : 0]));
   }
+
+  /// Activates in-app theme refreshing when the system theme changes.
+  void _activeThemeRefresh() {
+    WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged = (){
+      WidgetsBinding.instance.handlePlatformBrightnessChanged();
+      if (_currentTheme != ThemeMode.system) return;
+      add(OnSwitchTheme(_currentTheme));
+    };
+  }
+
+
+  set mapController(GoogleMapController value) => _mapController = value;
 
   ThemeMode get currentTheme => _currentTheme;
   String get currentMapTheme => _currentMapTheme;
