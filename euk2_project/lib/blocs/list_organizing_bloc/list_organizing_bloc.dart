@@ -38,8 +38,5 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
 
   void _updateSortedLocations() => _organizedLocations = List.from(_manager.locations);
 
-  ///Get locations as a list of addresses.
-  List<String> getSuggestions() => _manager.locations.map((loc) => loc.address).toList();
-
   List<EUKLocationData> get organizedLocations => _organizedLocations;
 }

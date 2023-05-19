@@ -152,31 +152,7 @@ class AppBarListScreen extends StatelessWidget {
       searchCursorColor: Theme.of(context).colorScheme.secondary,
       searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF191919) : Theme.of(context).colorScheme.surface,
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
-      suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
       searchHintText: 'Ostrava...',
-      onSuggestionTap: (value) async {
-        final locBloc = context.read<LocationManagementBloc>();
-        try {
-          await hideVirtualKeyboard();
-          final String id = locBloc.locationManager.locations.firstWhere((element) => element.address == value).id;
-          locBloc.add(OnFocusOnEUKLocation(id, zoom: 17));
-        } catch (e) {
-          //Intentionally Blank
-        }
-      },
-      suggestionBuilder: (value) {
-        return Column(
-          children: [
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              horizontalTitleGap: 0,
-              leading: const Icon(Icons.location_on),
-              title: Text(value),
-            ),
-            const Divider(height: 6),
-          ],
-        );
-      },
     );
   }
 }
