@@ -4,6 +4,7 @@ import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
+import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
@@ -127,7 +128,11 @@ class _ListScreenState extends State<ListScreen> {
           Text(distanceText),
         ],
       ),
-      onTap: () => context.read<LocationManagementBloc>().add(OnFocusOnEUKLocation(data.id, zoom: 17)),
+      onTap: () async {
+        final locBloc = context.read<LocationManagementBloc>();
+        await hideVirtualKeyboard();
+        locBloc.add(OnFocusOnEUKLocation(data.id, zoom: 17));
+      },
     );
   }
 }
@@ -149,9 +154,10 @@ class AppBarListScreen extends StatelessWidget {
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
       searchHintText: 'Ostrava...',
-      onSuggestionTap: (value) {
+      onSuggestionTap: (value) async {
         final locBloc = context.read<LocationManagementBloc>();
         try {
+          await hideVirtualKeyboard();
           final String id = locBloc.locationManager.locations.firstWhere((element) => element.address == value).id;
           locBloc.add(OnFocusOnEUKLocation(id, zoom: 17));
         } catch (e) {
