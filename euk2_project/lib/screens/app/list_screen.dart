@@ -1,5 +1,5 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
-import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
+import 'package:eurokey2/blocs/list_organizing_bloc/list_organizing_bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
@@ -19,63 +19,92 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: context.read<ListSortingBloc>().sortedLocations.isEmpty
-              ? const Center(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Žádné položky nebyly nalezeny. \n\n Zkus aktualizovat databázi v menu Více.',
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              : Scrollbar(
-                  thumbVisibility: true,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      children: [
-                        const Divider(),
-                        Expanded(
-                          child: RefreshIndicator(
-                            displacement: 5,
-                            onRefresh: () async {
-                              setState(() {
-                                context.read<LocationManagementBloc>().add(OnRecalculateLocationsDistance());
-                                context.read<ListSortingBloc>().add(OnSortByLocationDistance());
-                              });
-                              await Future.delayed(const Duration(milliseconds: 250));
-                            },
-                            child: ScrollWrapper(
-                              alwaysVisibleAtOffset: true,
-                              enabledAtOffset: 40,
-                              promptAlignment: Alignment.bottomCenter,
-                              promptTheme: PromptButtonTheme(
-                                color: Theme.of(context).colorScheme.surface,
-                                icon: const Icon(Icons.arrow_upward),
-                              ),
-                              builder: (context, properties) => ListView.separated(
-                                itemCount: context.read<ListSortingBloc>().sortedLocations.length,
-                                itemBuilder: _buildListTile,
-                                separatorBuilder: (BuildContext context, int index) => const Divider(),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-        ),
-      ],
+    return BlocBuilder<ListOrganizingBloc, ListOrganizingState>(
+      builder: (context, state) {
+        return AnimatedSwitcher(
+          duration: const Duration(milliseconds: 200),
+          transitionBuilder: (child, animation) => FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+          child: _getBody(context, state),
+        );
+      },
     );
   }
 
+  Widget _getBody(BuildContext context, state) {
+    if (state is ListOrganizingSortingState) {
+      return const Center(
+        child: Column(
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(
+              height: 16,
+            ),
+            Text('Uspořádávání listu'),
+          ],
+        ),
+      );
+    } else {
+      return Column(
+        children: [
+          Expanded(
+            child: context.read<ListOrganizingBloc>().organizedLocations.isEmpty
+                ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Žádné položky nebyly nalezeny. \n\n Zkus aktualizovat databázi v menu Více.',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  )
+                : Scrollbar(
+                    thumbVisibility: true,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        children: [
+                          const Divider(),
+                          Expanded(
+                            child: RefreshIndicator(
+                              displacement: 5,
+                              onRefresh: () async {
+                                setState(() {
+                                  context.read<LocationManagementBloc>().add(OnRecalculateLocationsDistance());
+                                  context.read<ListOrganizingBloc>().add(OnSortByLocationDistance());
+                                });
+                                await Future.delayed(const Duration(milliseconds: 250));
+                              },
+                              child: ScrollWrapper(
+                                alwaysVisibleAtOffset: true,
+                                enabledAtOffset: 40,
+                                promptAlignment: Alignment.bottomCenter,
+                                promptTheme: PromptButtonTheme(
+                                  color: Theme.of(context).colorScheme.surface,
+                                  icon: const Icon(Icons.arrow_upward),
+                                ),
+                                builder: (context, properties) => ListView.separated(
+                                  itemCount: context.read<ListOrganizingBloc>().organizedLocations.length,
+                                  itemBuilder: _buildListTile,
+                                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+          ),
+        ],
+      );
+    }
+  }
+
   Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data = context.read<ListSortingBloc>().sortedLocations[index];
+    final EUKLocationData data = context.read<ListOrganizingBloc>().organizedLocations[index];
     String distanceText;
     switch (context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
       case LocationAccuracyStatus.precise:
@@ -121,7 +150,7 @@ class AppBarListScreen extends StatelessWidget {
       searchBackIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchCursorColor: Theme.of(context).colorScheme.secondary,
       searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF161616) : Theme.of(context).colorScheme.surface,
-      onSearch: (value) {},
+      onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
     );
   }
 }

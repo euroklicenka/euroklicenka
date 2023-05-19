@@ -1,5 +1,5 @@
 import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
-import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
+import 'package:eurokey2/blocs/list_organizing_bloc/list_organizing_bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           create: (context) => MainScreenBloc(dataManager: _dataManager, locationBloc: BlocProvider.of<LocationManagementBloc>(context))..add(OnAppInit()),
         ),
         BlocProvider(
-          create: (context) => ListSortingBloc(locManager: BlocProvider.of<LocationManagementBloc>(context).locationManager),
+          create: (context) => ListOrganizingBloc(locManager: BlocProvider.of<LocationManagementBloc>(context).locationManager),
         ),
         BlocProvider(
           create: (context) => ThemeSwitchingBloc(dataManager: _dataManager),
