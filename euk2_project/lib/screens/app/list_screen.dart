@@ -1,7 +1,9 @@
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:eurokey2/blocs/list_sorting_bloc/list_sorting_bloc.dart';
 import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
+import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
@@ -75,7 +77,7 @@ class _ListScreenState extends State<ListScreen> {
   Widget _buildListTile(BuildContext context, int index) {
     final EUKLocationData data = context.read<ListSortingBloc>().sortedLocations[index];
     String distanceText;
-    switch(context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
+    switch (context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
       case LocationAccuracyStatus.precise:
         distanceText = '${data.distanceFromDevice.toStringAsFixed(2)} km';
         break;
@@ -94,7 +96,9 @@ class _ListScreenState extends State<ListScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           getIconByType(data.type),
-          const SizedBox(height: 4,),
+          const SizedBox(
+            height: 4,
+          ),
           Text(distanceText),
         ],
       ),
@@ -108,9 +112,16 @@ class AppBarListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text('Seznam míst'),
-      centerTitle: true, // Center the title
+    return EasySearchBar(
+      title: const Center(
+        child: Text('Seznam míst'),
+      ),
+      animationDuration: const Duration(milliseconds: 250),
+      searchClearIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchBackIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchCursorColor: Theme.of(context).colorScheme.secondary,
+      searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF161616) : Theme.of(context).colorScheme.surface,
+      onSearch: (value) {},
     );
   }
 }

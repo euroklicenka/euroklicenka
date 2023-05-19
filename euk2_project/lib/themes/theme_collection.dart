@@ -10,6 +10,7 @@ ThemeData defaultLightTheme = ThemeData(
   ),
   appBarTheme: const AppBarTheme(
     foregroundColor: Colors.white,
+    backgroundColor: Colors.deepOrangeAccent,
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     selectedItemColor: Colors.deepOrangeAccent,
@@ -25,6 +26,9 @@ ThemeData defaultDarkTheme = ThemeData(
   ).copyWith(
     secondary: Colors.red,
     surface: const Color(0xFF111111),
+  ),
+  appBarTheme: const AppBarTheme(
+    backgroundColor:  Color(0xFF111111),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
   snackBarTheme: const SnackBarThemeData(
