@@ -141,7 +141,7 @@ class AppBarListScreen extends StatelessWidget {
       title: const Center(
         child: Text('Seznam míst'),
       ),
-      animationDuration: const Duration(milliseconds: 250),
+      animationDuration: const Duration(milliseconds: 260),
       searchClearIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchBackIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchCursorColor: Theme.of(context).colorScheme.secondary,
@@ -149,12 +149,18 @@ class AppBarListScreen extends StatelessWidget {
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
       searchHintText: 'Ostrava...',
+
       suggestionBuilder: (value) {
-        return ListTile(
-          contentPadding: EdgeInsets.zero,
-          horizontalTitleGap: 0,
-          leading: const Icon(Icons.location_on),
-          title: Text(value),
+        return Column(
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              horizontalTitleGap: 0,
+              leading: const Icon(Icons.location_on),
+              title: Text(value),
+            ),
+            const Divider(height: 6),
+          ],
         );
       },
     );
