@@ -5,6 +5,8 @@ import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:eurokey2/utils/general_utils.dart';
+import 'package:eurokey2/widgets/sort_order_button.dart';
+import 'package:eurokey2/widgets/sort_type_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_scroll_to_top/flutter_scroll_to_top.dart';
@@ -65,6 +67,19 @@ class _ListScreenState extends State<ListScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
                         children: [
+                          const Divider(),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Spacer(),
+                                Flexible(
+                                  child: SortTypeDropdown(),
+                                ),
+                              ],
+                            ),
+                          ),
                           const Divider(),
                           Expanded(
                             child: RefreshIndicator(

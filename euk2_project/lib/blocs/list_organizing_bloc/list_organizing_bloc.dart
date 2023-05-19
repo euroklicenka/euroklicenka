@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
@@ -15,12 +17,28 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
     _manager = locManager;
     _currentSort = OnSortByLocationDistance();
     on<OnSortByLocationDistance>(_onSortByLocationDistance);
+    on<OnSortByAddress>(_onSortByAddress);
+    on<OnSortByCity>(_onSortByCity);
     on<OnFilterByText>(_onFilterByText);
   }
 
   void _onSortByLocationDistance(OnSortByLocationDistance event, emit) {
     emit(ListOrganizingSortingState());
     _organizedLocations.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+    _currentSort = event;
+    emit(ListOrganizingDefaultState());
+  }
+
+  void _onSortByAddress(OnSortByAddress event, emit) {
+    emit(ListOrganizingSortingState());
+    _organizedLocations.sort((a, b) => a.address.compareTo(b.address));
+    _currentSort = event;
+    emit(ListOrganizingDefaultState());
+  }
+
+  void _onSortByCity(OnSortByCity event, emit) {
+    emit(ListOrganizingSortingState());
+    _organizedLocations.sort((a, b) => a.city.compareTo(b.city));
     _currentSort = event;
     emit(ListOrganizingDefaultState());
   }
