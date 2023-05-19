@@ -148,6 +148,7 @@ class AppBarListScreen extends StatelessWidget {
       searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF191919) : Theme.of(context).colorScheme.surface,
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
+      searchHintText: 'Ostrava...',
       suggestionBuilder: (value) {
         return ListTile(
           contentPadding: EdgeInsets.zero,
