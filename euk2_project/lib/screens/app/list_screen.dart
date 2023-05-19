@@ -145,7 +145,7 @@ class AppBarListScreen extends StatelessWidget {
       searchClearIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchBackIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchCursorColor: Theme.of(context).colorScheme.secondary,
-      searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF161616) : Theme.of(context).colorScheme.surface,
+      searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF191919) : Theme.of(context).colorScheme.surface,
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
       suggestionBuilder: (value) {
