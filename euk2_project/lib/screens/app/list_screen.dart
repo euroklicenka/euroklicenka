@@ -149,7 +149,15 @@ class AppBarListScreen extends StatelessWidget {
       onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       suggestions: context.read<ListOrganizingBloc>().getSuggestions(),
       searchHintText: 'Ostrava...',
-
+      onSuggestionTap: (value) {
+        final locBloc = context.read<LocationManagementBloc>();
+        try {
+          final String id = locBloc.locationManager.locations.firstWhere((element) => element.address == value).id;
+          locBloc.add(OnFocusOnEUKLocation(id, zoom: 17));
+        } catch (e) {
+          //Intentionally Blank
+        }
+      },
       suggestionBuilder: (value) {
         return Column(
           children: [
