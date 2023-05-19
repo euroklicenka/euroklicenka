@@ -70,15 +70,23 @@ class _ListScreenState extends State<ListScreen> {
                           const SizedBox(height: 8),
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Flexible(
-                                  child: SortTypeDropdown(),
-                                ),
-                                SizedBox(width: 8),
-                                SortOrderButton(),
-                              ],
+                            child: IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Flexible(
+                                    child: SortTypeDropdown(),
+                                  ),
+                                  // SizedBox(width: 8),
+                                  // Text('|'),
+                                  VerticalDivider(
+                                    thickness: 1,
+                                    indent: 4,
+                                    endIndent: 4,
+                                  ),
+                                  SortOrderButton(),
+                                ],
+                              ),
                             ),
                           ),
                           const Divider(),

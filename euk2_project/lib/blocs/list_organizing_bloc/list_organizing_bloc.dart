@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
@@ -72,12 +70,12 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
   }
 
   void _onReset(OnReset event, emit) {
+    add(OnSortByLocationDistance());
     add(OnFilterByText(''));
     if (_isReversed) {
       _reverseLocations();
       _isReversed = false;
     }
-    add(OnSortByLocationDistance());
   }
 
   void _sortLocations({required ListOrganizingEvent event, required emit, required int Function(EUKLocationData a, EUKLocationData b) compare}) {
