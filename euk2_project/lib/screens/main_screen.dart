@@ -19,15 +19,29 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<MainScreenBloc, MainScreenState>(
       builder: (context, state) {
-        if (state is MainScreenInitialState) {
-          return const EUKSplashScreen();
-        } else if (state is MainScreenGuideState) {
-          return GuideScreen();
-        } else {
-          return const MainAppScreen();
-        }
+        return ColoredBox(
+          color: Theme.of(context).colorScheme.surface,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            transitionBuilder: (child, animation) => FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+            child: _getScreen(state),
+          ),
+        );
       },
     );
   }
 
+  ///Returns a screen based on the [state] of [MainScreenBloc].
+  Widget _getScreen(MainScreenState state) {
+    if (state is MainScreenInitialState) {
+      return const EUKSplashScreen();
+    } else if (state is MainScreenGuideState) {
+      return const GuideScreen();
+    } else {
+      return const MainAppScreen();
+    }
+  }
 }

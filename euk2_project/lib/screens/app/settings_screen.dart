@@ -45,7 +45,6 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
         children: [
           Expanded(
             child: Scrollbar(
-              thumbVisibility: true,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
