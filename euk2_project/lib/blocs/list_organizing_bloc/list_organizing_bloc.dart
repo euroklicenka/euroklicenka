@@ -29,7 +29,7 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
     emit(ListOrganizingSortingState());
     _updateSortedLocations();
     _organizedLocations = _organizedLocations.where((element) {
-      return element.address.toLowerCase().contains(event.value.toLowerCase());
+      return element.address.toLowerCase().contains(event.value.toLowerCase()) || element.city.toLowerCase().contains(event.value.toLowerCase());
     },).toList();
 
     add(_currentSort);
