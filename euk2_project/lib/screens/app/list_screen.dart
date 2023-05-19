@@ -67,16 +67,17 @@ class _ListScreenState extends State<ListScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Column(
                         children: [
-                          const Divider(),
+                          const SizedBox(height: 8),
                           const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(horizontal: 16.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Spacer(),
                                 Flexible(
                                   child: SortTypeDropdown(),
                                 ),
+                                SizedBox(width: 8),
+                                SortOrderButton(),
                               ],
                             ),
                           ),

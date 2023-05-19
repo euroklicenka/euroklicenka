@@ -58,7 +58,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
           if (index == ScreenType.map.index) locationBloc.add(OnFocusOnUserPosition());
           if (index == ScreenType.list.index) {
             locationBloc.add(OnRecalculateLocationsDistance());
-            context.read<ListOrganizingBloc>().add(OnFilterByText(''));
+            context.read<ListOrganizingBloc>().add(OnReset());
           }
           if (index == ScreenType.options.index) {
             context.read<ExternalMapBloc>().add(OnRedrawDefaultIcon());
