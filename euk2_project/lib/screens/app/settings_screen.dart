@@ -90,7 +90,7 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                       showDuration: const Duration(milliseconds: 3000),
                       triggerMode: TooltipTriggerMode.longPress,
                       child: SwitchListTile.adaptive(
-                        title: const Text('Aktualizovat míst při spuštění'),
+                        title: const Text('Aktualizovat místa při spuštění'),
                         value: context.watch<LocationManagementBloc>().checkForDataOnline,
                         onChanged: (value) => context.read<LocationManagementBloc>().add(OnChangeOnlineCheckDecision(decision: value)),
                       ),
