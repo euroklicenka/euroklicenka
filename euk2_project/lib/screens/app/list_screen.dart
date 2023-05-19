@@ -39,9 +39,7 @@ class _ListScreenState extends State<ListScreen> {
         child: Column(
           children: [
             CircularProgressIndicator(),
-            SizedBox(
-              height: 16,
-            ),
+            SizedBox(height: 16),
             Text('Uspořádávání listu'),
           ],
         ),
@@ -125,9 +123,7 @@ class _ListScreenState extends State<ListScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           getIconByType(data.type),
-          const SizedBox(
-            height: 4,
-          ),
+          const SizedBox(height: 4),
           Text(distanceText),
         ],
       ),

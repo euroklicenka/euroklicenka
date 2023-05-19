@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/features/location_data/location_manager.dart';
@@ -10,18 +8,20 @@ part 'list_organizing_state.dart';
 
 class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> {
   late EUKLocationManager _manager;
+  late ListOrganizingEvent _currentSort;
   List<EUKLocationData> _organizedLocations = [];
 
   ListOrganizingBloc({required EUKLocationManager locManager}) : super(ListOrganizingDefaultState()) {
     _manager = locManager;
+    _currentSort = OnSortByLocationDistance();
     on<OnSortByLocationDistance>(_onSortByLocationDistance);
     on<OnFilterByText>(_onFilterByText);
   }
 
   void _onSortByLocationDistance(OnSortByLocationDistance event, emit) {
-    _updateSortedLocations();
     emit(ListOrganizingSortingState());
     _organizedLocations.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+    _currentSort = event;
     emit(ListOrganizingDefaultState());
   }
 
@@ -32,6 +32,7 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
       return element.address.toLowerCase().contains(event.value.toLowerCase());
     },).toList();
 
+    add(_currentSort);
     emit(ListOrganizingDefaultState());
   }
 
