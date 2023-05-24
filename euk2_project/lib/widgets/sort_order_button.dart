@@ -1,4 +1,5 @@
 import 'package:eurokey2/blocs/list_organizing_bloc/list_organizing_bloc.dart';
+import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,7 +19,10 @@ class _SortOrderButtonState extends State<SortOrderButton> {
       padding: EdgeInsets.zero,
       splashRadius: 24,
       constraints: const BoxConstraints(),
-      icon: Icon(context.watch<ListOrganizingBloc>().isReversed ? Icons.arrow_downward : Icons.arrow_upward),
+      icon: Icon(
+        context.watch<ListOrganizingBloc>().isReversed ? Icons.arrow_downward : Icons.arrow_upward,
+        color: context.isAppInDarkMode ? Colors.white70 : Colors.black54,
+      ),
       onPressed: () => context.read<ListOrganizingBloc>().add(OnReverseOrder()),
     );
   }

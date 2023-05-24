@@ -52,7 +52,7 @@ class _SortTypeDropdownState extends State<SortTypeDropdown> {
       onTap: () => context.read<ListOrganizingBloc>().add(event),
       child: Row(
         children: [
-          Icon(icon, color: context.isAppInDarkMode ? Colors.white70 : Colors.black45,),
+          Icon(icon, color: context.isAppInDarkMode ? Colors.white70 : Colors.black54,),
           const SizedBox(width: 8),
           Text(text),
         ],
