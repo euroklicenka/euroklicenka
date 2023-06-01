@@ -12,7 +12,6 @@ class UserPositionLocator {
   LatLng _currentPosition = const LatLng(0, 0);
   LocationAccuracyStatus _accuracyStatus = LocationAccuracyStatus.unknown;
 
-
   Future<void> activate() async {
     _currentPosition = await _getDevicePosition();
     const LocationSettings locationSettings = LocationSettings(
@@ -39,7 +38,7 @@ class UserPositionLocator {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.always || permission != LocationPermission.whileInUse) {
+      if (permission != LocationPermission.always && permission != LocationPermission.whileInUse) {
         showSnackBar(message: 'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.');
         return defaultPos;
       }
