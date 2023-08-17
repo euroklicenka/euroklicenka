@@ -110,7 +110,7 @@ class AppBarMapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Mapa Euroklíč lokací'),
+      title: const Text('Místa osazená Euroklíčem'),
       centerTitle: true,
     );
   }
