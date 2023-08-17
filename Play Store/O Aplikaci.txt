@@ -1,8 +1,37 @@
+O Aplikaci
+
+
+== Čeština ===============================================================================================
+
+== Krátký popis ======
+S aplikací najdete Euroklíčem osazená zařízení ve svém okolí i v celé ČR.
+
+
+== Popis ======
 Jste vlastníkem Euroklíče a nevíte, kde jej můžete použít? Tak tomu už je konec! 
-Díky mobilní aplikaci EuroKlíčenka máte možnost najít všechna sociální zařízení, opatřena Eurozámkem. Díky přehlednému a uživatelsky přívětivému rozhraní naleznete nejen k vám nejbližší zařízení, ale také informaci o tom, o jaké zařízení se jedná.  Vše, co k tomu potřebujete mít je zapnutou GPS a připojení k internetu. 
+Díky mobilní aplikaci EuroKlíčenka máte možnost najít všechna sociální zařízení, opatřena Eurozámkem. Přes přehledné a uživatelsky přívětivé rozhraní naleznete nejen k vám nejbližší zařízení, ale také informaci o tom, o jaké zařízení se jedná.  Vše, co k tomu potřebujete mít je zapnutou GPS a připojení k internetu. 
 Zapomeňte na bloudění a jděte přímo...s EuroKlíčenkou!
 
 Aplikace vám umožní
 - vidět na mapě Euroklíčem osazená místa v České Republice.
-- zobrazit si nejbližší místa na listě, seřazeném podle vzdálenosti od vašeho zařízení.
-- připravit si navigování k určitému místu v podporované navigační aplikaci.
+- zobrazit si nejbližší místa na listě, seřazeném podle vzdálenosti.
+- připravit si navigování k určitému místu v podporované navigační aplikaci (Google Maps, Waze).
+
+
+
+
+== English ===============================================================================================
+
+== Short Description ======
+The app allows you to find Eurokey-equipped devices in your area and the CR.
+
+== Description ======
+Are you the owner of a Eurokey and don't know where to use it? Well, all your problems are now over!
+Thanks to the EuroKlíčenka mobile app, you can find all sanitary facilities equipped with an Eurokey. Using the and user-friendly interface, you can find not only the device closest to you, but also what it is and what it does. All you need to do this is to have your GPS turned on and an internet connection.
+Forget wandering and go straight...with EuroKlíčenka!
+
+The app allows you to:
+- see places in the Czech Republic fitted with an Eurokey on the map.
+- view the closest places to you on a list, sorted by their distance.
+- Trigger navigation to a specific location via a supported navigation app (Google Maps, Waze). 
+
