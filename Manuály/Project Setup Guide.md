@@ -1,27 +1,29 @@
 
-# About
+# Project Setup Guide
 
 This guide helps you with setting up the EuroKey 2.0 project on your machine (Windows, MAC).
 
 ## Table of Contents
 
-- [1. Install Flutter](#1-install-flutter)
-  - [For Windows](#for-windows)
-  - [For MAC](#for-mac)
-- [2. Install Android Studio](#2-install-android-studio)
-  - [For Windows \& MAC](#for-windows--mac)
-- [3. Get project onto your computer](#3-get-project-onto-your-computer)
-  - [For Windows \& MAC](#for-windows--mac-1)
-- [4. Test on a real device](#4-test-on-a-real-device)
-  - [For Android](#for-android)
-- [5. Test on an emulator](#5-test-on-an-emulator)
-  - [For Android](#for-android-1)
-  - [For iOS](#for-ios)
-- [6. Build APK for release](#6-build-apk-for-release)
+- [Project Setup Guide](#project-setup-guide)
+  - [Table of Contents](#table-of-contents)
+  - [1. Install Flutter](#1-install-flutter)
+    - [For Windows](#for-windows)
+    - [For MAC](#for-mac)
+  - [2. Install Android Studio](#2-install-android-studio)
+    - [For Windows \& MAC](#for-windows--mac)
+  - [3. Get project onto your computer](#3-get-project-onto-your-computer)
+    - [For Windows \& MAC](#for-windows--mac-1)
+  - [4. Test on a real device](#4-test-on-a-real-device)
+    - [For Android](#for-android)
+  - [5. Test on an emulator](#5-test-on-an-emulator)
+    - [For Android](#for-android-1)
+    - [For iOS](#for-ios)
+  - [6. Build APK for release](#6-build-apk-for-release)
 
 &nbsp;
 
-# 1. Install Flutter
+## 1. Install Flutter
 
 This section shows you how to install FLutter and Dart onto your computer.
 \
@@ -29,7 +31,7 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 
 > ❗ Make sure to have Java (JRE & JDK) installed on your computer.
 
-## For Windows
+### For Windows
 
 1. Download [Flutter SDK](https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.7.12-stable.zip).
 
@@ -45,7 +47,7 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 \
 4. Run `flutter doctor` in console to verify installation.
 
-## For MAC
+### For MAC
 
 1. Make sure you have xCode installed.
 
@@ -57,11 +59,11 @@ For more information visit the [Official Flutter site](https://docs.flutter.dev/
 
 &nbsp;
 
-# 2. Install Android Studio
+## 2. Install Android Studio
 
 This section explains how to prepare the Android Studio IDE for flutter development.
 
-## For Windows & MAC
+### For Windows & MAC
 
 1. Download & install the latest version of [Android Studio](https://developer.android.com/studio).
 
@@ -94,11 +96,11 @@ If flutter doctor says CocoaPods is not installed, open the terminal and run `br
 
 &nbsp;
 
-# 3. Get project onto your computer
+## 3. Get project onto your computer
 
 This section explains how to get your own copy of the project files onto your computer.
 
-## For Windows & MAC
+### For Windows & MAC
 
 1. Clone the [EuroKey 2.0 Repository](https://github.com/ondrej66/RPR1) from GitHub onto your computer.
 
@@ -114,11 +116,11 @@ This section explains how to get your own copy of the project files onto your co
 
 &nbsp;
 
-# 4. Test on a real device
+## 4. Test on a real device
 
 This section explains how to test the project on a real device.
 
-## For Android
+### For Android
 
 1. Enable [Developer options](https://developer.android.com/studio/debug/dev-options) on your Android device.
 
@@ -130,11 +132,11 @@ This section explains how to test the project on a real device.
 
 &nbsp;
 
-# 5. Test on an emulator
+## 5. Test on an emulator
 
 This section explains how to test the project on a simulated device.
 
-## For Android
+### For Android
 
 1. In Android Studio open the **Device Manager** (Right side of the screen or View -> Tool Windows -> Device Manager).
 
@@ -150,14 +152,14 @@ This section explains how to test the project on a simulated device.
 
 6. Hit Play on the device in the Device Manager. This will start up the emulator and allow the emulated device to be detected for app testing.
 
-## For iOS
+### For iOS
 
 1. Open **Simulator.app**.
 2. The default iOS device boots when the simulator starts. Android studio should now detect that device for testing the app.
 
 &nbsp;
 
-# 6. Build APK for release
+## 6. Build APK for release
 
 This section explains how to build a signed APK of the app.
 
