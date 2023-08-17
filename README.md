@@ -5,6 +5,7 @@ Jedná se o mobilní aplikaci pro zařízení Android a iOS, umožňující drž
 ## Manuály
 
 - [Jak zprovoznit vývojové prostředí + sestavení APK](https://github.com/ondrej66/RPR1/blob/main/Manu%C3%A1ly/Project%20Setup%20Guide.md)
+- [Úprava stahovacích URL adres + úprava parsování](https://github.com/ondrej66/RPR1/blob/main/Manu%C3%A1ly/Project%20Adjustments%20Guide.md)
 
 ## Odkazy
 
