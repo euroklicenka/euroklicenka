@@ -19,7 +19,6 @@ This guide helps you with setting up the EuroKey 2.0 project on your machine (Wi
   - [5. Test on an emulator](#5-test-on-an-emulator)
     - [For Android](#for-android-1)
     - [For iOS](#for-ios)
-  - [6. Build APK for release](#6-build-apk-for-release)
 
 &nbsp;
 
@@ -156,27 +155,3 @@ This section explains how to test the project on a simulated device.
 
 1. Open **Simulator.app**.
 2. The default iOS device boots when the simulator starts. Android studio should now detect that device for testing the app.
-
-&nbsp;
-
-## 6. Build APK for release
-
-This section explains how to build a signed APK of the app.
-
-1. Create a new file called **key.properties** in project's  **root/android/** folder.
-2. Paste this template into the new file and fill out the missing details:
-
-        storePassword=
-        keyPassword=
-        keyAlias=upload
-        storeFile=
-
-    The values are the same ones used in your .jks file. More about it can be found [here](https://docs.flutter.dev/deployment/android#create-an-upload-keystore).
-
-    > ❗ **key.properties** is ignored by Git by default and will never appear on the repository. (Contains private information, so that should never happen anyway.)
-
-3. In project's console run the `flutter build apk` command.
-4. This will build your APK file. It's default path is **root\build\app\outputs\flutter-apk\app-release.apk**.
-
-    > ❗ To check if your APK was signed properly, run in console: \
-    `jarsigner -verify -verbose -certs %Path to app-release.apk%`.
