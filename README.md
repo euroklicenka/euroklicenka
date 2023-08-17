@@ -9,10 +9,10 @@ Jedná se o mobilní aplikaci pro zařízení Android a iOS, umožňující drž
 
 ## Info o větvích
 
-- *main* - slouží pouze jako úschovna dokumentů. Nepoužívat k vývoji.
-- *develop* - obsahuje nejnovější změny na aplikaci a jedná se o hlavní větev vývoje.
-- *release-X-X-X* - představují jednotlivé velké releasy aplikace. Jedná se o časové snapshoty *develop* na které se již commitují pouze bug fixy.
-- *EUR2-X-NÁZEV* - Předtavují feature větve. káždá je samostatnou fíčurou propojenou přes ID číslo s taskem v Jire.
+- ***main*** - slouží pouze jako úschovna dokumentů. Nepoužívat k vývoji.
+- ***develop*** - obsahuje nejnovější změny na aplikaci a jedná se o hlavní větev vývoje.
+- ***release-X-X-X*** - představují velké releasy aplikace. Jedná se o časové snapshoty *develop* a commitují se na ně již  jen bug-fixy.
+- ***EUR2-X-NÁZEV*** - Předtavují feature větve. káždá je samostatnou fíčurou propojenou přes ID číslo s taskem v Jire.
 
 ## Odkazy
 
