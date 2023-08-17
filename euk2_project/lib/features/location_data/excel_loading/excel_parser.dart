@@ -14,20 +14,26 @@ class ExcelParser {
 
     for (int i = 1; i < decoder.tables[table]!.rows.length; i++) {
       final List row = decoder.tables[table]!.rows[i];
-      if (row[4].toString().isEmpty) continue;
-      final List<String> latlng = _toString(row[4]).split(',');
+      if (row[3] == null || row[3].toString().isEmpty) continue;
+
+      final String id = _toString(i);
+      final String region = _toString(row[0]);
+      final String city = _toString(row[1]);
+      final String address = _toString(row[2]);
+      final List<String> latlng = _toString(row[3]).split(',');
+      final String info = _toString(row[4]);
 
       locations.add(
         EUKLocationData(
-          id: _toString(row[0]),
+          id: id,
           lat: _fromDegreesToDecimals(latlng[0].trim()),
           long: _fromDegreesToDecimals(latlng[1].trim()),
-          address: _extractAddress(_toString(row[3])),
-          region: _toString(row[1]),
-          city: _toString(row[2]),
-          info: _toString(row[4]).replaceAll(RegExp('"'), ''),
-          ZIP: _extractZipCode(_toString(row[3])),
-          type: _extractLocationType(_toString(row[3])),
+          address: _extractAddress(address),
+          region: region,
+          city: city,
+          info: info.replaceAll(RegExp('"'), ''),
+          ZIP: _extractZipCode(address),
+          type: _extractLocationType(address),
         ),
       );
     }

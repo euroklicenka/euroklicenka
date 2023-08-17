@@ -2,7 +2,7 @@
 # and plist.info next to other links as well (so it can be allowed by the device).
 
 download_urls:
-  - 'https://www.euroklic.cz/element/simple/documents-to-download/d/0/b828501d0553497b.xlsx?download=true'
+  - 'https://www.euroklic.cz/element/simple/documents-to-download/1/3/2003395fc46ab916.xlsx?download=true'
   - 'https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx'
 
 about_eurokey_url: 'https://portal.gov.cz/rozcestniky/euroklic-RZC-83'
