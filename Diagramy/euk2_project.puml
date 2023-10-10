@@ -1,0 +1,149 @@
+@startuml
+set namespaceSeparator ::
+
+class "euk2_project::navigation::page_info.dart::PageInfo" {
+  -PreferredSizeWidget? _appBar
+  -Widget _body
+  +PreferredSizeWidget? appBar
+  +Widget body
+}
+
+"euk2_project::navigation::page_info.dart::PageInfo" o-- "flutter::src::widgets::preferred_size.dart::PreferredSizeWidget"
+"euk2_project::navigation::page_info.dart::PageInfo" o-- "flutter::src::widgets::framework.dart::Widget"
+
+class "euk2_project::navigation::app_navigator.dart::AppNavigator" {
+  -PreferredSizeWidget? _currentAppBar
+  -Widget _currentBody
+  -List<PageInfo> _screens
+  -int _screenIndex
+  +PreferredSizeWidget? currentAppBar
+  +Widget currentBody
+  +int screenIndex
+  +void navigate()
+}
+
+"euk2_project::navigation::app_navigator.dart::AppNavigator" o-- "flutter::src::widgets::preferred_size.dart::PreferredSizeWidget"
+"euk2_project::navigation::app_navigator.dart::AppNavigator" o-- "flutter::src::widgets::framework.dart::Widget"
+
+class "euk2_project::screens::splash.dart::SplashScreenPage" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::screens::splash.dart::SplashScreenPage"
+
+class "euk2_project::screens::intro_screen.dart::IntroScreen" {
+  +List<PageViewModel> pages
+  +Widget build()
+  +void onDone()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::screens::intro_screen.dart::IntroScreen"
+
+class "euk2_project::main.dart::MyApp" {
+  -ThemeManager _themeManager
+  +Widget build()
+}
+
+"euk2_project::main.dart::MyApp" o-- "euk2_project::themes::theme_manager.dart::ThemeManager"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::main.dart::MyApp"
+
+class "euk2_project::locations::location_data_test.dart::TestLocationData" {
+  -String _address
+  -String _city
+  -String _ZIP
+  -EUKLocationType _type
+  +String ZIP
+  +String city
+  +String address
+  +EUKLocationType type
+}
+
+"euk2_project::locations::location_data_test.dart::TestLocationData" o-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
+
+class "euk2_project::locations::location_data_test.dart::EUKLocationType" {
+  +int index
+  {static} +List<EUKLocationType> values
+  {static} +EUKLocationType wc
+  {static} +EUKLocationType platform
+  {static} +EUKLocationType hospital
+  {static} +EUKLocationType none
+}
+
+"euk2_project::locations::location_data_test.dart::EUKLocationType" o-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
+"dart::core::Enum" <|-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
+
+class "euk2_project::pages::list_page.dart::ListPage" {
+  +Widget build()
+  -Widget _listBuilder()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::pages::list_page.dart::ListPage"
+
+class "euk2_project::pages::map_page.dart::MapPage" {
+  +State<MapPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::pages::map_page.dart::MapPage"
+
+class "euk2_project::pages::map_page.dart::_MapPageState" {
+  -GoogleMapController? _controller
+  +Location currentLocation
+  +Set<Marker> markers
+  -double _zoom
+  +List<String> images
+  -dynamic _customInfoWindowController
+  -MapType _currentMapType
+  +dynamic getLocation()
+  +void dispose()
+  +dynamic getMarkers()
+  +Widget buildPopupWindow()
+  +void initState()
+  -Widget _drawer()
+  -dynamic _goToTrainStation()
+  -dynamic _goToCastle()
+  -dynamic _goToHospital()
+  +Widget build()
+}
+
+"euk2_project::pages::map_page.dart::_MapPageState" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
+"euk2_project::pages::map_page.dart::_MapPageState" o-- "location::location.dart::Location"
+"euk2_project::pages::map_page.dart::_MapPageState" o-- "google_maps_flutter_platform_interface::src::types::ui.dart::MapType"
+"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::pages::map_page.dart::_MapPageState"
+
+class "euk2_project::pages::settings_page.dart::SettingsPage" {
+  +State<SettingsPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::pages::settings_page.dart::SettingsPage"
+
+class "euk2_project::pages::settings_page.dart::_SettingsPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::pages::settings_page.dart::_SettingsPageState"
+
+class "euk2_project::main_screen.dart::MainScreen" {
+  +State<MainScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::main_screen.dart::MainScreen"
+
+class "euk2_project::main_screen.dart::_MainScreenState" {
+  -AppNavigator _navigator
+  +Widget build()
+}
+
+"euk2_project::main_screen.dart::_MainScreenState" o-- "euk2_project::navigation::app_navigator.dart::AppNavigator"
+"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::main_screen.dart::_MainScreenState"
+
+class "euk2_project::themes::theme_manager.dart::ThemeManager" {
+  -ThemeMode _mode
+  +ThemeMode themeMode
+  +void changeTheme()
+}
+
+"euk2_project::themes::theme_manager.dart::ThemeManager" o-- "flutter::src::material::app.dart::ThemeMode"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "euk2_project::themes::theme_manager.dart::ThemeManager"
+
+
+@enduml
