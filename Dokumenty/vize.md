@@ -22,5 +22,5 @@ uživatelům pomohou při rozhodování.
 
 ## Use Cases:
 
-UC0 – Operace s mapou
-UC1 – Hodnocení míst
+* UC0 – Operace s mapou
+* UC1 – Hodnocení míst
