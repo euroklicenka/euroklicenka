@@ -2,7 +2,7 @@
 
 | ID | Risk | Dopad | MA (Mitigační akce) | Priorita | Pravděpodobnost |
 |----|------|-------|---------------------|----------|-----------------|
-| R1 | Slabá komunikace | Členové týmu nebudou na stejné stránce, ohledně stavu projektu. Může dojít k nevědomosti, co už je hotové a co je třeba udělat dál. | Sledování prováděné aktivity v Jire. Přidělení práce hned na začátku sprintu. Kontrola před koncem. O nečekaných změnách ohledně práce informovat celý tým několik dní předem. | 3 | 0% |
+| R1 | Slabá komunikace | Členové týmu nebudou na stejné stránce, ohledně stavu projektu. Může dojít k nevědomosti, co už je hotové a co je třeba udělat dál. | Sledování prováděné aktivity v Jire. Přidělení práce hned na začátku sprintu. Kontrola před koncem. O nečekaných změnách ohledně práce informovat celý tým několik dní předem. | 3 | 70% |
 | R2 | Neznalost technologie | Bez známosti použité technologie není možné začít vývoj projektu. | Seznámit se s jejími součástmi vytvořením drobného prototypu. | 5 | 75% |
 | R3 | Nekvalitní kód | Rychle psaný a nekontrolovaný kód vede ke slabé udržitelnosti a snížené použitelnosti (bugy) softwaru. | Použití architektury, dodržování best practises. Průběžné manuální testování. Tvorba automatických testů. Implementace Continuous Integration. | 2 | 25% |
 | R4 | Náhlé změny požadavků (zákazníkem) | Promarněný čas, nekompletní funkce. | Domluva se zákazníkem => Způsob "Něco za něco" - implementace funkcí na úkor jiných. | 2 | 0% |
