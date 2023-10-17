@@ -1,6 +1,6 @@
 # EuroKlíčenka 2.0: User Stories
 
-## US0:
+## US0 (priority:high):
 
 Jako uživatel aplikace chci mít možnost vyhledat libovolnou pobočku na mapě. Výhodou je volnost a přidání funkcionality, která není závislá na aktuální poloze či explicitnímu vyhledání města.
 
@@ -10,7 +10,7 @@ DOR: Vyhledávací funkce implementována a zahrnuta do buildu.
 
 AC: Rozšířená funkcionalita je plně využitelná v aplikaci.
 
-## US1:
+## US1 (priority:low):
 
 Jako uživatel aplikace chci přidat hodnocení pobočky. Výhodou je přidaná hodnota výpisu poboček v okolí, kdy hodnocení či recenze udávají kvalitu dané pobočky.
 
@@ -19,6 +19,12 @@ DOD: Přidat funkcionalitu, která umožňuje uživatelům přidat a zobrazit ho
 DOR: Funkcionalita implementována a zahrnuta do buildu.
 
 AC: Rozšířená funkcionalita je plně využitelná v aplikaci.
+
+## US2:
+
+Jako uživatel požaduji ochranu soukromí a osobních dat při práci s Google Maps.
+
+-TODO
 
 ## Zainteresované strany:
 
