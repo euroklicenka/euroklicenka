@@ -1,0 +1,10 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: Euroklíčenka
+Upstream-Contact: Ondřej Surý <ondrej@sury.org>
+Source: https://github.com/euroklicenka/euroklicenka
+
+# Sample paragraph, commented out:
+#
+# Files: src/*
+# Copyright: $YEAR $NAME <$CONTACT>
+# License: ...
