@@ -14,3 +14,6 @@
 | R10 | Bezpečnostní chyby v externích knihovnách | Externí knihovny mohou obsahovat bezpečnostní chyby, které vynutí aktualizaci knihoven. | Používat pouze podporované verze externích knihoven, SDK a kompilátoru, aby bylo možné knihovny aktualizovat na verzi, která má opravené bezpečnostní chyby. | 6 | 100% |
 | R11 | Technologický dluh | Kód existujícího projektu je neudržovaný nebo neudržovatelný. | Důkladné prostudování stávajícího zdrojového kódu a použitých technologií. | 3 | 50% |
 | R12 | Přetížení zdroje dat | Uživatelé budou aplikaci hodně využívat a kvůli nevhodně zvolené technologii dojde k přetížení zdroje. | Lokální cache zdroje dat, automatická i manuální aktualizace dat. Remote cache v CDN. | 2 | 10 % |
+| R13 | Nedostatek zkušeností s Flutteren a Dartem | Členové nebudou mít dostatečné vědomosti s použitou technologí a nebudou schopni dalšího vývoje | Zajistit, aby členové týmu absolvovali „školení“ zaměřené na Flutter a Dart | 4 | 50 % |
+| R14 | Nedostatečná znalost aktuálního stavu aplikace | Může vést k chybám ve vývoji kvůli neznalosti aplikace | Studium dokumentace předchozího týmu | 3 | 30 % |
+| R15 | Časová náročnost projektu | Může vést k nedodržení termínu jednotlivých sprintů | Využití plánovacího softwaru přidělení práce každému členu týmu | 2 | 50 % |
