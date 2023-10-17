@@ -1,6 +1,6 @@
 # Risk List
 
-| ID | Risk | Dopad | MA (Mitigační akce) | Priorita | Pravděpodobnost |
+| ID | Risk | Dopad | MA (Mitigační akce) | Priorita[^1] | Pravděpodobnost |
 |----|------|-------|---------------------|----------|-----------------|
 | R1 | Slabá komunikace | Členové týmu nebudou na stejné stránce, ohledně stavu projektu. Může dojít k nevědomosti, co už je hotové a co je třeba udělat dál. | Sledování prováděné aktivity v Jire. Přidělení práce hned na začátku sprintu. Kontrola před koncem. O nečekaných změnách ohledně práce informovat celý tým několik dní předem. | 3 | 70% |
 | R2 | Neznalost technologie Flutter | Bez známosti použité technologie není možné pokračovat ve vývoji projektu. | Seznámit se součástmi technologie (Gradle, Dart, Flutter) vytvořením drobného prototypu. Průběžné sdílení zkušeností. | 5 | 100% |
@@ -14,3 +14,5 @@
 | R10 | Bezpečnostní chyby v externích knihovnách | Externí knihovny mohou obsahovat bezpečnostní chyby, které vynutí aktualizaci knihoven. | Používat pouze podporované verze externích knihoven, SDK a kompilátoru, aby bylo možné knihovny aktualizovat na verzi, která má opravené bezpečnostní chyby. | 6 | 100% |
 | R11 | Technologický dluh | Kód existujícího projektu je neudržovaný nebo neudržovatelný. | Důkladné prostudování stávajícího zdrojového kódu a použitých technologií. | 3 | 50% |
 | R12 | Přetížení zdroje dat | Uživatelé budou aplikaci hodně využívat a kvůli nevhodně zvolené technologii dojde k přetížení zdroje. | Lokální cache zdroje dat, automatická i manuální aktualizace dat. Remote cache v CDN. | 2 | 10 % |
+
+[^1]: Priority jsou číslované 1-6, kde 1 má nejmenší prioritu, 6 má největší prioritu.
