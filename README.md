@@ -10,12 +10,14 @@ Jedná se o mobilní aplikaci pro zařízení Android a iOS, umožňující drž
 
 ## Info o větvích
 
-- ***main*** - slouží pouze jako úschovna dokumentů. Nepoužívat k vývoji.
-- ***develop*** - obsahuje nejnovější změny na aplikaci a jedná se o hlavní větev vývoje.
-- ***release-X-X-X*** - představují velké releasy aplikace. Jedná se o časové snapshoty *develop* a commitují se na ně již  jen bug-fixy.
-- ***EUR2-X-NÁZEV*** - Předtavují feature větve. káždá je samostatnou fíčurou propojenou přes ID číslo s taskem v Jire.
+- ***main*** - hlavní větev aplikace, do které se integrují feature větve.
+- ***HF-<NN>-<nazev>*** - jednotlivé feature větve, HF-<NN> odpovídá číslu Tasku/Bugu v Jiře, název branche je výstižný.
+
+## Info o tags / releases
+
+- vNN.NN - odpovídá jednotlivým releasům, v případě oprav se dělá nový tag z ***main***
 
 ## Odkazy
 
-- Jira projekt: <https://osukip.atlassian.net/jira/software/projects/EUR2/boards/10>
+- Jira projekt: <https://osukip.atlassian.net/jira/software/projects/HF/boards/18>
 - Euroklíč: <https://www.euroklic.cz/obsah>
