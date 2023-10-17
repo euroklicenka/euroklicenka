@@ -1,8 +1,8 @@
 import 'package:euk2_project/screens/intro_screen.dart';
-import 'package:euk2_project/screens/splash.dart';
 import 'package:euk2_project/themes/theme_collection.dart';
 import 'package:euk2_project/themes/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:euk2_project/main_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 int? initScreen;
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: initScreen == 0 || initScreen == null ? 'onBoard' : 'home',
       routes: {
-        'home' : (context) => SplashScreenPage(),
+        'home' : (context) => MainScreen(),
         'onBoard' : (context) => IntroScreen(),
       },
 
