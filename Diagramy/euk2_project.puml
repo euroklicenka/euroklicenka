@@ -1,149 +1,766 @@
 @startuml
 set namespaceSeparator ::
 
-class "euk2_project::navigation::page_info.dart::PageInfo" {
-  -PreferredSizeWidget? _appBar
-  -Widget _body
-  +PreferredSizeWidget? appBar
-  +Widget body
+class "eurokey2::features::data_management::user_data_manager.dart::UserDataManager" {
+  {static} -String _notFirstTimeLaunchPref
+  {static} -String _defaultMapAppIndexPref
+  {static} -String _defaultThemeIndexPref
+  {static} -String _locationDataPref
+  {static} -String _searchOnlineOnStartupPref
+  -SharedPreferences? _prefs
+  -bool? _initScreen
+  +bool? notFirstTimeLaunch
+  {static} +dynamic create()
+  +dynamic saveEUKLocationData()
+  +List<EUKLocationData> loadEUKLocationData()
+  +dynamic saveDefaultMapApp()
+  +int loadDefaultMapAppIndex()
+  +dynamic saveDefaultTheme()
+  +int loadDefaultThemeIndex()
+  +dynamic saveOnlineCheckDecision()
+  +bool loadOnlineCheckDecision()
 }
 
-"euk2_project::navigation::page_info.dart::PageInfo" o-- "flutter::src::widgets::preferred_size.dart::PreferredSizeWidget"
-"euk2_project::navigation::page_info.dart::PageInfo" o-- "flutter::src::widgets::framework.dart::Widget"
+"eurokey2::features::data_management::user_data_manager.dart::UserDataManager" o-- "shared_preferences::shared_preferences.dart::SharedPreferences"
 
-class "euk2_project::navigation::app_navigator.dart::AppNavigator" {
-  -PreferredSizeWidget? _currentAppBar
-  -Widget _currentBody
-  -List<PageInfo> _screens
-  -int _screenIndex
-  +PreferredSizeWidget? currentAppBar
-  +Widget currentBody
-  +int screenIndex
-  +void navigate()
+class "eurokey2::features::data_management::yaml_data_manager.dart::YAMLDataManager" {
+  {static} -YAMLDataManager? _instance
+  -String _downloadURLsParam
+  -String _aboutEuroKeyUrlParam
+  -String _aboutEuroKeyWebUrlParam
+  -String _universityOfOstravaUrlParam
+  -String _universityOfOstravaKIPUrlParam
+  {static} +dynamic getInstance()
+  {static} -dynamic _create()
 }
 
-"euk2_project::navigation::app_navigator.dart::AppNavigator" o-- "flutter::src::widgets::preferred_size.dart::PreferredSizeWidget"
-"euk2_project::navigation::app_navigator.dart::AppNavigator" o-- "flutter::src::widgets::framework.dart::Widget"
+"eurokey2::features::data_management::yaml_data_manager.dart::YAMLDataManager" o-- "eurokey2::features::data_management::yaml_data_manager.dart::YAMLDataManager"
 
-class "euk2_project::screens::splash.dart::SplashScreenPage" {
-  +Widget build()
+class "eurokey2::features::location_data::excel_loading::excel_parser.dart::ExcelParser" {
+  +dynamic parse()
+  -double _fromDegreesToDecimals()
+  -double _fromDegreesToDecimal()
+  -String _extractZipCode()
+  -EUKLocationType _extractLocationType()
+  -String _extractAddress()
+  -String _toString()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::screens::splash.dart::SplashScreenPage"
-
-class "euk2_project::screens::intro_screen.dart::IntroScreen" {
-  +List<PageViewModel> pages
-  +Widget build()
-  +void onDone()
-}
-
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::screens::intro_screen.dart::IntroScreen"
-
-class "euk2_project::main.dart::MyApp" {
-  -ThemeManager _themeManager
-  +Widget build()
-}
-
-"euk2_project::main.dart::MyApp" o-- "euk2_project::themes::theme_manager.dart::ThemeManager"
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::main.dart::MyApp"
-
-class "euk2_project::locations::location_data_test.dart::TestLocationData" {
+class "eurokey2::features::location_data::euk_location_data.dart::EUKLocationData" {
+  -String _id
+  -double _lat
+  -double _long
   -String _address
+  -String _region
   -String _city
   -String _ZIP
+  -String _info
   -EUKLocationType _type
-  +String ZIP
-  +String city
+  -double _distanceFromDevice
+  +String id
+  +double lat
+  +double long
   +String address
+  +String region
+  +String city
+  +String info
+  +String ZIP
   +EUKLocationType type
+  +double distanceFromDevice
+  +LatLng location
+  +void updateDistanceFromDevice()
+  +Map<String, dynamic> toMap()
 }
 
-"euk2_project::locations::location_data_test.dart::TestLocationData" o-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
+"eurokey2::features::location_data::euk_location_data.dart::EUKLocationData" o-- "eurokey2::features::location_data::euk_location_data.dart::EUKLocationType"
+"eurokey2::features::location_data::euk_location_data.dart::EUKLocationData" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"google_maps_cluster_manager::src::cluster_item.dart::ClusterItem" <|-- "eurokey2::features::location_data::euk_location_data.dart::EUKLocationData"
 
-class "euk2_project::locations::location_data_test.dart::EUKLocationType" {
+class "eurokey2::features::location_data::euk_location_data.dart::EUKLocationType" {
   +int index
   {static} +List<EUKLocationType> values
+  {static} +EUKLocationType none
   {static} +EUKLocationType wc
   {static} +EUKLocationType platform
   {static} +EUKLocationType hospital
-  {static} +EUKLocationType none
+  {static} +EUKLocationType gate
+  {static} +EUKLocationType elevator
 }
 
-"euk2_project::locations::location_data_test.dart::EUKLocationType" o-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
-"dart::core::Enum" <|-- "euk2_project::locations::location_data_test.dart::EUKLocationType"
+"eurokey2::features::location_data::euk_location_data.dart::EUKLocationType" o-- "eurokey2::features::location_data::euk_location_data.dart::EUKLocationType"
+"dart::core::Enum" <|-- "eurokey2::features::location_data::euk_location_data.dart::EUKLocationType"
 
-class "euk2_project::pages::list_page.dart::ListPage" {
-  +Widget build()
-  -Widget _listBuilder()
+class "eurokey2::features::location_data::user_pos_locator.dart::UserPositionLocator" {
+  +LatLng defaultPos
+  -double _zoomAmount
+  -LatLng _currentPosition
+  -LocationAccuracyStatus _accuracyStatus
+  +LatLng currentPosition
+  +double zoomAmount
+  +LocationAccuracyStatus accuracyStatus
+  +dynamic activate()
+  -dynamic _getDevicePosition()
 }
 
-"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "euk2_project::pages::list_page.dart::ListPage"
+"eurokey2::features::location_data::user_pos_locator.dart::UserPositionLocator" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"eurokey2::features::location_data::user_pos_locator.dart::UserPositionLocator" o-- "geolocator_platform_interface::src::enums::location_accuracy_status.dart::LocationAccuracyStatus"
 
-class "euk2_project::pages::map_page.dart::MapPage" {
-  +State<MapPage> createState()
-}
-
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::pages::map_page.dart::MapPage"
-
-class "euk2_project::pages::map_page.dart::_MapPageState" {
-  -GoogleMapController? _controller
-  +Location currentLocation
+class "eurokey2::features::location_data::location_manager.dart::EUKLocationManager" {
+  -BehaviorSubject<Set<Marker>> _markerStream
+  -UserDataManager _dataManager
+  -ClusterManager<ClusterItem> _clusterManager
+  -ExcelParser _excelParser
+  -CustomInfoWindowController _windowController
+  -List<EUKLocationData> _locations
+  -Set<Marker> _markers
+  -bool _hasThrownError
+  +dynamic Function(Cluster<EUKLocationData>)? getMarkerBuilder
+  +List<EUKLocationData> locations
   +Set<Marker> markers
-  -double _zoom
-  +List<String> images
-  -dynamic _customInfoWindowController
-  -MapType _currentMapType
-  +dynamic getLocation()
+  +Stream<Set<Marker>> markerStream
+  +CustomInfoWindowController windowController
+  +ClusterManager<ClusterItem> clusterManager
+  +bool hasThrownError
   +void dispose()
-  +dynamic getMarkers()
-  +Widget buildPopupWindow()
+  +dynamic reloadFromDatabase()
+  -void _reloadFromLocalStorage()
+  -dynamic _loadDataFromURL()
+  -void _buildMarkers()
+  -void _initClusterManager()
+  -void _updateMarkers()
+}
+
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "rxdart::src::subjects::behavior_subject.dart::BehaviorSubject<Set<Marker>>"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "google_maps_cluster_manager::src::cluster_manager.dart::ClusterManager<ClusterItem>"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "eurokey2::features::location_data::excel_loading::excel_parser.dart::ExcelParser"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "custom_info_window::custom_info_window.dart::CustomInfoWindowController"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "null::dynamic Function(Cluster<EUKLocationData>)"
+"eurokey2::features::location_data::location_manager.dart::EUKLocationManager" o-- "dart::async::Stream<Set<Marker>>"
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenBloc" {
+  -LocationManagementBloc _locationBloc
+  -UserDataManager _dataManager
+  +LocationManagementBloc locationBloc
+  -FutureOr<void> _onAppInit()
+  -FutureOr<void> _onInitFinish()
+  -FutureOr<void> _onOpenGuideScreen()
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenBloc" o-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc"
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenBloc" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenBloc"
+
+abstract class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenEvent" {
+}
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnAppInit" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenEvent" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnAppInit"
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnInitFinish" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenEvent" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnInitFinish"
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnOpenGuideScreen" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenEvent" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::OnOpenGuideScreen"
+
+abstract class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenState" {
+}
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenInitialState" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenState" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenInitialState"
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenGuideState" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenState" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenGuideState"
+
+class "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenAppContentState" {
+}
+
+"eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenState" <|-- "eurokey2::blocs::main_screen_bloc::main_screen_bloc.dart::MainScreenAppContentState"
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationBloc" {
+  +ScreenType currentScreen
+  -void _onSwitchPage()
+  -void _onOpenNavigation()
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationBloc" o-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationBloc"
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType" {
+  +int index
+  {static} +List<ScreenType> values
+  {static} +ScreenType list
+  {static} +ScreenType map
+  {static} +ScreenType options
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType" o-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType"
+"dart::core::Enum" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType"
+
+abstract class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationEvent" {
+}
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnSwitchPage" {
+  +ScreenType screen
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnSwitchPage" o-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenType"
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationEvent" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnSwitchPage"
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnOpenInformation" {
+  +BuildContext context
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnOpenInformation" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationEvent" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::OnOpenInformation"
+
+abstract class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationState" {
+}
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenMapState" {
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationState" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenMapState"
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenListState" {
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationState" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenListState"
+
+class "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenOptionsState" {
+}
+
+"eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationState" <|-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::AppScreenOptionsState"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" {
+  -UserPositionLocator _userLocation
+  -LocationZoomInfo _zoomInfo
+  -UserDataManager _dataManager
+  -ScreenNavigationBloc _navigationBloc
+  +EUKLocationManager locationManager
+  -bool _checkForDataOnline
+  +ScreenNavigationBloc navigationBloc
+  +UserPositionLocator userLocation
+  +LatLng? wantedPosition
+  +double? wantedZoom
+  +bool checkForDataOnline
+  -dynamic _onInitialize()
+  -dynamic _onFocusOnLocation()
+  -dynamic _onFocusOnEUKLocation()
+  -dynamic _onFocusOnUserPosition()
+  -dynamic _onMapIsReady()
+  -dynamic _onLoadFromDatabase()
+  -dynamic _onLoadFromDatabaseFinished()
+  -void _onRecalculateLocationsDistance()
+  -void _onChangeOnlineCheckDecision()
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "eurokey2::features::location_data::user_pos_locator.dart::UserPositionLocator"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "eurokey2::blocs::location_management_bloc::location_zoom_info.dart::LocationZoomInfo"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "eurokey2::blocs::screen_navigation_bloc::screen_navigation_bloc.dart::ScreenNavigationBloc"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "eurokey2::features::location_data::location_manager.dart::EUKLocationManager"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementBloc"
+
+abstract class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" {
+}
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnInitialize" {
+  +dynamic Function()? onFinish
+  +UserDataManager dataManager
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnInitialize" o-- "null::dynamic Function()"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnInitialize" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnInitialize"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnLocation" {
+  +LatLng location
+  +double zoom
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnLocation" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnLocation"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnEUKLocation" {
+  +String locationID
+  +double zoom
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnEUKLocation"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnMapIsReady" {
+  +GoogleMapController mapController
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnMapIsReady" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnMapIsReady"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnChangeOnlineCheckDecision" {
+  +bool decision
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnChangeOnlineCheckDecision"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnUserPosition" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnFocusOnUserPosition"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnLoadLocationsFromDatabase" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnLoadLocationsFromDatabase"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnLoadLocationsFromDatabaseFinished" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnLoadLocationsFromDatabaseFinished"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnRecalculateLocationsDistance" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementEvent" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::OnRecalculateLocationsDistance"
+
+abstract class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementState" {
+}
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementDefaultState" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementState" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementDefaultState"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementUpdatingDatabaseState" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementState" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementUpdatingDatabaseState"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementUpdatingFinishedState" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementState" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementUpdatingFinishedState"
+
+class "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementLoadingPositionState" {
+}
+
+"eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementState" <|-- "eurokey2::blocs::location_management_bloc::location_management_bloc.dart::LocationManagementLoadingPositionState"
+
+class "eurokey2::blocs::location_management_bloc::location_zoom_info.dart::LocationZoomInfo" {
+  +LatLng? wantedPosition
+  +double? wantedZoom
+  +Widget? popupWindow
+  +void clear()
+}
+
+"eurokey2::blocs::location_management_bloc::location_zoom_info.dart::LocationZoomInfo" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"eurokey2::blocs::location_management_bloc::location_zoom_info.dart::LocationZoomInfo" o-- "flutter::src::widgets::framework.dart::Widget"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingBloc" {
+  -EUKLocationManager _manager
+  -ListOrganizingEvent _currentSort
+  -List<EUKLocationData> _organizedLocations
+  -bool _isReversed
+  +List<EUKLocationData> organizedLocations
+  +ListOrganizingEvent currentSort
+  +bool isReversed
+  -void _onFilterByText()
+  -void _onSortByLocationDistance()
+  -void _onSortByAddress()
+  -void _onSortByCity()
+  -void _onReverseOrder()
+  -void _onReset()
+  -void _sortLocations()
+  -void _updateSortedLocations()
+  -void _reverseLocations()
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingBloc" o-- "eurokey2::features::location_data::location_manager.dart::EUKLocationManager"
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingBloc" o-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingBloc"
+
+abstract class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" {
+}
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnReset" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnReset"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByLocationDistance" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByLocationDistance"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByAddress" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByAddress"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByCity" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnSortByCity"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnReverseOrder" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnReverseOrder"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnFilterByText" {
+  +String value
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingEvent" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::OnFilterByText"
+
+abstract class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingState" {
+}
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingDefaultState" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingState" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingDefaultState"
+
+class "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingSortingState" {
+}
+
+"eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingState" <|-- "eurokey2::blocs::list_organizing_bloc::list_organizing_bloc.dart::ListOrganizingSortingState"
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapBloc" {
+  -UserDataManager _dataManager
+  -List<AvailableMap> _availableMaps
+  -bool _nextAppIsDefault
+  -String _defaultMapIcon
+  +bool nextAppIsDefault
+  +String defaultMapIcon
+  +void updateNextAppIsDefault()
+  -dynamic _onNavigate()
+  -dynamic _onChangeDefaultMapApp()
+  -void _onFinishDefaultMapAppSetting()
+  -String _tryLoadIcon()
+  -dynamic _onInit()
+  -dynamic _refreshAvailableMaps()
+  -void _showDirections()
+  -void _saveMapAppIndex()
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapBloc" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapBloc"
+
+abstract class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapEvent" {
+}
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnOpenForNavigation" {
+  +BuildContext context
+  +double lat
+  +double long
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnOpenForNavigation" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapEvent" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnOpenForNavigation"
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnChangeDefaultMapApp" {
+  +BuildContext context
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnChangeDefaultMapApp" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapEvent" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnChangeDefaultMapApp"
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnFinishDefaultMapAppSetting" {
+  +BuildContext context
+  +int mapIndex
+  +String mapIcon
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnFinishDefaultMapAppSetting" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapEvent" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnFinishDefaultMapAppSetting"
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnRedrawDefaultIcon" {
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapEvent" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::OnRedrawDefaultIcon"
+
+abstract class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapState" {
+}
+
+class "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapDefaultState" {
+}
+
+"eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapState" <|-- "eurokey2::blocs::external_map_bloc::external_map_bloc.dart::ExternalMapDefaultState"
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc" {
+  -UserDataManager _dataManager
+  -MapThemeManager _mapThemes
+  -ThemeMode _currentTheme
+  -String _currentMapTheme
+  -GoogleMapController? _mapController
+  +GoogleMapController mapController
+  +ThemeMode currentTheme
+  +String currentMapTheme
+  -dynamic _onSwitchTheme()
+  -void _onOpenThemeDialog()
+  -void _loadThemeFromStorage()
+  -void _activeThemeRefresh()
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc" o-- "eurokey2::features::data_management::user_data_manager.dart::UserDataManager"
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc" o-- "eurokey2::themes::map_theme_manager.dart::MapThemeManager"
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc" o-- "flutter::src::material::app.dart::ThemeMode"
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
+"bloc::src::bloc.dart::Bloc" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingBloc"
+
+abstract class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingEvent" {
+}
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnOpenThemeDialog" {
+  +BuildContext context
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnOpenThemeDialog" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingEvent" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnOpenThemeDialog"
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnSwitchTheme" {
+  +ThemeMode themeMode
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnSwitchTheme" o-- "flutter::src::material::app.dart::ThemeMode"
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingEvent" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::OnSwitchTheme"
+
+abstract class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingState" {
+}
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingSystemState" {
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingState" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingSystemState"
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingLightState" {
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingState" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingLightState"
+
+class "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingDarkState" {
+}
+
+"eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingState" <|-- "eurokey2::blocs::theme_switching_bloc::theme_switching_bloc.dart::ThemeSwitchingDarkState"
+
+class "eurokey2::screens::app::settings_screen.dart::SettingsScreen" {
+  +State<SettingsScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::app::settings_screen.dart::SettingsScreen"
+
+class "eurokey2::screens::app::settings_screen.dart::_SettingsScreenState" {
+  -AnimationController _animController
   +void initState()
-  -Widget _drawer()
-  -dynamic _goToTrainStation()
-  -dynamic _goToCastle()
-  -dynamic _goToHospital()
+  +void dispose()
   +Widget build()
 }
 
-"euk2_project::pages::map_page.dart::_MapPageState" o-- "google_maps_flutter::google_maps_flutter.dart::GoogleMapController"
-"euk2_project::pages::map_page.dart::_MapPageState" o-- "location::location.dart::Location"
-"euk2_project::pages::map_page.dart::_MapPageState" o-- "google_maps_flutter_platform_interface::src::types::ui.dart::MapType"
-"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::pages::map_page.dart::_MapPageState"
+"eurokey2::screens::app::settings_screen.dart::_SettingsScreenState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::app::settings_screen.dart::_SettingsScreenState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin" <|-- "eurokey2::screens::app::settings_screen.dart::_SettingsScreenState"
 
-class "euk2_project::pages::settings_page.dart::SettingsPage" {
+class "eurokey2::screens::app::settings_screen.dart::AppBarSettingsScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::app::settings_screen.dart::AppBarSettingsScreen"
+
+class "eurokey2::screens::app::settings_screen.dart::DividerOptions" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::app::settings_screen.dart::DividerOptions"
+
+class "eurokey2::screens::app::map_screen.dart::MapScreen" {
+  +State<MapScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::app::map_screen.dart::MapScreen"
+
+class "eurokey2::screens::app::map_screen.dart::_MapScreenState" {
+  -MapLoadingState _mapState
+  +Widget build()
+  +Widget buildMapLoader()
+}
+
+"eurokey2::screens::app::map_screen.dart::_MapScreenState" o-- "eurokey2::screens::app::map_screen.dart::MapLoadingState"
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::app::map_screen.dart::_MapScreenState"
+
+class "eurokey2::screens::app::map_screen.dart::AppBarMapScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::app::map_screen.dart::AppBarMapScreen"
+
+class "eurokey2::screens::app::map_screen.dart::MapLoadingState" {
+  +int index
+  {static} +List<MapLoadingState> values
+  {static} +MapLoadingState initializing
+  {static} +MapLoadingState loading
+  {static} +MapLoadingState finished
+}
+
+"eurokey2::screens::app::map_screen.dart::MapLoadingState" o-- "eurokey2::screens::app::map_screen.dart::MapLoadingState"
+"dart::core::Enum" <|-- "eurokey2::screens::app::map_screen.dart::MapLoadingState"
+
+class "eurokey2::screens::app::list_screen.dart::ListScreen" {
+  +State<ListScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::app::list_screen.dart::ListScreen"
+
+class "eurokey2::screens::app::list_screen.dart::_ListScreenState" {
+  +Widget build()
+  -Widget _getBody()
+  -Widget _buildListTile()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::app::list_screen.dart::_ListScreenState"
+
+class "eurokey2::screens::app::list_screen.dart::AppBarListScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::app::list_screen.dart::AppBarListScreen"
+
+class "eurokey2::screens::app::main_app_screen.dart::MainAppScreen" {
+  +State<MainAppScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::app::main_app_screen.dart::MainAppScreen"
+
+class "eurokey2::screens::app::main_app_screen.dart::_MainAppScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::app::main_app_screen.dart::_MainAppScreenState"
+
+class "eurokey2::screens::app::extras::information_screen.dart::InformationScreen" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::app::extras::information_screen.dart::InformationScreen"
+
+class "eurokey2::screens::settings_screen.dart::SettingsPage" {
   +State<SettingsPage> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::pages::settings_page.dart::SettingsPage"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::settings_screen.dart::SettingsPage"
 
-class "euk2_project::pages::settings_page.dart::_SettingsPageState" {
+class "eurokey2::screens::settings_screen.dart::_SettingsPageState" {
   +Widget build()
 }
 
-"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::pages::settings_page.dart::_SettingsPageState"
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::settings_screen.dart::_SettingsPageState"
 
-class "euk2_project::main_screen.dart::MainScreen" {
+class "eurokey2::screens::intro_guide_screen.dart::GuideScreen" {
+  +_OnBoardScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::intro_guide_screen.dart::GuideScreen"
+
+class "eurokey2::screens::intro_guide_screen.dart::_OnBoardScreenState" {
+  +Widget build()
+  -void _gotoHome()
+  -Widget? _buildImage()
+  -Widget _buildButton()
+  -DotsDecorator _getDotDecoration()
+  -PageDecoration _getDecoration()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::intro_guide_screen.dart::_OnBoardScreenState"
+
+class "eurokey2::screens::main_screen.dart::MainScreen" {
   +State<MainScreen> createState()
 }
 
-"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "euk2_project::main_screen.dart::MainScreen"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::screens::main_screen.dart::MainScreen"
 
-class "euk2_project::main_screen.dart::_MainScreenState" {
-  -AppNavigator _navigator
+class "eurokey2::screens::main_screen.dart::_MainScreenState" {
+  +Widget build()
+  -Widget _getScreen()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::screens::main_screen.dart::_MainScreenState"
+
+class "eurokey2::screens::splash_screen.dart::EUKSplashScreen" {
   +Widget build()
 }
 
-"euk2_project::main_screen.dart::_MainScreenState" o-- "euk2_project::navigation::app_navigator.dart::AppNavigator"
-"flutter::src::widgets::framework.dart::State" <|-- "euk2_project::main_screen.dart::_MainScreenState"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::screens::splash_screen.dart::EUKSplashScreen"
 
-class "euk2_project::themes::theme_manager.dart::ThemeManager" {
-  -ThemeMode _mode
-  +ThemeMode themeMode
-  +void changeTheme()
+class "eurokey2::main.dart::MyApp" {
+  +Widget build()
 }
 
-"euk2_project::themes::theme_manager.dart::ThemeManager" o-- "flutter::src::material::app.dart::ThemeMode"
-"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "euk2_project::themes::theme_manager.dart::ThemeManager"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::main.dart::MyApp"
+
+class "eurokey2::themes::map_theme_manager.dart::MapThemeManager" {
+  -String? _lightTheme
+  -String? _darkTheme
+  +dynamic darkTheme
+  +dynamic lightTheme
+  -dynamic _loadThemes()
+}
+
+class "eurokey2::widgets::sort_type_dropdown.dart::SortTypeDropdown" {
+  +State<SortTypeDropdown> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::widgets::sort_type_dropdown.dart::SortTypeDropdown"
+
+class "eurokey2::widgets::sort_type_dropdown.dart::_SortTypeDropdownState" {
+  +String currentValue
+  +Widget build()
+  +DropdownMenuItem<String> buildItem()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::widgets::sort_type_dropdown.dart::_SortTypeDropdownState"
+
+class "eurokey2::widgets::sort_order_button.dart::SortOrderButton" {
+  +State<SortOrderButton> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "eurokey2::widgets::sort_order_button.dart::SortOrderButton"
+
+class "eurokey2::widgets::sort_order_button.dart::_SortOrderButtonState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "eurokey2::widgets::sort_order_button.dart::_SortOrderButtonState"
+
+class "eurokey2::widgets::popup_window.dart::EUKPopupWindow" {
+  -String _address
+  -String _region
+  -String _city
+  -String _ZIP
+  -String _info
+  -double _lat
+  -double _long
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::widgets::popup_window.dart::EUKPopupWindow"
+
+class "eurokey2::widgets::theme_dependent_icon.dart::ThemeDependentIcon" {
+  +IconData icon
+  +Widget build()
+}
+
+"eurokey2::widgets::theme_dependent_icon.dart::ThemeDependentIcon" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "eurokey2::widgets::theme_dependent_icon.dart::ThemeDependentIcon"
 
 
 @enduml
