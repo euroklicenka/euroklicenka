@@ -4,9 +4,9 @@ PODS:
     - Flutter
   - geolocator_apple (1.2.0):
     - Flutter
-  - google_maps_flutter (0.0.1):
+  - google_maps_flutter_ios (0.0.1):
     - Flutter
-    - GoogleMaps
+    - GoogleMaps (< 8.0)
   - GoogleMaps (5.2.0):
     - GoogleMaps/Maps (= 5.2.0)
   - GoogleMaps/Base (5.2.0)
@@ -24,7 +24,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
-  - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
+  - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
   - map_launcher (from `.symlinks/plugins/map_launcher/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -40,8 +40,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_keyboard_visibility/ios"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
-  google_maps_flutter:
-    :path: ".symlinks/plugins/google_maps_flutter/ios"
+  google_maps_flutter_ios:
+    :path: ".symlinks/plugins/google_maps_flutter_ios/ios"
   map_launcher:
     :path: ".symlinks/plugins/map_launcher/ios"
   shared_preferences_foundation:
@@ -53,11 +53,11 @@ SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
+  google_maps_flutter_ios: abdac20d6ce8931f6ebc5f46616df241bfaa2cfd
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   map_launcher: e325db1261d029ff33e08e03baccffe09593ffea
-  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
-  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
+  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
