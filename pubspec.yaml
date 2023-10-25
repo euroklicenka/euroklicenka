@@ -20,7 +20,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   csv: ^5.0.2
   spreadsheet_decoder: ^2.2.0
-  http: ^0.13.5
+  http: ^1.1.0
   rxdart: ^0.27.7
   google_maps_cluster_manager: ^3.0.0+1
   map_launcher: ^3.0.1
