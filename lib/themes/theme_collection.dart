@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 ThemeData defaultLightTheme = ThemeData(
   colorScheme: ColorScheme.fromSwatch(
-    brightness: Brightness.light,
     primarySwatch: createMaterialColor(Colors.deepOrangeAccent),
   ).copyWith(
     secondary: const Color(0xFFE95473),

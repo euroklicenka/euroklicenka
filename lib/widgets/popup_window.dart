@@ -5,8 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class EUKPopupWindow extends StatelessWidget {
-  final String _address, _region, _city, _ZIP, _info;
-  final double _lat, _long;
+  final String _address;
+  final String _region;
+  final String _city;
+  final String _ZIP;
+  final String _info;
+  final double _lat;
+  final double _long;
 
   const EUKPopupWindow({super.key, required String address, required String region,
       required String city, required String ZIP, required String info,
@@ -124,7 +129,7 @@ class EUKPopupWindow extends StatelessWidget {
                   onPressed: () => context.read<ExternalMapBloc>().add(OnOpenForNavigation(context: context, lat: _lat, long: _long)),
                   child: const Text('Navigovat', style: TextStyle(fontSize: 16),
                   ),
-                )
+                ),
               ],
             ),
           ],

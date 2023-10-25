@@ -84,7 +84,7 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
     Future.delayed(const Duration(milliseconds: 400), () => {
         locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
-        _zoomInfo.clear()
+        _zoomInfo.clear(),
       },
     );
   }

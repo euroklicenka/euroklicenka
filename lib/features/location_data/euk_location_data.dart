@@ -16,7 +16,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
   EUKLocationData(
       {required String id, required double lat, required double long, required String address, required String region, required String city,
-        required String ZIP, required String info, required EUKLocationType type}) {
+        required String ZIP, required String info, required EUKLocationType type,}) {
     _id = id;
     _lat = lat;
     _long = long;

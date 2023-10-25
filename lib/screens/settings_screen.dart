@@ -10,7 +10,7 @@ AppBar settingsAppBar = AppBar(
 );
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -41,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         isCheckedSettings1 = change;
                       });
-                    })
+                    },),
               ],
             ),
           ),
@@ -62,7 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         isCheckedSettings2 = change;
                       });
-                    })
+                    },),
               ],
             ),
           ),
@@ -83,7 +83,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       setState(() {
                         isCheckedSettings3 = change;
                       });
-                    })
+                    },),
               ],
             ),
           ),

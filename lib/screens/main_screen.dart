@@ -1,4 +1,3 @@
-import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
 import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:eurokey2/screens/app/main_app_screen.dart';
 import 'package:eurokey2/screens/intro_guide_screen.dart';

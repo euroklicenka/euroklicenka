@@ -43,8 +43,8 @@ class ExcelParser {
   ///Converts GPS coordinates from degrees into the decimal format (used by Latitude & Longitude)
   double _fromDegreesToDecimals(String s) {
     final double degrees = double.parse(s.substring(0, s.indexOf('°')));
-    final double minutes = double.parse(s.substring(s.indexOf('°') + 1, s.indexOf('\'')));
-    final double seconds = double.parse(s.substring(s.indexOf('\'') + 1, s.indexOf('"')));
+    final double minutes = double.parse(s.substring(s.indexOf('°') + 1, s.indexOf("'")));
+    final double seconds = double.parse(s.substring(s.indexOf("'") + 1, s.indexOf('"')));
     return _fromDegreesToDecimal(degrees, minutes, seconds);
   }
 
