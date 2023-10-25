@@ -12,7 +12,8 @@ void openThemeSwitchingDialog({
   showModalBottomSheet(
     // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
     context: context,
     builder: (BuildContext context) {
       return SafeArea(
@@ -28,7 +29,9 @@ void openThemeSwitchingDialog({
                     child: Text(
                       headerText,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold,),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                   SingleChildScrollView(

@@ -11,13 +11,14 @@ import 'package:map_launcher/map_launcher.dart';
 /// shows a toggle to set the next selected map as a default when [showDefaultSwitch] is on,
 /// allows an action to be taken [onSelect] and when [onSelectNone] has an action assigned,
 /// shows a special button below the window.
-void openMapAppDialog(
-    {required BuildContext context,
-    required List<AvailableMap> maps,
-    required Function(AvailableMap map) onSelect,
-    String headerText = 'Otevřít v aplikaci',
-    bool showDefaultSwitch = true,
-    Function()? onSelectNone,}) {
+void openMapAppDialog({
+  required BuildContext context,
+  required List<AvailableMap> maps,
+  required Function(AvailableMap map) onSelect,
+  String headerText = 'Otevřít v aplikaci',
+  bool showDefaultSwitch = true,
+  Function()? onSelectNone,
+}) {
   final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.355;
 
   ///Builds a Grid Tile for a map.
@@ -44,9 +45,11 @@ void openMapAppDialog(
 
   showModalBottomSheet(
     constraints: BoxConstraints(
-        maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight,),
+      maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight,
+    ),
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
     context: context,
     builder: (BuildContext context) {
       return SafeArea(

@@ -35,18 +35,20 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => LocationManagementBloc(
-              navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context),),
+            navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context),
+          ),
         ),
         BlocProvider(
           create: (context) => MainScreenBloc(
-              dataManager: _dataManager,
-              locationBloc: BlocProvider.of<LocationManagementBloc>(context),)
-            ..add(OnAppInit()),
+            dataManager: _dataManager,
+            locationBloc: BlocProvider.of<LocationManagementBloc>(context),
+          )..add(OnAppInit()),
         ),
         BlocProvider(
           create: (context) => ListOrganizingBloc(
-              locManager: BlocProvider.of<LocationManagementBloc>(context)
-                  .locationManager,),
+            locManager: BlocProvider.of<LocationManagementBloc>(context)
+                .locationManager,
+          ),
         ),
         BlocProvider(
           create: (context) => ThemeSwitchingBloc(dataManager: _dataManager),

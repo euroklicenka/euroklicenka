@@ -42,8 +42,10 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the built-in URL link and stores them
   ///in the internal list.
-  Future<void> reloadFromDatabase(
-      {Function()? onFinish, bool offlineOnly = false,}) async {
+  Future<void> reloadFromDatabase({
+    Function()? onFinish,
+    bool offlineOnly = false,
+  }) async {
     _hasThrownError = false;
 
     if (downloadURLs.isEmpty) {
@@ -100,8 +102,10 @@ class EUKLocationManager {
   ///Initializes the cluster manager.
   void _initClusterManager() {
     _clusterManager = ClusterManager<EUKLocationData>(
-        _locations, _updateMarkers,
-        markerBuilder: getMarkerBuilder,);
+      _locations,
+      _updateMarkers,
+      markerBuilder: getMarkerBuilder,
+    );
   }
 
   void _updateMarkers(Set<Marker> markers) {
@@ -123,7 +127,9 @@ class EUKLocationManager {
             : () {
                 final EUKLocationData data = cluster.items.first;
                 windowController.addInfoWindow!(
-                    buildPopUpWindow(data), LatLng(data.lat, data.long),);
+                  buildPopUpWindow(data),
+                  LatLng(data.lat, data.long),
+                );
               };
 
         return Marker(

@@ -40,8 +40,9 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
     if (_availableMaps.isEmpty) {
       showSnackBar(
-          message:
-              'Navigování nemůže být spuštěno.\nNa zařízení není nainstalovaná žádná podporovaná aplikace.',);
+        message:
+            'Navigování nemůže být spuštěno.\nNa zařízení není nainstalovaná žádná podporovaná aplikace.',
+      );
       return;
     }
 
@@ -81,8 +82,9 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
 
     if (_availableMaps.length <= 1) {
       showSnackBar(
-          message:
-              'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.',);
+        message:
+            'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.',
+      );
       _defaultMapIcon = _availableMaps[0].icon;
       emit(ExternalMapDefaultState());
       return;
@@ -96,15 +98,23 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
       headerText: 'Změnit výchozí navigaci',
       showDefaultSwitch: false,
       onSelect: (map) {
-        add(OnFinishDefaultMapAppSetting(
+        add(
+          OnFinishDefaultMapAppSetting(
             context: event.context,
             mapIndex: map.mapType.index,
-            mapIcon: map.icon,),);
+            mapIcon: map.icon,
+          ),
+        );
         Navigator.pop(event.context);
       },
       onSelectNone: () {
-        add(OnFinishDefaultMapAppSetting(
-            context: event.context, mapIndex: -1, mapIcon: '',),);
+        add(
+          OnFinishDefaultMapAppSetting(
+            context: event.context,
+            mapIndex: -1,
+            mapIcon: '',
+          ),
+        );
         Navigator.pop(event.context);
       },
     );
