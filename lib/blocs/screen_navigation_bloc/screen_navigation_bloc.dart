@@ -32,8 +32,10 @@ class ScreenNavigationBloc
   }
 
   void _onOpenNavigation(OnOpenInformation event, emit) {
-    Navigator.push(event.context,
-        MaterialPageRoute(builder: (context) => const InformationScreen()),);
+    Navigator.push(
+      event.context,
+      MaterialPageRoute(builder: (context) => const InformationScreen()),
+    );
   }
 }
 

@@ -47,10 +47,11 @@ class _SortTypeDropdownState extends State<SortTypeDropdown> {
     );
   }
 
-  DropdownMenuItem<String> buildItem(
-      {required String text,
-      required ListOrganizingEvent event,
-      required IconData icon,}) {
+  DropdownMenuItem<String> buildItem({
+    required String text,
+    required ListOrganizingEvent event,
+    required IconData icon,
+  }) {
     return DropdownMenuItem<String>(
       value: text,
       onTap: () => context.read<ListOrganizingBloc>().add(event),

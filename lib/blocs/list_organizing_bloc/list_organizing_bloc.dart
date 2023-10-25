@@ -82,10 +82,11 @@ class ListOrganizingBloc
     }
   }
 
-  void _sortLocations(
-      {required ListOrganizingEvent event,
-      required emit,
-      required int Function(EUKLocationData a, EUKLocationData b) compare,}) {
+  void _sortLocations({
+    required ListOrganizingEvent event,
+    required emit,
+    required int Function(EUKLocationData a, EUKLocationData b) compare,
+  }) {
     emit(ListOrganizingSortingState());
     _organizedLocations.sort(compare);
     if (_isReversed) _reverseLocations();

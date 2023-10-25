@@ -21,8 +21,10 @@ class UserPositionLocator {
 
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position? position) async {
-      _currentPosition = LatLng(position?.latitude ?? defaultPos.latitude,
-          position?.longitude ?? defaultPos.longitude,);
+      _currentPosition = LatLng(
+        position?.latitude ?? defaultPos.latitude,
+        position?.longitude ?? defaultPos.longitude,
+      );
       _accuracyStatus = await Geolocator.getLocationAccuracy();
     });
   }
@@ -34,8 +36,9 @@ class UserPositionLocator {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       showSnackBar(
-          message:
-              'Musíš aktivovat sledování polohy, aby aplikace mohla správně fungovat.',);
+        message:
+            'Musíš aktivovat sledování polohy, aby aplikace mohla správně fungovat.',
+      );
       return defaultPos;
     }
 
@@ -45,8 +48,9 @@ class UserPositionLocator {
       if (permission != LocationPermission.always &&
           permission != LocationPermission.whileInUse) {
         showSnackBar(
-            message:
-                'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.',);
+          message:
+              'Musíš povolit aplikaci přístup k poloze, aby mohla správně fungovat.',
+        );
         return defaultPos;
       }
     }

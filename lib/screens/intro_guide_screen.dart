@@ -25,17 +25,19 @@ class _OnBoardScreenState extends State<GuideScreen> {
             body:
                 'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
             footer: _buildButton(
-                onPressed: () => openURL(url: aboutEuroKeyURL),
-                text: 'Co je to eurozámek?',),
+              onPressed: () => openURL(url: aboutEuroKeyURL),
+              text: 'Co je to eurozámek?',
+            ),
             decoration: _getDecoration(),
           ),
           PageViewModel(
             title: 'MAPA',
             image: _buildImage(
-                context.isAppInDarkMode
-                    ? 'assets/images/img_guide_map_dark.jpg'
-                    : 'assets/images/img_guide_map_light.jpg',
-                context,),
+              context.isAppInDarkMode
+                  ? 'assets/images/img_guide_map_dark.jpg'
+                  : 'assets/images/img_guide_map_light.jpg',
+              context,
+            ),
             body:
                 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
             footer: _buildButton(onPressed: null, text: ''),
@@ -44,10 +46,11 @@ class _OnBoardScreenState extends State<GuideScreen> {
           PageViewModel(
             title: 'INFORMACE O MÍSTĚ',
             image: _buildImage(
-                context.isAppInDarkMode
-                    ? 'assets/images/img_guide_popup_dark.jpg'
-                    : 'assets/images/img_guide_popup_light.jpg',
-                context,),
+              context.isAppInDarkMode
+                  ? 'assets/images/img_guide_popup_dark.jpg'
+                  : 'assets/images/img_guide_popup_light.jpg',
+              context,
+            ),
             body:
                 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
             footer: _buildButton(onPressed: null, text: ''),
@@ -58,10 +61,11 @@ class _OnBoardScreenState extends State<GuideScreen> {
             body:
                 'Na listě lokací se zobrazují nejbližší místa \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
             image: _buildImage(
-                context.isAppInDarkMode
-                    ? 'assets/images/img_guide_list_dark.jpg'
-                    : 'assets/images/img_guide_list_light.jpg',
-                context,),
+              context.isAppInDarkMode
+                  ? 'assets/images/img_guide_list_dark.jpg'
+                  : 'assets/images/img_guide_list_light.jpg',
+              context,
+            ),
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
@@ -90,8 +94,10 @@ class _OnBoardScreenState extends State<GuideScreen> {
         ? Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(path,
-                  width: MediaQuery.of(context).size.width * 0.7,),
+              child: Image.asset(
+                path,
+                width: MediaQuery.of(context).size.width * 0.7,
+              ),
             ),
           )
         : null;
@@ -108,7 +114,8 @@ class _OnBoardScreenState extends State<GuideScreen> {
               )
             : OutlinedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),),
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
         child: Text(text),
       ),
