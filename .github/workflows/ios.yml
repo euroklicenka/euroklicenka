@@ -27,3 +27,6 @@ jobs:
 
     - name: Build iOS
       run: flutter build ios --release --no-codesign
+
+    - name: Build iOS archive bundle
+      run: flutter build ipa --release --no-codesign
