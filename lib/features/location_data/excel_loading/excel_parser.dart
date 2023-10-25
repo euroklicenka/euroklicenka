@@ -9,7 +9,8 @@ class ExcelParser {
 
     final List<EUKLocationData> locations = [];
 
-    final SpreadsheetDecoder decoder = SpreadsheetDecoder.decodeBytes(fileBytes, update: true);
+    final SpreadsheetDecoder decoder =
+        SpreadsheetDecoder.decodeBytes(fileBytes, update: true);
     final String table = decoder.tables.keys.first;
 
     for (int i = 1; i < decoder.tables[table]!.rows.length; i++) {
@@ -43,8 +44,10 @@ class ExcelParser {
   ///Converts GPS coordinates from degrees into the decimal format (used by Latitude & Longitude)
   double _fromDegreesToDecimals(String s) {
     final double degrees = double.parse(s.substring(0, s.indexOf('°')));
-    final double minutes = double.parse(s.substring(s.indexOf('°') + 1, s.indexOf("'")));
-    final double seconds = double.parse(s.substring(s.indexOf("'") + 1, s.indexOf('"')));
+    final double minutes =
+        double.parse(s.substring(s.indexOf('°') + 1, s.indexOf("'")));
+    final double seconds =
+        double.parse(s.substring(s.indexOf("'") + 1, s.indexOf('"')));
     return _fromDegreesToDecimal(degrees, minutes, seconds);
   }
 
@@ -63,11 +66,16 @@ class ExcelParser {
   ///Based on text snippets in a string returns a [EUKLocationType].
   EUKLocationType _extractLocationType(String address) {
     if (address.isEmpty) return EUKLocationType.none;
-    if (RegExp(r'\bWC\b').firstMatch(address) != null) return EUKLocationType.wc;
-    if (RegExp(r'\bPlošina\b').firstMatch(address) != null) return EUKLocationType.platform;
-    if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) return EUKLocationType.hospital;
-    if (RegExp(r'\bVýtah\b').firstMatch(address) != null) return EUKLocationType.elevator;
-    if (RegExp(r'\bBrána\b').firstMatch(address) != null) return EUKLocationType.gate;
+    if (RegExp(r'\bWC\b').firstMatch(address) != null)
+      return EUKLocationType.wc;
+    if (RegExp(r'\bPlošina\b').firstMatch(address) != null)
+      return EUKLocationType.platform;
+    if (RegExp(r'\bNemocnice\b').firstMatch(address) != null)
+      return EUKLocationType.hospital;
+    if (RegExp(r'\bVýtah\b').firstMatch(address) != null)
+      return EUKLocationType.elevator;
+    if (RegExp(r'\bBrána\b').firstMatch(address) != null)
+      return EUKLocationType.gate;
     return EUKLocationType.none;
   }
 
@@ -80,5 +88,6 @@ class ExcelParser {
   }
 
   ///Returns the object as a string, but if it is null, returns a default symbol.
-  String _toString(dynamic s) => (s == null || s.toString().isEmpty) ? '---' : s.toString();
+  String _toString(dynamic s) =>
+      (s == null || s.toString().isEmpty) ? '---' : s.toString();
 }

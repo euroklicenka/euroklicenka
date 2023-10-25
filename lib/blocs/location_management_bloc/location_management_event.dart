@@ -21,6 +21,7 @@ class OnFocusOnEUKLocation extends LocationManagementEvent {
   final double zoom;
   OnFocusOnEUKLocation(this.locationID, {required this.zoom});
 }
+
 class OnMapIsReady extends LocationManagementEvent {
   final GoogleMapController mapController;
   OnMapIsReady(this.mapController);
@@ -32,6 +33,9 @@ class OnChangeOnlineCheckDecision extends LocationManagementEvent {
 }
 
 class OnFocusOnUserPosition extends LocationManagementEvent {}
+
 class OnLoadLocationsFromDatabase extends LocationManagementEvent {}
+
 class OnLoadLocationsFromDatabaseFinished extends LocationManagementEvent {}
+
 class OnRecalculateLocationsDistance extends LocationManagementEvent {}

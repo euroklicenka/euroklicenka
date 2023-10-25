@@ -20,7 +20,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     final bloc = context.read<LocationManagementBloc>();
     final ThemeSwitchingBloc themeBloc = context.watch<ThemeSwitchingBloc>();
-    final double popupWindowFlexibleHeight = MediaQuery.of(context).size.height * 0.27;
+    final double popupWindowFlexibleHeight =
+        MediaQuery.of(context).size.height * 0.27;
 
     return ColoredBox(
       color: Colors.black,
@@ -29,28 +30,36 @@ class _MapScreenState extends State<MapScreen> {
           StreamBuilder<Set<Marker>>(
             initialData: const <Marker>{},
             stream: bloc.locationManager.markerStream,
-            builder: (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
+            builder:
+                (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
               return GoogleMap(
                 myLocationEnabled: true,
                 onMapCreated: (GoogleMapController controller) {
                   themeBloc.mapController = controller;
                   controller.setMapStyle(themeBloc.currentMapTheme);
-                  bloc.locationManager.windowController.googleMapController = controller;
+                  bloc.locationManager.windowController.googleMapController =
+                      controller;
                   bloc.add(OnMapIsReady(controller));
                   Future.delayed(const Duration(milliseconds: 610), () {
                     if (!mounted) return;
                     setState(() => _mapState = MapLoadingState.loading);
                   });
                 },
-                onTap: (position) => bloc.locationManager.windowController.hideInfoWindow!(),
+                onTap: (position) =>
+                    bloc.locationManager.windowController.hideInfoWindow!(),
                 onCameraMove: (position) {
                   bloc.locationManager.windowController.onCameraMove!();
                   bloc.locationManager.clusterManager.onCameraMove(position);
                 },
-                markers: (snapshot.data == null) ? <Marker>{} : snapshot.data!.toSet(),
+                markers: (snapshot.data == null)
+                    ? <Marker>{}
+                    : snapshot.data!.toSet(),
                 initialCameraPosition: CameraPosition(
-                  target: context.watch<LocationManagementBloc>().wantedPosition ?? const LatLng(50.073658, 14.418540),
-                  zoom: context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,
+                  target:
+                      context.watch<LocationManagementBloc>().wantedPosition ??
+                          const LatLng(50.073658, 14.418540),
+                  zoom:
+                      context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,
                 ),
                 onCameraIdle: () {
                   bloc.locationManager.clusterManager.updateMap();
@@ -64,8 +73,13 @@ class _MapScreenState extends State<MapScreen> {
             ignoreInputWhen: _mapState != MapLoadingState.finished,
           ),
           CustomInfoWindow(
-            controller: context.watch<LocationManagementBloc>().locationManager.windowController,
-            height: (popupWindowFlexibleHeight < 180) ? 180 : popupWindowFlexibleHeight,
+            controller: context
+                .watch<LocationManagementBloc>()
+                .locationManager
+                .windowController,
+            height: (popupWindowFlexibleHeight < 180)
+                ? 180
+                : popupWindowFlexibleHeight,
             width: MediaQuery.of(context).size.width * 0.8,
             offset: 70,
           ),
@@ -77,7 +91,8 @@ class _MapScreenState extends State<MapScreen> {
   ///Builds a loading screen to mask map initialization.
   ///
   ///The loading screen blocks input when [ignoreInputWhen] is TRUE.
-  Widget buildMapLoader({required BuildContext context, bool ignoreInputWhen = true}) {
+  Widget buildMapLoader(
+      {required BuildContext context, bool ignoreInputWhen = true}) {
     return IgnorePointer(
       ignoring: ignoreInputWhen,
       child: AnimatedOpacity(
@@ -92,7 +107,9 @@ class _MapScreenState extends State<MapScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(),
-                SizedBox(height: 16,),
+                SizedBox(
+                  height: 16,
+                ),
                 Text('Vykreslování mapy'),
               ],
             ),

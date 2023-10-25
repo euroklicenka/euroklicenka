@@ -10,7 +10,8 @@ class YAMLDataManager {
   final String _aboutEuroKeyUrlParam = 'about_eurokey_url';
   final String _aboutEuroKeyWebUrlParam = 'about_eurokey_web_url';
   final String _universityOfOstravaUrlParam = 'university_of_ostrava_url';
-  final String _universityOfOstravaKIPUrlParam = 'university_of_ostrava_kip_url';
+  final String _universityOfOstravaKIPUrlParam =
+      'university_of_ostrava_kip_url';
 
   static Future<YAMLDataManager> getInstance() async {
     _instance ??= await _create();
@@ -19,11 +20,11 @@ class YAMLDataManager {
 
   YAMLDataManager._();
 
-
   /// Creates a new instance of [YAMLDataManager].
   static Future<YAMLDataManager> _create() async {
     final YAMLDataManager m = YAMLDataManager._();
-    final String rawData = await rootBundle.loadString('assets/url_addresses.yaml');
+    final String rawData =
+        await rootBundle.loadString('assets/url_addresses.yaml');
     final YamlMap data = await loadYaml(rawData) as YamlMap;
 
     final List<String> downloads = [];
@@ -32,11 +33,12 @@ class YAMLDataManager {
     }
 
     setAllowedURLs(
-        downloads: downloads,
-        aboutEuroKey: data[m._aboutEuroKeyUrlParam].toString(),
-        aboutEuroKeyWeb: data[m._aboutEuroKeyWebUrlParam].toString(),
-        universityOfOstrava:  data[m._universityOfOstravaUrlParam].toString(),
-        universityOfOstravaKIP: data[m._universityOfOstravaKIPUrlParam].toString(),
+      downloads: downloads,
+      aboutEuroKey: data[m._aboutEuroKeyUrlParam].toString(),
+      aboutEuroKeyWeb: data[m._aboutEuroKeyWebUrlParam].toString(),
+      universityOfOstrava: data[m._universityOfOstravaUrlParam].toString(),
+      universityOfOstravaKIP:
+          data[m._universityOfOstravaKIPUrlParam].toString(),
     );
 
     return m;

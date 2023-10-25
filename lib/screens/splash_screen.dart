@@ -18,16 +18,24 @@ class EUKSplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               if (MediaQuery.of(context).size.height > 310)
-                Image.asset('assets/images/logo_key.png', height: screenHeight * 0.25,),
+                Image.asset(
+                  'assets/images/logo_key.png',
+                  height: screenHeight * 0.25,
+                ),
               SizedBox(height: screenHeight * 0.02),
-              const Text('EuroKlíčenka', textScaleFactor: 2,),
+              const Text(
+                'EuroKlíčenka',
+                textScaleFactor: 2,
+              ),
               SizedBox(height: screenHeight * 0.1),
               const CircularProgressIndicator(),
               const SizedBox(height: 16),
               BlocBuilder<LocationManagementBloc, LocationManagementState>(
                 builder: (context, state) {
                   if (state is LocationManagementUpdatingDatabaseState) {
-                    return (context.read<LocationManagementBloc>().checkForDataOnline)
+                    return (context
+                            .read<LocationManagementBloc>()
+                            .checkForDataOnline)
                         ? const Text('Stahování lokací z internetu')
                         : const Text('Načítání lokací z úložiště');
                   } else if (state is LocationManagementLoadingPositionState) {

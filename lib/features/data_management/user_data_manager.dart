@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// Manages all of user's saved data.
 class UserDataManager {
-
   static const String _notFirstTimeLaunchPref = 'isFirstTimeLaunch';
   static const String _defaultMapAppIndexPref = 'defaultMapAppIndex';
   static const String _defaultThemeIndexPref = 'defaultThemeIndex';
@@ -19,7 +18,6 @@ class UserDataManager {
 
   /// Creates a new instance of [UserDataManager].
   static Future<UserDataManager> create() async {
-
     final UserDataManager m = UserDataManager._create();
     m._prefs = await SharedPreferences.getInstance();
 
@@ -42,7 +40,8 @@ class UserDataManager {
   ///Try to load EUK Location data from the current device.
   List<EUKLocationData> loadEUKLocationData() {
     final List<EUKLocationData> data = [];
-    final List<String> listOfStrings = _prefs?.getStringList(_locationDataPref) ?? [];
+    final List<String> listOfStrings =
+        _prefs?.getStringList(_locationDataPref) ?? [];
 
     for (final String s in listOfStrings) {
       final decoded = json.decode(s) as Map<String, dynamic>;

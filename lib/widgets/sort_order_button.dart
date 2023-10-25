@@ -12,7 +12,6 @@ class SortOrderButton extends StatefulWidget {
 }
 
 class _SortOrderButtonState extends State<SortOrderButton> {
-
   @override
   Widget build(BuildContext context) {
     return IconButton(
@@ -20,7 +19,9 @@ class _SortOrderButtonState extends State<SortOrderButton> {
       splashRadius: 24,
       constraints: const BoxConstraints(),
       icon: Icon(
-        context.watch<ListOrganizingBloc>().isReversed ? Icons.arrow_downward : Icons.arrow_upward,
+        context.watch<ListOrganizingBloc>().isReversed
+            ? Icons.arrow_downward
+            : Icons.arrow_upward,
         color: context.isAppInDarkMode ? Colors.white70 : Colors.black54,
       ),
       onPressed: () => context.read<ListOrganizingBloc>().add(OnReverseOrder()),

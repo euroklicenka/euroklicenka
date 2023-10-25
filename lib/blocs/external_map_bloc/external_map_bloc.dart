@@ -15,14 +15,14 @@ part 'external_map_state.dart';
 
 ///Handles events dealing with external map applications.
 class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
-
   late UserDataManager _dataManager;
 
   List<AvailableMap> _availableMaps = [];
   bool _nextAppIsDefault = false;
   String _defaultMapIcon = '';
 
-  ExternalMapBloc({required UserDataManager dataManager}) : super(ExternalMapDefaultState()) {
+  ExternalMapBloc({required UserDataManager dataManager})
+      : super(ExternalMapDefaultState()) {
     _dataManager = dataManager;
     on<OnOpenForNavigation>(_onNavigate);
     on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
@@ -39,7 +39,9 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     await _refreshAvailableMaps();
 
     if (_availableMaps.isEmpty) {
-      showSnackBar(message: 'Navigování nemůže být spuštěno.\nNa zařízení není nainstalovaná žádná podporovaná aplikace.');
+      showSnackBar(
+          message:
+              'Navigování nemůže být spuštěno.\nNa zařízení není nainstalovaná žádná podporovaná aplikace.');
       return;
     }
 
@@ -51,8 +53,9 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     final int savedMapIndex = _dataManager.loadDefaultMapAppIndex();
     if (savedMapIndex != -1) {
       final MapType type = MapType.values[savedMapIndex];
-      final AvailableMap? map = _availableMaps.firstWhereOrNull((m) => m.mapType == type);
-      if (map != null){
+      final AvailableMap? map =
+          _availableMaps.firstWhereOrNull((m) => m.mapType == type);
+      if (map != null) {
         _showDirections(map, event);
         return;
       }
@@ -67,8 +70,8 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
           _saveMapAppIndex(map.mapType.index);
           _defaultMapIcon = map.icon;
         }
-          Navigator.pop(event.context);
-          _showDirections(map, event);
+        Navigator.pop(event.context);
+        _showDirections(map, event);
       },
     );
   }
@@ -77,7 +80,9 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     await _refreshAvailableMaps();
 
     if (_availableMaps.length <= 1) {
-      showSnackBar(message: 'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.');
+      showSnackBar(
+          message:
+              'Není možné změnit.\nAplikace detekovala pouze 1 podporovanou navigaci.');
       _defaultMapIcon = _availableMaps[0].icon;
       emit(ExternalMapDefaultState());
       return;
@@ -86,18 +91,22 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     if (!event.context.mounted) return;
 
     openMapAppDialog(
-        context: event.context,
-        maps: _availableMaps,
-        headerText: 'Změnit výchozí navigaci',
-        showDefaultSwitch: false,
-        onSelect: (map) {
-          add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: map.mapType.index, mapIcon: map.icon));
-          Navigator.pop(event.context);
-        },
-        onSelectNone: () {
-          add(OnFinishDefaultMapAppSetting(context: event.context, mapIndex: -1, mapIcon: ''));
-          Navigator.pop(event.context);
-        },
+      context: event.context,
+      maps: _availableMaps,
+      headerText: 'Změnit výchozí navigaci',
+      showDefaultSwitch: false,
+      onSelect: (map) {
+        add(OnFinishDefaultMapAppSetting(
+            context: event.context,
+            mapIndex: map.mapType.index,
+            mapIcon: map.icon));
+        Navigator.pop(event.context);
+      },
+      onSelectNone: () {
+        add(OnFinishDefaultMapAppSetting(
+            context: event.context, mapIndex: -1, mapIcon: ''));
+        Navigator.pop(event.context);
+      },
     );
   }
 
@@ -108,14 +117,15 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
   }
 
   ///Tries to return the icon of the currently saved map app.
-  String _tryLoadIcon()  {
+  String _tryLoadIcon() {
     final int mapIndex = _dataManager.loadDefaultMapAppIndex();
 
     if (_availableMaps.length == 1) return _availableMaps[0].icon;
     if (mapIndex < 0 || mapIndex > MapType.values.length) return '';
 
     final MapType wantedType = MapType.values[mapIndex];
-    final AvailableMap? map = _availableMaps.firstWhereOrNull((m) => m.mapType == wantedType);
+    final AvailableMap? map =
+        _availableMaps.firstWhereOrNull((m) => m.mapType == wantedType);
     return (map != null) ? map.icon : '';
   }
 
@@ -125,8 +135,10 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     emit(ExternalMapDefaultState());
   }
 
-  Future<void> _refreshAvailableMaps() async => _availableMaps = await MapLauncher.installedMaps;
-  void _showDirections(AvailableMap map, OnOpenForNavigation event) => map.showDirections(destination: Coords(event.lat, event.long));
+  Future<void> _refreshAvailableMaps() async =>
+      _availableMaps = await MapLauncher.installedMaps;
+  void _showDirections(AvailableMap map, OnOpenForNavigation event) =>
+      map.showDirections(destination: Coords(event.lat, event.long));
   void _saveMapAppIndex(int index) => _dataManager.saveDefaultMapApp(index);
 
   bool get nextAppIsDefault => _nextAppIsDefault;

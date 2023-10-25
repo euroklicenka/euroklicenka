@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 ///
 /// It displays all [themes] in a grid, shows a [headerText] above the window,
 /// allows an action to be taken [onSelect].
-void openThemeSwitchingDialog(
-    {required BuildContext context, required Function(int) onSelect, String headerText = 'Změnit motiv',}) {
+void openThemeSwitchingDialog({
+  required BuildContext context,
+  required Function(int) onSelect,
+  String headerText = 'Změnit motiv',
+}) {
   showModalBottomSheet(
     // constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.33),
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
     builder: (BuildContext context) {
       return SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
+          padding:
+              const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
           child: Scrollbar(
             thumbVisibility: true,
             child: SingleChildScrollView(
@@ -22,7 +27,8 @@ void openThemeSwitchingDialog(
                   Center(
                     child: Text(
                       headerText,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                   ),
                   SingleChildScrollView(

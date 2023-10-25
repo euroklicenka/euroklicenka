@@ -14,7 +14,10 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   late LocationManagementBloc _locationBloc;
   late UserDataManager _dataManager;
 
-  MainScreenBloc({required UserDataManager dataManager, required LocationManagementBloc locationBloc}) : super(const MainScreenInitialState()) {
+  MainScreenBloc(
+      {required UserDataManager dataManager,
+      required LocationManagementBloc locationBloc})
+      : super(const MainScreenInitialState()) {
     _dataManager = dataManager;
     _locationBloc = locationBloc;
     on<OnAppInit>(_onAppInit);
@@ -26,23 +29,29 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
   FutureOr<void> _onAppInit(event, emit) async {
     emit(const MainScreenInitialState());
 
-    _locationBloc.add(OnInitialize(
-      dataManager: _dataManager,
-      onFinish: () async {
-        if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
-          add(OnOpenGuideScreen());
-        } else {
-          await Future.delayed(const Duration(milliseconds: 500));
-          _locationBloc.add(OnFocusOnUserPosition());
-          add(OnInitFinish());
-        }
-      },
-    ),);
+    _locationBloc.add(
+      OnInitialize(
+        dataManager: _dataManager,
+        onFinish: () async {
+          if (_dataManager.notFirstTimeLaunch == null ||
+              _dataManager.notFirstTimeLaunch == false) {
+            add(OnOpenGuideScreen());
+          } else {
+            await Future.delayed(const Duration(milliseconds: 500));
+            _locationBloc.add(OnFocusOnUserPosition());
+            add(OnInitFinish());
+          }
+        },
+      ),
+    );
   }
 
   FutureOr<void> _onInitFinish(event, emit) async {
-    if (_dataManager.notFirstTimeLaunch == null || _dataManager.notFirstTimeLaunch == false) {
-      await checkInternetAccess(errorMessage: 'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.');
+    if (_dataManager.notFirstTimeLaunch == null ||
+        _dataManager.notFirstTimeLaunch == false) {
+      await checkInternetAccess(
+          errorMessage:
+              'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.');
     }
     emit(const MainScreenAppContentState());
   }

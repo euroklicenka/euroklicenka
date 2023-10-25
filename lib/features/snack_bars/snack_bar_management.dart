@@ -9,8 +9,8 @@ void showSnackBar({required String message}) {
   final SnackBar snackBar = SnackBar(
     content: Text(message),
     action: SnackBarAction(
-        label: 'OK',
-        onPressed: () => snackBarKey.currentState?.removeCurrentSnackBar(),
+      label: 'OK',
+      onPressed: () => snackBarKey.currentState?.removeCurrentSnackBar(),
     ),
   );
   snackBarKey.currentState?.showSnackBar(snackBar);

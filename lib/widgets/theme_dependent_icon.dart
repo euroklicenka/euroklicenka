@@ -10,7 +10,9 @@ class ThemeDependentIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       icon,
-      color: context.isAppInDarkMode ? Theme.of(context).colorScheme.secondary : Colors.grey[600],
+      color: context.isAppInDarkMode
+          ? Theme.of(context).colorScheme.secondary
+          : Colors.grey[600],
     );
   }
 }

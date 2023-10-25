@@ -6,7 +6,9 @@ abstract class ListOrganizingEvent {}
 class OnReset extends ListOrganizingEvent {}
 
 class OnSortByLocationDistance extends ListOrganizingEvent {}
+
 class OnSortByAddress extends ListOrganizingEvent {}
+
 class OnSortByCity extends ListOrganizingEvent {}
 
 class OnReverseOrder extends ListOrganizingEvent {}

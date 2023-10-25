@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 ///Big red button that updates the database.
 Widget databaseButton({required BuildContext context}) {
   return ElevatedButton.icon(
-    onPressed: () => context.read<LocationManagementBloc>().add(OnLoadLocationsFromDatabase()),
+    onPressed: () => context
+        .read<LocationManagementBloc>()
+        .add(OnLoadLocationsFromDatabase()),
     style: ElevatedButton.styleFrom(
       foregroundColor: Colors.red[50],
       minimumSize: const Size.fromHeight(50),
@@ -20,11 +22,13 @@ Widget databaseButton({required BuildContext context}) {
 }
 
 ///Disabled version of Database Button.
-Widget databaseButtonDisabled(BuildContext context, {required AnimationController animController}) {
+Widget databaseButtonDisabled(BuildContext context,
+    {required AnimationController animController}) {
   return OutlinedButton.icon(
     onPressed: null,
     style: ElevatedButton.styleFrom(
-      disabledForegroundColor: context.isAppInDarkMode ? Colors.white70 : Colors.black87,
+      disabledForegroundColor:
+          context.isAppInDarkMode ? Colors.white70 : Colors.black87,
       minimumSize: const Size.fromHeight(47.5),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),

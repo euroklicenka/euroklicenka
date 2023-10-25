@@ -56,22 +56,27 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
 
   switch (type) {
     case EUKLocationType.none:
-      icon = await _getBytesFromAsset("assets/images/map_marker_default.png", size);
+      icon = await _getBytesFromAsset(
+          "assets/images/map_marker_default.png", size);
       break;
     case EUKLocationType.wc:
       icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
       break;
     case EUKLocationType.platform:
-      icon = await _getBytesFromAsset("assets/images/map_marker_platform.png", size);
+      icon = await _getBytesFromAsset(
+          "assets/images/map_marker_platform.png", size);
       break;
     case EUKLocationType.hospital:
-      icon = await _getBytesFromAsset("assets/images/map_marker_hospital.png", size);
+      icon = await _getBytesFromAsset(
+          "assets/images/map_marker_hospital.png", size);
       break;
     case EUKLocationType.gate:
-      icon = await _getBytesFromAsset("assets/images/map_marker_gate.png", size);
+      icon =
+          await _getBytesFromAsset("assets/images/map_marker_gate.png", size);
       break;
     case EUKLocationType.elevator:
-      icon = await _getBytesFromAsset("assets/images/map_marker_elevator.png", size);
+      icon = await _getBytesFromAsset(
+          "assets/images/map_marker_elevator.png", size);
       break;
   }
 
@@ -91,22 +96,34 @@ Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
   final double ratio = _clusterIcon!.width / _clusterIcon!.height;
 
   final textSize = (text != null) ? text.length : 1;
-  final double iconWidth = size.toDouble() * 0.72 * ratio * (1 + (textSize-1) * 0.17);
-  final double iconHeight = size.toDouble() * 0.72 * (1 + (textSize-1) * 0.12);
-  canvas.drawImageNine(_clusterIcon!, Rect.zero, Rect.fromCenter(center: Offset(size / 2, size / 2), width: iconWidth, height: iconHeight), Paint());
+  final double iconWidth =
+      size.toDouble() * 0.72 * ratio * (1 + (textSize - 1) * 0.17);
+  final double iconHeight =
+      size.toDouble() * 0.72 * (1 + (textSize - 1) * 0.12);
+  canvas.drawImageNine(
+      _clusterIcon!,
+      Rect.zero,
+      Rect.fromCenter(
+          center: Offset(size / 2, size / 2),
+          width: iconWidth,
+          height: iconHeight),
+      Paint());
 
   if (text != null) {
     final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
     painter.text = TextSpan(
       text: text,
       style: TextStyle(
-          fontSize: size / 5,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+        fontSize: size / 5,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
       ),
     );
     painter.layout();
-    painter.paint(canvas, Offset(size / 2.03 - painter.width / 2, (size / 2) - painter.height + 5));
+    painter.paint(
+        canvas,
+        Offset(
+            size / 2.03 - painter.width / 2, (size / 2) - painter.height + 5));
   }
 
   final img = await pictureRecorder.endRecording().toImage(size, size);
@@ -122,13 +139,18 @@ Future<Uint8List> _getBytesFromAsset(String path, int width) async {
     targetWidth: width,
   );
   final ui.FrameInfo fi = await codec.getNextFrame();
-  return (await fi.image.toByteData(format: ui.ImageByteFormat.png,))!.buffer.asUint8List();
+  return (await fi.image.toByteData(
+    format: ui.ImageByteFormat.png,
+  ))!
+      .buffer
+      .asUint8List();
 }
 
 /// The cluster icon gets initialized if it wasn't already.
 Future<void> _tryInitClusterIcon() async {
   if (_clusterIcon != null) return;
-  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"));
+  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(
+      await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"));
   final ui.Codec codec = await descriptor.instantiateCodec();
   final ui.FrameInfo frame = await codec.getNextFrame();
   _clusterIcon = frame.image;

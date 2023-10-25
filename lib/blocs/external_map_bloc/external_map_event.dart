@@ -1,7 +1,9 @@
 part of 'external_map_bloc.dart';
 
 @immutable
-abstract class ExternalMapEvent { const ExternalMapEvent(); }
+abstract class ExternalMapEvent {
+  const ExternalMapEvent();
+}
 
 ///Request navigation in another supported map app.
 class OnOpenForNavigation extends ExternalMapEvent {

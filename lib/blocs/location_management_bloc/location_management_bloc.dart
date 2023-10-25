@@ -18,7 +18,8 @@ part 'location_management_event.dart';
 part 'location_management_state.dart';
 
 ///Stores location data.
-class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManagementState> {
+class LocationManagementBloc
+    extends Bloc<LocationManagementEvent, LocationManagementState> {
   final UserPositionLocator _userLocation = UserPositionLocator();
   final LocationZoomInfo _zoomInfo = LocationZoomInfo();
 
@@ -28,7 +29,8 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
 
   bool _checkForDataOnline = true;
 
-  LocationManagementBloc({required ScreenNavigationBloc navigationBloc}) : super(LocationManagementDefaultState()) {
+  LocationManagementBloc({required ScreenNavigationBloc navigationBloc})
+      : super(LocationManagementDefaultState()) {
     _navigationBloc = navigationBloc;
     on<OnInitialize>(_onInitialize);
     on<OnFocusOnLocation>(_onFocusOnLocation);
@@ -59,21 +61,25 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
   }
 
   Future<void> _onFocusOnLocation(OnFocusOnLocation event, emit) async {
-    _zoomInfo.wantedPosition = LatLng(event.location.latitude, event.location.longitude);
+    _zoomInfo.wantedPosition =
+        LatLng(event.location.latitude, event.location.longitude);
     _zoomInfo.wantedZoom = event.zoom;
 
     //Switch to the map screen
     _navigationBloc.add(OnSwitchPage.screen(ScreenType.map));
   }
 
-  Future<FutureOr<void>> _onFocusOnEUKLocation(OnFocusOnEUKLocation event, emit) async {
-    final EUKLocationData data = locationManager.locations.where((d) => d.id == event.locationID).first;
+  Future<FutureOr<void>> _onFocusOnEUKLocation(
+      OnFocusOnEUKLocation event, emit) async {
+    final EUKLocationData data =
+        locationManager.locations.where((d) => d.id == event.locationID).first;
     _zoomInfo.popupWindow = buildPopUpWindow(data);
     add(OnFocusOnLocation(LatLng(data.lat, data.long), zoom: event.zoom));
   }
 
   Future<void> _onFocusOnUserPosition(OnFocusOnUserPosition event, emit) async {
-    add(OnFocusOnLocation(_userLocation.currentPosition, zoom: _userLocation.zoomAmount));
+    add(OnFocusOnLocation(_userLocation.currentPosition,
+        zoom: _userLocation.zoomAmount));
   }
 
   Future<void> _onMapIsReady(OnMapIsReady event, emit) async {
@@ -82,21 +88,29 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     if (_zoomInfo.wantedPosition == null) return;
     if (_zoomInfo.popupWindow == null) return;
 
-    Future.delayed(const Duration(milliseconds: 400), () => {
-        locationManager.windowController.addInfoWindow!(_zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
+    Future.delayed(
+      const Duration(milliseconds: 400),
+      () => {
+        locationManager.windowController.addInfoWindow!(
+            _zoomInfo.popupWindow!, _zoomInfo.wantedPosition!),
         _zoomInfo.clear(),
       },
     );
   }
 
-  Future<void> _onLoadFromDatabase(OnLoadLocationsFromDatabase event, emit) async {
+  Future<void> _onLoadFromDatabase(
+      OnLoadLocationsFromDatabase event, emit) async {
     emit(LocationManagementUpdatingDatabaseState());
-    locationManager.reloadFromDatabase(onFinish: () => add(OnLoadLocationsFromDatabaseFinished()));
+    locationManager.reloadFromDatabase(
+        onFinish: () => add(OnLoadLocationsFromDatabaseFinished()));
   }
 
-  Future<void> _onLoadFromDatabaseFinished(OnLoadLocationsFromDatabaseFinished event, emit) async {
+  Future<void> _onLoadFromDatabaseFinished(
+      OnLoadLocationsFromDatabaseFinished event, emit) async {
     if (locationManager.hasThrownError) {
-      showSnackBar(message: 'Nebylo možné navázat spojení se serverem. Zkuste to prosím později nebo zkontrolujte své nastavení internetu.');
+      showSnackBar(
+          message:
+              'Nebylo možné navázat spojení se serverem. Zkuste to prosím později nebo zkontrolujte své nastavení internetu.');
       await Future.delayed(const Duration(milliseconds: 200));
       emit(LocationManagementDefaultState());
       return;
@@ -108,10 +122,13 @@ class LocationManagementBloc extends Bloc<LocationManagementEvent, LocationManag
     emit(LocationManagementDefaultState());
   }
 
-  void _onRecalculateLocationsDistance(OnRecalculateLocationsDistance event, emit) {
+  void _onRecalculateLocationsDistance(
+      OnRecalculateLocationsDistance event, emit) {
     for (final EUKLocationData data in locationManager.locations) {
       final LatLng userLoc = userLocation.currentPosition;
-      data.updateDistanceFromDevice(Geolocator.distanceBetween(data.lat, data.long, userLoc.latitude, userLoc.longitude) / 1000);
+      data.updateDistanceFromDevice(Geolocator.distanceBetween(
+              data.lat, data.long, userLoc.latitude, userLoc.longitude) /
+          1000);
     }
     emit(LocationManagementDefaultState());
   }

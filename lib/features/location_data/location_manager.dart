@@ -14,7 +14,8 @@ import 'package:rxdart/rxdart.dart';
 
 /// Stores and works with all EUK Locations.
 class EUKLocationManager {
-  final BehaviorSubject<Set<Marker>> _markerStream = BehaviorSubject<Set<Marker>>();
+  final BehaviorSubject<Set<Marker>> _markerStream =
+      BehaviorSubject<Set<Marker>>();
 
   late UserDataManager _dataManager;
   late ClusterManager _clusterManager;
@@ -41,10 +42,12 @@ class EUKLocationManager {
 
   ///Loads EUK Locations from the built-in URL link and stores them
   ///in the internal list.
-  Future<void> reloadFromDatabase({Function()? onFinish, bool offlineOnly = false}) async {
+  Future<void> reloadFromDatabase(
+      {Function()? onFinish, bool offlineOnly = false}) async {
     _hasThrownError = false;
 
-    if (downloadURLs.isEmpty) throw StateError('List of download URLs cannot be empty.');
+    if (downloadURLs.isEmpty)
+      throw StateError('List of download URLs cannot be empty.');
 
     if (!offlineOnly) {
       for (final String url in downloadURLs) {
@@ -95,7 +98,9 @@ class EUKLocationManager {
 
   ///Initializes the cluster manager.
   void _initClusterManager() {
-    _clusterManager = ClusterManager<EUKLocationData>(_locations, _updateMarkers, markerBuilder: getMarkerBuilder);
+    _clusterManager = ClusterManager<EUKLocationData>(
+        _locations, _updateMarkers,
+        markerBuilder: getMarkerBuilder);
   }
 
   void _updateMarkers(Set<Marker> markers) {
@@ -107,7 +112,8 @@ class EUKLocationManager {
   /// clusters, that need to be built.
   ///
   /// Uses custom icons for individual markers and cluster icons for clusters.
-  Future<Marker> Function(Cluster<EUKLocationData>)? get getMarkerBuilder => (cluster) async {
+  Future<Marker> Function(Cluster<EUKLocationData>)? get getMarkerBuilder =>
+      (cluster) async {
         final BitmapDescriptor icon = (cluster.isMultiple)
             ? await getClusterIcon(270, text: cluster.count.toString())
             : await getMarkerIconByType(cluster.items.first.type);
@@ -115,7 +121,8 @@ class EUKLocationManager {
             ? () {}
             : () {
                 final EUKLocationData data = cluster.items.first;
-                windowController.addInfoWindow!(buildPopUpWindow(data), LatLng(data.lat, data.long));
+                windowController.addInfoWindow!(
+                    buildPopUpWindow(data), LatLng(data.lat, data.long));
               };
 
         return Marker(

@@ -4,4 +4,5 @@ part of 'list_organizing_bloc.dart';
 abstract class ListOrganizingState {}
 
 class ListOrganizingDefaultState extends ListOrganizingState {}
+
 class ListOrganizingSortingState extends ListOrganizingState {}

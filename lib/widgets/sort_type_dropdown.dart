@@ -24,7 +24,8 @@ class _SortTypeDropdownState extends State<SortTypeDropdown> {
         isDense: true,
         iconSize: 0,
         value: currentValue,
-        onChanged: (value) => setState(() => currentValue = value ?? 'Vzdálenost'),
+        onChanged: (value) =>
+            setState(() => currentValue = value ?? 'Vzdálenost'),
         items: [
           buildItem(
             text: 'Vzdálenost',
@@ -46,13 +47,19 @@ class _SortTypeDropdownState extends State<SortTypeDropdown> {
     );
   }
 
-  DropdownMenuItem<String> buildItem({required String text, required ListOrganizingEvent event, required IconData icon}) {
+  DropdownMenuItem<String> buildItem(
+      {required String text,
+      required ListOrganizingEvent event,
+      required IconData icon}) {
     return DropdownMenuItem<String>(
       value: text,
       onTap: () => context.read<ListOrganizingBloc>().add(event),
       child: Row(
         children: [
-          Icon(icon, color: context.isAppInDarkMode ? Colors.white70 : Colors.black54,),
+          Icon(
+            icon,
+            color: context.isAppInDarkMode ? Colors.white70 : Colors.black54,
+          ),
           const SizedBox(width: 8),
           Text(text),
         ],

@@ -7,13 +7,15 @@ part 'list_organizing_event.dart';
 
 part 'list_organizing_state.dart';
 
-class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> {
+class ListOrganizingBloc
+    extends Bloc<ListOrganizingEvent, ListOrganizingState> {
   late EUKLocationManager _manager;
   late ListOrganizingEvent _currentSort;
   List<EUKLocationData> _organizedLocations = [];
   bool _isReversed = false;
 
-  ListOrganizingBloc({required EUKLocationManager locManager}) : super(ListOrganizingDefaultState()) {
+  ListOrganizingBloc({required EUKLocationManager locManager})
+      : super(ListOrganizingDefaultState()) {
     _manager = locManager;
     _currentSort = OnSortByLocationDistance();
     on<OnReset>(_onReset);
@@ -29,7 +31,9 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
     _updateSortedLocations();
     _organizedLocations = _organizedLocations.where(
       (element) {
-        return element.address.toLowerCase().contains(event.value.toLowerCase()) ||
+        return element.address
+                .toLowerCase()
+                .contains(event.value.toLowerCase()) ||
             element.city.toLowerCase().contains(event.value.toLowerCase());
       },
     ).toList();
@@ -78,7 +82,10 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
     }
   }
 
-  void _sortLocations({required ListOrganizingEvent event, required emit, required int Function(EUKLocationData a, EUKLocationData b) compare}) {
+  void _sortLocations(
+      {required ListOrganizingEvent event,
+      required emit,
+      required int Function(EUKLocationData a, EUKLocationData b) compare}) {
     emit(ListOrganizingSortingState());
     _organizedLocations.sort(compare);
     if (_isReversed) _reverseLocations();
@@ -86,8 +93,10 @@ class ListOrganizingBloc extends Bloc<ListOrganizingEvent, ListOrganizingState> 
     emit(ListOrganizingDefaultState());
   }
 
-  void _updateSortedLocations() => _organizedLocations = List.from(_manager.locations);
-  void _reverseLocations() => _organizedLocations = _organizedLocations.reversed.toList();
+  void _updateSortedLocations() =>
+      _organizedLocations = List.from(_manager.locations);
+  void _reverseLocations() =>
+      _organizedLocations = _organizedLocations.reversed.toList();
 
   List<EUKLocationData> get organizedLocations => _organizedLocations;
   ListOrganizingEvent get currentSort => _currentSort;

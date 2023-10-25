@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:eurokey2/screens/app/extras/information_screen.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,8 @@ part 'screen_navigation_event.dart';
 part 'screen_navigation_state.dart';
 
 ///Controls user navigation between app screens.
-class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationState> {
+class ScreenNavigationBloc
+    extends Bloc<ScreenNavigationEvent, ScreenNavigationState> {
   ScreenType currentScreen = ScreenType.map;
 
   ScreenNavigationBloc() : super(const AppScreenMapState()) {
@@ -32,8 +32,9 @@ class ScreenNavigationBloc extends Bloc<ScreenNavigationEvent, ScreenNavigationS
   }
 
   void _onOpenNavigation(OnOpenInformation event, emit) {
-    Navigator.push(event.context, MaterialPageRoute(builder: (context) => const InformationScreen()));
+    Navigator.push(event.context,
+        MaterialPageRoute(builder: (context) => const InformationScreen()));
   }
 }
 
-enum ScreenType {list, map, options}
+enum ScreenType { list, map, options }
