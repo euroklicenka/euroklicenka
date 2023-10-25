@@ -16,7 +16,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
 
   MainScreenBloc(
       {required UserDataManager dataManager,
-      required LocationManagementBloc locationBloc})
+      required LocationManagementBloc locationBloc,})
       : super(const MainScreenInitialState()) {
     _dataManager = dataManager;
     _locationBloc = locationBloc;
@@ -51,7 +51,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
         _dataManager.notFirstTimeLaunch == false) {
       await checkInternetAccess(
           errorMessage:
-              'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.');
+              'Zařízení není připojené k internetu.\nDatabáze míst se nemusela aktualizovat.',);
     }
     emit(const MainScreenAppContentState());
   }

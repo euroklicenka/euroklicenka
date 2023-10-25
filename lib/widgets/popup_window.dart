@@ -41,19 +41,19 @@ class EUKPopupWindow extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         border: Border.all(
-            color: context.isAppInDarkMode ? Colors.white12 : Colors.grey),
+            color: context.isAppInDarkMode ? Colors.white12 : Colors.grey,),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
         padding: const EdgeInsets.only(
-            left: 12.0, right: 12.0, top: 12.0, bottom: 6.0),
+            left: 12.0, right: 12.0, top: 12.0, bottom: 6.0,),
         child: Column(
           children: [
             Text(
               _address,
               maxLines: 3,
               style: const TextStyle(
-                  fontSize: headerSize, fontWeight: FontWeight.bold),
+                  fontSize: headerSize, fontWeight: FontWeight.bold,),
             ),
             const Divider(),
             Expanded(
@@ -142,7 +142,7 @@ class EUKPopupWindow extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => context.read<ExternalMapBloc>().add(
                       OnOpenForNavigation(
-                          context: context, lat: _lat, long: _long)),
+                          context: context, lat: _lat, long: _long,),),
                   child: const Text(
                     'Navigovat',
                     style: TextStyle(fontSize: 16),

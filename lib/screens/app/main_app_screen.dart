@@ -56,8 +56,9 @@ class _MainAppScreenState extends State<MainAppScreen> {
         currentIndex: context.watch<ScreenNavigationBloc>().currentScreen.index,
         onTap: (index) {
           context.read<ScreenNavigationBloc>().add(OnSwitchPage(index));
-          if (index == ScreenType.map.index)
+          if (index == ScreenType.map.index) {
             locationBloc.add(OnFocusOnUserPosition());
+          }
           if (index == ScreenType.list.index) {
             locationBloc.add(OnRecalculateLocationsDistance());
             context.read<ListOrganizingBloc>().add(OnReset());

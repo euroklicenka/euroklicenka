@@ -29,7 +29,7 @@ class InformationScreen extends StatelessWidget {
                       children: [
                         const SizedBox(height: 56),
                         Image.asset('assets/images/logo_key.png',
-                            width: MediaQuery.of(context).size.width * 0.25),
+                            width: MediaQuery.of(context).size.width * 0.25,),
                         const SizedBox(height: 12),
                         Text(
                           'EuroKlíčenka $appVersion',

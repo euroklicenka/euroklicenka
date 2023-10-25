@@ -66,16 +66,21 @@ class ExcelParser {
   ///Based on text snippets in a string returns a [EUKLocationType].
   EUKLocationType _extractLocationType(String address) {
     if (address.isEmpty) return EUKLocationType.none;
-    if (RegExp(r'\bWC\b').firstMatch(address) != null)
+    if (RegExp(r'\bWC\b').firstMatch(address) != null) {
       return EUKLocationType.wc;
-    if (RegExp(r'\bPlošina\b').firstMatch(address) != null)
+    }
+    if (RegExp(r'\bPlošina\b').firstMatch(address) != null) {
       return EUKLocationType.platform;
-    if (RegExp(r'\bNemocnice\b').firstMatch(address) != null)
+    }
+    if (RegExp(r'\bNemocnice\b').firstMatch(address) != null) {
       return EUKLocationType.hospital;
-    if (RegExp(r'\bVýtah\b').firstMatch(address) != null)
+    }
+    if (RegExp(r'\bVýtah\b').firstMatch(address) != null) {
       return EUKLocationType.elevator;
-    if (RegExp(r'\bBrána\b').firstMatch(address) != null)
+    }
+    if (RegExp(r'\bBrána\b').firstMatch(address) != null) {
       return EUKLocationType.gate;
+    }
     return EUKLocationType.none;
   }
 
