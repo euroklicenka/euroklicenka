@@ -5,48 +5,46 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class EUKLocationData with ClusterItem {
   late String _id;
   late double _lat;
-  late double _long;
+  late double _lng;
   late String _address;
   late String _region;
   late String _city;
-  late String _ZIP;
-  late String _info;
+  late String _zip;
   late EUKLocationType _type;
-  double _distanceFromDevice = 0;
+  double distanceFromDevice = 0;
+  double distanceFromMap = 0;
 
   EUKLocationData({
     required String id,
     required double lat,
-    required double long,
+    required double lng,
     required String address,
     required String region,
     required String city,
-    required String ZIP,
-    required String info,
+    required String zip,
     required EUKLocationType type,
   }) {
     _id = id;
     _lat = lat;
-    _long = long;
+    _lng = lng;
     _address = address;
     _region = region;
     _city = city;
-    _ZIP = ZIP;
-    _info = info;
+    _zip = zip;
     _type = type;
   }
 
   EUKLocationData.copy(EUKLocationData data) {
     _id = data.id;
     _lat = data.lat;
-    _long = data.long;
+    _lng = data.lng;
     _address = data.address;
     _region = data.region;
     _city = data.city;
-    _ZIP = data.ZIP;
-    _info = data.info;
+    _zip = data.zip;
     _type = data.type;
-    _distanceFromDevice = data.distanceFromDevice;
+    distanceFromDevice = data.distanceFromDevice;
+    distanceFromMap = data.distanceFromMap;
   }
 
   EUKLocationData.latLng({
@@ -55,47 +53,58 @@ class EUKLocationData with ClusterItem {
     required String address,
     required String region,
     required String city,
-    required String info,
-    required String ZIP,
+    required String zip,
     required EUKLocationType type,
   })  : _id = id,
         _lat = latLng.latitude,
-        _long = latLng.longitude,
+        _lng = latLng.longitude,
         _address = address,
         _region = region,
         _city = city,
-        _info = info,
-        _ZIP = ZIP,
+        _zip = zip,
         _type = type;
 
   factory EUKLocationData.fromJson(Map<String, dynamic> json) {
+    final EUKLocationType type;
+
+    switch (json['type']) {
+      case 'wc':
+        type = EUKLocationType.wc;
+        break;
+      case 'platform':
+        type = EUKLocationType.platform;
+        break;
+      case 'gate':
+        type = EUKLocationType.gate;
+        break;
+      case 'elevator':
+        type = EUKLocationType.elevator;
+        break;
+      default:
+        throw FormatException("Unknown EUK Location Type ${json['type']}");
+    }
+
     return EUKLocationData(
       id: json['id'].toString(),
       lat: double.parse(json['lat'].toString()),
-      long: double.parse(json['long'].toString()),
+      lng: double.parse(json['lng'].toString()),
       address: json['address'].toString(),
       region: json['region'].toString(),
       city: json['city'].toString(),
-      ZIP: json['ZIP'].toString(),
-      info: json['info'].toString(),
-      type: EUKLocationType.values[int.parse(json['type'].toString())],
+      zip: json['zip'].toString(),
+      type: type,
     );
   }
-
-  ///Update the current distance from device to a new value ([newDistance]).
-  void updateDistanceFromDevice(double newDistance) =>
-      _distanceFromDevice = newDistance;
 
   ///Convert the location data into a JSON format.
   Map<String, dynamic> toMap() => {
         'id': id,
         'lat': lat,
-        'long': long,
+        'lng': lng,
         'address': address,
         'region': region,
         'city': city,
-        'ZIP': ZIP,
-        'info': info,
+        'ZIP': zip,
         'type': type.index,
       };
 
@@ -103,7 +112,7 @@ class EUKLocationData with ClusterItem {
 
   double get lat => _lat;
 
-  double get long => _long;
+  double get lng => _lng;
 
   String get address => _address;
 
@@ -111,16 +120,12 @@ class EUKLocationData with ClusterItem {
 
   String get city => _city;
 
-  String get info => _info;
-
-  String get ZIP => _ZIP;
+  String get zip => _zip;
 
   EUKLocationType get type => _type;
 
-  double get distanceFromDevice => _distanceFromDevice;
-
   @override
-  LatLng get location => LatLng(_lat, _long);
+  LatLng get location => LatLng(_lat, _lng);
 }
 
-enum EUKLocationType { none, wc, platform, hospital, gate, elevator }
+enum EUKLocationType { none, wc, platform, gate, elevator }

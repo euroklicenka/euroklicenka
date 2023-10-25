@@ -45,7 +45,7 @@ class InformationScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 64, bottom: 8),
                           child: Column(
                             children: [
-                              InfoTile(
+                              infoTile(
                                 context: context,
                                 leadingText:
                                     'EuroKlíčenka je majetkem Přírodovědecké fakulty ',
@@ -57,7 +57,7 @@ class InformationScreen extends StatelessWidget {
                                 launchURL: universityOfOstravaURL,
                               ),
                               const Divider(),
-                              InfoTile(
+                              infoTile(
                                 context: context,
                                 leadingText: 'Vývoj provedl tým studentů\nz ',
                                 hyperText: 'katedry informatiky a počítačů',
@@ -67,7 +67,7 @@ class InformationScreen extends StatelessWidget {
                                 launchURL: universityOfOstravaKIPURL,
                               ),
                               const Divider(),
-                              InfoTile(
+                              infoTile(
                                 context: context,
                                 leadingText:
                                     'Data o umístění eurozámků jsou veřejně dostupná na ',

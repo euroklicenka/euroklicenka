@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 /// Shows the text on the left side comprised of [leadingText], [hyperText] (only visual) and [trailingText].
 /// Draws an image located under [imageFilePath] to the right of the tile.
 /// Launches a URL when tapped that is assigned to [launchURL].
-Widget InfoTile({
+Widget infoTile({
   required BuildContext context,
   required String leadingText,
   required String imageFilePath,
