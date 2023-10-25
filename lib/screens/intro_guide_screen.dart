@@ -22,28 +22,46 @@ class _OnBoardScreenState extends State<GuideScreen> {
           PageViewModel(
             title: 'VÍTEJTE V EUROKLÍČENCE',
             image: _buildImage('assets/images/logo_key.png', context),
-            body: 'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
-            footer: _buildButton(onPressed: () => openURL(url: aboutEuroKeyURL), text: 'Co je to eurozámek?'),
+            body:
+                'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
+            footer: _buildButton(
+                onPressed: () => openURL(url: aboutEuroKeyURL),
+                text: 'Co je to eurozámek?'),
             decoration: _getDecoration(),
           ),
           PageViewModel(
             title: 'MAPA',
-            image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_map_dark.jpg' : 'assets/images/img_guide_map_light.jpg', context),
-            body: 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
+            image: _buildImage(
+                context.isAppInDarkMode
+                    ? 'assets/images/img_guide_map_dark.jpg'
+                    : 'assets/images/img_guide_map_light.jpg',
+                context),
+            body:
+                'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
           PageViewModel(
             title: 'INFORMACE O MÍSTĚ',
-            image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_popup_dark.jpg' : 'assets/images/img_guide_popup_light.jpg', context),
-            body: 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
+            image: _buildImage(
+                context.isAppInDarkMode
+                    ? 'assets/images/img_guide_popup_dark.jpg'
+                    : 'assets/images/img_guide_popup_light.jpg',
+                context),
+            body:
+                'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
           PageViewModel(
             title: 'NEJBLIŽŠÍ MÍSTA',
-            body: 'Na listě lokací se zobrazují nejbližší místa \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
-            image: _buildImage(context.isAppInDarkMode ? 'assets/images/img_guide_list_dark.jpg' : 'assets/images/img_guide_list_light.jpg', context),
+            body:
+                'Na listě lokací se zobrazují nejbližší místa \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
+            image: _buildImage(
+                context.isAppInDarkMode
+                    ? 'assets/images/img_guide_list_dark.jpg'
+                    : 'assets/images/img_guide_list_light.jpg',
+                context),
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
@@ -63,16 +81,20 @@ class _OnBoardScreenState extends State<GuideScreen> {
     );
   }
 
-  void _gotoHome(BuildContext context) => context.read<MainScreenBloc>().add(OnInitFinish());
+  void _gotoHome(BuildContext context) =>
+      context.read<MainScreenBloc>().add(OnInitFinish());
 
   Widget? _buildImage(String path, BuildContext context) {
     final bool isTooSmall = MediaQuery.of(context).size.height < 490;
-    return !isTooSmall ? Center(
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.asset(path, width: MediaQuery.of(context).size.width * 0.7),
-        ),
-      ) : null;
+    return !isTooSmall
+        ? Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(path,
+                  width: MediaQuery.of(context).size.width * 0.7),
+            ),
+          )
+        : null;
   }
 
   Widget _buildButton({required Function()? onPressed, required String text}) {
@@ -85,7 +107,8 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 side: MaterialStatePropertyAll(BorderSide.none),
               )
             : OutlinedButton.styleFrom(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
               ),
         child: Text(text),
       ),
@@ -96,7 +119,8 @@ class _OnBoardScreenState extends State<GuideScreen> {
         size: const Size(10, 10),
         activeSize: const Size(25, 15),
         activeColor: Theme.of(context).colorScheme.secondary,
-        activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        activeShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       );
 
   PageDecoration _getDecoration() => const PageDecoration(

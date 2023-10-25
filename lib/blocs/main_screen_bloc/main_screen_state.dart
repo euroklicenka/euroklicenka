@@ -15,5 +15,4 @@ class MainScreenGuideState extends MainScreenState {
 
 class MainScreenAppContentState extends MainScreenState {
   const MainScreenAppContentState();
-
 }

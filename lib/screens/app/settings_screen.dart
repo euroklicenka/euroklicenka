@@ -18,7 +18,8 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
+class _SettingsScreenState extends State<SettingsScreen>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _animController;
 
   @override
@@ -48,11 +49,14 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                 child: Column(
                   children: [
                     ListTile(
-                      onTap: () => context.read<ThemeSwitchingBloc>().add(OnOpenThemeDialog(context)),
+                      onTap: () => context
+                          .read<ThemeSwitchingBloc>()
+                          .add(OnOpenThemeDialog(context)),
                       title: const Text('Motiv rozhraní'),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 8),
-                        child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
+                        child: BlocBuilder<ThemeSwitchingBloc,
+                            ThemeSwitchingState>(
                           builder: (context, state) {
                             if (state is ThemeSwitchingLightState) {
                               return const ThemeDependentIcon(Icons.light_mode);
@@ -65,43 +69,63 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                         ),
                       ),
                     ),
-                    const SizedBox(height: 8,),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     ListTile(
-                      onTap: () => context.read<ExternalMapBloc>().add(OnChangeDefaultMapApp(context: context)),
+                      onTap: () => context
+                          .read<ExternalMapBloc>()
+                          .add(OnChangeDefaultMapApp(context: context)),
                       title: const Text('Výchozí navigace'),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 8),
-                        child: (context.watch<ExternalMapBloc>().defaultMapIcon.isEmpty)
+                        child: (context
+                                .watch<ExternalMapBloc>()
+                                .defaultMapIcon
+                                .isEmpty)
                             ? const ThemeDependentIcon(Icons.cancel_outlined)
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(10),
                                 child: SvgPicture.asset(
-                                  context.watch<ExternalMapBloc>().defaultMapIcon,
+                                  context
+                                      .watch<ExternalMapBloc>()
+                                      .defaultMapIcon,
                                   width: 32,
                                 ),
                               ),
                       ),
                     ),
-                    const SizedBox(height: 8,),
+                    const SizedBox(
+                      height: 8,
+                    ),
                     Tooltip(
-                      message: 'Pokusí se aplikace aktualizovat lokace z internetu při spuštění?',
+                      message:
+                          'Pokusí se aplikace aktualizovat lokace z internetu při spuštění?',
                       showDuration: const Duration(milliseconds: 3000),
                       triggerMode: TooltipTriggerMode.longPress,
                       child: SwitchListTile.adaptive(
                         title: const Text('Aktualizovat místa při spuštění'),
-                        value: context.watch<LocationManagementBloc>().checkForDataOnline,
-                        onChanged: (value) => context.read<LocationManagementBloc>().add(OnChangeOnlineCheckDecision(decision: value)),
+                        value: context
+                            .watch<LocationManagementBloc>()
+                            .checkForDataOnline,
+                        onChanged: (value) => context
+                            .read<LocationManagementBloc>()
+                            .add(OnChangeOnlineCheckDecision(decision: value)),
                       ),
                     ),
                     const DividerOptions(),
                     ListTile(
-                      onTap: () => context.read<MainScreenBloc>().add(OnOpenGuideScreen()),
+                      onTap: () => context
+                          .read<MainScreenBloc>()
+                          .add(OnOpenGuideScreen()),
                       title: const Text("Průvodce"),
                       leading: const ThemeDependentIcon(Icons.rocket_launch),
                     ),
                     const DividerOptions(),
                     ListTile(
-                      onTap: () => context.read<ScreenNavigationBloc>().add(OnOpenInformation(context: context)),
+                      onTap: () => context
+                          .read<ScreenNavigationBloc>()
+                          .add(OnOpenInformation(context: context)),
                       title: const Text("O aplikaci"),
                       leading: const ThemeDependentIcon(Icons.info),
                     ),
@@ -115,7 +139,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: BlocBuilder<LocationManagementBloc, LocationManagementState>(
+              child:
+                  BlocBuilder<LocationManagementBloc, LocationManagementState>(
                 builder: (context, state) {
                   return AnimatedSize(
                     duration: const Duration(milliseconds: 300),
@@ -123,7 +148,8 @@ class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProvid
                     child: (state is LocationManagementUpdatingFinishedState)
                         ? databaseButtonFinished()
                         : (state is LocationManagementUpdatingDatabaseState)
-                            ? databaseButtonDisabled(context,
+                            ? databaseButtonDisabled(
+                                context,
                                 animController: _animController,
                               )
                             : databaseButton(context: context),

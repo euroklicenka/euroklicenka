@@ -11,7 +11,13 @@ import 'package:map_launcher/map_launcher.dart';
 /// shows a toggle to set the next selected map as a default when [showDefaultSwitch] is on,
 /// allows an action to be taken [onSelect] and when [onSelectNone] has an action assigned,
 /// shows a special button below the window.
-void openMapAppDialog({required BuildContext context, required List<AvailableMap> maps, required Function(AvailableMap map) onSelect, String headerText = 'Otevřít v aplikaci', bool showDefaultSwitch = true, Function()? onSelectNone}) {
+void openMapAppDialog(
+    {required BuildContext context,
+    required List<AvailableMap> maps,
+    required Function(AvailableMap map) onSelect,
+    String headerText = 'Otevřít v aplikaci',
+    bool showDefaultSwitch = true,
+    Function()? onSelectNone}) {
   final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.355;
 
   ///Builds a Grid Tile for a map.
@@ -24,7 +30,10 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: SvgPicture.asset(maps[index].icon, width: 64,),
+            child: SvgPicture.asset(
+              maps[index].icon,
+              width: 64,
+            ),
           ),
           const SizedBox(height: 8),
           Text(maps[index].mapName),
@@ -34,13 +43,16 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
   }
 
   showModalBottomSheet(
-    constraints: BoxConstraints(maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight),
-    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+    constraints: BoxConstraints(
+        maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight),
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
     context: context,
     builder: (BuildContext context) {
       return SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
+          padding:
+              const EdgeInsets.only(left: 18, right: 18, top: 18, bottom: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -59,7 +71,8 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                     itemCount: maps.length,
                     itemBuilder: buildGridTile,
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 12,
                       crossAxisSpacing: 16,
@@ -72,7 +85,8 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
                 SwitchListTile.adaptive(
                   title: const Text('Použít vždy'),
                   value: context.watch<ExternalMapBloc>().nextAppIsDefault,
-                  onChanged: context.read<ExternalMapBloc>().updateNextAppIsDefault,
+                  onChanged:
+                      context.read<ExternalMapBloc>().updateNextAppIsDefault,
                 ),
               if (onSelectNone != null)
                 ListTile(

@@ -18,7 +18,8 @@ ThemeData defaultLightTheme = ThemeData(
 
 ThemeData defaultDarkTheme = ThemeData(
   canvasColor: const Color(0xFF111111),
-  scrollbarTheme: const ScrollbarThemeData().copyWith(thumbColor: MaterialStateProperty.all(const Color(0xFF464646))),
+  scrollbarTheme: const ScrollbarThemeData()
+      .copyWith(thumbColor: MaterialStateProperty.all(const Color(0xFF464646))),
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.dark,
     primarySwatch: Colors.red,
@@ -27,7 +28,7 @@ ThemeData defaultDarkTheme = ThemeData(
     surface: const Color(0xFF111111),
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor:  Color(0xFF111111),
+    backgroundColor: Color(0xFF111111),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(),
   snackBarTheme: const SnackBarThemeData(

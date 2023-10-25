@@ -95,10 +95,15 @@ class _ListScreenState extends State<ListScreen> {
                               displacement: 5,
                               onRefresh: () async {
                                 setState(() {
-                                  context.read<LocationManagementBloc>().add(OnRecalculateLocationsDistance());
-                                  context.read<ListOrganizingBloc>().add(OnSortByLocationDistance());
+                                  context
+                                      .read<LocationManagementBloc>()
+                                      .add(OnRecalculateLocationsDistance());
+                                  context
+                                      .read<ListOrganizingBloc>()
+                                      .add(OnSortByLocationDistance());
                                 });
-                                await Future.delayed(const Duration(milliseconds: 250));
+                                await Future.delayed(
+                                    const Duration(milliseconds: 250));
                               },
                               child: ScrollWrapper(
                                 alwaysVisibleAtOffset: true,
@@ -108,10 +113,16 @@ class _ListScreenState extends State<ListScreen> {
                                   color: Theme.of(context).colorScheme.surface,
                                   icon: const Icon(Icons.arrow_upward),
                                 ),
-                                builder: (context, properties) => ListView.separated(
-                                  itemCount: context.read<ListOrganizingBloc>().organizedLocations.length,
+                                builder: (context, properties) =>
+                                    ListView.separated(
+                                  itemCount: context
+                                      .read<ListOrganizingBloc>()
+                                      .organizedLocations
+                                      .length,
                                   itemBuilder: _buildListTile,
-                                  separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          const Divider(),
                                 ),
                               ),
                             ),
@@ -127,9 +138,11 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   Widget _buildListTile(BuildContext context, int index) {
-    final EUKLocationData data = context.read<ListOrganizingBloc>().organizedLocations[index];
+    final EUKLocationData data =
+        context.read<ListOrganizingBloc>().organizedLocations[index];
     String distanceText;
-    switch (context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
+    switch (
+        context.read<LocationManagementBloc>().userLocation.accuracyStatus) {
       case LocationAccuracyStatus.precise:
         distanceText = '${data.distanceFromDevice.toStringAsFixed(2)} km';
         break;
@@ -171,11 +184,16 @@ class AppBarListScreen extends StatelessWidget {
         child: Text('Seznam míst'),
       ),
       animationDuration: const Duration(milliseconds: 260),
-      searchClearIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      searchBackIconTheme: IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchClearIconTheme:
+          IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchBackIconTheme:
+          IconThemeData(color: Theme.of(context).colorScheme.secondary),
       searchCursorColor: Theme.of(context).colorScheme.secondary,
-      searchBackgroundColor: context.isAppInDarkMode ? const Color(0xFF191919) : Theme.of(context).colorScheme.surface,
-      onSearch: (value) => context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
+      searchBackgroundColor: context.isAppInDarkMode
+          ? const Color(0xFF191919)
+          : Theme.of(context).colorScheme.surface,
+      onSearch: (value) =>
+          context.read<ListOrganizingBloc>().add(OnFilterByText(value)),
       searchHintText: 'Ostrava...',
     );
   }

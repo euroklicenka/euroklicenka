@@ -2,7 +2,7 @@ import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Represents an EUK location.
- class EUKLocationData with ClusterItem {
+class EUKLocationData with ClusterItem {
   late String _id;
   late double _lat;
   late double _long;
@@ -14,9 +14,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
   late EUKLocationType _type;
   double _distanceFromDevice = 0;
 
-  EUKLocationData(
-      {required String id, required double lat, required double long, required String address, required String region, required String city,
-        required String ZIP, required String info, required EUKLocationType type,}) {
+  EUKLocationData({
+    required String id,
+    required double lat,
+    required double long,
+    required String address,
+    required String region,
+    required String city,
+    required String ZIP,
+    required String info,
+    required EUKLocationType type,
+  }) {
     _id = id;
     _lat = lat;
     _long = long;
@@ -50,8 +58,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
     required String info,
     required String ZIP,
     required EUKLocationType type,
-  })
-      : _id = id,
+  })  : _id = id,
         _lat = latLng.latitude,
         _long = latLng.longitude,
         _address = address,
@@ -63,20 +70,21 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
   factory EUKLocationData.fromJson(Map<String, dynamic> json) {
     return EUKLocationData(
-        id: json['id'].toString(),
-        lat: double.parse(json['lat'].toString()),
-        long: double.parse(json['long'].toString()),
-        address: json['address'].toString(),
-        region: json['region'].toString(),
-        city: json['city'].toString(),
-        ZIP: json['ZIP'].toString(),
-        info: json['info'].toString(),
-        type: EUKLocationType.values[int.parse(json['type'].toString())],
+      id: json['id'].toString(),
+      lat: double.parse(json['lat'].toString()),
+      long: double.parse(json['long'].toString()),
+      address: json['address'].toString(),
+      region: json['region'].toString(),
+      city: json['city'].toString(),
+      ZIP: json['ZIP'].toString(),
+      info: json['info'].toString(),
+      type: EUKLocationType.values[int.parse(json['type'].toString())],
     );
   }
 
   ///Update the current distance from device to a new value ([newDistance]).
-  void updateDistanceFromDevice(double newDistance) => _distanceFromDevice = newDistance;
+  void updateDistanceFromDevice(double newDistance) =>
+      _distanceFromDevice = newDistance;
 
   ///Convert the location data into a JSON format.
   Map<String, dynamic> toMap() => {

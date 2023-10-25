@@ -18,7 +18,8 @@ class InformationScreen extends StatelessWidget {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 24, bottom: 16, left: 24, right: 24),
+          padding:
+              const EdgeInsets.only(top: 24, bottom: 16, left: 24, right: 24),
           child: Column(
             children: [
               Expanded(
@@ -27,7 +28,8 @@ class InformationScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         const SizedBox(height: 56),
-                        Image.asset('assets/images/logo_key.png', width: MediaQuery.of(context).size.width * 0.25),
+                        Image.asset('assets/images/logo_key.png',
+                            width: MediaQuery.of(context).size.width * 0.25),
                         const SizedBox(height: 12),
                         Text(
                           'EuroKlíčenka $appVersion',
@@ -43,7 +45,8 @@ class InformationScreen extends StatelessWidget {
                             children: [
                               InfoTile(
                                 context: context,
-                                leadingText: 'EuroKlíčenka je majetkem Přírodovědecké fakulty ',
+                                leadingText:
+                                    'EuroKlíčenka je majetkem Přírodovědecké fakulty ',
                                 hyperText: 'Ostravské univerzity',
                                 trailingText: ' v Ostravě.',
                                 imageFilePath: context.isAppInDarkMode
@@ -56,14 +59,16 @@ class InformationScreen extends StatelessWidget {
                                 context: context,
                                 leadingText: 'Vývoj provedl tým studentů\nz ',
                                 hyperText: 'katedry informatiky a počítačů',
-                                trailingText: ' OU, do kterého patří Jan Sonnek, Jan Kunetka a Ondřej Sládek.',
+                                trailingText:
+                                    ' OU, do kterého patří Jan Sonnek, Jan Kunetka a Ondřej Sládek.',
                                 imageFilePath: 'assets/images/logo_kip.png',
                                 launchURL: universityOfOstravaKIPURL,
                               ),
                               const Divider(),
                               InfoTile(
                                 context: context,
-                                leadingText: 'Data o umístění eurozámků jsou veřejně dostupná na ',
+                                leadingText:
+                                    'Data o umístění eurozámků jsou veřejně dostupná na ',
                                 hyperText: 'oficiálních stránkách Euroklíče',
                                 trailingText: '.',
                                 imageFilePath: 'assets/images/logo_eurokey.png',

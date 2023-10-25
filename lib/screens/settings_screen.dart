@@ -36,12 +36,13 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 const Text("Nastavení 1", style: TextStyle(fontSize: 20)),
                 Switch(
-                    value: isCheckedSettings1,
-                    onChanged: (bool change) {
-                      setState(() {
-                        isCheckedSettings1 = change;
-                      });
-                    },),
+                  value: isCheckedSettings1,
+                  onChanged: (bool change) {
+                    setState(() {
+                      isCheckedSettings1 = change;
+                    });
+                  },
+                ),
               ],
             ),
           ),
@@ -57,12 +58,13 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 const Text("Nastavení 2", style: TextStyle(fontSize: 20)),
                 Switch(
-                    value: isCheckedSettings2,
-                    onChanged: (bool change) {
-                      setState(() {
-                        isCheckedSettings2 = change;
-                      });
-                    },),
+                  value: isCheckedSettings2,
+                  onChanged: (bool change) {
+                    setState(() {
+                      isCheckedSettings2 = change;
+                    });
+                  },
+                ),
               ],
             ),
           ),
@@ -78,12 +80,13 @@ class _SettingsPageState extends State<SettingsPage> {
               children: [
                 const Text("Nastavení 3", style: TextStyle(fontSize: 20)),
                 Switch(
-                    value: isCheckedSettings3,
-                    onChanged: (bool change) {
-                      setState(() {
-                        isCheckedSettings3 = change;
-                      });
-                    },),
+                  value: isCheckedSettings3,
+                  onChanged: (bool change) {
+                    setState(() {
+                      isCheckedSettings3 = change;
+                    });
+                  },
+                ),
               ],
             ),
           ),

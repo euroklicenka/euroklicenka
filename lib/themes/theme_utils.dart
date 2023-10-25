@@ -26,5 +26,6 @@ MaterialColor createMaterialColor(Color color) {
 
 ///Returns TRUE if system dark mode is currently active.
 bool isSystemDarkModeActive() {
-  return SchedulerBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+  return SchedulerBinding.instance.platformDispatcher.platformBrightness ==
+      Brightness.dark;
 }

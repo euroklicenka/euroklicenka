@@ -12,8 +12,8 @@ part 'theme_switching_event.dart';
 part 'theme_switching_state.dart';
 
 ///Controls the current theme of the app.
-class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> {
-
+class ThemeSwitchingBloc
+    extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> {
   late UserDataManager _dataManager;
   late MapThemeManager _mapThemes;
 
@@ -21,7 +21,8 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
   String _currentMapTheme = '';
   GoogleMapController? _mapController;
 
-  ThemeSwitchingBloc({required UserDataManager dataManager}) : super(ThemeSwitchingSystemState()) {
+  ThemeSwitchingBloc({required UserDataManager dataManager})
+      : super(ThemeSwitchingSystemState()) {
     _dataManager = dataManager;
     _mapThemes = MapThemeManager();
     on<OnOpenThemeDialog>(_onOpenThemeDialog);
@@ -35,7 +36,9 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
     _dataManager.saveDefaultTheme(event.themeMode.index);
     switch (_currentTheme) {
       case ThemeMode.system:
-        _currentMapTheme = (isSystemDarkModeActive()) ? await _mapThemes.darkTheme : await _mapThemes.lightTheme;
+        _currentMapTheme = (isSystemDarkModeActive())
+            ? await _mapThemes.darkTheme
+            : await _mapThemes.lightTheme;
         emit(ThemeSwitchingSystemState());
         break;
       case ThemeMode.light:
@@ -69,13 +72,13 @@ class ThemeSwitchingBloc extends Bloc<ThemeSwitchingEvent, ThemeSwitchingState> 
 
   /// Activates in-app theme refreshing when the system theme changes.
   void _activeThemeRefresh() {
-    WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged = (){
+    WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged =
+        () {
       WidgetsBinding.instance.handlePlatformBrightnessChanged();
       if (_currentTheme != ThemeMode.system) return;
       add(OnSwitchTheme(_currentTheme));
     };
   }
-
 
   set mapController(GoogleMapController value) => _mapController = value;
 

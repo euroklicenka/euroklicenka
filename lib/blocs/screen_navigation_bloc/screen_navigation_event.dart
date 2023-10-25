@@ -11,5 +11,7 @@ class OnSwitchPage extends ScreenNavigationEvent {
 
 class OnOpenInformation extends ScreenNavigationEvent {
   final BuildContext context;
-  OnOpenInformation({required this.context,});
+  OnOpenInformation({
+    required this.context,
+  });
 }

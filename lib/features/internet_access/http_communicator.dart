@@ -9,12 +9,12 @@ import 'package:url_launcher/url_launcher.dart';
 ///
 /// Throws [SocketException] when it fails to connect.
 Future<List<int>> getAsBytes({required String url}) async {
-    final response = await get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      return response.bodyBytes;
-    } else {
-      return [];
-    }
+  final response = await get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    return response.bodyBytes;
+  } else {
+    return [];
+  }
 }
 
 ///Open the [url] in an external browser.
@@ -26,6 +26,6 @@ Future<void> openURL({required String url}) async {
 
 ///Checks if the device is connected to the internet. If not, shows a warning SnackBar.
 Future<void> checkInternetAccess({required String errorMessage}) async {
-    final bool result = await InternetConnectionChecker().hasConnection;
-    if (!result) showSnackBar(message: errorMessage);
+  final bool result = await InternetConnectionChecker().hasConnection;
+  if (!result) showSnackBar(message: errorMessage);
 }
