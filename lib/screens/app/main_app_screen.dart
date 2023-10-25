@@ -71,7 +71,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.view_list),
             activeIcon: Icon(Icons.view_list_outlined),
-            label: "List",
+            label: "Seznam",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.map),
