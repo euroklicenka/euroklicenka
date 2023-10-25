@@ -3,7 +3,6 @@ import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc
 import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
 import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
-import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:eurokey2/widgets/theme_dependent_icon.dart';
 import 'package:eurokey2/widgets/update_database_button.dart';
 import 'package:flutter/material.dart';

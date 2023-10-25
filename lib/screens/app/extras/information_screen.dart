@@ -1,5 +1,4 @@
 import 'package:eurokey2/features/internet_access/allowed_urls.dart';
-import 'package:eurokey2/themes/theme_utils.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:eurokey2/version_label.dart';
 import 'package:eurokey2/widgets/information_tile.dart';

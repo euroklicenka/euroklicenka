@@ -37,7 +37,7 @@ class MainScreenBloc extends Bloc<MainScreenEvent, MainScreenState> {
           add(OnInitFinish());
         }
       },
-    ));
+    ),);
   }
 
   FutureOr<void> _onInitFinish(event, emit) async {

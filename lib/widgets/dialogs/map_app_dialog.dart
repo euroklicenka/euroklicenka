@@ -77,9 +77,9 @@ void openMapAppDialog({required BuildContext context, required List<AvailableMap
               if (onSelectNone != null)
                 ListTile(
                   onTap: onSelectNone,
-                  title: Row(
+                  title: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(Icons.cancel_outlined),
                       SizedBox(
                         width: 8,

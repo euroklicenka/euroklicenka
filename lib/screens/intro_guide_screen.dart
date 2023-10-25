@@ -109,7 +109,6 @@ class _OnBoardScreenState extends State<GuideScreen> {
         imagePadding: EdgeInsets.all(15),
         bodyAlignment: Alignment.center,
         imageFlex: 2,
-        bodyFlex: 1,
         footerFlex: 0,
       );
 }
