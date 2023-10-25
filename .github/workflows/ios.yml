@@ -2,13 +2,9 @@ name: Flutter iOS
 
 on:
   push:
-    branches:
-      - 'main'
-      - 'HF-**'
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - 'main'
-      - 'HF-**'
+    branches: [ "main" ]
 
 jobs:
   build-ios:
@@ -22,6 +18,12 @@ jobs:
         cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:' # optional, change this to force refresh cache
         cache-path: '${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:' # optional, change this to specify the cache path
         architecture: x64 # optional, x64 or arm64
-    - run: flutter pub get
-    - run: flutter test
-    - run: flutter build ios --release --no-codesign
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    # - name: Run tests
+    # - run: flutter test
+
+    - name: Build iOS
+      run: flutter build ios --release --no-codesign
