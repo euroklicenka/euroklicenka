@@ -1,25 +1,93 @@
-import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
-import 'package:eurokey2/blocs/list_organizing_bloc/list_organizing_bloc.dart';
-import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
-import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
-import 'package:eurokey2/features/data_management/user_data_manager.dart';
-import 'package:eurokey2/features/data_management/yaml_data_manager.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/screens/main_screen.dart';
+import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/models/preferences_model.dart';
+import 'package:eurokey2/screens/app/list_screen.dart';
+import 'package:eurokey2/screens/app/main_app_screen.dart';
+import 'package:eurokey2/screens/app/map_screen.dart';
+import 'package:eurokey2/screens/app/settings_screen.dart';
+import 'package:eurokey2/screens/intro_guide_screen.dart';
+import 'package:eurokey2/screens/splash_screen.dart';
 import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-late UserDataManager _dataManager;
-late YAMLDataManager _yamlManager;
+final _router = GoRouter(
+  initialLocation: '/splash',
+  routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const EUKSplashScreen(),
+      redirect: (context, state) {
+        final prefs = Provider.of<PreferencesModel>(context);
+        switch (prefs.mainScreenState) {
+          case MainScreenStates.initialState:
+            return '/splash';
+          case MainScreenStates.guideState:
+            return '/guide';
+          case MainScreenStates.appContentState:
+            return '/map';
+          default:
+            throw 'Barf!';
+        }
+      },
+    ),
+    GoRoute(
+      path: '/guide',
+      builder: (context, state) => const GuideScreen(),
+      redirect: (context, state) {
+        final prefs = Provider.of<PreferencesModel>(context);
+        switch (prefs.mainScreenState) {
+          case MainScreenStates.initialState:
+            return '/splash';
+          case MainScreenStates.guideState:
+            return '/guide';
+          case MainScreenStates.appContentState:
+            return '/map';
+          default:
+            throw 'Barf!';
+        }
+      },
+    ),
+    ShellRoute(
+      builder: (BuildContext context, GoRouterState state, Widget child) {
+        final int index;
+        switch (state.matchedLocation) {
+          case '/list':
+            index = 0;
+            break;
+          case '/map':
+            index = 1;
+            break;
+          case '/settings':
+            index = 2;
+            break;
+          default:
+            index = 1;
+        }
+        return MainAppScreen(index: index, child: child);
+      },
+      routes: [
+        GoRoute(
+          path: '/map',
+          builder: (context, state) => const MapScreen(),
+        ),
+        GoRoute(
+          path: '/list',
+          builder: (context, state) => const ListScreen(),
+        ),
+        GoRoute(
+          path: '/settings',
+          builder: (context, state) => const SettingsScreen(),
+        ),
+      ],
+    ),
+  ],
+);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  _dataManager = await UserDataManager.create();
-  _yamlManager = await YAMLDataManager.getInstance();
-
   runApp(const MyApp());
 }
 
@@ -28,47 +96,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ScreenNavigationBloc(),
-        ),
-        BlocProvider(
-          create: (context) => LocationManagementBloc(
-            navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => MainScreenBloc(
-            dataManager: _dataManager,
-            locationBloc: BlocProvider.of<LocationManagementBloc>(context),
-          )..add(OnAppInit()),
-        ),
-        BlocProvider(
-          create: (context) => ListOrganizingBloc(
-            locManager: BlocProvider.of<LocationManagementBloc>(context)
-                .locationManager,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ThemeSwitchingBloc(dataManager: _dataManager),
-        ),
-        BlocProvider(
-          create: (context) => ExternalMapBloc(dataManager: _dataManager),
-        ),
+        ChangeNotifierProvider(create: (context) => LocationModel()),
+        ChangeNotifierProvider(create: (context) => PreferencesModel()),
+        ChangeNotifierProvider(create: (context) => EurolockModel()),
       ],
-      child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
-        builder: (context, state) {
-          return MaterialApp(
+      builder: (context, child) {
+        return Consumer<PreferencesModel>(
+          builder: (context, prefs, child) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: defaultLightTheme,
             darkTheme: defaultDarkTheme,
-            themeMode: context.watch<ThemeSwitchingBloc>().currentTheme,
+            themeMode: prefs.themeMode,
             scaffoldMessengerKey: snackBarKey,
-            home: const MainScreen(),
-          );
-        },
-      ),
+            routerConfig: _router,
+          ),
+        );
+      },
     );
   }
 }
