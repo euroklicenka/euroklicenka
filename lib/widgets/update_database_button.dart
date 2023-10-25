@@ -23,7 +23,7 @@ Widget databaseButton({required BuildContext context}) {
 
 ///Disabled version of Database Button.
 Widget databaseButtonDisabled(BuildContext context,
-    {required AnimationController animController}) {
+    {required AnimationController animController,}) {
   return OutlinedButton.icon(
     onPressed: null,
     style: ElevatedButton.styleFrom(

@@ -8,7 +8,8 @@ abstract class ExternalMapEvent {
 ///Request navigation in another supported map app.
 class OnOpenForNavigation extends ExternalMapEvent {
   final BuildContext context;
-  final double lat, long;
+  final double lat;
+  final double long;
 
   const OnOpenForNavigation({
     required this.context,

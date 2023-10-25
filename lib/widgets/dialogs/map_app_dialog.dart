@@ -17,7 +17,7 @@ void openMapAppDialog(
     required Function(AvailableMap map) onSelect,
     String headerText = 'Otevřít v aplikaci',
     bool showDefaultSwitch = true,
-    Function()? onSelectNone}) {
+    Function()? onSelectNone,}) {
   final dialogFlexibleHeight = MediaQuery.of(context).size.height * 0.355;
 
   ///Builds a Grid Tile for a map.
@@ -44,9 +44,9 @@ void openMapAppDialog(
 
   showModalBottomSheet(
     constraints: BoxConstraints(
-        maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight),
+        maxHeight: (dialogFlexibleHeight < 250) ? 250 : dialogFlexibleHeight,),
     shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),),
     context: context,
     builder: (BuildContext context) {
       return SafeArea(

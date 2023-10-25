@@ -103,7 +103,7 @@ class _ListScreenState extends State<ListScreen> {
                                       .add(OnSortByLocationDistance());
                                 });
                                 await Future.delayed(
-                                    const Duration(milliseconds: 250));
+                                    const Duration(milliseconds: 250),);
                               },
                               child: ScrollWrapper(
                                 alwaysVisibleAtOffset: true,

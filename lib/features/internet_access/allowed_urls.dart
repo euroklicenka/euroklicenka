@@ -10,7 +10,7 @@ void setAllowedURLs(
     required String aboutEuroKey,
     required String aboutEuroKeyWeb,
     required String universityOfOstrava,
-    required String universityOfOstravaKIP}) {
+    required String universityOfOstravaKIP,}) {
   downloadURLs = downloads;
   aboutEuroKeyURL = aboutEuroKey;
   aboutEuroKeyWebURL = aboutEuroKeyWeb;

@@ -26,7 +26,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
             footer: _buildButton(
                 onPressed: () => openURL(url: aboutEuroKeyURL),
-                text: 'Co je to eurozámek?'),
+                text: 'Co je to eurozámek?',),
             decoration: _getDecoration(),
           ),
           PageViewModel(
@@ -35,7 +35,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 context.isAppInDarkMode
                     ? 'assets/images/img_guide_map_dark.jpg'
                     : 'assets/images/img_guide_map_light.jpg',
-                context),
+                context,),
             body:
                 'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
             footer: _buildButton(onPressed: null, text: ''),
@@ -47,7 +47,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 context.isAppInDarkMode
                     ? 'assets/images/img_guide_popup_dark.jpg'
                     : 'assets/images/img_guide_popup_light.jpg',
-                context),
+                context,),
             body:
                 'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
             footer: _buildButton(onPressed: null, text: ''),
@@ -61,7 +61,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
                 context.isAppInDarkMode
                     ? 'assets/images/img_guide_list_dark.jpg'
                     : 'assets/images/img_guide_list_light.jpg',
-                context),
+                context,),
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
@@ -91,7 +91,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.asset(path,
-                  width: MediaQuery.of(context).size.width * 0.7),
+                  width: MediaQuery.of(context).size.width * 0.7,),
             ),
           )
         : null;
@@ -108,7 +108,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
               )
             : OutlinedButton.styleFrom(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),),
               ),
         child: Text(text),
       ),

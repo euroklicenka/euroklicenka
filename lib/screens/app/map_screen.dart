@@ -92,7 +92,7 @@ class _MapScreenState extends State<MapScreen> {
   ///
   ///The loading screen blocks input when [ignoreInputWhen] is TRUE.
   Widget buildMapLoader(
-      {required BuildContext context, bool ignoreInputWhen = true}) {
+      {required BuildContext context, bool ignoreInputWhen = true,}) {
     return IgnorePointer(
       ignoring: ignoreInputWhen,
       child: AnimatedOpacity(

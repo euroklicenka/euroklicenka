@@ -57,18 +57,18 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
   switch (type) {
     case EUKLocationType.none:
       icon = await _getBytesFromAsset(
-          "assets/images/map_marker_default.png", size);
+          "assets/images/map_marker_default.png", size,);
       break;
     case EUKLocationType.wc:
       icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
       break;
     case EUKLocationType.platform:
       icon = await _getBytesFromAsset(
-          "assets/images/map_marker_platform.png", size);
+          "assets/images/map_marker_platform.png", size,);
       break;
     case EUKLocationType.hospital:
       icon = await _getBytesFromAsset(
-          "assets/images/map_marker_hospital.png", size);
+          "assets/images/map_marker_hospital.png", size,);
       break;
     case EUKLocationType.gate:
       icon =
@@ -76,7 +76,7 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
       break;
     case EUKLocationType.elevator:
       icon = await _getBytesFromAsset(
-          "assets/images/map_marker_elevator.png", size);
+          "assets/images/map_marker_elevator.png", size,);
       break;
   }
 
@@ -106,8 +106,8 @@ Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
       Rect.fromCenter(
           center: Offset(size / 2, size / 2),
           width: iconWidth,
-          height: iconHeight),
-      Paint());
+          height: iconHeight,),
+      Paint(),);
 
   if (text != null) {
     final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
@@ -123,7 +123,7 @@ Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
     painter.paint(
         canvas,
         Offset(
-            size / 2.03 - painter.width / 2, (size / 2) - painter.height + 5));
+            size / 2.03 - painter.width / 2, (size / 2) - painter.height + 5,),);
   }
 
   final img = await pictureRecorder.endRecording().toImage(size, size);
@@ -150,7 +150,7 @@ Future<Uint8List> _getBytesFromAsset(String path, int width) async {
 Future<void> _tryInitClusterIcon() async {
   if (_clusterIcon != null) return;
   final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(
-      await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"));
+      await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"),);
   final ui.Codec codec = await descriptor.instantiateCodec();
   final ui.FrameInfo frame = await codec.getNextFrame();
   _clusterIcon = frame.image;
