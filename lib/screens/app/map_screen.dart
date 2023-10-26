@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
 import 'package:google_api_headers/google_api_headers.dart';
-import "package:google_maps_webservice/places.dart";
 
 ///Screen that shows the primary map with EUK locations.
 class MapScreen extends StatefulWidget {
@@ -87,7 +87,7 @@ class _MapScreenState extends State<MapScreen> {
                           strictbounds: false,
                           language: 'cs',
                           components: [Component(Component.country, 'cz')],
-                                      //google_map_webservice package
+                          resultTextStyle: Theme.of(context).textTheme.titleMedium,
                           onError: (err){
                              print(err);
                           }
