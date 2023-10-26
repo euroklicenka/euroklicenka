@@ -41,3 +41,9 @@ class OnFinishDefaultMapAppSetting extends ExternalMapEvent {
 }
 
 class OnRedrawDefaultIcon extends ExternalMapEvent {}
+
+class OnSetAppAsDefault extends ExternalMapEvent {
+  final bool isDefault;
+
+  const OnSetAppAsDefault({required this.isDefault});
+}

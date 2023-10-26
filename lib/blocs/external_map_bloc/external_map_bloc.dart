@@ -28,10 +28,11 @@ class ExternalMapBloc extends Bloc<ExternalMapEvent, ExternalMapState> {
     on<OnChangeDefaultMapApp>(_onChangeDefaultMapApp);
     on<OnFinishDefaultMapAppSetting>(_onFinishDefaultMapAppSetting);
     on<OnRedrawDefaultIcon>(_onInit);
+    on<OnSetAppAsDefault>(_onSetAppAsDefault);
   }
 
-  void updateNextAppIsDefault(bool value) {
-    _nextAppIsDefault = value;
+  void _onSetAppAsDefault(OnSetAppAsDefault event, emit) {
+    _nextAppIsDefault = event.isDefault;
     emit(ExternalMapDefaultState());
   }
 
