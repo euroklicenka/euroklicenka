@@ -17,7 +17,7 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  String googleApikey = "AIzaSyBjU2ts7Ss5g7qfvxnqFmJ05gGsYmB3sfU";
+  String googleApikey = "AIzaSyBpeiwg_btFCFZUbgOMelyFyee58gCiH-Q";
   GoogleMapController? mapController; //controller for Google map
   MapLoadingState _mapState = MapLoadingState.initializing;
   String location = "Search Location";
@@ -76,7 +76,7 @@ class _MapScreenState extends State<MapScreen> {
             },
           ),
           Positioned(  //search input bar
-               top:10,
+               top:0,
                child: InkWell(
                  onTap: () async {
                   var place = await PlacesAutocomplete.show(
@@ -116,13 +116,13 @@ class _MapScreenState extends State<MapScreen> {
                    }
                  },
                  child:Padding(
-                   padding: EdgeInsets.all(15),
+                   padding: EdgeInsets.all(5),
                     child: Card(
                        child: Container(
                          padding: EdgeInsets.all(0),
-                         width: MediaQuery.of(context).size.width - 40,
+                         width: MediaQuery.of(context).size.width - 70,
                          child: ListTile(
-                            title:Text(location, style: TextStyle(fontSize: 18),),
+                            title:Text(location, style: TextStyle(fontSize: 12),),
                             trailing: Icon(Icons.search),
                             dense: true,
                          )
