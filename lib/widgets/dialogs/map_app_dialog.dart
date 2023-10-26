@@ -88,8 +88,9 @@ void openMapAppDialog({
                 SwitchListTile.adaptive(
                   title: const Text('Použít vždy'),
                   value: context.watch<ExternalMapBloc>().nextAppIsDefault,
-                  onChanged:
-                      context.read<ExternalMapBloc>().updateNextAppIsDefault,
+                  onChanged: (value) => context
+                      .read<ExternalMapBloc>()
+                      .add(OnSetAppAsDefault(isDefault: value)),
                 ),
               if (onSelectNone != null)
                 ListTile(
