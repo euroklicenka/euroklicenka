@@ -8,22 +8,24 @@
 
 **Basic flow**:
 
-1.	Uživatel otevře aplikaci.
-2.	Uživatel použije funkci vyhledávání a zadá konkrétní místo.
-3.	Aplikace zobrazí výsledky vyhledávání obsahující nalezené místo.
-4.	Uživatel klikne na název nalezeného místa, aby zobrazil podrobnosti o něm.
-5.	Aplikace zobrazí podrobnosti o místě, včetně názvu, adresy a dalších informací.
-6.	Zde uživatel najde možnost "Hodnotit" a klikne na ni.
-7.	Aplikace otevře formulář pro hodnocení místa, který obsahuje pole pro hodnocení a tlačítko pro potvrzení.
-8.	Uživatel zadá hodnocení (například hodnocení na stupnici od 1 do 5).
-9.	Po dokončení uživatel klikne na tlačítko "Odeslat".
-10.	Aplikace uloží uživatelovo hodnocení pro toto místo.
+1.	Uživatel zapne aplikaci Euroklíčenka a přejde na stránku "mapa". 
+2.	Klikne na vyhledávací pole a zadá požadovanou adresu. 
+3.	Našeptávač uživateli nabídne možné shody, které uživatel může vybrat, nebo mu poskytne další možnosti na dokončení zadávané adresy. 
+4.	Uživatel klikne na doporučenou adresu nebo po zadání celé adresy potvrdí vyhledávání.
+5.	Po potvrzení se na mapě zobrazí požadované místo. (Dané místo je zvýrazněno ikonou podle toho o jaké zařízení se jedná).
+6.	Uživatel klikne na ikonu a tím zobrazí detailní informace o daném místě .
+7.	Zobrazí se okno s detailními informacemi, kde se nachází informace o kvalitě daného místa vedle ikony s hvězdičkou.
+8.	Uživatel klikne na tlačítko "přidat hodnocení", pokud chce přidat hodnocení.
+9.	Systém mu zobrazí formulář s hvězdičkami které symbolizují kvalitu daného místa.
+10.	Uživatel vybere počet hvězdiček a klikne na tlačítko „uložit hodnocení“.
+11.	Systém uloží hodnocení a přiřadí ho ke konkrétnímu místu.
+12.	Na základě průměru hodnocení uživatelů systém zobrazí hodnocení místa.
 
 **Alternative Flow**:
 
-•	*Storno hodnocení*: Uživatel může kdykoli stornovat své hodnocení před odesláním a vrátit se na stránku s výsledky vyhledávání nebo podrobnostmi o místě.
-•	*Nesprávný vstup*: Pokud uživatel nevyplní všechny požadované údaje, aplikace by měla zobrazit upozornění na chybě a vyzvat uživatele, aby doplnil chybějící údaje.
-•	 *Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
+•*Storno hodnocení*: Uživatel může kdykoli stornovat své hodnocení před odesláním a vrátit se na stránku s výsledky vyhledávání nebo podrobnostmi o místě.
+•*Nesprávný vstup*: Pokud uživatel nevyplní všechny požadované údaje, aplikace by měla zobrazit upozornění na chybě a vyzvat uživatele, aby doplnil chybějící údaje.
+•*Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
 
 **Postcondition**:
 
@@ -39,25 +41,25 @@ Uživatel zadá adresu, u které by si rád našel euroklíč a aplikace zobraz�
 
 **Basic flow**:
 
-1.	Uživatel otevře aplikaci a přejde na kartu s mapou.
-2.	Na kartě s mapou uvidí vyhledávací pole
-3.	Uživatel klikne na vyhledávací pole
-4.	Uživatel zadá hledanou adresu do textového pole.
-5.	Jakmile uživatel dokončí zadávání adresy, klikne na tlačítko "Hledat" nebo použije klávesu "Enter".
-6.	Aplikace odešle zadání adresy na server, kde probíhá vyhledávání.
-7.	Server vrátí výsledky vyhledávání, které zahrnují nalezenou adresu a případně další informace jako geografické souřadnice.
-8.	Aplikace zobrazí na mapě nalezenou adresu nebo místo na základě vrácených geografických souřadnic.
-9.	Uživatel může přiblížit nebo oddálit mapu a prozkoumávat místo.
+1.	Uživatel zapne aplikaci Euroklíčenka a přejde na stránku „mapa“. 
+2.	Klikne na vyhledávací pole a zadá požadovanou adresu. 
+3.	Našeptávač uživateli nabídne možné shody, které uživatel může vybrat, nebo mu poskytne další možnosti na dokončení zadávané adresy. 
+4.	Uživatel klikne na doporučenou adresu nebo po zadání celé adresy potvrdí vyhledávání.
+5.	Po potvrzení se na mapě zobrazí požadované místo. (Dané místo je zvýrazněno ikonou podle toho o jaké zařízení se jedná)
+6.	Uživatel může kliknout na tento ukazatel a zobrazit si tak detailní informace o daném místě 
 
 **Alternative flow**:
 
 •	*Chybný vstup*: Pokud uživatel nezadá adresu správně nebo server nemůže najít odpovídající místo, aplikace by měla zobrazit chybovou zprávu a umožnit uživateli znovu zadat adresu.
+
 •	*Zrušení hledání*: Uživatel může kdykoli zrušit hledání a vrátit se zpět na kartu s mapou bez zobrazení výsledků.
-•	*Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
+
+•	*Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po 
+obnovení připojení.
 
 **Postcondition**:
 
-Uživatel může najít konkrétní míst na stránce s mapou
+Uživatel může najít konkrétní místo na stránce s mapou
 
 ## EuroKlíčenka - Use Case – Zobrazení nejbližších lokací na mapě
 
