@@ -19,12 +19,11 @@
 9.	Systém mu zobrazí formulář s hvězdičkami které symbolizují kvalitu daného místa.
 10.	Uživatel vybere počet hvězdiček a klikne na tlačítko „uložit hodnocení“.
 11.	Systém uloží hodnocení a přiřadí ho ke konkrétnímu místu.
-12.	Na základě průměru hodnocení uživatelů systém zobrazí hodnocení místa.
+
 
 **Alternative Flow**:
 
 •*Storno hodnocení*: Uživatel může kdykoli stornovat své hodnocení před odesláním a vrátit se na stránku s výsledky vyhledávání nebo podrobnostmi o místě.
-•*Nesprávný vstup*: Pokud uživatel nevyplní všechny požadované údaje, aplikace by měla zobrazit upozornění na chybě a vyzvat uživatele, aby doplnil chybějící údaje.
 •*Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
 
 **Postcondition**:
