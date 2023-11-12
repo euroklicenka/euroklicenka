@@ -21,7 +21,7 @@
 7.	Uživatel může přejít na kartu "*seznam*". Zde se mu zobrazí nejbližší místa k místu co vyhledal.
 8.	Uživatel klikne na nějaké z uvedených míst, které se následně zobrazí na kartě "*mapa*" (opět zvýrazněné ikonou).
    
-Alternative flow:
+**Alternative flow:**
 
 • **Alternativní vyhledání místa na kartě seznam**: Uživatel může zadat adresu do vyhledávače na kartě seznam. Adresa se mu následně zobrazí na mapě v kartě "*mapa*".
 
