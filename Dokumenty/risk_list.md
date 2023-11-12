@@ -2,11 +2,11 @@
 
 | ID | Risk | Dopad | MA (Mitigační akce) | Priorita[^1] | Pravděpodobnost |
 |----|------|-------|---------------------|----------|-----------------|
-| R1 | Slabá komunikace | Členové týmu nebudou na stejné stránce, ohledně stavu projektu. Může dojít k nevědomosti, co už je hotové a co je třeba udělat dál. | Sledování prováděné aktivity v Jire. Přidělení práce hned na začátku sprintu. Kontrola před koncem. O nečekaných změnách ohledně práce informovat celý tým několik dní předem. | 3 | 70% |
-| R2 | Neznalost technologie Flutter | Bez známosti použité technologie není možné pokračovat ve vývoji projektu. | Seznámit se součástmi technologie (Gradle, Dart, Flutter) vytvořením drobného prototypu. Průběžné sdílení zkušeností. | 5 | 100% |
+| R1 | Slabá komunikace | Členové týmu nebudou na stejné stránce, ohledně stavu projektu. Může dojít k nevědomosti, co už je hotové a co je třeba udělat dál. | Sledování prováděné aktivity v Jire. Přidělení práce hned na začátku sprintu. Kontrola před koncem. O nečekaných změnách ohledně práce informovat celý tým několik dní předem. | 3 | 80% |
+| R2 | Neznalost technologie Flutter | Bez známosti použité technologie není možné pokračovat ve vývoji projektu. | Seznámit se součástmi technologie (Gradle, Dart, Flutter) vytvořením drobného prototypu. Průběžné sdílení zkušeností. | 5 | 60% |
 | R3 | Nekvalitní kód | Rychle psaný a nekontrolovaný kód vede ke slabé udržitelnosti a snížené použitelnosti (bugy) softwaru. | Použití architektury, dodržování best practises. Průběžné manuální testování. Tvorba automatických testů. Implementace Continuous Integration. | 2 | 25% |
 | R4 | Náhlé změny požadavků (zákazníkem) | Promarněný čas, nekompletní funkce. | Domluva se zákazníkem => Způsob "Něco za něco" - implementace funkcí na úkor jiných. | 2 | 0% |
-| R5 | Ztráta člena týmu | Snížení efektivnosti celého týmu a zvýšení zátěže pro zbývající členy. | Aspoň jeden další člen má přehled v problematice chybějící osoby. Dokumentace prováděné činnosti. Krátké sprinty (1-2 týdny). | 5 | 50% |
+| R5 | Ztráta člena týmu | Snížení efektivnosti celého týmu a zvýšení zátěže pro zbývající členy. | Aspoň jeden další člen má přehled v problematice chybějící osoby. Dokumentace prováděné činnosti. Krátké sprinty (1-2 týdny). | 5 | 30% |
 | R6 | Časová náročnost projektu | Může vést k nedodržení termínu jednotlivých sprintů | Využití plánovacího softwaru přidělení práce každému členu týmu | 2 | 50 % |
 | R7 | Nedostatečná znalost aktuálního stavu aplikace | Může vést k chybám ve vývoji kvůli neznalosti aplikace | Studium dokumentace předchozího týmu | 3 | 30 % |
 | R8 | Změna datového zdroje | Pokud Euroklíč změní URL k souboru dat o místech osazených eurozámkem, znamená to aplikaci úplné odříznutí od dat. | Domluva s vedoucími Euroklíče o potřebách aplikace. Držení offline EUK dat. | 6 | 100% |
