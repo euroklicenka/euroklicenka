@@ -29,7 +29,7 @@ Alternative flow:
 
 • **Zrušení hledání**: Uživatel může kdykoli zrušit hledání a vrátit se zpět na kartu s mapou bez zobrazení výsledků.
 
-• *Nepřipojen k internetu*: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
+• **Nepřipojen k internetu**: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
 
 • **Ztráta GPS připojení**: Pokud uživatel nemá připojení k GPS, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení
 
