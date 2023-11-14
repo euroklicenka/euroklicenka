@@ -31,8 +31,6 @@
 
 • **Nepřipojen k internetu**: Pokud uživatel nemá připojení k internetu, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení.
 
-• **Ztráta GPS připojení**: Pokud uživatel nemá připojení k GPS, aplikace by měla informovat o této situaci a nabídnout možnost opětovného pokusu po obnovení připojení
-
 ## EuroKlíčenka - Use Case - Hodnocení míst
 
 **Name**: Hodnocení míst
