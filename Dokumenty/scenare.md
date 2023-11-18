@@ -16,10 +16,9 @@
 2.	Klikne na vyhledávací pole a zadá požadovanou adresu.
 3.	Našeptávač uživateli nabídne možné shody, které uživatel může vybrat, nebo mu poskytne další možnosti na dokončení zadávané adresy.
 4.	Uživatel klikne na doporučenou adresu nebo po zadání celé adresy potvrdí vyhledávání.
-5.	Po potvrzení se na mapě zobrazí požadované místo. (Dané místo je zvýrazněno ikonou podle toho o jaké zařízení se jedná)
-6.	Uživatel může kliknout na tento ukazatel a zobrazit si tak detailní informace o daném místě
-7.	Uživatel může přejít na kartu "*seznam*". Zde se mu zobrazí nejbližší místa k místu co vyhledal.
-8.	Uživatel klikne na nějaké z uvedených míst, které se následně zobrazí na kartě "*mapa*" (opět zvýrazněné ikonou).
+5.	Po potvrzení se na mapě zobrazí požadované místo zvýrazněné červeným symbolem.
+6.	Uživatel může přejít na kartu "*seznam*". Zde se mu zobrazí nejbližší místa k místu co vyhledal.
+7.	Uživatel klikne na nějaké z uvedených míst, které se následně zobrazí na kartě "*mapa*".
    
 **Alternative flow:**
 
