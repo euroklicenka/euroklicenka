@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2023-11-18T12:27:38.334Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/119.0" etag="K_U5UN1hs064PTTk8aga" version="22.1.3" type="device">
+  <diagram name="Stránka-1" id="cqeGaGLjyRGob3xw0t6_">
+    <mxGraphModel dx="1026" dy="507" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-12" value="" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#6c8ebf;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="30" width="470" height="470" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-1" value="&lt;font size=&quot;1&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;Uživatel&lt;/b&gt;&lt;/font&gt;" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#292230;" vertex="1" parent="1">
+          <mxGeometry x="124" y="240" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-3" value="&lt;b&gt;Zobrazení mapy&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#292230;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
+          <mxGeometry x="284" y="90" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-8" value="&lt;b&gt;Vyhledání lokace&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#292230;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
+          <mxGeometry x="284" y="170" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-9" value="&lt;b&gt;Zobrazení nejbližších míst&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#292230;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
+          <mxGeometry x="284" y="250" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-10" value="&lt;b&gt;&lt;font color=&quot;#fcfcfc&quot;&gt;Zobrazení informací&lt;br&gt;zvoleného místa&lt;/font&gt;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#292230;" vertex="1" parent="1">
+          <mxGeometry x="284" y="330" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-11" value="&lt;b&gt;&lt;font color=&quot;#fcfcfc&quot;&gt;Přidání hodnocení zvoleného místa&lt;br&gt;&lt;/font&gt;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#292230;" vertex="1" parent="1">
+          <mxGeometry x="284" y="410" width="136" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-13" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#292230;strokeWidth=2;" edge="1" parent="1" target="_Bk7a2N4P5uGOZtN05ml-8">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="144" y="280" as="sourcePoint" />
+            <mxPoint x="394" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-14" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="_Bk7a2N4P5uGOZtN05ml-1" target="_Bk7a2N4P5uGOZtN05ml-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="174" y="250" as="sourcePoint" />
+            <mxPoint x="394" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-16" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="_Bk7a2N4P5uGOZtN05ml-1" target="_Bk7a2N4P5uGOZtN05ml-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="344" y="290" as="sourcePoint" />
+            <mxPoint x="394" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-17" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="_Bk7a2N4P5uGOZtN05ml-1" target="_Bk7a2N4P5uGOZtN05ml-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="344" y="290" as="sourcePoint" />
+            <mxPoint x="394" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-18" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;exitX=0.5;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="_Bk7a2N4P5uGOZtN05ml-1" target="_Bk7a2N4P5uGOZtN05ml-11">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="344" y="290" as="sourcePoint" />
+            <mxPoint x="394" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="_Bk7a2N4P5uGOZtN05ml-19" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Aplikace Euroklíčenka&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="165" y="40" width="220" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
