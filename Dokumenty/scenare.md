@@ -44,13 +44,14 @@
 2.	Klikne na vyhledávací pole a zadá požadovanou adresu. 
 3.	Našeptávač uživateli nabídne možné shody, které uživatel může vybrat, nebo mu poskytne další možnosti na dokončení zadávané adresy. 
 4.	Uživatel klikne na doporučenou adresu nebo po zadání celé adresy potvrdí vyhledávání.
-5.	Po potvrzení se na mapě zobrazí požadované místo. (Dané místo je zvýrazněno ikonou podle toho o jaké zařízení se jedná).
-6.	Uživatel klikne na ikonu a tím zobrazí detailní informace o daném místě .
-7.	Zobrazí se okno s detailními informacemi, kde se nachází informace o kvalitě daného místa vedle ikony s hvězdičkou.
-8.	Uživatel klikne na tlačítko "*přidat hodnocení*", pokud chce přidat hodnocení.
-9.	Systém mu zobrazí formulář s hvězdičkami které symbolizují kvalitu daného místa.
-10.	Uživatel vybere počet hvězdiček a klikne na tlačítko "*uložit hodnocení*".
-11.	Systém uloží hodnocení a přiřadí ho ke konkrétnímu místu.
+5.	Po potvrzení se na mapě zobrazí požadované místo zvýrazněné červeným symbolem.
+6.	Uživatel si vybere místo v okolí zadané adresy.
+7.	Uživatel klikne na ikonu a tím zobrazí detailní informace o daném místě .
+8.	Zobrazí se okno s detailními informacemi, kde se nachází informace o kvalitě daného místa vedle ikony s hvězdičkou.
+9.	Uživatel klikne na tlačítko "*přidat hodnocení*", pokud chce přidat hodnocení.
+10. Systém mu zobrazí formulář s hvězdičkami které symbolizují kvalitu daného místa.
+11. Uživatel vybere počet hvězdiček a klikne na tlačítko "*uložit hodnocení*".
+12. Systém uloží hodnocení a přiřadí ho ke konkrétnímu místu.
 
 **Alternative Flow**:
 
