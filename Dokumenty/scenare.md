@@ -74,10 +74,6 @@
 1. Uživatel přejde na kartu "*mapa*".
 2. Uživatel posouvá svojí polohu po mapě, aby získal lepší přehled o okolí.
 3. Uživatel ztratí svou konkrétní polohu a chce se vrátit zpátky.
-4. Uživatel klikne 2x rychle zasebou, aby se vrátil na svou původní polohu.
+4. Uživatel klikne na ikonu v levém dolním rohu, aby se vrátil na svou původní polohu.
 5. Mapa se vráti na aktuální polohu uživatele.
-
-**Alternative Flow**:
-
-• **Ikona návratu na aktuální polohu**: na rohu obrazovky se zobrazí jasně viditelná ikona symbolizující návrat na aktuální polohu uživatele. Po kliknutí na ikonu se uživatel automaticky vrátí na aktuální polohu.
 
