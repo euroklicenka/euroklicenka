@@ -1,16 +1,13 @@
-import 'package:eurokey2/blocs/external_map_bloc/external_map_bloc.dart';
-import 'package:eurokey2/blocs/list_organizing_bloc/list_organizing_bloc.dart';
-import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
-import 'package:eurokey2/blocs/screen_navigation_bloc/screen_navigation_bloc.dart';
-import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
 import 'package:eurokey2/features/data_management/user_data_manager.dart';
 import 'package:eurokey2/features/data_management/yaml_data_manager.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
+import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/models/preferences_model.dart';
 import 'package:eurokey2/screens/main_screen.dart';
 import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 late UserDataManager _dataManager;
 late YAMLDataManager _yamlManager;
@@ -28,46 +25,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ScreenNavigationBloc(),
-        ),
-        BlocProvider(
-          create: (context) => LocationManagementBloc(
-            navigationBloc: BlocProvider.of<ScreenNavigationBloc>(context),
-          ),
-        ),
-        BlocProvider(
-          create: (context) => MainScreenBloc(
-            dataManager: _dataManager,
-            locationBloc: BlocProvider.of<LocationManagementBloc>(context),
-          )..add(OnAppInit()),
-        ),
-        BlocProvider(
-          create: (context) => ListOrganizingBloc(
-            locManager: BlocProvider.of<LocationManagementBloc>(context)
-                .locationManager,
-          ),
-        ),
-        BlocProvider(
-          create: (context) => ThemeSwitchingBloc(dataManager: _dataManager),
-        ),
-        BlocProvider(
-          create: (context) => ExternalMapBloc(dataManager: _dataManager),
-        ),
+        ChangeNotifierProvider(create: (context) => LocationModel()),
+        ChangeNotifierProvider(create: (context) => PreferencesModel()),
+        ChangeNotifierProvider(create: (context) => EurolockModel()),
       ],
-      child: BlocBuilder<ThemeSwitchingBloc, ThemeSwitchingState>(
-        builder: (context, state) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: defaultLightTheme,
-            darkTheme: defaultDarkTheme,
-            themeMode: context.watch<ThemeSwitchingBloc>().currentTheme,
-            scaffoldMessengerKey: snackBarKey,
-            home: const MainScreen(),
-          );
-        },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: defaultLightTheme,
+        darkTheme: defaultDarkTheme,
+        // themeMode: context.watch<ThemeSwitchingBloc>().currentTheme,
+        scaffoldMessengerKey: snackBarKey,
+        // FIXME: Maybe use routes here?
+        home: const MainScreen(),
       ),
     );
   }

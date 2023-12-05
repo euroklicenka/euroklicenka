@@ -1,6 +1,6 @@
-import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
+import 'package:eurokey2/models/preferences_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 /// Represents the EUK2 Splash screen.
 class EUKSplashScreen extends StatelessWidget {
@@ -9,6 +9,9 @@ class EUKSplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
+
+    // Don't show this more than once
+    Provider.of<PreferencesModel>(context, listen: false).onInitFinish();
 
     return Scaffold(
       body: Center(
@@ -30,21 +33,6 @@ class EUKSplashScreen extends StatelessWidget {
               SizedBox(height: screenHeight * 0.1),
               const CircularProgressIndicator(),
               const SizedBox(height: 16),
-              BlocBuilder<LocationManagementBloc, LocationManagementState>(
-                builder: (context, state) {
-                  if (state is LocationManagementUpdatingDatabaseState) {
-                    return (context
-                            .read<LocationManagementBloc>()
-                            .checkForDataOnline)
-                        ? const Text('Stahování lokací z internetu')
-                        : const Text('Načítání lokací z úložiště');
-                  } else if (state is LocationManagementLoadingPositionState) {
-                    return const Text('Příprava polohy');
-                  } else {
-                    return const Text('Načítání');
-                  }
-                },
-              ),
             ],
           ),
         ),

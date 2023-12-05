@@ -1,12 +1,11 @@
-import 'package:custom_info_window/custom_info_window.dart';
-import 'package:eurokey2/blocs/location_management_bloc/location_management_bloc.dart';
-import 'package:eurokey2/blocs/theme_switching_bloc/theme_switching_bloc.dart';
+import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
-import 'package:flutter_google_places_hoc081098/google_maps_webservice_places.dart';
-import 'package:google_api_headers/google_api_headers.dart';
+import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 
 ///Screen that shows the primary map with EUK locations.
 class MapScreen extends StatefulWidget {
@@ -17,170 +16,57 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  String googleApikey = "AIzaSyBpeiwg_btFCFZUbgOMelyFyee58gCiH-Q";
-  GoogleMapController? mapController; //controller for Google map
-  MapLoadingState _mapState = MapLoadingState.initializing;
-  String location = "Search Location";
+  GoogleMapController? mapController;
+  final location = Location();
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    final here = await location.getLocation();
+
+    assert(here.latitude != null);
+    assert(here.longitude != null);
+
+    final cameraPosition = CameraPosition(
+        target: LatLng(here.latitude!, here.longitude!), zoom: 15);
+
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+
+    mapController = controller;
+  }
+
+  Future<Map<String, Marker>> _loadData(LatLng location) async {
+    return await Provider.of<EurolockModel>(context, listen: false)
+        .getMarkers(location);
+  }
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<LocationManagementBloc>();
-    final ThemeSwitchingBloc themeBloc = context.watch<ThemeSwitchingBloc>();
-    final double popupWindowFlexibleHeight =
-        MediaQuery.of(context).size.height * 0.27;
-
-    return ColoredBox(
-      color: Colors.black,
-      child: Stack(
-        children: <Widget>[
-          StreamBuilder<Set<Marker>>(
-            initialData: const <Marker>{},
-            stream: bloc.locationManager.markerStream,
-            builder:
-                (BuildContext context, AsyncSnapshot<Set<Marker>> snapshot) {
-              return GoogleMap(
-                myLocationEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  themeBloc.mapController = controller;
-                  mapController = controller;
-                  controller.setMapStyle(themeBloc.currentMapTheme);
-                  bloc.locationManager.windowController.googleMapController =
-                      controller;
-                  bloc.add(OnMapIsReady(controller));
-                  Future.delayed(const Duration(milliseconds: 610), () {
-                    if (!mounted) return;
-                    setState(() => _mapState = MapLoadingState.loading);
-                  });
-                },
-                onTap: (position) =>
-                    bloc.locationManager.windowController.hideInfoWindow!(),
-                onCameraMove: (position) {
-                  bloc.locationManager.windowController.onCameraMove!();
-                  bloc.locationManager.clusterManager.onCameraMove(position);
-                },
-                markers: (snapshot.data == null)
-                    ? <Marker>{}
-                    : snapshot.data!.toSet(),
-                initialCameraPosition: CameraPosition(
-                  target:
-                      context.watch<LocationManagementBloc>().wantedPosition ??
-                          const LatLng(50.073658, 14.418540),
-                  zoom:
-                      context.watch<LocationManagementBloc>().wantedZoom ?? 6.0,
-                ),
-                onCameraIdle: () {
-                  bloc.locationManager.clusterManager.updateMap();
-                  bloc.locationManager.windowController.onCameraMove!();
-                },
-              );
-            },
-          ),
-          Positioned(  //search input bar
-               top:0,
-               child: InkWell(
-                 onTap: () async {
-                  var place = await PlacesAutocomplete.show(
-                          context: context,
-                          apiKey: googleApikey,
-                          mode: Mode.overlay,
-                          types: [],
-                          strictbounds: false,
-                          language: 'cs',
-                          components: [Component(Component.country, 'cz')],
-                          resultTextStyle: Theme.of(context).textTheme.titleMedium,
-                          onError: (err){
-                             print(err);
-                          }
-                      );
-
-                   if(place != null){
-                        setState(() {
-                          location = place.description.toString();
-                        });
-
-                       //form google_maps_webservice package
-                       final plist = GoogleMapsPlaces(apiKey:googleApikey,
-                              apiHeaders: await GoogleApiHeaders().getHeaders(),
-                                        //from google_api_headers package
-                        );
-                        String placeid = place.placeId ?? "0";
-                        final detail = await plist.getDetailsByPlaceId(placeid);
-                        final geometry = detail.result.geometry!;
-                        final lat = geometry.location.lat;
-                        final lang = geometry.location.lng;
-                        var newlatlang = LatLng(lat, lang);
-                        
-
-                        //move map camera to selected place with animation
-                        mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
-                   }
-                 },
-                 child:Padding(
-                   padding: EdgeInsets.all(5),
-                    child: Card(
-                       child: Container(
-                         padding: EdgeInsets.all(0),
-                         width: MediaQuery.of(context).size.width - 70,
-                         child: ListTile(
-                            title:Text(location, style: TextStyle(fontSize: 12),),
-                            trailing: Icon(Icons.search),
-                            dense: true,
-                         )
-                       ),
-                    ),
-                 )
-               )
-             ),
-          buildMapLoader(
-            context: context,
-            ignoreInputWhen: _mapState != MapLoadingState.finished,
-          ),
-          CustomInfoWindow(
-            controller: context
-                .watch<LocationManagementBloc>()
-                .locationManager
-                .windowController,
-            height: (popupWindowFlexibleHeight < 180)
-                ? 180
-                : popupWindowFlexibleHeight,
-            width: MediaQuery.of(context).size.width * 0.8,
-            offset: 70,
-          ),
-        ],
-      ),
-    );
-  }
-
-  ///Builds a loading screen to mask map initialization.
-  ///
-  ///The loading screen blocks input when [ignoreInputWhen] is TRUE.
-  Widget buildMapLoader({
-    required BuildContext context,
-    bool ignoreInputWhen = true,
-  }) {
-    return IgnorePointer(
-      ignoring: ignoreInputWhen,
-      child: AnimatedOpacity(
-        curve: Curves.fastOutSlowIn,
-        opacity: _mapState != MapLoadingState.initializing ? 0 : 1,
-        duration: const Duration(milliseconds: 300),
-        onEnd: () => setState(() => _mapState == MapLoadingState.finished),
-        child: ColoredBox(
-          color: Theme.of(context).colorScheme.surface,
-          child: const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(
-                  height: 16,
-                ),
-                Text('Vykreslování mapy'),
-              ],
-            ),
-          ),
-        ),
-      ),
+    return Consumer<LocationModel>(
+      builder: (context, location, child) {
+        mapController
+            ?.moveCamera(CameraUpdate.newLatLng(location.currentPosition));
+        return FutureBuilder<Map<String, Marker>>(
+          future: _loadData(location.currentPosition),
+          builder: (context, snapshot) {
+            Map<String, Marker> _markers = {};
+            if (snapshot.hasData) {
+              _markers = snapshot.data!;
+            } else if (snapshot.hasError) {
+              // FIXME: handle error here
+            } else {
+              _markers.clear();
+            }
+            return GoogleMap(
+              myLocationEnabled: true,
+              onMapCreated: _onMapCreated,
+              initialCameraPosition: CameraPosition(
+                target: location.currentPosition,
+                zoom: 15.0,
+              ),
+              markers: _markers.values.toSet(),
+            );
+          },
+        );
+      },
     );
   }
 }
@@ -191,11 +77,22 @@ class AppBarMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text('Místa osazená Euroklíčem'),
-      centerTitle: true,
+    final model = Provider.of<LocationModel>(context, listen: false);
+    return EasySearchBar(
+      title: const Center(
+        child: Text('Mapa míst'),
+      ),
+      animationDuration: const Duration(milliseconds: 260),
+      searchClearIconTheme:
+          IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchBackIconTheme:
+          IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      searchCursorColor: Theme.of(context).colorScheme.secondary,
+      searchBackgroundColor: context.isAppInDarkMode
+          ? const Color(0xFF191919)
+          : Theme.of(context).colorScheme.surface,
+      onSearch: (value) => model.onSearch(value),
+      searchHintText: 'Ostrava...',
     );
   }
 }
-
-enum MapLoadingState { initializing, loading, finished }

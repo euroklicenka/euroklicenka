@@ -1,10 +1,10 @@
-import 'package:eurokey2/blocs/main_screen_bloc/main_screen_bloc.dart';
 import 'package:eurokey2/features/internet_access/allowed_urls.dart';
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
+import 'package:eurokey2/models/preferences_model.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:provider/provider.dart';
 
 class GuideScreen extends StatefulWidget {
   const GuideScreen({super.key});
@@ -86,7 +86,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
   }
 
   void _gotoHome(BuildContext context) =>
-      context.read<MainScreenBloc>().add(OnInitFinish());
+      Provider.of<PreferencesModel>(context, listen: false).onInitFinish();
 
   Widget? _buildImage(String path, BuildContext context) {
     final bool isTooSmall = MediaQuery.of(context).size.height < 490;

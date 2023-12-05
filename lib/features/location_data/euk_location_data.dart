@@ -82,9 +82,9 @@ class EUKLocationData with ClusterItem {
     );
   }
 
-  ///Update the current distance from device to a new value ([newDistance]).
-  void updateDistanceFromDevice(double newDistance) =>
-      _distanceFromDevice = newDistance;
+  set distanceFromDevice(double distanceFromDevice) {
+    _distanceFromDevice = distanceFromDevice;
+  }
 
   ///Convert the location data into a JSON format.
   Map<String, dynamic> toMap() => {

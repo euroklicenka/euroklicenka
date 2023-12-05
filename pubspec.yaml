@@ -16,7 +16,7 @@ dependencies:
   onboarding: ^3.1.0
   geolocator: ^10.1.0
   introduction_screen: ^3.1.8
-  shared_preferences: ^2.1.0
+  shared_preferences: ^2.2.2
   flutter_bloc: ^8.1.2
   csv: ^5.0.2
   spreadsheet_decoder: ^2.2.0
@@ -54,3 +54,4 @@ flutter:
     - assets/
     - assets/images/
     - assets/map_styles/
+    - assets/jiz_osazeno.xlsx

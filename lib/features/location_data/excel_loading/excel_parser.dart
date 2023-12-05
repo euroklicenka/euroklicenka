@@ -20,21 +20,28 @@ class ExcelParser {
       final String id = _toString(i);
       final String region = _toString(row[0]);
       final String city = _toString(row[1]);
-      final String address = _toString(row[2]);
+      final String fullAddress = _toString(row[2]);
       final List<String> latlng = _toString(row[3]).split(',');
       final String info = _toString(row[4]);
+
+      final lat = _fromDegreesToDecimals(latlng[0].trim());
+      final lng = _fromDegreesToDecimals(latlng[1].trim());
+      final address = _extractAddress(fullAddress);
+      final inf = info.replaceAll(RegExp('"'), '');
+      final zip = _extractZipCode(fullAddress);
+      final type = _extractLocationType(fullAddress);
 
       locations.add(
         EUKLocationData(
           id: id,
-          lat: _fromDegreesToDecimals(latlng[0].trim()),
-          long: _fromDegreesToDecimals(latlng[1].trim()),
-          address: _extractAddress(address),
+          lat: lat,
+          long: lng,
+          address: address,
           region: region,
           city: city,
-          info: info.replaceAll(RegExp('"'), ''),
-          ZIP: _extractZipCode(address),
-          type: _extractLocationType(address),
+          info: inf,
+          ZIP: zip,
+          type: type,
         ),
       );
     }
