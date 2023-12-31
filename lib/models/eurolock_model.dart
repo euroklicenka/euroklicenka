@@ -24,6 +24,10 @@ class EurolockModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void cleanupCurrentEUK() {
+    _currentEUK = null;
+  }
+
   ListTile mapItemBuilder(BuildContext context, EUKLocationData loc) {
     final distanceFromDevice = loc.distanceFromDevice;
     final String distanceText;
