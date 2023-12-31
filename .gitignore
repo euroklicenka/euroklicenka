@@ -49,3 +49,6 @@ app.*.map.json
 
 # Tests
 ios/Runner_*.xctestproducts/
+
+# Keystore
+/keystores/
