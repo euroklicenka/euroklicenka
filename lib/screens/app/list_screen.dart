@@ -57,6 +57,7 @@ class _ListScreenState extends State<ListScreenBody> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               assert(snapshot.data != null);
+              eukModel.cleanupCurrentEUK();
               return ListView(children: snapshot.data!); // snapshot.data!
             } else if (snapshot.hasError) {
               throw Exception(snapshot.error.toString());
