@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:diacritic/diacritic.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/models/location_model.dart';
@@ -13,10 +14,10 @@ import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
 
 class EurolockModel extends ChangeNotifier {
-  late List<EUKLocationData> locationsList;
-  bool locationsListInitialized = false;
+  late List<EUKLocationData> _locationsList;
   EUKLocationData? _currentEUK;
   EUKLocationData? get currentEUK => _currentEUK;
+  String? _filterBy;
 
   set currentEUK(EUKLocationData? newEUK) {
     _currentEUK = newEUK;
@@ -90,35 +91,43 @@ class EurolockModel extends ChangeNotifier {
     );
   }
 
+  MapEntry<String, Marker> markerBuilder(EUKLocationData euk) {
+    return MapEntry(
+      euk.id,
+      Marker(
+        markerId: MarkerId(euk.id),
+        position: LatLng(euk.lat, euk.lng),
+        onTap: () {
+          _currentEUK = euk;
+        },
+      ),
+    );
+  }
+
   Future<Map<String, Marker>> getMarkers(
     LatLng location,
   ) async {
-    final Map<String, Marker> markers = {};
-
-    await sortList(location);
-
-    /* show only 10 nearest locations */
-    var count = 20;
-    for (final loc in locationsList) {
-      final latlng = LatLng(loc.lat, loc.lng);
-
-      final marker = Marker(
-        markerId: MarkerId(loc.id),
-        position: latlng,
-        onTap: () {
-          _currentEUK = loc;
-        },
-      );
-      markers[loc.id] = marker;
-      if (--count == 0) {
-        //  break;
-      }
-    }
-    return markers;
+    return Map<String, Marker>.fromEntries(
+      _locationsList.map((euk) => markerBuilder(euk)),
+    );
   }
 
-  Future<void> sortList(LatLng location) async {
-    for (final loc in locationsList) {
+  Future<List<EUKLocationData>> filterList(
+    List<EUKLocationData> list,
+    String search,
+  ) async {
+    return list.where((element) {
+      return removeDiacritics(element.address.toLowerCase()).contains(search) ||
+          removeDiacritics(element.city.toLowerCase()).contains(search) ||
+          removeDiacritics(element.zip.toLowerCase()).contains(search);
+    }).toList();
+  }
+
+  Future<List<EUKLocationData>> sortList(
+    List<EUKLocationData> list,
+    LatLng location,
+  ) async {
+    for (final loc in list) {
       loc.distanceFromDevice = Geolocator.distanceBetween(
         location.latitude,
         location.longitude,
@@ -127,21 +136,33 @@ class EurolockModel extends ChangeNotifier {
       );
     }
 
-    locationsList
-        .sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+    list.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+
+    return list;
   }
 
   Future<List<Widget>> getList(BuildContext context, LatLng location) async {
-    await sortList(location);
+    final List<EUKLocationData> list;
+    if (_filterBy != null) {
+      list = await sortList(
+        await filterList(
+          _locationsList,
+          _filterBy!,
+        ),
+        location,
+      );
+    } else {
+      list = await sortList(
+        _locationsList,
+        location,
+      );
+    }
 
-    return locationsList
-        .map((location) => itemBuilder(context, location))
-        .toList();
+    return list.map((location) => itemBuilder(context, location)).toList();
   }
 
   void onSearch(String value) {
-    // Prepare filtered list
-
+    _filterBy = removeDiacritics(value.toLowerCase());
     notifyListeners();
   }
 
@@ -149,20 +170,14 @@ class EurolockModel extends ChangeNotifier {
     //const eurokliceLocationsURL =
     //  'https://www.euroklic.cz/element/simple/documents-to-download/8/3/9ce2559301112481.xlsx?download=true&download_filename=Pruvodce_po_mistech_v_CR_osazenych_Eurozamky_20231020_web.xlsx';
 
-    if (locationsListInitialized) {
-      return;
-    }
-
     // parse the on disk file
     final String fileData = await rootBundle.loadString('assets/data.json');
 
     final parsed = (jsonDecode(fileData) as List).cast<Map<String, dynamic>>();
 
-    locationsList = parsed
+    _locationsList = parsed
         .map<EUKLocationData>((json) => EUKLocationData.fromJson(json))
         .toList();
-
-    locationsListInitialized = true;
 
     return;
   }

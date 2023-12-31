@@ -50,19 +50,16 @@ class _ListScreenState extends State<ListScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LocationModel>(
-      builder: (context, location, child) {
+    return Consumer2<LocationModel, EurolockModel>(
+      builder: (context, locModel, eukModel, child) {
         return FutureBuilder<List<Widget>>(
-          future: _loadData(context, location.currentPosition),
+          future: _loadData(context, locModel.currentPosition),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               assert(snapshot.data != null);
               return ListView(children: snapshot.data!); // snapshot.data!
             } else if (snapshot.hasError) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text('Error: ${snapshot.error}'),
-              );
+              throw Exception(snapshot.error.toString());
             } else {
               return const Padding(
                 padding: EdgeInsets.only(top: 16),
