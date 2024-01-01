@@ -22,6 +22,7 @@ class MainAppScreen extends StatelessWidget {
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: index,
         children: const <Widget>[

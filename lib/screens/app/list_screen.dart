@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
 
-  EasySearchBar appBar(BuildContext context) {
+  PreferredSizeWidget appBar(BuildContext context) {
     final eukModel = Provider.of<EurolockModel>(context, listen: false);
     return EasySearchBar(
       title: const Center(
@@ -28,6 +28,7 @@ class ListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBar(context),
       body: const ListScreenBody(),
     );
