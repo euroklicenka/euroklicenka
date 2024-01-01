@@ -88,6 +88,9 @@ class EurolockModel extends ChangeNotifier {
         locProvider.currentPosition = loc.location;
 
         currentEUK = loc;
+
+        FocusScope.of(context).unfocus();
+
         context.go("/main/1");
       },
     );
