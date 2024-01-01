@@ -1,15 +1,11 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cz.euroklicenka">
-
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-
     <application
-        android:label="EuroKlíčenka"
+        android:label="Euroklíčenka"
         android:name="${applicationName}"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyBpeiwg_btFCFZUbgOMelyFyee58gCiH-Q"/>
         <activity
@@ -39,31 +35,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://portal.gov.cz/rozcestniky/euroklic-RZC-83" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://prf.osu.cz/" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://prf.osu.cz/kip/" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://www.euroklic.cz/element/simple/documents-to-download/d/0/b828501d0553497b.xlsx?download=true" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://github.com/ondrej66/RPR1/raw/main/Dokumenty/jiz_osazeno.xlsx" />
-        </intent>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-            <data android:scheme="https://www.euroklic.cz/o-cem-jsou-tyto-stranky-a-co-zde-najdete" />
-        </intent>
-    </queries>
 </manifest>
