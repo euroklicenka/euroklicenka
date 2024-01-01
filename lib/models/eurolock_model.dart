@@ -5,6 +5,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:geolocator/geolocator.dart';
@@ -89,7 +90,7 @@ class EurolockModel extends ChangeNotifier {
 
         currentEUK = loc;
 
-        FocusScope.of(context).unfocus();
+        hideVirtualKeyboard();
 
         context.go("/main/1");
       },
