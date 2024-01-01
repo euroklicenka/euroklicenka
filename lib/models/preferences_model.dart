@@ -28,6 +28,7 @@ class PreferencesModel extends ChangeNotifier {
 
       if (isFirstTimeLaunch ?? true) {
         // mainScreenState = MainScreenStates.guideState;
+        // FIXME
         mainScreenState = MainScreenStates.initialState;
       }
       notifyListeners();

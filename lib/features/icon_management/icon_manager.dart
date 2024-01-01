@@ -54,26 +54,21 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
         "assets/images/map_marker_default.png",
         size,
       );
-      break;
     case EUKLocationType.wc:
       icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
-      break;
     case EUKLocationType.platform:
       icon = await _getBytesFromAsset(
         "assets/images/map_marker_platform.png",
         size,
       );
-      break;
     case EUKLocationType.gate:
       icon =
           await _getBytesFromAsset("assets/images/map_marker_gate.png", size);
-      break;
     case EUKLocationType.elevator:
       icon = await _getBytesFromAsset(
         "assets/images/map_marker_elevator.png",
         size,
       );
-      break;
   }
 
   return BitmapDescriptor.fromBytes(icon);

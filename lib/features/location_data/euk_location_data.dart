@@ -70,16 +70,12 @@ class EUKLocationData with ClusterItem {
     switch (json['type']) {
       case 'wc':
         type = EUKLocationType.wc;
-        break;
       case 'platform':
         type = EUKLocationType.platform;
-        break;
       case 'gate':
         type = EUKLocationType.gate;
-        break;
       case 'elevator':
         type = EUKLocationType.elevator;
-        break;
       default:
         throw FormatException("Unknown EUK Location Type ${json['type']}");
     }

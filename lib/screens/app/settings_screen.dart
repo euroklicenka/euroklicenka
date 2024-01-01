@@ -46,13 +46,10 @@ class SettingsScreenBody extends StatelessWidget {
     switch (preferencesModel.themeMode) {
       case ThemeMode.system:
         preferencesModel.themeMode = ThemeMode.dark;
-        break;
       case ThemeMode.dark:
         preferencesModel.themeMode = ThemeMode.light;
-        break;
       case ThemeMode.light:
         preferencesModel.themeMode = ThemeMode.system;
-        break;
       default:
         throw Exception("invalid themeMode");
     }

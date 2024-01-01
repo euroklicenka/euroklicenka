@@ -1,14 +1,20 @@
+import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/screens/app/list_screen.dart';
+import 'package:eurokey2/screens/app/map_screen.dart';
+import 'package:eurokey2/screens/app/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class MainAppScreen extends StatelessWidget {
-  final Widget child;
-  final int index;
+  final String id;
 
-  const MainAppScreen({super.key, required this.child, required this.index});
+  const MainAppScreen({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
+    final int index = int.parse(id);
+
     if (index < 0 || index >= 3) {
       // Just in case someone tries to pass an invalid index in the url.
       GoRouter.of(context).go('/');
@@ -16,20 +22,19 @@ class MainAppScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      body: child,
+      body: IndexedStack(
+        index: index,
+        children: const <Widget>[
+          ListScreen(),
+          MapScreen(),
+          SettingsScreen(),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (index) {
-          switch (index) {
-            case 0:
-              context.go('/list');
-              break;
-            case 1:
-              context.go('/map');
-              break;
-            case 2:
-              context.go('/settings');
-              break;
-          }
+          final eukModel = Provider.of<EurolockModel>(context, listen: false);
+          eukModel.cleanupCurrentEUK();
+          context.go('/main/$index');
         },
         indicatorColor: Colors.amber,
         selectedIndex: index,

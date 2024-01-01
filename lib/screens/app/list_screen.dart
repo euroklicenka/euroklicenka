@@ -2,7 +2,6 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:eurokey2/models/eurolock_model.dart';
 import 'package:eurokey2/models/location_model.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ListScreen extends StatelessWidget {
@@ -43,21 +42,23 @@ class ListScreenBody extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreenBody> {
-  Future<List<Widget>> _loadData(BuildContext context, LatLng location) async {
-    return await Provider.of<EurolockModel>(context, listen: false)
-        .getList(context, location);
+  Future<List<Widget>> _loadData(
+    BuildContext context,
+    EurolockModel eukModel,
+    LocationModel locModel,
+  ) async {
+    return await eukModel.getList(context, locModel.currentPosition);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<LocationModel, EurolockModel>(
-      builder: (context, locModel, eukModel, child) {
+    return Consumer2<EurolockModel, LocationModel>(
+      builder: (context, eukModel, locModel, child) {
         return FutureBuilder<List<Widget>>(
-          future: _loadData(context, locModel.currentPosition),
+          future: _loadData(context, eukModel, locModel),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               assert(snapshot.data != null);
-              eukModel.cleanupCurrentEUK();
               return ListView(children: snapshot.data!); // snapshot.data!
             } else if (snapshot.hasError) {
               throw Exception(snapshot.error.toString());

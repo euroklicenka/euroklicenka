@@ -87,10 +87,8 @@ class EurolockModel extends ChangeNotifier {
 
         locProvider.currentPosition = loc.location;
 
-        _currentEUK = loc;
-        context.go("/map");
-
-        notifyListeners();
+        currentEUK = loc;
+        context.go("/main/1");
       },
     );
   }
@@ -102,15 +100,13 @@ class EurolockModel extends ChangeNotifier {
         markerId: MarkerId(euk.id),
         position: LatLng(euk.lat, euk.lng),
         onTap: () {
-          _currentEUK = euk;
+          currentEUK = euk;
         },
       ),
     );
   }
 
-  Future<Map<String, Marker>> getMarkers(
-    LatLng location,
-  ) async {
+  Future<Map<String, Marker>> getMarkers() async {
     return Map<String, Marker>.fromEntries(
       _locationsList.map((euk) => markerBuilder(euk)),
     );
