@@ -60,7 +60,6 @@ class _MapScreenState extends State<MapScreenBody> {
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
     final prefProvider = Provider.of<PreferencesModel>(context, listen: false);
-    final locProvider = Provider.of<LocationModel>(context, listen: false);
     final String mapTheme;
 
     switch (prefProvider.themeMode) {
@@ -70,81 +69,75 @@ class _MapScreenState extends State<MapScreenBody> {
         } else {
           mapTheme = await MapThemeManager().lightTheme;
         }
-        break;
       case ThemeMode.light:
         mapTheme = await MapThemeManager().lightTheme;
-        break;
       case ThemeMode.dark:
         mapTheme = await MapThemeManager().darkTheme;
-        break;
       default:
         throw const MapStyleException("invalid themeMode");
     }
 
     controller.setMapStyle(mapTheme);
 
-    final cameraPosition = CameraPosition(
-      target: locProvider.currentPosition,
-      zoom: locProvider.currentZoom,
-    );
-
-    mapController
-        ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-
     mapController = controller;
   }
 
-  Future<Map<String, Marker>> _loadData(
-    EurolockModel eukProvider,
-    LocationModel locProvider,
-  ) async {
-    return await eukProvider.getMarkers(locProvider.currentPosition);
+  Future<Map<String, Marker>> _loadData() async {
+    final eukModel = Provider.of<EurolockModel>(context, listen: false);
+    return await eukModel.getMarkers();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<EurolockModel, LocationModel, PreferencesModel>(
-      builder: (context, eukProvider, locProvider, prefProvider, child) {
+    return Consumer2<LocationModel, PreferencesModel>(
+      builder: (context, locProvider, prefProvider, child) {
         return FutureBuilder<Map<String, Marker>>(
-          future: _loadData(eukProvider, locProvider),
+          future: _loadData(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               final Map<String, Marker> markers = snapshot.data!;
-              final List<Widget> widgets = [];
 
-              widgets.add(
-                GoogleMap(
-                  myLocationEnabled: true,
-                  mapToolbarEnabled: false,
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: locProvider.currentPosition,
-                    zoom: locProvider.currentZoom,
-                  ),
-                  onCameraMove: _onCameraMove,
-                  onTap: (position) => eukProvider.currentEUK = null,
-                  markers: markers.values.toSet(),
-                ),
-              );
-
-              if (eukProvider.currentEUK != null) {
-                final euk = eukProvider.currentEUK;
-
-                widgets.add(
-                  Positioned(
-                    bottom: 0,
-                    height: 100,
-                    width: MediaQuery.of(context).size.width,
-                    child: ColoredBox(
-                      color: Theme.of(context).colorScheme.surface,
-                      child: eukProvider.mapItemBuilder(context, euk!),
-                    ),
-                  ),
-                );
-              }
+              final eukModel =
+                  Provider.of<EurolockModel>(context, listen: false);
 
               return Stack(
-                children: widgets,
+                children: <Widget>[
+                  GoogleMap(
+                    buildingsEnabled: false,
+                    myLocationEnabled: true,
+                    mapToolbarEnabled: false,
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: locProvider.currentPosition,
+                      zoom: locProvider.currentZoom,
+                    ),
+                    onCameraMove: _onCameraMove,
+                    onTap: (position) => eukModel.currentEUK = null,
+                    markers: markers.values.toSet(),
+                  ),
+                  Consumer<EurolockModel>(
+                    builder: (context, eukModel, child) {
+                      if (eukModel.currentEUK == null) {
+                        return const SizedBox.shrink();
+                      }
+                      final euk = eukModel.currentEUK!;
+
+                      mapController?.moveCamera(
+                        CameraUpdate.newLatLng(LatLng(euk.lat, euk.lng)),
+                      );
+
+                      return Positioned(
+                        bottom: 0,
+                        height: 100,
+                        width: MediaQuery.of(context).size.width,
+                        child: ColoredBox(
+                          color: Theme.of(context).colorScheme.surface,
+                          child: eukModel.mapItemBuilder(context, euk),
+                        ),
+                      );
+                    },
+                  ),
+                ],
               );
             } else if (snapshot.hasError) {
               throw Exception(snapshot.error.toString());
