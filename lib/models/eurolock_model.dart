@@ -86,7 +86,7 @@ class EurolockModel extends ChangeNotifier {
       onTap: () {
         final locProvider = Provider.of<LocationModel>(context, listen: false);
 
-        locProvider.currentPosition = loc.location;
+        locProvider.currentMapPosition = loc.location;
 
         currentEUK = loc;
 
@@ -129,8 +129,12 @@ class EurolockModel extends ChangeNotifier {
 
   Future<List<EUKLocationData>> sortList(
     List<EUKLocationData> list,
-    LatLng location,
+    LatLng? location,
   ) async {
+    if (location == null) {
+      return list;
+    }
+
     for (final loc in list) {
       loc.distanceFromDevice = Geolocator.distanceBetween(
         location.latitude,
@@ -145,7 +149,7 @@ class EurolockModel extends ChangeNotifier {
     return list;
   }
 
-  Future<List<Widget>> getList(BuildContext context, LatLng location) async {
+  Future<List<Widget>> getList(BuildContext context, LatLng? location) async {
     final List<EUKLocationData> list;
     if (_filterBy != null) {
       list = await sortList(

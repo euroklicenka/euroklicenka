@@ -1,3 +1,4 @@
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/models/eurolock_model.dart';
 import 'package:eurokey2/models/location_model.dart';
 import 'package:eurokey2/models/preferences_model.dart';
@@ -16,7 +17,16 @@ class EUKSplashScreen extends StatelessWidget {
     await eukModel.onInitApp();
     await preferencesModel.onInitApp();
 
-    locationModel.currentPosition = await locationModel.determinePosition();
+    await locationModel
+        .determinePosition()
+        .then(
+          (currentPosition) =>
+              locationModel.currentUserPosition = currentPosition,
+        )
+        .catchError((e) {
+      showSnackBar(message: e.toString());
+      return null;
+    });
 
     return true;
   }

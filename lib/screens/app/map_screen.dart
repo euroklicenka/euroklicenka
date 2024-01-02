@@ -4,7 +4,6 @@ import 'package:eurokey2/models/location_model.dart';
 import 'package:eurokey2/models/preferences_model.dart';
 import 'package:eurokey2/themes/map_theme_manager.dart';
 import 'package:eurokey2/themes/theme_utils.dart';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
@@ -56,8 +55,8 @@ class _MapScreenState extends State<MapScreenBody> {
   Future<void> _onCameraMove(CameraPosition position) async {
     final locProvider = Provider.of<LocationModel>(context, listen: false);
 
-    locProvider.currentPosition = position.target;
-    locProvider.currentZoom = position.zoom;
+    locProvider.currentMapPosition = position.target;
+    locProvider.currentMapZoom = position.zoom;
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
@@ -110,8 +109,9 @@ class _MapScreenState extends State<MapScreenBody> {
                     mapToolbarEnabled: false,
                     onMapCreated: _onMapCreated,
                     initialCameraPosition: CameraPosition(
-                      target: locProvider.currentPosition,
-                      zoom: locProvider.currentZoom,
+                      target: locProvider.currentUserPosition ??
+                          locProvider.currentMapPosition,
+                      zoom: locProvider.currentMapZoom,
                     ),
                     onCameraMove: _onCameraMove,
                     onTap: (position) => eukModel.currentEUK = null,
