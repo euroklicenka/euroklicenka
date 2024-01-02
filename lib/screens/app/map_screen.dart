@@ -51,6 +51,7 @@ class MapScreenBody extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreenBody> {
   GoogleMapController? mapController;
+  bool movedToMarker = false;
 
   Future<void> _onCameraMove(CameraPosition position) async {
     final locProvider = Provider.of<LocationModel>(context, listen: false);
@@ -120,13 +121,17 @@ class _MapScreenState extends State<MapScreenBody> {
                   Consumer<EurolockModel>(
                     builder: (context, eukModel, child) {
                       if (eukModel.currentEUK == null) {
+                        movedToMarker = false;
                         return const SizedBox.shrink();
                       }
                       final euk = eukModel.currentEUK!;
 
-                      mapController?.moveCamera(
-                        CameraUpdate.newLatLng(LatLng(euk.lat, euk.lng)),
-                      );
+                      if (!movedToMarker) {
+                        mapController?.moveCamera(
+                          CameraUpdate.newLatLng(LatLng(euk.lat, euk.lng)),
+                        );
+                        movedToMarker = true;
+                      }
 
                       return Positioned(
                         bottom: 0,

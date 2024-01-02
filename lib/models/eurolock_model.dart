@@ -29,16 +29,17 @@ class EurolockModel extends ChangeNotifier {
     _currentEUK = null;
   }
 
-  ListTile mapItemBuilder(BuildContext context, EUKLocationData loc) {
-    final distanceFromDevice = loc.distanceFromDevice;
-    final String distanceText;
-
-    if (distanceFromDevice < 1000) {
-      distanceText = '${distanceFromDevice.toStringAsFixed(0)} m';
+  String distanceToString(double distance) {
+    if (distance < 1000) {
+      return '${distance.toStringAsFixed(0)} m';
     } else {
-      final distanceInKm = distanceFromDevice / 1000;
-      distanceText = '${distanceInKm.toStringAsFixed(2)} km';
+      final distanceInKm = distance / 1000;
+      return '${distanceInKm.toStringAsFixed(2)} km';
     }
+  }
+
+  ListTile mapItemBuilder(BuildContext context, EUKLocationData loc) {
+    final String distanceText = distanceToString(loc.distanceFromUser);
 
     return ListTile(
       tileColor: Theme.of(context).colorScheme.surface,
@@ -60,14 +61,14 @@ class EurolockModel extends ChangeNotifier {
   }
 
   ListTile itemBuilder(BuildContext context, EUKLocationData loc) {
-    final distanceFromDevice = loc.distanceFromDevice;
+    final String distanceFromUserText = distanceToString(loc.distanceFromUser);
+    final String distanceFromMapText = distanceToString(loc.distanceFromMap);
     final String distanceText;
 
-    if (distanceFromDevice < 1000) {
-      distanceText = '${distanceFromDevice.toStringAsFixed(0)} m';
+    if (distanceFromUserText == distanceFromMapText) {
+      distanceText = distanceFromUserText;
     } else {
-      final distanceInKm = distanceFromDevice / 1000;
-      distanceText = '${distanceInKm.toStringAsFixed(2)} km';
+      distanceText = "$distanceFromUserText ($distanceFromMapText)";
     }
 
     return ListTile(
@@ -97,7 +98,9 @@ class EurolockModel extends ChangeNotifier {
     );
   }
 
-  MapEntry<String, Marker> markerBuilder(EUKLocationData euk) {
+  Future<MapEntry<String, Marker>> markerBuilder(EUKLocationData euk) async {
+    final icon = await getMarkerIconByType(euk.type);
+
     return MapEntry(
       euk.id,
       Marker(
@@ -106,14 +109,19 @@ class EurolockModel extends ChangeNotifier {
         onTap: () {
           currentEUK = euk;
         },
+        icon: icon,
       ),
     );
   }
 
   Future<Map<String, Marker>> getMarkers() async {
-    return Map<String, Marker>.fromEntries(
-      _locationsList.map((euk) => markerBuilder(euk)),
-    );
+    final List<MapEntry<String, Marker>> entries = [];
+    for (final euk in _locationsList) {
+      // we cannot use fromEntries() directly because of await
+      entries.add(await markerBuilder(euk));
+    }
+
+    return Map<String, Marker>.fromEntries(entries);
   }
 
   Future<List<EUKLocationData>> filterList(
@@ -129,27 +137,40 @@ class EurolockModel extends ChangeNotifier {
 
   Future<List<EUKLocationData>> sortList(
     List<EUKLocationData> list,
-    LatLng? location,
+    LatLng? userLocation,
+    LatLng mapLocation,
   ) async {
-    if (location == null) {
-      return list;
-    }
-
+    // FIXME: Recalculate only on map location change
     for (final loc in list) {
-      loc.distanceFromDevice = Geolocator.distanceBetween(
-        location.latitude,
-        location.longitude,
+      loc.distanceFromMap = Geolocator.distanceBetween(
+        mapLocation.latitude,
+        mapLocation.longitude,
+        loc.lat,
+        loc.lng,
+      );
+      if (userLocation == null) {
+        continue;
+      }
+
+      // FIXME: Recalculate only on user location change
+      loc.distanceFromUser = Geolocator.distanceBetween(
+        userLocation.latitude,
+        userLocation.longitude,
         loc.lat,
         loc.lng,
       );
     }
 
-    list.sort((a, b) => a.distanceFromDevice.compareTo(b.distanceFromDevice));
+    list.sort((a, b) => a.distanceFromMap.compareTo(b.distanceFromMap));
 
     return list;
   }
 
-  Future<List<Widget>> getList(BuildContext context, LatLng? location) async {
+  Future<List<Widget>> getList(
+    BuildContext context,
+    LatLng? userLocation,
+    LatLng mapLocation,
+  ) async {
     final List<EUKLocationData> list;
     if (_filterBy != null) {
       list = await sortList(
@@ -157,12 +178,14 @@ class EurolockModel extends ChangeNotifier {
           _locationsList,
           _filterBy!,
         ),
-        location,
+        userLocation,
+        mapLocation,
       );
     } else {
       list = await sortList(
         _locationsList,
-        location,
+        userLocation,
+        mapLocation,
       );
     }
 

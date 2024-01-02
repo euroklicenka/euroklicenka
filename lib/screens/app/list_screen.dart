@@ -48,7 +48,11 @@ class _ListScreenState extends State<ListScreenBody> {
     EurolockModel eukModel,
     LocationModel locModel,
   ) async {
-    return await eukModel.getList(context, locModel.currentUserPosition);
+    return await eukModel.getList(
+      context,
+      locModel.currentUserPosition,
+      locModel.currentMapPosition,
+    );
   }
 
   @override
