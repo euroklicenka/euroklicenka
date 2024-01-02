@@ -31,7 +31,7 @@ jobs:
     # - run: flutter test
 
     - name: Build APK
-      run: flutter build apk
+      run: flutter build apk --debug
 
     - name: Build App Bundle
-      run: flutter build appbundle
+      run: flutter build appbundle --debug
