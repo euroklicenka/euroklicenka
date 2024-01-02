@@ -2,6 +2,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- The Internet permissions are need to access Google Maps -->
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:label="EuroKlíčenka"
         android:name="${applicationName}"
