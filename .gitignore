@@ -52,3 +52,6 @@ ios/Runner_*.xctestproducts/
 
 # Keystore
 /keystores/
+
+# DevTools options
+/devtools_options.yaml
