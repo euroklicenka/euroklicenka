@@ -14,6 +14,27 @@ class EUKSplashScreen extends StatelessWidget {
     final preferencesModel = context.read<PreferencesModel>();
     final locationModel = Provider.of<LocationModel>(context, listen: false);
 
+    precacheImage(
+      const AssetImage("markers/map_marker_default.png"),
+      context,
+    );
+    precacheImage(
+      const AssetImage("markers/map_marker_wc.png"),
+      context,
+    );
+    precacheImage(
+      const AssetImage("markers/map_marker_platform.png"),
+      context,
+    );
+    precacheImage(
+      const AssetImage("markers/map_marker_gate.png"),
+      context,
+    );
+    precacheImage(
+      const AssetImage("markers/map_marker_elevator.png"),
+      context,
+    );
+
     await eukModel.onInitApp();
     await preferencesModel.onInitApp();
 

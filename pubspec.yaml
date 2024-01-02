@@ -44,6 +44,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - markers/
     - assets/
     - assets/images/
     - assets/map_styles/
