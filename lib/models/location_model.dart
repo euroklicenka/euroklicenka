@@ -6,22 +6,27 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationModel with ChangeNotifier {
-  LatLng _currentPosition = const LatLng(0, 0);
-  double _currentZoom = 14.5;
+  LatLng? _currentUserPosition;
+  double _currentMapZoom = 14.5;
+  LatLng _currentMapPosition =
+      const LatLng(49.8402811, 18.2887964); // Bráfova 7
 
-  double get currentZoom => _currentZoom;
-  set currentZoom(double newZoom) {
-    _currentZoom = newZoom;
+  double get currentMapZoom => _currentMapZoom;
+  set currentMapZoom(double zoom) {
+    _currentMapZoom = zoom;
     notifyListeners();
   }
 
   // Get the current position
-  LatLng get currentPosition {
-    return _currentPosition;
+  LatLng? get currentUserPosition => _currentUserPosition;
+  set currentUserPosition(LatLng? position) {
+    _currentUserPosition = position;
+    notifyListeners();
   }
 
-  set currentPosition(LatLng newPosition) {
-    _currentPosition = newPosition;
+  LatLng get currentMapPosition => _currentMapPosition;
+  set currentMapPosition(LatLng position) {
+    _currentMapPosition = position;
     notifyListeners();
   }
 
@@ -29,7 +34,7 @@ class LocationModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<LatLng> determinePosition() async {
+  Future<LatLng?> determinePosition() async {
     // Test if location services are enabled.
 
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -63,6 +68,6 @@ class LocationModel with ChangeNotifier {
     // continue accessing the position of the device.
     final Position position = await Geolocator.getCurrentPosition();
 
-    return _currentPosition = LatLng(position.latitude, position.longitude);
+    return LatLng(position.latitude, position.longitude);
   }
 }
