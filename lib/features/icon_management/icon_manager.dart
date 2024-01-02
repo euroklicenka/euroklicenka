@@ -1,11 +1,6 @@
-import 'dart:ui' as ui;
-
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-ui.Image? _clusterIcon;
 
 ///Returns an [Icon], representing the given location [type].
 Icon getIconByType(EUKLocationType type) {
@@ -45,110 +40,15 @@ Icon getIconByType(EUKLocationType type) {
 
 ///Returns a custom marker icon, based on an EUK location type.
 Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
-  Uint8List icon;
-  const int size = 110;
+  const ImageConfiguration configuration =
+      ImageConfiguration(size: Size(12, 12));
+  final String assetName = switch (type) {
+    EUKLocationType.none => "markers/map_marker_default.png",
+    EUKLocationType.wc => "markers/map_marker_wc.png",
+    EUKLocationType.platform => "markers/map_marker_platform.png",
+    EUKLocationType.gate => "markers/map_marker_gate.png",
+    EUKLocationType.elevator => "markers/map_marker_elevator.png",
+  };
 
-  switch (type) {
-    case EUKLocationType.none:
-      icon = await _getBytesFromAsset(
-        "assets/images/map_marker_default.png",
-        size,
-      );
-    case EUKLocationType.wc:
-      icon = await _getBytesFromAsset("assets/images/map_marker_wc.png", size);
-    case EUKLocationType.platform:
-      icon = await _getBytesFromAsset(
-        "assets/images/map_marker_platform.png",
-        size,
-      );
-    case EUKLocationType.gate:
-      icon =
-          await _getBytesFromAsset("assets/images/map_marker_gate.png", size);
-    case EUKLocationType.elevator:
-      icon = await _getBytesFromAsset(
-        "assets/images/map_marker_elevator.png",
-        size,
-      );
-  }
-
-  return BitmapDescriptor.fromBytes(icon);
-}
-
-///Creates a new icon for a cluster.
-///
-/// [size] controls how big the icon is.
-///
-/// [text] controls what text is written at the cneter of the icon.
-Future<BitmapDescriptor> getClusterIcon(int size, {String? text}) async {
-  await _tryInitClusterIcon();
-
-  final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
-  final Canvas canvas = Canvas(pictureRecorder);
-  final double ratio = _clusterIcon!.width / _clusterIcon!.height;
-
-  final textSize = (text != null) ? text.length : 1;
-  final double iconWidth =
-      size.toDouble() * 0.72 * ratio * (1 + (textSize - 1) * 0.17);
-  final double iconHeight =
-      size.toDouble() * 0.72 * (1 + (textSize - 1) * 0.12);
-  canvas.drawImageNine(
-    _clusterIcon!,
-    Rect.zero,
-    Rect.fromCenter(
-      center: Offset(size / 2, size / 2),
-      width: iconWidth,
-      height: iconHeight,
-    ),
-    Paint(),
-  );
-
-  if (text != null) {
-    final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
-    painter.text = TextSpan(
-      text: text,
-      style: TextStyle(
-        fontSize: size / 5,
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-    painter.layout();
-    painter.paint(
-      canvas,
-      Offset(
-        size / 2.03 - painter.width / 2,
-        (size / 2) - painter.height + 5,
-      ),
-    );
-  }
-
-  final img = await pictureRecorder.endRecording().toImage(size, size);
-  final ByteData? data = await img.toByteData(format: ui.ImageByteFormat.png);
-  return BitmapDescriptor.fromBytes(data!.buffer.asUint8List());
-}
-
-///Returns a PNG image as bytes under a specific [path] with a [width].
-Future<Uint8List> _getBytesFromAsset(String path, int width) async {
-  final ByteData data = await rootBundle.load(path);
-  final ui.Codec codec = await ui.instantiateImageCodec(
-    data.buffer.asUint8List(),
-    targetWidth: width,
-  );
-  final ui.FrameInfo fi = await codec.getNextFrame();
-  return (await fi.image.toByteData(
-    format: ui.ImageByteFormat.png,
-  ))!
-      .buffer
-      .asUint8List();
-}
-
-/// The cluster icon gets initialized if it wasn't already.
-Future<void> _tryInitClusterIcon() async {
-  if (_clusterIcon != null) return;
-  final ui.ImageDescriptor descriptor = await ui.ImageDescriptor.encoded(
-    await ImmutableBuffer.fromAsset("assets/images/map_marker_cluster.png"),
-  );
-  final ui.Codec codec = await descriptor.instantiateCodec();
-  final ui.FrameInfo frame = await codec.getNextFrame();
-  _clusterIcon = frame.image;
+  return BitmapDescriptor.fromAssetImage(configuration, assetName);
 }
