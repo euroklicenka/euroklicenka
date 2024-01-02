@@ -11,7 +11,7 @@ class EUKLocationData with ClusterItem {
   late String _city;
   late String _zip;
   late EUKLocationType _type;
-  double distanceFromDevice = 0;
+  double distanceFromUser = 0;
   double distanceFromMap = 0;
 
   EUKLocationData({
@@ -43,7 +43,7 @@ class EUKLocationData with ClusterItem {
     _city = data.city;
     _zip = data.zip;
     _type = data.type;
-    distanceFromDevice = data.distanceFromDevice;
+    distanceFromUser = data.distanceFromUser;
     distanceFromMap = data.distanceFromMap;
   }
 
