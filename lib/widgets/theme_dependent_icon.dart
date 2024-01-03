@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class ThemeDependentIcon extends StatelessWidget {
   final IconData icon;
 
-  const ThemeDependentIcon(this.icon);
+  const ThemeDependentIcon(this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {
