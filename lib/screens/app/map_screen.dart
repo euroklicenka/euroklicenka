@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreenBody> {
 
   Future<Map<String, Marker>> _loadData() async {
     final eukModel = Provider.of<EurolockModel>(context, listen: false);
-    return await eukModel.getMarkers();
+    return await eukModel.getMarkers(context);
   }
 
   @override

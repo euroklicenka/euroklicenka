@@ -39,9 +39,10 @@ Icon getIconByType(EUKLocationType type) {
 }
 
 ///Returns a custom marker icon, based on an EUK location type.
-Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
-  const ImageConfiguration configuration =
-      ImageConfiguration(size: Size(12, 12));
+Future<BitmapDescriptor> getMarkerIconByType(
+  ImageConfiguration imageConfiguration,
+  EUKLocationType type,
+) async {
   final String assetName = switch (type) {
     EUKLocationType.none => "markers/map_marker_default.png",
     EUKLocationType.wc => "markers/map_marker_wc.png",
@@ -50,5 +51,6 @@ Future<BitmapDescriptor> getMarkerIconByType(EUKLocationType type) async {
     EUKLocationType.elevator => "markers/map_marker_elevator.png",
   };
 
-  return BitmapDescriptor.fromAssetImage(configuration, assetName);
+  return BitmapDescriptor.fromAssetImage(imageConfiguration, assetName,
+      mipmaps: false);
 }
