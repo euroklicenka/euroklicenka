@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:eurokey2/models/eurolock_model.dart';
 import 'package:eurokey2/models/location_model.dart';
 import 'package:eurokey2/models/preferences_model.dart';
-import 'package:eurokey2/themes/map_theme_manager.dart';
-import 'package:eurokey2/themes/theme_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapScreen extends StatelessWidget {
-  const MapScreen({super.key});
+  final MapController mapController = MapController();
+
+  MapScreen({super.key});
 
   EasySearchBar appBar(BuildContext context) {
     final locationModel = Provider.of<LocationModel>(context);
@@ -34,15 +38,18 @@ class MapScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBar(context),
-      body: const MapScreenBody(),
+      body: MapScreenBody(mapController: mapController),
     );
   }
 }
 
 ///Screen that shows the primary map with EUK locations.
 class MapScreenBody extends StatefulWidget {
+  final MapController? mapController;
+
   const MapScreenBody({
     super.key,
+    required this.mapController,
   });
 
   @override
@@ -50,108 +57,116 @@ class MapScreenBody extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreenBody> {
-  GoogleMapController? mapController;
-  bool movedToMarker = false;
+  late AlignOnUpdate _followOnLocationUpdate;
+  late StreamController<double?> _followCurrentLocationStreamController;
 
-  Future<void> _onCameraMove(CameraPosition position) async {
-    final locProvider = Provider.of<LocationModel>(context, listen: false);
-
-    locProvider.currentMapPosition = position.target;
-    locProvider.currentMapZoom = position.zoom;
+  @override
+  void initState() {
+    super.initState();
+    _followOnLocationUpdate = AlignOnUpdate.always;
+    _followCurrentLocationStreamController = StreamController<double?>();
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    final prefProvider = Provider.of<PreferencesModel>(context, listen: false);
-    final String mapTheme;
+  @override
+  void dispose() {
+    _followCurrentLocationStreamController.close();
+    super.dispose();
+  }
 
-    switch (prefProvider.themeMode) {
-      case ThemeMode.system:
-        if (isSystemDarkModeActive()) {
-          mapTheme = await MapThemeManager().darkTheme;
-        } else {
-          mapTheme = await MapThemeManager().lightTheme;
-        }
-      case ThemeMode.light:
-        mapTheme = await MapThemeManager().lightTheme;
-      case ThemeMode.dark:
-        mapTheme = await MapThemeManager().darkTheme;
-      default:
-        throw const MapStyleException("invalid themeMode");
+  void _onPositionChanged(MapPosition mapPosition, bool hasGesture) {
+    if (hasGesture) {
+      final eurolockModel = Provider.of<EurolockModel>(context, listen: false);
+      eurolockModel.currentEUK = null;
     }
 
-    controller.setMapStyle(mapTheme);
+    if (hasGesture && _followOnLocationUpdate != AlignOnUpdate.never) {
+      setState(
+        () => _followOnLocationUpdate = AlignOnUpdate.never,
+      );
+    }
 
-    mapController = controller;
-  }
-
-  Future<Map<String, Marker>> _loadData() async {
-    final eukModel = Provider.of<EurolockModel>(context, listen: false);
-    return await eukModel.getMarkers(context);
+    final locationProvider = Provider.of<LocationModel>(context, listen: false);
+    locationProvider.currentMapPosition = mapPosition.center!;
+    locationProvider.currentMapZoom = mapPosition.zoom!;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<LocationModel, PreferencesModel>(
-      builder: (context, locProvider, prefProvider, child) {
-        return FutureBuilder<Map<String, Marker>>(
-          future: _loadData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final Map<String, Marker> markers = snapshot.data!;
-
-              final eukModel =
-                  Provider.of<EurolockModel>(context, listen: false);
-
-              return Stack(
-                children: <Widget>[
-                  GoogleMap(
-                    buildingsEnabled: false,
-                    myLocationEnabled: true,
-                    mapToolbarEnabled: false,
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: CameraPosition(
-                      target: locProvider.currentUserPosition ??
-                          locProvider.currentMapPosition,
-                      zoom: locProvider.currentMapZoom,
+    return Consumer3<LocationModel, PreferencesModel, EurolockModel>(
+      builder: (context, locProvider, prefProvider, eukModel, child) {
+        eukModel.mapController = widget.mapController;
+        return Stack(
+          children: <Widget>[
+            FlutterMap(
+              mapController: widget.mapController,
+              options: MapOptions(
+                initialCenter: locProvider.currentMapPosition,
+                initialZoom: 15,
+                onTap: (tapPosition, point) => eukModel.currentEUK = null,
+                onPositionChanged: _onPositionChanged,
+              ),
+              children: [
+                TileLayer(
+                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  userAgentPackageName: 'cz.osu.euroklicenka',
+                ),
+                CurrentLocationLayer(
+                  alignPositionStream:
+                      _followCurrentLocationStreamController.stream,
+                  alignPositionOnUpdate: _followOnLocationUpdate,
+                ),
+                MarkerLayer(markers: eukModel.markers),
+                RichAttributionWidget(
+                  attributions: [
+                    TextSourceAttribution(
+                      'OpenStreetMap contributors',
+                      onTap: () => launchUrl(
+                        Uri.parse('https://openstreetmap.org/copyright'),
+                      ),
                     ),
-                    onCameraMove: _onCameraMove,
-                    onTap: (position) => eukModel.currentEUK = null,
-                    markers: markers.values.toSet(),
-                  ),
-                  Consumer<EurolockModel>(
-                    builder: (context, eukModel, child) {
-                      if (eukModel.currentEUK == null) {
-                        movedToMarker = false;
-                        return const SizedBox.shrink();
-                      }
-                      final euk = eukModel.currentEUK!;
+                  ],
+                ),
+              ],
+            ),
+            Positioned(
+              right: 20,
+              top: 20,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // Follow the location marker on the map when location updated until user interact with the map.
+                  setState(
+                    () => _followOnLocationUpdate = AlignOnUpdate.always,
+                  );
+                  // Follow the location marker on the map and zoom the map to level 18.
+                  _followCurrentLocationStreamController.add(18);
+                },
+                child: const Icon(
+                  Icons.my_location,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            Builder(
+              builder: (context) {
+                if (eukModel.currentEUK == null) {
+                  return const SizedBox.shrink();
+                }
+                final euk = eukModel.currentEUK!;
 
-                      if (!movedToMarker) {
-                        mapController?.moveCamera(
-                          CameraUpdate.newLatLng(LatLng(euk.lat, euk.lng)),
-                        );
-                        movedToMarker = true;
-                      }
+                _followOnLocationUpdate = AlignOnUpdate.never;
 
-                      return Positioned(
-                        bottom: 0,
-                        height: 100,
-                        width: MediaQuery.of(context).size.width,
-                        child: ColoredBox(
-                          color: Theme.of(context).colorScheme.surface,
-                          child: eukModel.mapItemBuilder(context, euk),
-                        ),
-                      );
-                    },
+                return Positioned(
+                  bottom: 0,
+                  height: 100,
+                  width: MediaQuery.of(context).size.width,
+                  child: ColoredBox(
+                    color: Theme.of(context).colorScheme.surface,
+                    child: eukModel.mapItemBuilder(context, euk),
                   ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              throw Exception(snapshot.error.toString());
-            } else {
-              return const Text("loading data...");
-            }
-          },
+                );
+              },
+            ),
+          ],
         );
       },
     );

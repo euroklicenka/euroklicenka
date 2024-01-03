@@ -1,6 +1,5 @@
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 ///Returns an [Icon], representing the given location [type].
 Icon getIconByType(EUKLocationType type) {
@@ -38,11 +37,33 @@ Icon getIconByType(EUKLocationType type) {
   }
 }
 
+Future<void> precacheMarkerIcon(BuildContext context) async {
+  precacheImage(
+    const AssetImage("markers/map_marker_default.png"),
+    context,
+  );
+  precacheImage(
+    const AssetImage("markers/map_marker_wc.png"),
+    context,
+  );
+  precacheImage(
+    const AssetImage("markers/map_marker_platform.png"),
+    context,
+  );
+  precacheImage(
+    const AssetImage("markers/map_marker_gate.png"),
+    context,
+  );
+  precacheImage(
+    const AssetImage("markers/map_marker_elevator.png"),
+    context,
+  );
+}
+
 ///Returns a custom marker icon, based on an EUK location type.
-Future<BitmapDescriptor> getMarkerIconByType(
-  ImageConfiguration imageConfiguration,
+Image getMarkerIconByType(
   EUKLocationType type,
-) async {
+) {
   final String assetName = switch (type) {
     EUKLocationType.none => "markers/map_marker_default.png",
     EUKLocationType.wc => "markers/map_marker_wc.png",
@@ -51,6 +72,5 @@ Future<BitmapDescriptor> getMarkerIconByType(
     EUKLocationType.elevator => "markers/map_marker_elevator.png",
   };
 
-  return BitmapDescriptor.fromAssetImage(imageConfiguration, assetName,
-      mipmaps: false);
+  return Image.asset(assetName);
 }

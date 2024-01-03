@@ -25,10 +25,10 @@ class MainAppScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: index,
-        children: const <Widget>[
-          ListScreen(),
+        children: <Widget>[
+          const ListScreen(),
           MapScreen(),
-          SettingsScreen(),
+          const SettingsScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(

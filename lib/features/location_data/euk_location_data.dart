@@ -1,8 +1,11 @@
-import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:eurokey2/features/icon_management/icon_manager.dart';
+import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 ///Represents an EUK location.
-class EUKLocationData with ClusterItem {
+class EUKLocationData {
   late String _id;
   late double _lat;
   late double _lng;
@@ -104,6 +107,19 @@ class EUKLocationData with ClusterItem {
         'type': type.index,
       };
 
+  Marker toMarker(EurolockModel eurolockModel) {
+    return Marker(
+      point: LatLng(lat, lng),
+      // width: 30,
+      // height: 30,
+      child: GestureDetector(
+        onTap: () => eurolockModel.currentEUK = this,
+        child: getMarkerIconByType(type),
+      ),
+      rotate: true,
+    );
+  }
+
   String get id => _id;
 
   double get lat => _lat;
@@ -120,7 +136,6 @@ class EUKLocationData with ClusterItem {
 
   EUKLocationType get type => _type;
 
-  @override
   LatLng get location => LatLng(_lat, _lng);
 }
 
