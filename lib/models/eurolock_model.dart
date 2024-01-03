@@ -98,8 +98,11 @@ class EurolockModel extends ChangeNotifier {
     );
   }
 
-  Future<MapEntry<String, Marker>> markerBuilder(EUKLocationData euk) async {
-    final icon = await getMarkerIconByType(euk.type);
+  Future<MapEntry<String, Marker>> markerBuilder(
+    ImageConfiguration imageConfiguration,
+    EUKLocationData euk,
+  ) async {
+    final icon = await getMarkerIconByType(imageConfiguration, euk.type);
 
     return MapEntry(
       euk.id,
@@ -114,11 +117,14 @@ class EurolockModel extends ChangeNotifier {
     );
   }
 
-  Future<Map<String, Marker>> getMarkers() async {
+  Future<Map<String, Marker>> getMarkers(BuildContext context) async {
     final List<MapEntry<String, Marker>> entries = [];
+    final ImageConfiguration imageConfiguration =
+        createLocalImageConfiguration(context);
+
     for (final euk in _locationsList) {
       // we cannot use fromEntries() directly because of await
-      entries.add(await markerBuilder(euk));
+      entries.add(await markerBuilder(imageConfiguration, euk));
     }
 
     return Map<String, Marker>.fromEntries(entries);
