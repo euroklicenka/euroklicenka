@@ -7,6 +7,7 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
+  cupertino_icons: ^1.0.6
   diacritic: ^0.1.5
   easy_search_bar: ^2.5.0
   flutter:

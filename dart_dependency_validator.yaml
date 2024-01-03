@@ -1,3 +1,4 @@
 ignore:
+  - cupertino_icons
   - flutter_test
   - test
