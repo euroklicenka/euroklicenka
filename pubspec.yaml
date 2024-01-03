@@ -7,8 +7,6 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  archive: ^3.4.6
-  cupertino_icons: ^1.0.5
   diacritic: ^0.1.5
   easy_search_bar: ^2.5.0
   flutter:
@@ -28,9 +26,7 @@ dependencies:
   yaml: ^3.1.2
 
 dev_dependencies:
-  change_app_package_name: ^1.1.0
   dependency_validator: ^3.0.0
-  flutter_launcher_icons: ^0.13.1
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
