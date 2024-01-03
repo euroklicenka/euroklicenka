@@ -28,7 +28,8 @@ class EurolockModel extends ChangeNotifier {
   set currentEUK(EUKLocationData? newEUK) {
     _currentEUK = newEUK;
     if (newEUK != null) {
-      mapController?.move(newEUK.location, 18);
+      final zoom = mapController?.camera.zoom ?? 15;
+      mapController?.move(newEUK.location, zoom);
     }
     notifyListeners();
   }
