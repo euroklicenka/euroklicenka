@@ -10,7 +10,7 @@ class GuideScreen extends StatefulWidget {
   const GuideScreen({super.key});
 
   @override
-  _OnBoardScreenState createState() => _OnBoardScreenState();
+  State<GuideScreen> createState() => _OnBoardScreenState();
 }
 
 class _OnBoardScreenState extends State<GuideScreen> {
