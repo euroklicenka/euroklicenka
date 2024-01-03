@@ -102,6 +102,8 @@ class _MapScreenState extends State<MapScreenBody> {
               options: MapOptions(
                 initialCenter: locProvider.currentMapPosition,
                 initialZoom: 15,
+                interactionOptions: const InteractionOptions(
+                    flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
                 onTap: (tapPosition, point) => eukModel.currentEUK = null,
                 onPositionChanged: _onPositionChanged,
               ),
