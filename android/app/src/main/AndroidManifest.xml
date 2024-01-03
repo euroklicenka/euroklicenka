@@ -3,15 +3,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- The Internet permissions are need to access Google Maps -->
+    <!-- The Internet permissions are need to access maps -->
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:label="EuroKlíčenka"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-       <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyBpeiwg_btFCFZUbgOMelyFyee58gCiH-Q"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

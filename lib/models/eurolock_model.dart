@@ -7,21 +7,35 @@ import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/models/location_model.dart';
 import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
 
 class EurolockModel extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
   EUKLocationData? _currentEUK;
-  EUKLocationData? get currentEUK => _currentEUK;
   String? _filterBy;
+  List<Marker> _markers = [];
+  MapController? mapController;
 
+  List<EUKLocationData> get locationsList => _locationsList;
+
+  EUKLocationData? get currentEUK => _currentEUK;
   set currentEUK(EUKLocationData? newEUK) {
     _currentEUK = newEUK;
+    if (newEUK != null) {
+      mapController?.move(newEUK.location, 18);
+    }
+    notifyListeners();
+  }
+
+  List<Marker> get markers => _markers;
+  set markers(List<Marker> markers) {
+    _markers = markers;
     notifyListeners();
   }
 
@@ -98,38 +112,6 @@ class EurolockModel extends ChangeNotifier {
     );
   }
 
-  Future<MapEntry<String, Marker>> markerBuilder(
-    ImageConfiguration imageConfiguration,
-    EUKLocationData euk,
-  ) async {
-    final icon = await getMarkerIconByType(imageConfiguration, euk.type);
-
-    return MapEntry(
-      euk.id,
-      Marker(
-        markerId: MarkerId(euk.id),
-        position: LatLng(euk.lat, euk.lng),
-        onTap: () {
-          currentEUK = euk;
-        },
-        icon: icon,
-      ),
-    );
-  }
-
-  Future<Map<String, Marker>> getMarkers(BuildContext context) async {
-    final List<MapEntry<String, Marker>> entries = [];
-    final ImageConfiguration imageConfiguration =
-        createLocalImageConfiguration(context);
-
-    for (final euk in _locationsList) {
-      // we cannot use fromEntries() directly because of await
-      entries.add(await markerBuilder(imageConfiguration, euk));
-    }
-
-    return Map<String, Marker>.fromEntries(entries);
-  }
-
   Future<List<EUKLocationData>> filterList(
     List<EUKLocationData> list,
     String search,
@@ -203,6 +185,12 @@ class EurolockModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void _initMarkers() {
+    for (final euk in _locationsList) {
+      _markers.add(euk.toMarker(this));
+    }
+  }
+
   Future<void> onInitApp() async {
     //const eurokliceLocationsURL =
     //  'https://www.euroklic.cz/element/simple/documents-to-download/8/3/9ce2559301112481.xlsx?download=true&download_filename=Pruvodce_po_mistech_v_CR_osazenych_Eurozamky_20231020_web.xlsx';
@@ -215,6 +203,8 @@ class EurolockModel extends ChangeNotifier {
     _locationsList = parsed
         .map<EUKLocationData>((json) => EUKLocationData.fromJson(json))
         .toList();
+
+    _initMarkers();
 
     return;
   }
