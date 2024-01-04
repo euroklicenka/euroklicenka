@@ -63,7 +63,7 @@ class _MapScreenState extends State<MapScreenBody> {
   @override
   void initState() {
     super.initState();
-    _followOnLocationUpdate = AlignOnUpdate.always;
+    _followOnLocationUpdate = AlignOnUpdate.once;
     _followCurrentLocationStreamController = StreamController<double?>();
   }
 
@@ -137,10 +137,11 @@ class _MapScreenState extends State<MapScreenBody> {
                 onPressed: () {
                   // Follow the location marker on the map when location updated until user interact with the map.
                   setState(
-                    () => _followOnLocationUpdate = AlignOnUpdate.always,
+                    () => _followOnLocationUpdate = AlignOnUpdate.once,
                   );
                   // Follow the location marker on the map and zoom the map to level 18.
-                  _followCurrentLocationStreamController.add(18);
+                  _followCurrentLocationStreamController
+                      .add(locProvider.currentMapZoom);
                 },
                 child: const Icon(
                   Icons.my_location,
