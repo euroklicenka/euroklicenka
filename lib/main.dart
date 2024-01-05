@@ -1,7 +1,7 @@
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/models/eurolock_model.dart';
-import 'package:eurokey2/models/location_model.dart';
-import 'package:eurokey2/models/preferences_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
+import 'package:eurokey2/providers/location_provider.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:eurokey2/screens/app/main_app_screen.dart';
 import 'package:eurokey2/screens/intro_guide_screen.dart';
 import 'package:eurokey2/screens/splash_screen.dart';
@@ -17,7 +17,7 @@ final _router = GoRouter(
       path: '/splash',
       builder: (context, state) => const EUKSplashScreen(),
       redirect: (context, state) {
-        final prefs = Provider.of<PreferencesModel>(context);
+        final prefs = Provider.of<PreferencesProvider>(context);
         switch (prefs.mainScreenState) {
           case MainScreenStates.initialState:
             return '/splash';
@@ -34,7 +34,7 @@ final _router = GoRouter(
       path: '/guide',
       builder: (context, state) => const GuideScreen(),
       redirect: (context, state) {
-        final prefs = Provider.of<PreferencesModel>(context);
+        final prefs = Provider.of<PreferencesProvider>(context);
         switch (prefs.mainScreenState) {
           case MainScreenStates.initialState:
             return '/splash';
@@ -67,12 +67,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => LocationModel()),
-        ChangeNotifierProvider(create: (context) => PreferencesModel()),
-        ChangeNotifierProvider(create: (context) => EurolockModel()),
+        ChangeNotifierProvider(create: (context) => LocationProvider()),
+        ChangeNotifierProvider(create: (context) => PreferencesProvider()),
+        ChangeNotifierProvider(create: (context) => EurolockProvider()),
       ],
       builder: (context, child) {
-        return Consumer<PreferencesModel>(
+        return Consumer<PreferencesProvider>(
           builder: (context, prefs, child) => MaterialApp.router(
             debugShowCheckedModeBanner: false,
             theme: defaultLightTheme,

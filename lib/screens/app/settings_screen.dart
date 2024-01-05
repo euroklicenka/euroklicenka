@@ -1,5 +1,4 @@
-import 'package:eurokey2/models/preferences_model.dart';
-import 'package:eurokey2/widgets/theme_dependent_icon.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,17 +22,17 @@ class SettingsScreen extends StatelessWidget {
 class SettingsScreenBody extends StatelessWidget {
   const SettingsScreenBody({super.key});
 
-  ThemeDependentIcon themeSelector(
+  Icon themeSelector(
     BuildContext context,
-    PreferencesModel preferencesModel,
+    PreferencesProvider preferencesProvider,
   ) {
-    switch (preferencesModel.themeMode) {
+    switch (preferencesProvider.themeMode) {
       case ThemeMode.system:
-        return const ThemeDependentIcon(Icons.settings);
+        return const Icon(Icons.settings);
       case ThemeMode.dark:
-        return const ThemeDependentIcon(Icons.dark_mode);
+        return const Icon(Icons.dark_mode);
       case ThemeMode.light:
-        return const ThemeDependentIcon(Icons.light_mode);
+        return const Icon(Icons.light_mode);
       default:
         throw Exception("invalid themeMode");
     }
@@ -41,15 +40,15 @@ class SettingsScreenBody extends StatelessWidget {
 
   void themeTap(
     BuildContext context,
-    PreferencesModel preferencesModel,
+    PreferencesProvider preferencesProvider,
   ) {
-    switch (preferencesModel.themeMode) {
+    switch (preferencesProvider.themeMode) {
       case ThemeMode.system:
-        preferencesModel.themeMode = ThemeMode.dark;
+        preferencesProvider.themeMode = ThemeMode.dark;
       case ThemeMode.dark:
-        preferencesModel.themeMode = ThemeMode.light;
+        preferencesProvider.themeMode = ThemeMode.light;
       case ThemeMode.light:
-        preferencesModel.themeMode = ThemeMode.system;
+        preferencesProvider.themeMode = ThemeMode.system;
       default:
         throw Exception("invalid themeMode");
     }
@@ -57,8 +56,8 @@ class SettingsScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<PreferencesModel>(
-      builder: (context, preferencesModel, child) {
+    return Consumer<PreferencesProvider>(
+      builder: (context, preferencesProvider, child) {
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           child: Column(
@@ -72,11 +71,11 @@ class SettingsScreenBody extends StatelessWidget {
                           height: 8,
                         ),
                         ListTile(
-                          onTap: () => themeTap(context, preferencesModel),
+                          onTap: () => themeTap(context, preferencesProvider),
                           title: const Text('Motiv rozhraní'),
                           trailing: Padding(
                             padding: const EdgeInsets.only(right: 8),
-                            child: themeSelector(context, preferencesModel),
+                            child: themeSelector(context, preferencesProvider),
                           ),
                         ),
                         const SizedBox(

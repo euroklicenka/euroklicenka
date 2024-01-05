@@ -1,5 +1,5 @@
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
-import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -107,13 +107,13 @@ class EUKLocationData {
         'type': type.index,
       };
 
-  Marker toMarker(EurolockModel eurolockModel) {
+  Marker toMarker(EurolockProvider eukProvider) {
     return Marker(
       point: LatLng(lat, lng),
       // width: 30,
       // height: 30,
       child: GestureDetector(
-        onTap: () => eurolockModel.currentEUK = this,
+        onTap: () => eukProvider.currentEUK = this,
         child: getMarkerIconByType(type),
       ),
       rotate: true,

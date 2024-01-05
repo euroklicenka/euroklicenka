@@ -1,6 +1,6 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
-import 'package:eurokey2/models/eurolock_model.dart';
-import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
+import 'package:eurokey2/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -8,19 +8,14 @@ class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
 
   PreferredSizeWidget appBar(BuildContext context) {
-    final eukModel = Provider.of<EurolockModel>(context, listen: false);
+    final eurolockProvider =
+        Provider.of<EurolockProvider>(context, listen: false);
     return EasySearchBar(
       title: const Center(
         child: Text('Seznam nejbližších míst'),
       ),
       animationDuration: const Duration(milliseconds: 260),
-      searchClearIconTheme:
-          IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      searchBackIconTheme:
-          IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      searchCursorColor: Theme.of(context).colorScheme.secondary,
-      searchBackgroundColor: Theme.of(context).colorScheme.surface,
-      onSearch: (value) => eukModel.onSearch(value),
+      onSearch: (value) => eurolockProvider.onSearch(value),
       searchHintText: 'Ostrava...',
     );
   }
@@ -45,22 +40,22 @@ class ListScreenBody extends StatefulWidget {
 class _ListScreenState extends State<ListScreenBody> {
   Future<List<Widget>> _loadData(
     BuildContext context,
-    EurolockModel eukModel,
-    LocationModel locModel,
+    EurolockProvider eukProvider,
+    LocationProvider locationProvider,
   ) async {
-    return await eukModel.getList(
+    return await eukProvider.getList(
       context,
-      locModel.currentUserPosition,
-      locModel.currentMapPosition,
+      locationProvider.currentUserPosition,
+      locationProvider.currentMapPosition,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<EurolockModel, LocationModel>(
-      builder: (context, eukModel, locModel, child) {
+    return Consumer2<EurolockProvider, LocationProvider>(
+      builder: (context, eukProvider, locationProvider, child) {
         return FutureBuilder<List<Widget>>(
-          future: _loadData(context, eukModel, locModel),
+          future: _loadData(context, eukProvider, locationProvider),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               assert(snapshot.data != null);
