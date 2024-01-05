@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:diacritic/diacritic.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
-import 'package:eurokey2/models/location_model.dart';
+import 'package:eurokey2/providers/location_provider.dart';
 import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +15,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
 
-class EurolockModel extends ChangeNotifier {
+class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
   EUKLocationData? _currentEUK;
   String? _filterBy;
@@ -100,7 +100,8 @@ class EurolockModel extends ChangeNotifier {
         ],
       ),
       onTap: () {
-        final locProvider = Provider.of<LocationModel>(context, listen: false);
+        final locProvider =
+            Provider.of<LocationProvider>(context, listen: false);
 
         locProvider.currentMapPosition = loc.location;
 
@@ -129,7 +130,6 @@ class EurolockModel extends ChangeNotifier {
     LatLng? userLocation,
     LatLng mapLocation,
   ) async {
-    // FIXME: Recalculate only on map location change
     for (final loc in list) {
       loc.distanceFromMap = Geolocator.distanceBetween(
         mapLocation.latitude,
@@ -141,7 +141,6 @@ class EurolockModel extends ChangeNotifier {
         continue;
       }
 
-      // FIXME: Recalculate only on user location change
       loc.distanceFromUser = Geolocator.distanceBetween(
         userLocation.latitude,
         userLocation.longitude,

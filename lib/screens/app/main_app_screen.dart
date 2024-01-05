@@ -1,7 +1,7 @@
-import 'package:eurokey2/models/eurolock_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/screens/app/list_screen.dart';
 import 'package:eurokey2/screens/app/map_screen.dart';
-import 'package:eurokey2/screens/app/settings_screen.dart';
+import 'package:eurokey2/screens/app/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -28,16 +28,17 @@ class MainAppScreen extends StatelessWidget {
         children: <Widget>[
           const ListScreen(),
           MapScreen(),
-          const SettingsScreen(),
+          const InformationScreen(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (index) {
-          final eukModel = Provider.of<EurolockModel>(context, listen: false);
-          eukModel.cleanupCurrentEUK();
+          final eurolockProvider =
+              Provider.of<EurolockProvider>(context, listen: false);
+          eurolockProvider.cleanupCurrentEUK();
           context.go('/main/$index');
         },
-        indicatorColor: Colors.amber,
+        // indicatorColor: Colors.amber,
         selectedIndex: index,
         destinations: const <Widget>[
           NavigationDestination(
@@ -53,7 +54,7 @@ class MainAppScreen extends StatelessWidget {
           NavigationDestination(
             selectedIcon: Icon(Icons.format_align_center),
             icon: Icon(Icons.format_list_bulleted),
-            label: "Více",
+            label: "O aplikaci...",
           ),
         ],
       ),

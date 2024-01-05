@@ -1,6 +1,6 @@
 import 'package:eurokey2/features/internet_access/allowed_urls.dart';
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
-import 'package:eurokey2/models/preferences_model.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
@@ -86,7 +86,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
   }
 
   void _gotoHome(BuildContext context) =>
-      Provider.of<PreferencesModel>(context, listen: false).onInitFinish();
+      Provider.of<PreferencesProvider>(context, listen: false).onInitFinish();
 
   Widget? _buildImage(String path, BuildContext context) {
     final bool isTooSmall = MediaQuery.of(context).size.height < 490;

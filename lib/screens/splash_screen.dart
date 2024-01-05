@@ -1,8 +1,8 @@
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/models/eurolock_model.dart';
-import 'package:eurokey2/models/location_model.dart';
-import 'package:eurokey2/models/preferences_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
+import 'package:eurokey2/providers/location_provider.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,20 +11,21 @@ class EUKSplashScreen extends StatelessWidget {
   const EUKSplashScreen({super.key});
 
   Future<bool> _onInitApp(BuildContext context) async {
-    final eukModel = context.read<EurolockModel>();
-    final preferencesModel = context.read<PreferencesModel>();
-    final locationModel = Provider.of<LocationModel>(context, listen: false);
+    final eurolockProvider = context.read<EurolockProvider>();
+    final preferencesProvider = context.read<PreferencesProvider>();
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
 
     await precacheMarkerIcon(context);
 
-    await eukModel.onInitApp();
-    await preferencesModel.onInitApp();
+    await eurolockProvider.onInitApp();
+    await preferencesProvider.onInitApp();
 
-    await locationModel
+    await locationProvider
         .determinePosition()
         .then(
           (currentPosition) =>
-              locationModel.currentUserPosition = currentPosition,
+              locationProvider.currentUserPosition = currentPosition,
         )
         .catchError((e) {
       showSnackBar(message: e.toString());
@@ -70,7 +71,8 @@ class EUKSplashScreen extends StatelessWidget {
       future: _onInitApp(context),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          Provider.of<PreferencesModel>(context, listen: false).onInitFinish();
+          Provider.of<PreferencesProvider>(context, listen: false)
+              .onInitFinish();
         } else if (snapshot.hasError) {
           throw snapshot.error.toString();
         }

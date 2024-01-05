@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:easy_search_bar/easy_search_bar.dart';
-import 'package:eurokey2/models/eurolock_model.dart';
-import 'package:eurokey2/models/location_model.dart';
-import 'package:eurokey2/models/preferences_model.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
+import 'package:eurokey2/providers/location_provider.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
+import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -27,24 +28,15 @@ class MapScreenState extends State<MapScreen> {
   DateTime asyncSuggestionsLastSearch = DateTime.now();
 
   EasySearchBar appBar(BuildContext context) {
-    // final locationModel = Provider.of<LocationModel>(context);
     return EasySearchBar(
       title: const Center(
         child: Text('Mapa nejbližších míst'),
       ),
       animationDuration: const Duration(milliseconds: 260),
-      searchClearIconTheme:
-          IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      searchBackIconTheme:
-          IconThemeData(color: Theme.of(context).colorScheme.secondary),
-      searchCursorColor: Theme.of(context).colorScheme.secondary,
-      searchBackgroundColor: Theme.of(context).colorScheme.surface,
       onSearch: (value) => onSearch(value),
       searchHintText: 'Ostrava...',
       debounceDuration: const Duration(milliseconds: 1000),
       asyncSuggestions: asyncSuggestions,
-      // suggestions: lastSuggestions,
-      suggestionBackgroundColor: Theme.of(context).colorScheme.surface,
       onSuggestionTap: _onSuggestionTap,
     );
   }
@@ -56,6 +48,8 @@ class MapScreenState extends State<MapScreen> {
       final place = lastSuggestions[value]!;
       widget.mapController.move(LatLng(place.lat, place.lon), 15);
     }
+
+    hideVirtualKeyboard();
 
     return value;
   }
@@ -120,11 +114,8 @@ class MapScreenState extends State<MapScreen> {
 
       final addressStr = "$roadStr$houseNumberStr, $postCodeStr$town";
 
-      print(place.nameDetails);
-
       lastSuggestions[addressStr] = place;
 
-      // FIXME: sort by distance???
       places.add(addressStr);
     }
 
@@ -176,8 +167,9 @@ class _MapScreenState extends State<MapScreenBody> {
 
   void _onPositionChanged(MapPosition mapPosition, bool hasGesture) {
     if (hasGesture) {
-      final eurolockModel = Provider.of<EurolockModel>(context, listen: false);
-      eurolockModel.currentEUK = null;
+      final eurolockProvider =
+          Provider.of<EurolockProvider>(context, listen: false);
+      eurolockProvider.currentEUK = null;
     }
 
     if (hasGesture && _followOnLocationUpdate != AlignOnUpdate.never) {
@@ -186,7 +178,8 @@ class _MapScreenState extends State<MapScreenBody> {
       );
     }
 
-    final locationProvider = Provider.of<LocationModel>(context, listen: false);
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
     if (_followOnLocationUpdate != AlignOnUpdate.never) {
       locationProvider.currentUserPosition = mapPosition.center!;
     }
@@ -197,19 +190,21 @@ class _MapScreenState extends State<MapScreenBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<LocationModel, PreferencesModel, EurolockModel>(
-      builder: (context, locProvider, prefProvider, eukModel, child) {
-        eukModel.mapController = widget.mapController;
+    return Consumer3<LocationProvider, PreferencesProvider, EurolockProvider>(
+      builder: (context, locationProvider, preferencesProvider,
+          eurolockProvider, child) {
+        eurolockProvider.mapController = widget.mapController;
         return Stack(
           children: <Widget>[
             FlutterMap(
               mapController: widget.mapController,
               options: MapOptions(
-                initialCenter: locProvider.currentMapPosition,
+                initialCenter: locationProvider.currentMapPosition,
                 initialZoom: 15,
                 interactionOptions: const InteractionOptions(
                     flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
-                onTap: (tapPosition, point) => eukModel.currentEUK = null,
+                onTap: (tapPosition, point) =>
+                    eurolockProvider.currentEUK = null,
                 onPositionChanged: _onPositionChanged,
               ),
               children: [
@@ -222,7 +217,7 @@ class _MapScreenState extends State<MapScreenBody> {
                       _followCurrentLocationStreamController.stream,
                   alignPositionOnUpdate: _followOnLocationUpdate,
                 ),
-                MarkerLayer(markers: eukModel.markers),
+                MarkerLayer(markers: eurolockProvider.markers),
                 RichAttributionWidget(
                   attributions: [
                     TextSourceAttribution(
@@ -246,7 +241,7 @@ class _MapScreenState extends State<MapScreenBody> {
                   );
                   // Follow the location marker on the map and zoom the map to level 18.
                   _followCurrentLocationStreamController
-                      .add(locProvider.currentMapZoom);
+                      .add(locationProvider.currentMapZoom);
                 },
                 child: const Icon(
                   Icons.my_location,
@@ -256,10 +251,10 @@ class _MapScreenState extends State<MapScreenBody> {
             ),
             Builder(
               builder: (context) {
-                if (eukModel.currentEUK == null) {
+                if (eurolockProvider.currentEUK == null) {
                   return const SizedBox.shrink();
                 }
-                final euk = eukModel.currentEUK!;
+                final euk = eurolockProvider.currentEUK!;
 
                 _followOnLocationUpdate = AlignOnUpdate.never;
 
@@ -269,7 +264,7 @@ class _MapScreenState extends State<MapScreenBody> {
                   width: MediaQuery.of(context).size.width,
                   child: ColoredBox(
                     color: Theme.of(context).colorScheme.surface,
-                    child: eukModel.mapItemBuilder(context, euk),
+                    child: eurolockProvider.mapItemBuilder(context, euk),
                   ),
                 );
               },

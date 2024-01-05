@@ -22,6 +22,7 @@ dependencies:
   latlong2: ^0.9.0
   maps_launcher: ^2.2.0
   osm_nominatim: ^3.0.0
+  package_info_plus: ^5.0.1
   provider: ^6.1.1
   shared_preferences: ^2.2.2
   url_launcher: ^6.1.10

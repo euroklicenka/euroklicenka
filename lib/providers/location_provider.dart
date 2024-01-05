@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-class LocationModel with ChangeNotifier {
+class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
   double _currentMapZoom = 14.5;
   LatLng _currentMapPosition =
