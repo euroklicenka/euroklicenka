@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Ostravská Univerzita
+//
+// SPDX-License-Identifier: MPL-2.0
+
 List<String> downloadURLs = [];
 String aboutEuroKeyURL = '';
 String aboutEuroKeyWebURL = '';

@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Ostravská Univerzita
+//
+// SPDX-License-Identifier: MPL-2.0
+
 import 'dart:io';
 
 import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
