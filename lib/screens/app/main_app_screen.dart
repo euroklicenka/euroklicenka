@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2024 Ostravská Univerzita
+//
+// SPDX-License-Identifier: MPL-2.0
+
 import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/screens/app/list_screen.dart';
 import 'package:eurokey2/screens/app/map_screen.dart';
