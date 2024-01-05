@@ -77,14 +77,14 @@ class EurolockModel extends ChangeNotifier {
 
   ListTile itemBuilder(BuildContext context, EUKLocationData loc) {
     final String distanceFromUserText = distanceToString(loc.distanceFromUser);
-    final String distanceFromMapText = distanceToString(loc.distanceFromMap);
+    // final String distanceFromMapText = distanceToString(loc.distanceFromMap);
     final String distanceText;
 
-    if (distanceFromUserText == distanceFromMapText) {
-      distanceText = distanceFromUserText;
-    } else {
-      distanceText = "$distanceFromUserText ($distanceFromMapText)";
-    }
+    // if (distanceFromUserText == distanceFromMapText) {
+    distanceText = distanceFromUserText;
+    // } else {
+    //  distanceText = "$distanceFromUserText ($distanceFromMapText)";
+    // }
 
     return ListTile(
       tileColor: Theme.of(context).colorScheme.surface,
