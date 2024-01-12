@@ -8,12 +8,23 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
 class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
   double _currentMapZoom = 14.5;
   LatLng _currentMapPosition =
       const LatLng(49.8402811, 18.2887964); // Bráfova 7
+
+  AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.always;
+  final StreamController<double?> followCurrentLocationStreamController =
+      StreamController<double?>();
+
+  AlignOnUpdate get followOnLocationUpdate => _followOnLocationUpdate;
+  set followOnLocationUpdate(AlignOnUpdate update) {
+    _followOnLocationUpdate = update;
+    notifyListeners();
+  }
 
   double get currentMapZoom => _currentMapZoom;
   set currentMapZoom(double zoom) {
