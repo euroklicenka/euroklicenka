@@ -153,38 +153,29 @@ class MapScreenBody extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreenBody> {
-  late AlignOnUpdate _followOnLocationUpdate;
-  late StreamController<double?> _followCurrentLocationStreamController;
-
-  @override
-  void initState() {
-    super.initState();
-    _followOnLocationUpdate = AlignOnUpdate.once;
-    _followCurrentLocationStreamController = StreamController<double?>();
-  }
-
   @override
   void dispose() {
-    _followCurrentLocationStreamController.close();
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.followCurrentLocationStreamController.close();
     super.dispose();
   }
 
   void _onPositionChanged(MapPosition mapPosition, bool hasGesture) {
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+
     if (hasGesture) {
       final eurolockProvider =
           Provider.of<EurolockProvider>(context, listen: false);
       eurolockProvider.currentEUK = null;
+
+      if (locationProvider.followOnLocationUpdate != AlignOnUpdate.never) {
+        locationProvider.followOnLocationUpdate = AlignOnUpdate.never;
+      }
     }
 
-    if (hasGesture && _followOnLocationUpdate != AlignOnUpdate.never) {
-      setState(
-        () => _followOnLocationUpdate = AlignOnUpdate.never,
-      );
-    }
-
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
-    if (_followOnLocationUpdate != AlignOnUpdate.never) {
+    if (locationProvider.followOnLocationUpdate != AlignOnUpdate.never) {
       locationProvider.currentUserPosition = mapPosition.center!;
     }
 
@@ -217,9 +208,11 @@ class _MapScreenState extends State<MapScreenBody> {
                   userAgentPackageName: 'cz.osu.euroklicenka',
                 ),
                 CurrentLocationLayer(
-                  alignPositionStream:
-                      _followCurrentLocationStreamController.stream,
-                  alignPositionOnUpdate: _followOnLocationUpdate,
+                  alignPositionStream: locationProvider
+                      .followCurrentLocationStreamController.stream,
+                  alignPositionOnUpdate: (eurolockProvider.currentEUK == null)
+                      ? locationProvider.followOnLocationUpdate
+                      : AlignOnUpdate.never,
                 ),
                 MarkerLayer(markers: eurolockProvider.markers),
                 RichAttributionWidget(
@@ -240,11 +233,11 @@ class _MapScreenState extends State<MapScreenBody> {
               child: FloatingActionButton(
                 onPressed: () {
                   // Follow the location marker on the map when location updated until user interact with the map.
-                  setState(
-                    () => _followOnLocationUpdate = AlignOnUpdate.once,
-                  );
+                  locationProvider.followOnLocationUpdate =
+                      AlignOnUpdate.always;
+
                   // Follow the location marker on the map and zoom the map to level 18.
-                  _followCurrentLocationStreamController
+                  locationProvider.followCurrentLocationStreamController
                       .add(locationProvider.currentMapZoom);
                 },
                 child: const Icon(
@@ -259,8 +252,6 @@ class _MapScreenState extends State<MapScreenBody> {
                   return const SizedBox.shrink();
                 }
                 final euk = eurolockProvider.currentEUK!;
-
-                _followOnLocationUpdate = AlignOnUpdate.never;
 
                 return Positioned(
                   bottom: 0,
