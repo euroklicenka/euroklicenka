@@ -237,6 +237,14 @@ class _MapScreenState extends State<MapScreenBody> {
                   userAgentPackageName: 'cz.osu.euroklicenka',
                 ),
                 CurrentLocationLayer(
+                  positionStream: const LocationMarkerDataStreamFactory()
+                      .fromGeolocatorPositionStream(
+                    stream: Geolocator.getPositionStream(
+                      locationSettings: const LocationSettings(
+                        accuracy: LocationAccuracy.reduced,
+                      ),
+                    ),
+                  ),
                   alignPositionStream: locationProvider
                       .followCurrentLocationStreamController.stream,
                   alignPositionOnUpdate: (eurolockProvider.currentEUK == null)
