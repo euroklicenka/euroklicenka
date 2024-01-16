@@ -240,9 +240,7 @@ class _MapScreenState extends State<MapScreenBody> {
                   positionStream: const LocationMarkerDataStreamFactory()
                       .fromGeolocatorPositionStream(
                     stream: Geolocator.getPositionStream(
-                      locationSettings: const LocationSettings(
-                        accuracy: LocationAccuracy.reduced,
-                      ),
+                      locationSettings: const LocationSettings(),
                     ),
                   ),
                   alignPositionStream: locationProvider
