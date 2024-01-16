@@ -64,14 +64,31 @@ class EurolockProvider extends ChangeNotifier {
       tileColor: Theme.of(context).colorScheme.surface,
       title: Text(loc.address),
       subtitle: Text('${loc.city}, ${loc.zip}'),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Icon(Icons.directions, color: Colors.blue),
-          const SizedBox(height: 4),
-          Text(distanceText),
-        ],
+      leading: Container(
+        width: 48,
+        height: 48,
+        padding: const EdgeInsets.symmetric(vertical: 2.0),
+        alignment: Alignment.center,
+        child: getIconByType(loc.type),
+      ),
+      trailing: Container(
+        width: 48,
+        height: 48,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const Expanded(
+                    child: Icon(Icons.directions, color: Colors.blue)),
+                Text(distanceText),
+              ],
+            ),
+          ],
+        ),
       ),
       onTap: () async {
         MapsLauncher.launchCoordinates(loc.lat, loc.lng, loc.address);
@@ -94,11 +111,12 @@ class EurolockProvider extends ChangeNotifier {
       tileColor: Theme.of(context).colorScheme.surface,
       title: Text(loc.address),
       subtitle: Text('${loc.city}, ${loc.zip}'),
+      leading: getIconByType(loc.type),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          getIconByType(loc.type),
+          const Icon(Icons.chevron_right),
           const SizedBox(height: 4),
           Text(distanceText),
         ],
