@@ -49,9 +49,7 @@
 	<array>
 		<string>maps</string>
 	</array>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Your location allows you to view the nearest places that can be operated with Eurokey.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Your location allows you to view the nearest places that can be operated with Eurokey.</string>
+	<string>This app needs access to location when open.</string>
 </dict>
 </plist>
