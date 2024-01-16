@@ -32,6 +32,12 @@ class MapScreenState extends State<MapScreen> {
   DateTime asyncSuggestionsLastSearch = DateTime.now();
 
   EasySearchBar appBar(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final AppBarTheme appBarTheme = AppBarTheme.of(context);
+    Color? foregroundColor = appBarTheme.foregroundColor;
+    IconThemeData iconTheme = appBarTheme.iconTheme ??
+        theme.iconTheme.copyWith(color: foregroundColor);
+
     return EasySearchBar(
       title: const Center(
         child: Text('Mapa nejbližších míst'),
@@ -42,6 +48,29 @@ class MapScreenState extends State<MapScreen> {
       debounceDuration: const Duration(milliseconds: 1000),
       asyncSuggestions: asyncSuggestions,
       onSuggestionTap: _onSuggestionTap,
+      putActionsOnRight: true,
+      actions: <Widget>[
+        // FIXME: Deduplicate
+        IconTheme(
+          data: iconTheme,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.my_location),
+              onPressed: () {
+                final locationProvider =
+                    Provider.of<LocationProvider>(context, listen: false);
+                // Follow the location marker on the map when location updated until user interact with the map.
+                locationProvider.followOnLocationUpdate = AlignOnUpdate.once;
+
+                // Follow the location marker on the map and zoom the map to level 18.
+                locationProvider.followCurrentLocationStreamController
+                    .add(locationProvider.currentMapZoom);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -175,9 +204,9 @@ class _MapScreenState extends State<MapScreenBody> {
       }
     }
 
-    if (locationProvider.followOnLocationUpdate != AlignOnUpdate.never) {
-      locationProvider.currentUserPosition = mapPosition.center!;
-    }
+    //if (locationProvider.followOnLocationUpdate != AlignOnUpdate.never) {
+    //   locationProvider.currentUserPosition = mapPosition.center!;
+    //}
 
     locationProvider.currentMapPosition = mapPosition.center!;
     locationProvider.currentMapZoom = mapPosition.zoom!;
@@ -226,25 +255,6 @@ class _MapScreenState extends State<MapScreenBody> {
                   ],
                 ),
               ],
-            ),
-            Positioned(
-              right: 20,
-              top: 20,
-              child: FloatingActionButton(
-                onPressed: () {
-                  // Follow the location marker on the map when location updated until user interact with the map.
-                  locationProvider.followOnLocationUpdate =
-                      AlignOnUpdate.always;
-
-                  // Follow the location marker on the map and zoom the map to level 18.
-                  locationProvider.followCurrentLocationStreamController
-                      .add(locationProvider.currentMapZoom);
-                },
-                child: const Icon(
-                  Icons.my_location,
-                  color: Colors.white,
-                ),
-              ),
             ),
             Builder(
               builder: (context) {

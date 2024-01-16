@@ -42,11 +42,15 @@ class InformationScreenState extends State<InformationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final AppBarTheme appBarTheme = AppBarTheme.of(context);
+    Color? backgroundColor = appBarTheme.backgroundColor ?? theme.primaryColor;
+
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text('O aplikaci')),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: backgroundColor,
       ),
       body: Center(
         child: Padding(

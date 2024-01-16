@@ -7,6 +7,8 @@ import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -14,6 +16,12 @@ class ListScreen extends StatelessWidget {
   PreferredSizeWidget appBar(BuildContext context) {
     final eurolockProvider =
         Provider.of<EurolockProvider>(context, listen: false);
+    final ThemeData theme = Theme.of(context);
+    final AppBarTheme appBarTheme = AppBarTheme.of(context);
+    Color? foregroundColor = appBarTheme.foregroundColor;
+    IconThemeData iconTheme = appBarTheme.iconTheme ??
+        theme.iconTheme.copyWith(color: foregroundColor);
+
     return EasySearchBar(
       title: const Center(
         child: Text('Seznam nejbližších míst'),
@@ -21,6 +29,42 @@ class ListScreen extends StatelessWidget {
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => eurolockProvider.onSearch(value),
       searchHintText: 'Ostrava...',
+      putActionsOnRight: true,
+      actions: <Widget>[
+        // FIXME: Deduplicate
+        IconTheme(
+          data: iconTheme,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: IconButton(
+              icon: const Icon(Icons.my_location),
+              onPressed: () async {
+                final locationProvider =
+                    Provider.of<LocationProvider>(context, listen: false);
+
+                await locationProvider
+                    .determinePosition()
+                    .then((currentPosition) {
+                  locationProvider.currentUserPosition = currentPosition;
+                  if (currentPosition != null) {
+                    locationProvider.currentMapPosition = currentPosition;
+                  }
+                }).catchError((e) {
+                  showSnackBar(message: e.toString());
+                  return null;
+                });
+
+                // Follow the location marker on the map when location updated until user interact with the map.
+                locationProvider.followOnLocationUpdate = AlignOnUpdate.once;
+
+                // Follow the location marker on the map and zoom the map to level 18.
+                locationProvider.followCurrentLocationStreamController
+                    .add(locationProvider.currentMapZoom);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -104,10 +104,10 @@ class EurolockProvider extends ChangeNotifier {
         ],
       ),
       onTap: () {
-        final locProvider =
+        final locationProvider =
             Provider.of<LocationProvider>(context, listen: false);
 
-        locProvider.currentMapPosition = loc.location;
+        locationProvider.currentMapPosition = loc.location;
 
         currentEUK = loc;
 
