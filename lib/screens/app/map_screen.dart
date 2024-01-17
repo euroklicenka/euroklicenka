@@ -62,7 +62,7 @@ class MapScreenState extends State<MapScreen> {
                 final locationProvider =
                     Provider.of<LocationProvider>(context, listen: false);
                 // Follow the location marker on the map when location updated until user interact with the map.
-                locationProvider.followOnLocationUpdate = AlignOnUpdate.always;
+                locationProvider.followOnLocationUpdate = AlignOnUpdate.once;
 
                 // Follow the location marker on the map and zoom the map to level 18.
                 locationProvider.followCurrentLocationStreamController

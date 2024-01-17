@@ -16,7 +16,7 @@ class LocationProvider with ChangeNotifier {
   LatLng _currentMapPosition =
       const LatLng(49.8402811, 18.2887964); // Bráfova 7
 
-  AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.always;
+  AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.once;
   final StreamController<double?> followCurrentLocationStreamController =
       StreamController<double?>();
 
