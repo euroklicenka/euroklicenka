@@ -42,14 +42,7 @@ class ListScreen extends StatelessWidget {
                 final locationProvider =
                     Provider.of<LocationProvider>(context, listen: false);
 
-                await locationProvider
-                    .determinePosition()
-                    .then((currentPosition) {
-                  locationProvider.currentUserPosition = currentPosition;
-                  if (currentPosition != null) {
-                    locationProvider.currentMapPosition = currentPosition;
-                  }
-                }).catchError((e) {
+                await locationProvider.getCurrentPosition().catchError((e) {
                   showSnackBar(message: e.toString());
                   return null;
                 });
@@ -91,11 +84,12 @@ class _ListScreenState extends State<ListScreenBody> {
     EurolockProvider eukProvider,
     LocationProvider locationProvider,
   ) async {
-    return await eukProvider.getList(
+    final list = await eukProvider.getList(
       context,
       locationProvider.currentUserPosition,
       locationProvider.currentMapPosition,
     );
+    return list;
   }
 
   @override

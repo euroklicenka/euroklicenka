@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 
 class MapScreen extends StatefulWidget {
   final MapController mapController = MapController();
@@ -57,15 +58,20 @@ class MapScreenState extends State<MapScreen> {
             padding: const EdgeInsets.only(right: 10),
             child: IconButton(
               icon: const Icon(Icons.my_location),
-              onPressed: () {
+              onPressed: () async {
                 final locationProvider =
                     Provider.of<LocationProvider>(context, listen: false);
                 // Follow the location marker on the map when location updated until user interact with the map.
-                locationProvider.followOnLocationUpdate = AlignOnUpdate.once;
+                locationProvider.followOnLocationUpdate = AlignOnUpdate.always;
 
                 // Follow the location marker on the map and zoom the map to level 18.
                 locationProvider.followCurrentLocationStreamController
                     .add(locationProvider.currentMapZoom);
+
+                await locationProvider.getCurrentPosition().catchError((e) {
+                  showSnackBar(message: e.toString());
+                  return null;
+                });
               },
             ),
           ),
@@ -235,6 +241,7 @@ class _MapScreenState extends State<MapScreenBody> {
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'cz.osu.euroklicenka',
+                  maxZoom: 19,
                 ),
                 CurrentLocationLayer(
                   positionStream: const LocationMarkerDataStreamFactory()

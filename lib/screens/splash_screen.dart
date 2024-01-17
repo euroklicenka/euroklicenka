@@ -25,15 +25,8 @@ class EUKSplashScreen extends StatelessWidget {
     await eurolockProvider.onInitApp();
     await preferencesProvider.onInitApp();
 
-    await locationProvider
-        .determinePosition()
-        .then(
-          (currentPosition) =>
-              locationProvider.currentUserPosition = currentPosition,
-        )
-        .catchError((e) {
+    await locationProvider.handlePermissions().catchError((e) {
       showSnackBar(message: e.toString());
-      return null;
     });
 
     return true;

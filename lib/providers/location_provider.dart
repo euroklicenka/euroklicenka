@@ -16,7 +16,7 @@ class LocationProvider with ChangeNotifier {
   LatLng _currentMapPosition =
       const LatLng(49.8402811, 18.2887964); // Bráfova 7
 
-  AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.once;
+  AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.always;
   final StreamController<double?> followCurrentLocationStreamController =
       StreamController<double?>();
 
@@ -49,7 +49,7 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<LatLng?> determinePosition() async {
+  Future<void> handlePermissions() async {
     // Test if location services are enabled.
 
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -81,8 +81,17 @@ class LocationProvider with ChangeNotifier {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    final Position position = await Geolocator.getCurrentPosition();
+  }
 
-    return LatLng(position.latitude, position.longitude);
+  Future<void> getCurrentPosition() async {
+    await handlePermissions();
+
+    final Position? position = await Geolocator.getLastKnownPosition();
+
+    if (position == null) {
+      _currentUserPosition = null;
+    } else {
+      _currentUserPosition = LatLng(position.latitude, position.longitude);
+    }
   }
 }
