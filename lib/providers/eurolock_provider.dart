@@ -71,7 +71,7 @@ class EurolockProvider extends ChangeNotifier {
         alignment: Alignment.center,
         child: getIconByType(loc.type),
       ),
-      trailing: Container(
+      trailing: SizedBox(
         width: 48,
         height: 48,
         child: Row(
