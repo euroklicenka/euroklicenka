@@ -44,13 +44,21 @@ class InformationScreenState extends State<InformationScreen> {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
-    Color? backgroundColor = appBarTheme.backgroundColor ?? theme.primaryColor;
+    final backgroundColor = appBarTheme.backgroundColor ?? theme.primaryColor;
+    final foregroundColor = appBarTheme.foregroundColor;
+    final titleTextStyle = appBarTheme.titleTextStyle ??
+        theme.textTheme.titleLarge!.copyWith(color: foregroundColor);
 
-    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('O aplikaci')),
+        title: Center(
+          child: Text(
+            '${_packageInfo.appName} ${_packageInfo.version}',
+          ),
+        ),
         backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        titleTextStyle: titleTextStyle,
       ),
       body: Center(
         child: Padding(
@@ -63,22 +71,8 @@ class InformationScreenState extends State<InformationScreen> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        const SizedBox(height: 56),
-                        Image.asset(
-                          'assets/images/logo_key.png',
-                          width: MediaQuery.of(context).size.width * 0.25,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          '${_packageInfo.appName} ${_packageInfo.version}',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 24,
-                            color: textColor,
-                          ),
-                        ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 64, bottom: 8),
+                          padding: const EdgeInsets.only(top: 8, bottom: 8),
                           child: Column(
                             children: [
                               infoTile(
@@ -124,12 +118,11 @@ class InformationScreenState extends State<InformationScreen> {
               ),
               const Divider(),
               const SizedBox(height: 4),
-              Text(
+              const Text(
                 'Copyright © 2023 Ostravská univerzita',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 12,
-                  color: textColor,
                 ),
               ),
             ],
