@@ -76,14 +76,12 @@ class EurolockProvider extends ChangeNotifier {
         height: 48,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Expanded(
-                    child: Icon(Icons.directions, color: Colors.blue)),
+                  child: Icon(Icons.directions, color: Colors.blue),
+                ),
                 Text(distanceText),
               ],
             ),

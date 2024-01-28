@@ -3,9 +3,9 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'package:eurokey2/providers/eurolock_provider.dart';
+import 'package:eurokey2/screens/app/information_screen.dart';
 import 'package:eurokey2/screens/app/list_screen.dart';
 import 'package:eurokey2/screens/app/map_screen.dart';
-import 'package:eurokey2/screens/app/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';

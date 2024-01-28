@@ -9,7 +9,6 @@ ThemeData defaultLightTheme = ThemeData(
   brightness: Brightness.light,
   colorScheme: const ColorScheme.light(
     primary: Color.fromARGB(245, 255, 107, 38),
-    onPrimary: Color.fromARGB(255, 255, 255, 255),
     secondary: Color.fromARGB(245, 255, 107, 38),
     onSecondary: Color.fromARGB(255, 255, 255, 255),
   ),
