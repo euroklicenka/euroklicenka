@@ -5,6 +5,7 @@
 import 'dart:async';
 
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/providers/location_provider.dart';
 import 'package:eurokey2/providers/preferences_provider.dart';
@@ -13,11 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:osm_nominatim/osm_nominatim.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 
 class MapScreen extends StatefulWidget {
   final MapController mapController = MapController();
@@ -35,8 +35,8 @@ class MapScreenState extends State<MapScreen> {
   EasySearchBar appBar(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
-    Color? foregroundColor = appBarTheme.foregroundColor;
-    IconThemeData iconTheme = appBarTheme.iconTheme ??
+    final Color? foregroundColor = appBarTheme.foregroundColor;
+    final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
 
     return EasySearchBar(
@@ -103,7 +103,8 @@ class MapScreenState extends State<MapScreen> {
     if (difference.inMilliseconds < 1000) {
       // this should not happen, but just in case...
       await Future.delayed(
-          Duration(milliseconds: 1000 - difference.inMilliseconds));
+        Duration(milliseconds: 1000 - difference.inMilliseconds),
+      );
     }
 
     final searchResult = await Nominatim.searchByName(
@@ -115,38 +116,41 @@ class MapScreenState extends State<MapScreen> {
       // countryCodes: ['cz'],
     );
 
-    List<String> places = [];
+    final List<String> places = [];
 
-    searchResult.sort((a, b) => Geolocator.distanceBetween(
-            widget.mapController.camera.center.latitude,
-            widget.mapController.camera.center.longitude,
-            a.lat,
-            a.lon)
-        .compareTo(Geolocator.distanceBetween(
-            widget.mapController.camera.center.latitude,
-            widget.mapController.camera.center.longitude,
-            b.lat,
-            b.lon)));
+    searchResult.sort(
+      (a, b) => Geolocator.distanceBetween(
+        widget.mapController.camera.center.latitude,
+        widget.mapController.camera.center.longitude,
+        a.lat,
+        a.lon,
+      ).compareTo(
+        Geolocator.distanceBetween(
+          widget.mapController.camera.center.latitude,
+          widget.mapController.camera.center.longitude,
+          b.lat,
+          b.lon,
+        ),
+      ),
+    );
 
     for (final place in searchResult) {
-      String? town = place.address?['city'] ??
+      final town = place.address?['city'] ??
           place.address?['town'] ??
           place.address?['village'] ??
           place.address?['municipality'];
-      String? suburb = place.address?['city_district'] ??
+      final suburb = place.address?['city_district'] ??
           place.address?['district'] ??
           place.address?['borough'] ??
           place.address?['suburb'] ??
           place.address?['subdivision'];
 
-      final String? road = place.address?['road'];
-      final String roadStr =
-          (road != null) ? road : suburb ?? "where the streets have no name";
+      final road = place.address?['road'];
+      final roadStr = road ?? suburb ?? "where the streets have no name";
 
       final houseNumber =
           place.address?['house_number'] ?? place.address?['house_name'];
-      final String houseNumberStr =
-          (houseNumber != null) ? " $houseNumber" : "";
+      final houseNumberStr = (houseNumber != null) ? " $houseNumber" : "";
 
       final postCode = place.address?['postcode'];
       final postCodeStr = (postCode != null) ? "$postCode " : "";
@@ -221,8 +225,13 @@ class _MapScreenState extends State<MapScreenBody> {
   @override
   Widget build(BuildContext context) {
     return Consumer3<LocationProvider, PreferencesProvider, EurolockProvider>(
-      builder: (context, locationProvider, preferencesProvider,
-          eurolockProvider, child) {
+      builder: (
+        context,
+        locationProvider,
+        preferencesProvider,
+        eurolockProvider,
+        child,
+      ) {
         eurolockProvider.mapController = widget.mapController;
         return Stack(
           children: <Widget>[
@@ -232,7 +241,8 @@ class _MapScreenState extends State<MapScreenBody> {
                 initialCenter: locationProvider.currentMapPosition,
                 initialZoom: 15,
                 interactionOptions: const InteractionOptions(
-                    flags: InteractiveFlag.all & ~InteractiveFlag.rotate),
+                  flags: InteractiveFlag.all & ~InteractiveFlag.rotate,
+                ),
                 onTap: (tapPosition, point) =>
                     eurolockProvider.currentEUK = null,
                 onPositionChanged: _onPositionChanged,

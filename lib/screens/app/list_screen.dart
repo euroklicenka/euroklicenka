@@ -3,12 +3,12 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/providers/location_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:provider/provider.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -18,8 +18,8 @@ class ListScreen extends StatelessWidget {
         Provider.of<EurolockProvider>(context, listen: false);
     final ThemeData theme = Theme.of(context);
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
-    Color? foregroundColor = appBarTheme.foregroundColor;
-    IconThemeData iconTheme = appBarTheme.iconTheme ??
+    final Color? foregroundColor = appBarTheme.foregroundColor;
+    final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
 
     return EasySearchBar(
