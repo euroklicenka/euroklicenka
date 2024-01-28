@@ -238,14 +238,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  flutter_lints:
-    dependency: "direct dev"
-    description:
-      name: flutter_lints
-      sha256: e2a421b7e59244faef694ba7b30562e489c2b489866e505074eb005cd7060db7
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   flutter_map:
     dependency: "direct main"
     description:
@@ -340,10 +332,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "3b40e751eaaa855179b416974d59d29669e750d2e50fcdb2b37f1cb0ca8c803a"
+      sha256: "07ee2436909f749d606f53521dc1725dd738dc5196e5ff815bc254253c594075"
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.1"
+    version: "13.1.0"
   http:
     dependency: "direct main"
     description:
@@ -424,14 +416,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.0"
-  lints:
-    dependency: transitive
+  lint:
+    dependency: "direct dev"
     description:
-      name: lints
-      sha256: cbf8d4b858bb0134ef3ef87841abdf8d63bfc255c266b7bf6b39daa1085c4290
+      name: lint
+      sha256: d758a5211fce7fd3f5e316f804daefecdc34c7e53559716125e6da7388ae8565
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "2.3.0"
   lists:
     dependency: transitive
     description:
@@ -806,7 +798,7 @@ packages:
     source: hosted
     version: "1.2.1"
   test:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: test
       sha256: a1f7595805820fcc05e5c52e3a231aedd0b72972cb333e8c738a8b1239448b6f
