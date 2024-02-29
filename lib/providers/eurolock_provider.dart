@@ -58,7 +58,7 @@ class EurolockProvider extends ChangeNotifier {
   }
 
   ListTile mapItemBuilder(BuildContext context, EUKLocationData loc) {
-    final String distanceText = distanceToString(loc.distanceFromUser);
+    final String distanceText = distanceToString(loc.distanceFromMap);
 
     return ListTile(
       tileColor: Theme.of(context).colorScheme.surface,
@@ -95,15 +95,10 @@ class EurolockProvider extends ChangeNotifier {
   }
 
   ListTile itemBuilder(BuildContext context, EUKLocationData loc) {
-    final String distanceFromUserText = distanceToString(loc.distanceFromUser);
-    // final String distanceFromMapText = distanceToString(loc.distanceFromMap);
+    final String distanceFromMapText = distanceToString(loc.distanceFromMap);
     final String distanceText;
 
-    // if (distanceFromUserText == distanceFromMapText) {
-    distanceText = distanceFromUserText;
-    // } else {
-    //  distanceText = "$distanceFromUserText ($distanceFromMapText)";
-    // }
+    distanceText = distanceFromMapText;
 
     return ListTile(
       tileColor: Theme.of(context).colorScheme.surface,
@@ -160,13 +155,6 @@ class EurolockProvider extends ChangeNotifier {
       if (userLocation == null) {
         continue;
       }
-
-      loc.distanceFromUser = Geolocator.distanceBetween(
-        userLocation.latitude,
-        userLocation.longitude,
-        loc.lat,
-        loc.lng,
-      );
     }
 
     list.sort((a, b) => a.distanceFromMap.compareTo(b.distanceFromMap));
