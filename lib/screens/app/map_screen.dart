@@ -13,6 +13,7 @@ import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
@@ -251,6 +252,7 @@ class _MapScreenState extends State<MapScreenBody> {
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'cz.osu.euroklicenka',
+                  tileProvider: FMTC.instance('mapStore').getTileProvider(),
                   maxZoom: 19,
                 ),
                 CurrentLocationLayer(
