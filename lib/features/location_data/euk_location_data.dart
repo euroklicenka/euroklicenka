@@ -18,7 +18,6 @@ class EUKLocationData {
   late String _city;
   late String _zip;
   late EUKLocationType _type;
-  double distanceFromUser = 0;
   double distanceFromMap = 0;
 
   EUKLocationData({
@@ -50,7 +49,6 @@ class EUKLocationData {
     _city = data.city;
     _zip = data.zip;
     _type = data.type;
-    distanceFromUser = data.distanceFromUser;
     distanceFromMap = data.distanceFromMap;
   }
 
