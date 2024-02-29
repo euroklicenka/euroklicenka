@@ -11,6 +11,7 @@ import 'package:eurokey2/screens/intro_guide_screen.dart';
 import 'package:eurokey2/screens/splash_screen.dart';
 import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -61,6 +62,8 @@ final _router = GoRouter(
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterMapTileCaching.initialise();
+  await FMTC.instance('mapStore').manage.createAsync();
   runApp(const MyApp());
 }
 
