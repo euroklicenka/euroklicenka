@@ -29,6 +29,11 @@ class EUKSplashScreen extends StatelessWidget {
       showSnackBar(message: e.toString());
     });
 
+    await locationProvider.getCurrentPosition().catchError((e) {
+      showSnackBar(message: e.toString());
+      return null;
+    });
+
     return true;
   }
 
