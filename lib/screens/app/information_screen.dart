@@ -3,10 +3,14 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'package:eurokey2/features/internet_access/allowed_urls.dart';
+import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:eurokey2/widgets/information_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:provider/provider.dart';
 
 ///The information screen, that shows general info about the app as well as
 ///it's version.
@@ -31,6 +35,11 @@ class InformationScreenState extends State<InformationScreen> {
   void initState() {
     super.initState();
     _initPackageInfo();
+    _initIntl();
+  }
+
+  Future<void> _initIntl() async {
+    await initializeDateFormatting('cs_CZ');
   }
 
   Future<void> _initPackageInfo() async {
@@ -99,14 +108,27 @@ class InformationScreenState extends State<InformationScreen> {
                                 launchURL: universityOfOstravaKIPURL,
                               ),
                               const Divider(),
-                              infoTile(
-                                context: context,
-                                leadingText:
-                                    'Data o umístění eurozámků jsou veřejně dostupná na ',
-                                hyperText: 'oficiálních stránkách Euroklíče',
-                                trailingText: '.',
-                                imageFilePath: 'assets/images/logo_eurokey.png',
-                                launchURL: aboutEuroKeyWebURL,
+                              Consumer<EurolockProvider>(
+                                builder: (
+                                  context,
+                                  eurolockProvider,
+                                  child,
+                                ) {
+                                  final lastModified = DateFormat('d.M.y')
+                                      .format(eurolockProvider.lastModified);
+                                  return infoTile(
+                                    context: context,
+                                    leadingText:
+                                        'Data o umístění eurozámků jsou veřejně dostupná na ',
+                                    hyperText:
+                                        'oficiálních stránkách Euroklíče',
+                                    trailingText:
+                                        '.\n\nDatum poslední aktualizace dat: $lastModified',
+                                    imageFilePath:
+                                        'assets/images/logo_eurokey.png',
+                                    launchURL: aboutEuroKeyWebURL,
+                                  );
+                                },
                               ),
                             ],
                           ),

@@ -12,6 +12,7 @@ import 'package:eurokey2/providers/location_provider.dart';
 import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -21,10 +22,13 @@ import "package:provider/provider.dart";
 
 class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
+  late DateTime _lastModified;
   EUKLocationData? _currentEUK;
   String? _filterBy;
   List<Marker> _markers = [];
   MapController? mapController;
+
+  DateTime get lastModified => _lastModified;
 
   List<EUKLocationData> get locationsList => _locationsList;
 
@@ -199,12 +203,14 @@ class EurolockProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> onInitApp() async {
-    //const eurokliceLocationsURL =
-    //  'https://www.euroklic.cz/element/simple/documents-to-download/8/3/9ce2559301112481.xlsx?download=true&download_filename=Pruvodce_po_mistech_v_CR_osazenych_Eurozamky_20231020_web.xlsx';
+  Future<void> sync() async {
+    const url = "https://cdn.euroklicenka.cz/data.json";
 
-    // parse the on disk file
-    final String fileData = await rootBundle.loadString('assets/data.json');
+    final cachedFile = await DefaultCacheManager().getSingleFile(url);
+
+    final fileData = await cachedFile.readAsString();
+
+    _lastModified = await cachedFile.lastModified();
 
     final parsed = (jsonDecode(fileData) as List).cast<Map<String, dynamic>>();
 
@@ -213,6 +219,19 @@ class EurolockProvider extends ChangeNotifier {
         .toList();
 
     _initMarkers();
+  }
+
+  Future<void> onInitApp() async {
+    const url = "https://cdn.euroklicenka.cz/data.json";
+
+    // parse the on disk file
+    final fileData = await rootBundle.load('assets/data.json');
+    final fileList = Uint8List.view(fileData.buffer);
+
+    DefaultCacheManager()
+        .putFile(url, fileList, maxAge: const Duration(days: 1));
+
+    await sync();
 
     return;
   }
