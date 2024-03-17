@@ -17,15 +17,9 @@ Widget infoTile({
   String hyperText = '',
   String trailingText = '',
 }) {
-  return InkWell(
-    onTap: () {
-      if (launchURL.isEmpty) return;
-      openURL(url: launchURL);
-    },
-    child: Row(
-      children: [
-        Flexible(
+  final flexible = Flexible(
           child: RichText(
+            textAlign: TextAlign.left,
             text: TextSpan(
               style: TextStyle(
                 fontSize: 15,
@@ -44,12 +38,20 @@ Widget infoTile({
               ],
             ),
           ),
-        ),
-        const SizedBox(width: 8),
+        );
+  return InkWell(
+    onTap: () {
+      if (launchURL.isEmpty) return;
+      openURL(url: launchURL);
+    },
+    child: Row(
+      children: [
         Image.asset(
           imageFilePath,
           width: MediaQuery.of(context).size.width * 0.25,
         ),
+        const SizedBox(width: 8),
+        flexible,
       ],
     ),
   );

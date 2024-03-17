@@ -58,7 +58,7 @@ class MainAppScreen extends StatelessWidget {
           NavigationDestination(
             selectedIcon: Icon(Icons.format_align_center),
             icon: Icon(Icons.format_list_bulleted),
-            label: "O aplikaci...",
+            label: "O aplikaci",
           ),
         ],
       ),

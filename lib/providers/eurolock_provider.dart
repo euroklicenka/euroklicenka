@@ -86,7 +86,26 @@ class EurolockProvider extends ChangeNotifier {
                 const Expanded(
                   child: Icon(Icons.directions, color: Colors.blue),
                 ),
-                Text(distanceText),
+                Row(
+                 children: [
+                    Text(distanceText),
+                    const SizedBox(width: 5),
+                    InkWell(
+                      child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue.withOpacity(0.1),
+                    ),
+                        child: const Icon(
+                        Icons.arrow_forward,
+                        size: 10,
+                        color: Colors.blue,
+                      ),
+                    ),
+                  ),
+                 ],
+                ),
               ],
             ),
           ],
