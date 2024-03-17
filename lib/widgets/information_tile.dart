@@ -17,6 +17,28 @@ Widget infoTile({
   String hyperText = '',
   String trailingText = '',
 }) {
+  final flexible = Flexible(
+    child: RichText(
+      textAlign: TextAlign.left,
+      text: TextSpan(
+        style: TextStyle(
+          fontSize: 15,
+          color: Theme.of(context).textTheme.bodyLarge!.color,
+        ),
+        children: [
+          TextSpan(text: leadingText),
+          TextSpan(
+            text: hyperText,
+            style: const TextStyle(
+              color: Colors.blue, // You can choose the hyperlink color
+              decoration: TextDecoration.underline,
+            ),
+          ),
+          TextSpan(text: trailingText),
+        ],
+      ),
+    ),
+  );
   return InkWell(
     onTap: () {
       if (launchURL.isEmpty) return;
@@ -24,32 +46,12 @@ Widget infoTile({
     },
     child: Row(
       children: [
-        Flexible(
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(
-                fontSize: 15,
-                color: Theme.of(context).textTheme.bodyLarge!.color,
-              ),
-              children: [
-                TextSpan(text: leadingText),
-                TextSpan(
-                  text: hyperText,
-                  style: const TextStyle(
-                    color: Colors.blue, // You can choose the hyperlink color
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-                TextSpan(text: trailingText),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
         Image.asset(
           imageFilePath,
           width: MediaQuery.of(context).size.width * 0.25,
         ),
+        const SizedBox(width: 8),
+        flexible,
       ],
     ),
   );

@@ -16,10 +16,10 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 
 class MapScreen extends StatefulWidget {
   final MapController mapController = MapController();
@@ -307,7 +307,10 @@ class _MapScreenState extends State<MapScreenBody> {
                                 child: const Text('NAVIGOVAT'),
                                 onPressed: () async {
                                   MapsLauncher.launchCoordinates(
-                                      euk.lat, euk.lng, euk.address);
+                                    euk.lat,
+                                    euk.lng,
+                                    euk.address,
+                                  );
                                 },
                               ),
                               const SizedBox(width: 8),

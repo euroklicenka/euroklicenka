@@ -18,7 +18,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import "package:provider/provider.dart";
-import 'package:maps_launcher/maps_launcher.dart';
 
 class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
