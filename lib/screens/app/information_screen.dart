@@ -68,6 +68,8 @@ class InformationScreenState extends State<InformationScreen> {
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         titleTextStyle: titleTextStyle,
+        elevation: 5.5,
+        shadowColor: const Color.fromARGB(255, 209, 209, 209),
       ),
       body: Center(
         child: Padding(
@@ -95,7 +97,12 @@ class InformationScreenState extends State<InformationScreen> {
                                     : 'assets/images/logo_prf_light.png',
                                 launchURL: universityOfOstravaURL,
                               ),
-                              const Divider(),
+                              const SizedBox(height: 10),
+                              const Divider(
+                                color: Color.fromARGB(255, 151, 151, 151),
+                                thickness: 0.5,
+                              ),
+                              const SizedBox(height: 10),
                               infoTile(
                                 context: context,
                                 leadingText:
@@ -103,32 +110,31 @@ class InformationScreenState extends State<InformationScreen> {
                                 hyperText:
                                     'katedry informatiky a\u{00A0}počítačů',
                                 trailingText:
-                                    ' OU, do kterého patří Barbora Hájičková a\u{00A0}Ondřej Surý.  Vývoj původní aplikace provedl Jan Sonnek, Jan Kunetka a\u{00A0}Ondřej Sládek.',
+                                    ' OU, do kterého patří Barbora Hajíčková a\u{00A0}Ondřej Surý.  Vývoj původní aplikace provedl Jan Sonnek, Jan Kunetka a\u{00A0}Ondřej Sládek.',
                                 imageFilePath: 'assets/images/logo_kip.png',
                                 launchURL: universityOfOstravaKIPURL,
                               ),
-                              const Divider(),
+                              const SizedBox(height: 10),
+                              const Divider(
+                                color: Color.fromARGB(255, 151, 151, 151),
+                                thickness: 0.5,
+                              ),
+                              const SizedBox(height: 10),
                               Consumer<EurolockProvider>(
                                 builder: (
                                   context,
                                   eurolockProvider,
                                   child,
-                                ) {
-                                  final lastModified = DateFormat('d.M.y')
-                                      .format(eurolockProvider.lastModified);
-                                  return infoTile(
-                                    context: context,
-                                    leadingText:
-                                        'Data o umístění eurozámků jsou veřejně dostupná na ',
-                                    hyperText:
-                                        'oficiálních stránkách Euroklíče',
-                                    trailingText:
-                                        '.\n\nDatum poslední aktualizace dat: $lastModified',
-                                    imageFilePath:
-                                        'assets/images/logo_eurokey.png',
-                                    launchURL: aboutEuroKeyWebURL,
-                                  );
-                                },
+                                ) =>
+                                    infoTile(
+                                  context: context,
+                                  leadingText:
+                                      'Data o umístění eurozámků jsou veřejně dostupná na ',
+                                  hyperText: 'oficiálních stránkách Euroklíče',
+                                  imageFilePath:
+                                      'assets/images/logo_eurokey.png',
+                                  launchURL: aboutEuroKeyWebURL,
+                                ),
                               ),
                             ],
                           ),
@@ -138,8 +144,25 @@ class InformationScreenState extends State<InformationScreen> {
                   ),
                 ),
               ),
-              const Divider(),
-              const SizedBox(height: 4),
+              const SizedBox(height: 10),
+              const Divider(
+                color: Color.fromARGB(255, 151, 151, 151),
+                thickness: 0.5,
+              ),
+              const SizedBox(height: 1),
+              Consumer<EurolockProvider>(
+                builder: (
+                  context,
+                  eurolockProvider,
+                  child,
+                ) {
+                  final lastModified =
+                      DateFormat('d.M.y').format(eurolockProvider.lastModified);
+                  return Text(
+                    '.\n\nDatum poslední aktualizace dat: $lastModified',
+                  );
+                },
+              ),
               const Text(
                 'Copyright © 2023 Ostravská univerzita',
                 textAlign: TextAlign.left,
