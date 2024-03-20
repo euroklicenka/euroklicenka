@@ -19,6 +19,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 
 class MapScreen extends StatefulWidget {
   final MapController mapController = MapController();
@@ -290,14 +291,32 @@ class _MapScreenState extends State<MapScreenBody> {
                 }
                 final euk = eurolockProvider.currentEUK!;
 
-                return Positioned(
-                  bottom: 0,
-                  height: 100,
-                  width: MediaQuery.of(context).size.width,
-                  child: ColoredBox(
-                    color: Theme.of(context).colorScheme.surface,
-                    child: eurolockProvider.mapItemBuilder(context, euk),
-                  ),
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Card(
+                      surfaceTintColor: Theme.of(context).colorScheme.surface,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          eurolockProvider.mapItemBuilder(context, euk),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              TextButton(
+                                child: const Text('NAVIGOVAT'),
+                                onPressed: () async {
+                                  MapsLauncher.launchCoordinates(
+                                      euk.lat, euk.lng, euk.address);
+                                },
+                              ),
+                              const SizedBox(width: 8),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               },
             ),
