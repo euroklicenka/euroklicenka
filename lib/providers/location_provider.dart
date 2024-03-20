@@ -13,8 +13,7 @@ import 'package:latlong2/latlong.dart';
 class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
   double _currentMapZoom = 14.5;
-  LatLng _currentMapPosition =
-      const LatLng(49.8402811, 18.2887964); // Bráfova 7
+  LatLng _currentMapPosition = const LatLng(0, 0);
 
   AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.once;
   final StreamController<double?> followCurrentLocationStreamController =
@@ -92,6 +91,7 @@ class LocationProvider with ChangeNotifier {
       _currentUserPosition = null;
     } else {
       _currentUserPosition = LatLng(position.latitude, position.longitude);
+      _currentMapPosition = LatLng(position.latitude, position.longitude);
     }
   }
 }
