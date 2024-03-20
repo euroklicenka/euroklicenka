@@ -13,13 +13,14 @@ data = json.loads(thisisjson)
 
 parsed = []
 
+id = 0
 for row in data:
     import re
 
-    id = row['#']
+    id += 1
     region = row['KRAJ']
     city = row['MĚSTO']
-    full_address = row['OSAZENÉ MÍSTO']
+    full_address = row['ORIGINÁLNÍ ZÁZNAM']
     latlng = row['GPS']
 
     if latlng is None:
@@ -29,6 +30,8 @@ for row in data:
     # 50°5'11.124", 14°25'4.031"
     r = re.compile('[°\'", ]+')
     _ = r.split(latlng.strip())
+    if (len(_) == 8):
+        _ = _[0:3] + _[4:7]
 
     lat = float(_[0]) + float(_[1]) / 60 + float(_[2]) / 3600;
     lng = float(_[3]) + float(_[4]) / 60 + float(_[5]) / 3600;

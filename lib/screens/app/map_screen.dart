@@ -147,7 +147,7 @@ class MapScreenState extends State<MapScreen> {
           place.address?['subdivision'];
 
       final road = place.address?['road'];
-      final roadStr = road ?? suburb ?? "where the streets have no name";
+      final roadStr = road ?? suburb ?? "";
 
       final houseNumber =
           place.address?['house_number'] ?? place.address?['house_name'];
@@ -156,7 +156,9 @@ class MapScreenState extends State<MapScreen> {
       final postCode = place.address?['postcode'];
       final postCodeStr = (postCode != null) ? "$postCode " : "";
 
-      final addressStr = "$roadStr$houseNumberStr, $postCodeStr$town";
+      final roadTownSep = (roadStr != "" || houseNumberStr != "") ? ", " : "";
+
+      final addressStr = "$roadStr$houseNumberStr$roadTownSep$postCodeStr$town";
 
       lastSuggestions[addressStr] = place;
 
