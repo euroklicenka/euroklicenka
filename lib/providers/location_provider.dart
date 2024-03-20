@@ -85,13 +85,9 @@ class LocationProvider with ChangeNotifier {
   Future<void> getCurrentPosition() async {
     await handlePermissions();
 
-    final Position? position = await Geolocator.getLastKnownPosition();
+    final Position position = await Geolocator.getCurrentPosition();
 
-    if (position == null) {
-      _currentUserPosition = null;
-    } else {
-      _currentUserPosition = LatLng(position.latitude, position.longitude);
-      _currentMapPosition = LatLng(position.latitude, position.longitude);
-    }
+    _currentUserPosition = LatLng(position.latitude, position.longitude);
+    _currentMapPosition = LatLng(position.latitude, position.longitude);
   }
 }
