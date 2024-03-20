@@ -17,8 +17,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
+import 'package:maps_launcher/maps_launcher.dart';
 
 class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
@@ -61,72 +61,60 @@ class EurolockProvider extends ChangeNotifier {
     }
   }
 
-  ListTile mapItemBuilder(BuildContext context, EUKLocationData loc) {
+  Widget mapItemBuilder(BuildContext context, EUKLocationData loc) {
     final String distanceText = distanceToString(loc.distanceFromUser);
 
     return ListTile(
-      tileColor: Theme.of(context).colorScheme.surface,
-      title: Text(loc.address),
-      subtitle: Text('${loc.city}, ${loc.zip}'),
-      leading: Container(
-        width: 48,
-        height: 48,
-        padding: const EdgeInsets.symmetric(vertical: 2.0),
-        alignment: Alignment.center,
-        child: getIconByType(loc.type),
+      dense: true,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(loc.address),
+          Text('${loc.city}, ${loc.zip}'),
+        ],
       ),
-      trailing: SizedBox(
-        width: 48,
-        height: 48,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Column(
-              children: [
-                const Expanded(
-                  child: Icon(Icons.directions, color: Colors.blue),
-                ),
-                Text(distanceText),
-              ],
-            ),
-          ],
-        ),
-      ),
-      onTap: () async {
-        MapsLauncher.launchCoordinates(loc.lat, loc.lng, loc.address);
-      },
-    );
-  }
-
-  ListTile itemBuilder(BuildContext context, EUKLocationData loc) {
-    final String distanceText = distanceToString(loc.distanceFromMap);
-
-    return ListTile(
-      tileColor: Theme.of(context).colorScheme.surface,
-      title: Text(loc.address),
-      subtitle: Text('${loc.city}, ${loc.zip}'),
       leading: getIconByType(loc.type),
       trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Icon(Icons.chevron_right),
+          const Icon(Icons.directions, color: Colors.blue),
           const SizedBox(height: 4),
           Text(distanceText),
         ],
       ),
-      onTap: () {
-        final locationProvider =
-            Provider.of<LocationProvider>(context, listen: false);
+    );
+  }
 
-        locationProvider.currentMapPosition = loc.location;
+  Widget itemBuilder(BuildContext context, EUKLocationData loc) {
+    final String distanceText = distanceToString(loc.distanceFromMap);
 
-        currentEUK = loc;
+    return Card(
+      surfaceTintColor: Theme.of(context).colorScheme.surface,
+      child: ListTile(
+        title: Text(loc.address),
+        subtitle: Text('${loc.city}, ${loc.zip}'),
+        leading: getIconByType(loc.type),
+        trailing: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            const Icon(Icons.chevron_right),
+            const SizedBox(height: 4),
+            Text(distanceText),
+          ],
+        ),
+        onTap: () {
+          final locationProvider =
+              Provider.of<LocationProvider>(context, listen: false);
 
-        hideVirtualKeyboard();
+          locationProvider.currentMapPosition = loc.location;
 
-        context.go("/main/1");
-      },
+          currentEUK = loc;
+
+          hideVirtualKeyboard();
+
+          context.go("/main/1");
+        },
+      ),
     );
   }
 
