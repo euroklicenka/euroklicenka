@@ -13,7 +13,8 @@ class EUKLocationData {
   late String _id;
   late double _lat;
   late double _lng;
-  late String _address;
+  late String _place;
+  late String _street;
   late String _region;
   late String _city;
   late String _zip;
@@ -25,7 +26,8 @@ class EUKLocationData {
     required String id,
     required double lat,
     required double lng,
-    required String address,
+    required String place,
+    required String street,
     required String region,
     required String city,
     required String zip,
@@ -34,7 +36,8 @@ class EUKLocationData {
     _id = id;
     _lat = lat;
     _lng = lng;
-    _address = address;
+    _place = place;
+    _street = street;
     _region = region;
     _city = city;
     _zip = zip;
@@ -45,7 +48,8 @@ class EUKLocationData {
     _id = data.id;
     _lat = data.lat;
     _lng = data.lng;
-    _address = data.address;
+    _place = data.place;
+    _street = data.street;
     _region = data.region;
     _city = data.city;
     _zip = data.zip;
@@ -57,7 +61,8 @@ class EUKLocationData {
   EUKLocationData.latLng({
     required String id,
     required LatLng latLng,
-    required String address,
+    required String place,
+    required String street,
     required String region,
     required String city,
     required String zip,
@@ -65,7 +70,8 @@ class EUKLocationData {
   })  : _id = id,
         _lat = latLng.latitude,
         _lng = latLng.longitude,
-        _address = address,
+        _place = place,
+        _street = street,
         _region = region,
         _city = city,
         _zip = zip,
@@ -91,7 +97,8 @@ class EUKLocationData {
       id: json['id'].toString(),
       lat: double.parse(json['lat'].toString()),
       lng: double.parse(json['lng'].toString()),
-      address: json['address'].toString(),
+      place: json['place'].toString(),
+      street: json['street'].toString(),
       region: json['region'].toString(),
       city: json['city'].toString(),
       zip: json['zip'].toString(),
@@ -104,7 +111,8 @@ class EUKLocationData {
         'id': id,
         'lat': lat,
         'lng': lng,
-        'address': address,
+        'place': place,
+        'street': street,
         'region': region,
         'city': city,
         'ZIP': zip,
@@ -114,8 +122,6 @@ class EUKLocationData {
   Marker toMarker(EurolockProvider eukProvider) {
     return Marker(
       point: LatLng(lat, lng),
-      // width: 30,
-      // height: 30,
       child: GestureDetector(
         onTap: () => eukProvider.currentEUK = this,
         child: getMarkerIconByType(type),
@@ -130,7 +136,9 @@ class EUKLocationData {
 
   double get lng => _lng;
 
-  String get address => _address;
+  String get place => _place;
+
+  String get street => _street;
 
   String get region => _region;
 

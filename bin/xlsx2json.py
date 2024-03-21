@@ -2,8 +2,9 @@
 
 import pandas
 import json
+import sys
 
-excel_data_df = pandas.read_excel('9ce2559301112481.xlsx')
+excel_data_df = pandas.read_excel(sys.argv[1])
 
 # Convert excel to string
 # (define orientation of document in this case from up to down)
@@ -75,11 +76,22 @@ for row in data:
 
     address = address[:-len(zip_address)].strip(", ")
 
+    r = re.compile(', [^,]*$')
+    m = r.search(address)
+
+    if m is None:
+        place = address
+        street = ""
+    else:
+        street = m.group(0).strip(", ")
+        place = address[:-len(street)].strip(", ")
+
     parsed.append({
         "id": id,
         "lat": lat,
         "lng": lng,
-        "address": address,
+        "place": place,
+        "street": street,
         "region": region,
         "city": city,
         "zip": zip,
@@ -92,5 +104,5 @@ for row in data:
 
 #    break
 
-with open('data.json', 'w') as json_file:
+with open(sys.argv[2], 'w') as json_file:
     json.dump(parsed, json_file, skipkeys = True, indent = 2)
