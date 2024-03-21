@@ -16,7 +16,6 @@ import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -297,23 +296,18 @@ class _MapScreenState extends State<MapScreenBody> {
                     Card(
                       surfaceTintColor: Theme.of(context).colorScheme.surface,
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
+                        children: [
                           eurolockProvider.mapItemBuilder(context, euk),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              TextButton(
-                                child: const Text('NAVIGOVAT'),
-                                onPressed: () async {
-                                  MapsLauncher.launchCoordinates(
-                                    euk.lat,
-                                    euk.lng,
-                                    euk.address,
-                                  );
-                                },
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: 8,
+                                  right: 8,
+                                ),
+                                child: eurolockProvider.navigateButton(euk),
                               ),
-                              const SizedBox(width: 8),
                             ],
                           ),
                         ],

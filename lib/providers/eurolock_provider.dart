@@ -17,6 +17,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
 
 class EurolockProvider extends ChangeNotifier {
@@ -60,26 +61,66 @@ class EurolockProvider extends ChangeNotifier {
     }
   }
 
+  Widget placeText(EUKLocationData loc) {
+    final List<Widget> l = [];
+
+    l.add(Text(loc.place, style: const TextStyle(fontWeight: FontWeight.bold)));
+    if (loc.street != '') {
+      l.add(Text(loc.street));
+    }
+    l.add(Text('${loc.zip} ${loc.city}'));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: l,
+    );
+  }
+
+  Widget navigateButton(EUKLocationData loc) {
+    return Column(
+      children: <Widget>[
+        ElevatedButton(
+          child: const Text('NAVIGOVAT'),
+          onPressed: () async {
+            MapsLauncher.launchCoordinates(
+              loc.lat,
+              loc.lng,
+              loc.place,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
   Widget mapItemBuilder(BuildContext context, EUKLocationData loc) {
     final String distanceText = distanceToString(loc.distanceFromUser);
 
     return ListTile(
-      dense: true,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(loc.address),
-          Text('${loc.city}, ${loc.zip}'),
+      title: placeText(loc),
+      // subtitle: Text('Vzdálenost: $distanceText'),
+      leading: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          getIconByType(loc.type),
         ],
       ),
-      leading: getIconByType(loc.type),
       trailing: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const Icon(Icons.directions, color: Colors.blue),
+          const Icon(Icons.chevron_right),
           const SizedBox(height: 4),
           Text(distanceText),
         ],
       ),
+      onTap: () async {
+        MapsLauncher.launchCoordinates(
+          loc.lat,
+          loc.lng,
+          loc.place,
+        );
+      },
     );
   }
 
@@ -89,8 +130,7 @@ class EurolockProvider extends ChangeNotifier {
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.surface,
       child: ListTile(
-        title: Text(loc.address),
-        subtitle: Text('${loc.city}, ${loc.zip}'),
+        title: placeText(loc),
         leading: getIconByType(loc.type),
         trailing: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -122,7 +162,8 @@ class EurolockProvider extends ChangeNotifier {
     String search,
   ) async {
     return list.where((element) {
-      return removeDiacritics(element.address.toLowerCase()).contains(search) ||
+      return removeDiacritics(element.place.toLowerCase()).contains(search) ||
+          removeDiacritics(element.street.toLowerCase()).contains(search) ||
           removeDiacritics(element.city.toLowerCase()).contains(search) ||
           removeDiacritics(element.zip.toLowerCase()).contains(search);
     }).toList();
