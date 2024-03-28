@@ -22,7 +22,9 @@ class EUKSplashScreen extends StatelessWidget {
 
     await precacheMarkerIcon(context);
 
-    await eurolockProvider.onInitApp();
+    await eurolockProvider.onInitApp().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
     await preferencesProvider.onInitApp();
 
     await locationProvider.handlePermissions().catchError((e) {

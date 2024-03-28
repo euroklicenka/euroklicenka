@@ -65,6 +65,21 @@ class InformationScreenState extends State<InformationScreen> {
             '${_packageInfo.appName} ${_packageInfo.version}',
           ),
         ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.refresh_rounded),
+            tooltip: "Obnovit seznam míst",
+            onPressed: () {
+              final eurolockProvider =
+                  Provider.of<EurolockProvider>(context, listen: false);
+              eurolockProvider.sync(true);
+
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Obnovuji databázi')),
+              );
+            },
+          ),
+        ],
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         titleTextStyle: titleTextStyle,
