@@ -32,6 +32,8 @@ class EurolockProvider extends ChangeNotifier {
 
   List<EUKLocationData> get locationsList => _locationsList;
 
+  final url = "https://cdn.euroklicenka.cz/data.json";
+
   EUKLocationData? get currentEUK => _currentEUK;
   set currentEUK(EUKLocationData? newEUK) {
     _currentEUK = newEUK;
@@ -235,8 +237,10 @@ class EurolockProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> sync() async {
-    const url = "https://cdn.euroklicenka.cz/data.json";
+  Future<void> sync(bool force) async {
+    if (force) {
+      DefaultCacheManager().emptyCache();
+    }
 
     final cachedFile = await DefaultCacheManager().getSingleFile(url);
 
@@ -254,8 +258,6 @@ class EurolockProvider extends ChangeNotifier {
   }
 
   Future<void> onInitApp() async {
-    const url = "https://cdn.euroklicenka.cz/data.json";
-
     // parse the on disk file
     final fileData = await rootBundle.load('assets/data.json');
     final fileList = Uint8List.view(fileData.buffer);
@@ -263,7 +265,7 @@ class EurolockProvider extends ChangeNotifier {
     DefaultCacheManager()
         .putFile(url, fileList, maxAge: const Duration(days: 1));
 
-    await sync();
+    await sync(false);
 
     return;
   }

@@ -184,8 +184,9 @@ class MapScreenState extends State<MapScreen> {
 ///Screen that shows the primary map with EUK locations.
 class MapScreenBody extends StatefulWidget {
   final MapController? mapController;
+  late final tileProvider = const FMTCStore('mapStore').getTileProvider();
 
-  const MapScreenBody({
+  MapScreenBody({
     super.key,
     required this.mapController,
   });
@@ -254,7 +255,7 @@ class _MapScreenState extends State<MapScreenBody> {
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                   userAgentPackageName: 'cz.osu.euroklicenka',
-                  tileProvider: FMTC.instance('mapStore').getTileProvider(),
+                  tileProvider: widget.tileProvider,
                   maxZoom: 19,
                 ),
                 CurrentLocationLayer(

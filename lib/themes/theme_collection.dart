@@ -23,8 +23,24 @@ ThemeData defaultLightTheme = ThemeData(
     ),
   ),
   iconTheme: const IconThemeData(
-    color: Color.fromARGB(255, 255, 255, 255),
+    color: Colors.white,
     size: 23.0,
+  ),
+  primaryIconTheme: const IconThemeData(
+    color: Colors.white,
+  ),
+  iconButtonTheme: const IconButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: MaterialStatePropertyAll(
+        Colors.white,
+      ),
+      backgroundColor: MaterialStatePropertyAll(
+        Color.fromARGB(245, 255, 107, 38),
+      ),
+      iconColor: MaterialStatePropertyAll(
+        Colors.white,
+      ),
+    ),
   ),
 );
 
