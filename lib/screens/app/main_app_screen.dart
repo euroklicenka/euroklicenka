@@ -9,6 +9,7 @@ import 'package:eurokey2/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class MainAppScreen extends StatelessWidget {
   final String id;
@@ -24,6 +25,21 @@ class MainAppScreen extends StatelessWidget {
       GoRouter.of(context).go('/');
       return const SizedBox.shrink();
     }
+
+    String listLabel() => Intl.message(
+          'Seznam',
+          name: 'MainAppScreen_listLabel',
+        );
+
+    String mapLabel() => Intl.message(
+          'Mapa',
+          name: 'MainAppScreen_mapLabel',
+        );
+
+    String aboutLabel() => Intl.message(
+          'O aplikaci',
+          name: 'MainAppScreen_aboutLabel',
+        );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -44,21 +60,21 @@ class MainAppScreen extends StatelessWidget {
         },
         // indicatorColor: Colors.amber,
         selectedIndex: index,
-        destinations: const <Widget>[
+        destinations: <Widget>[
           NavigationDestination(
             selectedIcon: Icon(Icons.view_list_outlined),
             icon: Icon(Icons.view_list),
-            label: "Seznam",
+            label: listLabel(),
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.map_outlined),
             icon: Icon(Icons.map),
-            label: "Mapa",
+            label: mapLabel(),
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.format_align_center),
             icon: Icon(Icons.format_list_bulleted),
-            label: "O aplikaci",
+            label: aboutLabel(),
           ),
         ],
       ),

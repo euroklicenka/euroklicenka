@@ -19,6 +19,7 @@ import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
+import 'package:intl/intl.dart';
 
 class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
@@ -78,11 +79,16 @@ class EurolockProvider extends ChangeNotifier {
     );
   }
 
+  String navigateButtonText() => Intl.message(
+        'NAVIGOVAT',
+        name: 'EurolockProvider_navigateButtonText',
+      );
+
   Widget navigateButton(EUKLocationData loc) {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          child: const Text('NAVIGOVAT'),
+          child: Text(navigateButtonText()),
           onPressed: () async {
             MapsLauncher.launchCoordinates(
               loc.lat,
@@ -95,6 +101,11 @@ class EurolockProvider extends ChangeNotifier {
     );
   }
 
+  String distanceTextMessage() => Intl.message(
+        'Vzdálenost: ',
+        name: 'EurolockProvider_distanceText',
+      );
+
   Widget mapItemBuilder(BuildContext context, EUKLocationData loc) {
     final String distanceText = distanceToString(loc.distanceFromUser);
 
@@ -104,9 +115,9 @@ class EurolockProvider extends ChangeNotifier {
         text: TextSpan(
           style: const TextStyle(color: Colors.black),
           children: <TextSpan>[
-            const TextSpan(
-                text: 'Vzdálenost: ',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(
+                text: distanceTextMessage(),
+                style: const TextStyle(fontWeight: FontWeight.bold)),
             TextSpan(text: distanceText),
           ],
         ),

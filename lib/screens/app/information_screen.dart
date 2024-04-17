@@ -58,6 +58,18 @@ class InformationScreenState extends State<InformationScreen> {
     final titleTextStyle = appBarTheme.titleTextStyle ??
         theme.textTheme.titleLarge!.copyWith(color: foregroundColor);
 
+    String tooltipMessage() => Intl.message(
+          'Obnovit seznam míst',
+          name: 'InformationScreenState_tooltipMessage',
+          args: [],
+          desc: 'A tooltip for refresh button',
+        );
+
+    String refreshDatabaseMessage() => Intl.message('Obnovuji databázi',
+        name: 'InformationScreenState_refreshDatabaseMessage',
+        args: [],
+        desc: 'A snackbar message that informs user about database refresh');
+
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -68,14 +80,14 @@ class InformationScreenState extends State<InformationScreen> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.refresh_rounded),
-            tooltip: "Obnovit seznam míst",
+            tooltip: tooltipMessage(),
             onPressed: () {
               final eurolockProvider =
                   Provider.of<EurolockProvider>(context, listen: false);
               eurolockProvider.sync(true);
 
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Obnovuji databázi')),
+                SnackBar(content: Text(refreshDatabaseMessage())),
               );
             },
           ),

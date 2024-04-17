@@ -9,6 +9,7 @@ import 'package:eurokey2/providers/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -22,9 +23,16 @@ class ListScreen extends StatelessWidget {
     final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
 
+    String appBarMessage() => Intl.message(
+          'Seznam nejbližších míst',
+          name: 'ListScreen_appBarMessage',
+          args: [],
+          desc: 'An appBar title for the list screen',
+        );
+
     return EasySearchBar(
-      title: const Center(
-        child: Text('Seznam nejbližších míst'),
+      title: Center(
+        child: Text(appBarMessage()),
       ),
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => eurolockProvider.onSearch(value),
@@ -92,6 +100,13 @@ class _ListScreenState extends State<ListScreenBody> {
     return list;
   }
 
+  String loadingDataMessage() => Intl.message(
+        'Nahrávám data',
+        name: 'ListScreen_loadingDataMessage',
+        args: [],
+        desc: 'Simple indicator that we are loading data',
+      );
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<EurolockProvider, LocationProvider>(
@@ -105,9 +120,9 @@ class _ListScreenState extends State<ListScreenBody> {
             } else if (snapshot.hasError) {
               throw Exception(snapshot.error.toString());
             } else {
-              return const Padding(
-                padding: EdgeInsets.only(top: 16),
-                child: Text('Loading data...'),
+              return Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(loadingDataMessage()),
               );
             }
           },

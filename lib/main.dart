@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 final _router = GoRouter(
   initialLocation: '/splash',
@@ -61,6 +62,7 @@ final _router = GoRouter(
 );
 
 Future<void> main() async {
+  Intl.defaultLocale = 'cs_CZ';
   WidgetsFlutterBinding.ensureInitialized();
   await FMTCObjectBoxBackend().initialise();
   await const FMTCStore('mapStore').manage.create();
