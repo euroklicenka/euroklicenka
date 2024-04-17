@@ -96,24 +96,23 @@ class EurolockProvider extends ChangeNotifier {
   }
 
   Widget mapItemBuilder(BuildContext context, EUKLocationData loc) {
-    final String distanceText = distanceToString(loc.distanceFromUser);
+   final String distanceText = distanceToString(loc.distanceFromUser);
 
     return ListTile(
       title: placeText(loc),
-      // subtitle: Text('Vzdálenost: $distanceText'),
+      subtitle: RichText(
+      text: TextSpan(
+      style: const TextStyle(color: Colors.black),
+      children: <TextSpan>[
+      const TextSpan(text: 'Vzdálenost: ', style: TextStyle(fontWeight: FontWeight.bold)),
+      TextSpan(text: distanceText),
+          ],
+        ),
+      ),
       leading: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           getIconByType(loc.type),
-        ],
-      ),
-      trailing: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          const Icon(Icons.chevron_right),
-          const SizedBox(height: 4),
-          Text(distanceText),
         ],
       ),
       onTap: () async {

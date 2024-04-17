@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData defaultLightTheme = ThemeData(
   useMaterial3: true,
@@ -40,6 +41,12 @@ ThemeData defaultLightTheme = ThemeData(
       iconColor: MaterialStatePropertyAll(
         Colors.white,
       ),
+    ),
+  ),
+  appBarTheme: const AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Color.fromARGB(245, 255, 107, 38),
+      statusBarIconBrightness: Brightness.light 
     ),
   ),
 );
