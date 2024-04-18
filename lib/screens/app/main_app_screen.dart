@@ -62,18 +62,18 @@ class MainAppScreen extends StatelessWidget {
         selectedIndex: index,
         destinations: <Widget>[
           NavigationDestination(
-            selectedIcon: Icon(Icons.view_list_outlined),
-            icon: Icon(Icons.view_list),
+            selectedIcon: const Icon(Icons.view_list_outlined),
+            icon: const Icon(Icons.view_list),
             label: listLabel(),
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.map_outlined),
-            icon: Icon(Icons.map),
+            selectedIcon: const Icon(Icons.map_outlined),
+            icon: const Icon(Icons.map),
             label: mapLabel(),
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.format_align_center),
-            icon: Icon(Icons.format_list_bulleted),
+            selectedIcon: const Icon(Icons.format_align_center),
+            icon: const Icon(Icons.format_list_bulleted),
             label: aboutLabel(),
           ),
         ],
