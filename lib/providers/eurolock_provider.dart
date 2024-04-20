@@ -99,15 +99,18 @@ class EurolockProvider extends ChangeNotifier {
    final String distanceText = distanceToString(loc.distanceFromUser);
 
     return ListTile(
-      title: placeText(loc),
-      subtitle: RichText(
-      text: TextSpan(
-      style: const TextStyle(color: Colors.black),
-      children: <TextSpan>[
-      const TextSpan(text: 'Vzdálenost: ', style: TextStyle(fontWeight: FontWeight.bold)),
-      TextSpan(text: distanceText),
-          ],
-        ),
+     title: Row(
+     children: [
+     Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+           placeText(loc),
+           Text(distanceText, style: const TextStyle(color: Colors.black)),
+              ],
+            ),
+          ),
+        ],
       ),
       leading: Column(
         mainAxisAlignment: MainAxisAlignment.center,
