@@ -9,13 +9,13 @@ import 'package:diacritic/diacritic.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/providers/location_provider.dart';
+import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
@@ -158,6 +158,8 @@ class EurolockProvider extends ChangeNotifier {
         onTap: () {
           final locationProvider =
               Provider.of<LocationProvider>(context, listen: false);
+          final sharedPreferencesProvider =
+              Provider.of<PreferencesProvider>(context, listen: false);
 
           locationProvider.currentMapPosition = loc.location;
 
@@ -165,7 +167,8 @@ class EurolockProvider extends ChangeNotifier {
 
           hideVirtualKeyboard();
 
-          context.go("/main/1");
+          sharedPreferencesProvider.mainScreenState =
+              MainScreenStates.mapScreenState;
         },
       ),
     );

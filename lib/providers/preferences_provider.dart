@@ -10,41 +10,52 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum MainScreenStates {
   initialState,
   guideState,
-  appContentState,
+  listScreenState,
+  mapScreenState,
+  aboutScreenState,
 }
 
 class PreferencesProvider extends ChangeNotifier {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  MainScreenStates mainScreenState = MainScreenStates.initialState;
+  final Future<SharedPreferences> _sharedPreferences =
+      SharedPreferences.getInstance();
+  MainScreenStates _mainScreenState = MainScreenStates.initialState;
   ThemeMode _themeMode = ThemeMode.system;
 
   ThemeMode get themeMode => _themeMode;
+
+  MainScreenStates get mainScreenState => _mainScreenState;
+
+  set mainScreenState(MainScreenStates state) {
+    _mainScreenState = state;
+    notifyListeners();
+  }
 
   set themeMode(ThemeMode mode) {
     _themeMode = mode;
     notifyListeners();
   }
 
-  Future<void> onInitApp() async {
-    if (mainScreenState == MainScreenStates.initialState) {
-      final SharedPreferences prefs = await _prefs;
-      final bool? isFirstTimeLaunch = prefs.getBool('isFirstTimeLaunch');
+  Future<void> initialize() async {
+    final SharedPreferences sharedPreferences = await _sharedPreferences;
+    final bool? isFirstTimeLaunch =
+        sharedPreferences.getBool('isFirstTimeLaunch');
 
-      if (isFirstTimeLaunch ?? true) {
-        // mainScreenState = MainScreenStates.guideState;
-        // FIXME
-        mainScreenState = MainScreenStates.initialState;
-      }
-      notifyListeners();
+    print(isFirstTimeLaunch);
+
+    if (isFirstTimeLaunch ?? true) {
+      _mainScreenState = MainScreenStates.guideState;
+    } else {
+      _mainScreenState = MainScreenStates.mapScreenState;
     }
   }
 
-  Future<void> onInitFinish() async {
-    final SharedPreferences prefs = await _prefs;
+  Future<void> guideScreenDone() async {
+    final SharedPreferences sharedPreferences = await _sharedPreferences;
 
-    prefs.setBool('isFirstTimeLaunch', false);
+    // FIXME: Change this to 'false' if you want to hide the guide
+    sharedPreferences.setBool('isFirstTimeLaunch', true);
 
-    mainScreenState = MainScreenStates.appContentState;
+    _mainScreenState = MainScreenStates.mapScreenState;
 
     notifyListeners();
   }

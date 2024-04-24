@@ -12,58 +12,15 @@ import 'package:eurokey2/screens/splash_screen.dart';
 import 'package:eurokey2/themes/theme_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_tile_caching/flutter_map_tile_caching.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-
-final _router = GoRouter(
-  initialLocation: '/splash',
-  routes: [
-    GoRoute(
-      path: '/splash',
-      builder: (context, state) => const EUKSplashScreen(),
-      redirect: (context, state) {
-        final prefs = Provider.of<PreferencesProvider>(context);
-        switch (prefs.mainScreenState) {
-          case MainScreenStates.initialState:
-            return '/splash';
-          case MainScreenStates.guideState:
-            return '/guide';
-          case MainScreenStates.appContentState:
-            return '/main/1';
-          default:
-            throw 'Barf!';
-        }
-      },
-    ),
-    GoRoute(
-      path: '/guide',
-      builder: (context, state) => const GuideScreen(),
-      redirect: (context, state) {
-        final prefs = Provider.of<PreferencesProvider>(context);
-        switch (prefs.mainScreenState) {
-          case MainScreenStates.initialState:
-            return '/splash';
-          case MainScreenStates.guideState:
-            return '/guide';
-          case MainScreenStates.appContentState:
-            return '/main/1';
-          default:
-            throw 'Barf!';
-        }
-      },
-    ),
-    GoRoute(
-      path: "/main/:pageId",
-      builder: (context, state) =>
-          MainAppScreen(id: state.pathParameters['pageId']!),
-    ),
-  ],
-);
+import 'package:eurokey2/features/icon_management/icon_manager.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   Intl.defaultLocale = 'cs_CZ';
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await FMTCObjectBoxBackend().initialise();
   await const FMTCStore('mapStore').manage.create();
   runApp(const MyApp());
@@ -72,8 +29,37 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  Future<bool> initialize(BuildContext context) async {
+    final eurolockProvider = context.read<EurolockProvider>();
+    final preferencesProvider = context.read<PreferencesProvider>();
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+
+    await precacheMarkerIcon(context);
+
+    await eurolockProvider.onInitApp().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
+
+    await preferencesProvider.initialize().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
+
+    await locationProvider.handlePermissions().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
+
+    await locationProvider.getCurrentPosition().catchError((e) {
+      showSnackBar(message: e.toString());
+      return null;
+    });
+
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
+    FlutterNativeSplash.remove();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LocationProvider()),
@@ -81,15 +67,51 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EurolockProvider()),
       ],
       builder: (context, child) {
-        return Consumer<PreferencesProvider>(
-          builder: (context, prefs, child) => MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            theme: defaultLightTheme,
-            darkTheme: defaultDarkTheme,
-            themeMode: prefs.themeMode,
-            scaffoldMessengerKey: snackBarKey,
-            routerConfig: _router,
-          ),
+        return FutureBuilder<bool>(
+          future: initialize(context),
+          builder: (context, snapshot) {
+            Widget returnWidget = const MaterialApp(
+              home: SplashScreen(),
+            ); //
+
+            if (snapshot.hasData) {
+              // FlutterNativeSplash.remove();
+
+              returnWidget = Consumer<PreferencesProvider>(
+                builder: (context, sharedPreferencesProvider, child) {
+                  final Widget homeWidget;
+
+                  print(sharedPreferencesProvider.mainScreenState);
+
+                  switch (sharedPreferencesProvider.mainScreenState) {
+                    case MainScreenStates.initialState:
+                      throw ("We should not be in initialState");
+                    case MainScreenStates.guideState:
+                      homeWidget = const GuideScreen();
+                    case MainScreenStates.listScreenState:
+                    case MainScreenStates.mapScreenState:
+                    case MainScreenStates.aboutScreenState:
+                      homeWidget = const MainAppScreen();
+                    default:
+                      print(sharedPreferencesProvider.mainScreenState);
+                      throw ("invalid state ${sharedPreferencesProvider.mainScreenState}");
+                  }
+
+                  return MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: defaultLightTheme,
+                    darkTheme: defaultDarkTheme,
+                    themeMode: sharedPreferencesProvider.themeMode,
+                    scaffoldMessengerKey: snackBarKey,
+                    home: homeWidget,
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              throw snapshot.error.toString();
+            }
+            return returnWidget;
+          },
         );
       },
     );
