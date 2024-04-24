@@ -2,44 +2,13 @@
 //
 // SPDX-License-Identifier: MPL-2.0
 
-import 'package:eurokey2/features/icon_management/icon_manager.dart';
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
-import 'package:eurokey2/providers/eurolock_provider.dart';
-import 'package:eurokey2/providers/location_provider.dart';
-import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-/// Represents the EUK2 Splash screen.
-class EUKSplashScreen extends StatelessWidget {
-  const EUKSplashScreen({super.key});
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
 
-  Future<bool> _onInitApp(BuildContext context) async {
-    final eurolockProvider = context.read<EurolockProvider>();
-    final preferencesProvider = context.read<PreferencesProvider>();
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
-
-    await precacheMarkerIcon(context);
-
-    await eurolockProvider.onInitApp().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-    await preferencesProvider.onInitApp();
-
-    await locationProvider.handlePermissions().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
-    await locationProvider.getCurrentPosition().catchError((e) {
-      showSnackBar(message: e.toString());
-      return null;
-    });
-
-    return true;
-  }
-
-  Widget splashScreen(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -66,22 +35,6 @@ class EUKSplashScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder<bool>(
-      future: _onInitApp(context),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          Provider.of<PreferencesProvider>(context, listen: false)
-              .onInitFinish();
-        } else if (snapshot.hasError) {
-          throw snapshot.error.toString();
-        }
-        return splashScreen(context);
-      },
     );
   }
 }
