@@ -6,6 +6,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/providers/location_provider.dart';
@@ -21,6 +22,8 @@ import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
 import 'package:intl/intl.dart';
 
+const List<String> countries = ["cz", "sk"];
+
 class EurolockProvider extends ChangeNotifier {
   late List<EUKLocationData> _locationsList;
   late DateTime _lastModified;
@@ -32,8 +35,6 @@ class EurolockProvider extends ChangeNotifier {
   DateTime get lastModified => _lastModified;
 
   List<EUKLocationData> get locationsList => _locationsList;
-
-  final url = "https://cdn.euroklicenka.cz/data.json";
 
   EUKLocationData? get currentEUK => _currentEUK;
   set currentEUK(EUKLocationData? newEUK) {
@@ -252,33 +253,58 @@ class EurolockProvider extends ChangeNotifier {
     }
   }
 
+  String getUrl(String country) {
+    return "https://cdn.euroklicenka.cz/data-$country.json";
+  }
+
   Future<void> sync(bool force) async {
     if (force) {
       DefaultCacheManager().emptyCache();
+      _locationsList = [];
     }
 
-    final cachedFile = await DefaultCacheManager().getSingleFile(url);
+    List<EUKLocationData> newLocationsList = [];
+    for (String country in countries) {
+      final url = getUrl(country);
 
-    final fileData = await cachedFile.readAsString();
+      showSnackBar(message: "Loading $url");
 
-    _lastModified = await cachedFile.lastModified();
+      final cachedFile = await DefaultCacheManager().getSingleFile(url);
 
-    final parsed = (jsonDecode(fileData) as List).cast<Map<String, dynamic>>();
+      final fileData = await cachedFile.readAsString();
 
-    _locationsList = parsed
-        .map<EUKLocationData>((json) => EUKLocationData.fromJson(json))
-        .toList();
+      _lastModified = await cachedFile.lastModified();
+
+      final jsonData = await jsonDecode(fileData);
+
+      final parsed = (jsonData as List).cast<Map<String, dynamic>>();
+
+      final list = parsed
+          .map<EUKLocationData>((json) => EUKLocationData.fromJson(json))
+          .toList();
+
+      newLocationsList.addAll(list);
+    }
+
+    _locationsList = newLocationsList;
 
     _initMarkers();
   }
 
   Future<void> onInitApp() async {
     // parse the on disk file
-    final fileData = await rootBundle.load('assets/data.json');
-    final fileList = Uint8List.view(fileData.buffer);
 
-    DefaultCacheManager()
-        .putFile(url, fileList, maxAge: const Duration(days: 1));
+    for (String country in countries) {
+      final url = getUrl(country);
+      final name = 'assets/data-$country.json';
+      final fileData = await rootBundle.load(name);
+      final fileList = Uint8List.view(fileData.buffer);
+
+      showSnackBar(message: "Storing $name to $url");
+
+      DefaultCacheManager()
+          .putFile(url, fileList, maxAge: const Duration(days: 1));
+    }
 
     await sync(false);
 
