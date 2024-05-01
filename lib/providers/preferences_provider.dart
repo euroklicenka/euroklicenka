@@ -52,8 +52,7 @@ class PreferencesProvider extends ChangeNotifier {
   Future<void> guideScreenDone() async {
     final SharedPreferences sharedPreferences = await _sharedPreferences;
 
-    // FIXME: Change this to 'false' if you want to hide the guide
-    sharedPreferences.setBool('isFirstTimeLaunch', true);
+    sharedPreferences.setBool('isFirstTimeLaunch', false);
 
     _mainScreenState = MainScreenStates.mapScreenState;
 
