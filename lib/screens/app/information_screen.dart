@@ -191,7 +191,7 @@ class InformationScreenState extends State<InformationScreen> {
                 },
               ),
               const Text(
-                'Copyright © 2023 Ostravská univerzita',
+                'Copyright © Ostravská univerzita',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 12,
