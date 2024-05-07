@@ -1,0 +1,10 @@
+{
+    "@@locale": "sk",
+    "appTitle": "Eurokľúčenka",
+    "mapAppBarTitle": "Mapa najbližších miest",
+    "listAppBarTitle": "Zoznam najbližších miest",
+    "settingsAppBarTitle": "Nastavenia",
+    "mapLabel": "Mapa",
+    "listLabel": "Zoznam",
+    "settingsLabel": "Nastavenia"
+}

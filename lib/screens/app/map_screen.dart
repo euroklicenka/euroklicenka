@@ -19,7 +19,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:osm_nominatim/osm_nominatim.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapScreen extends StatefulWidget {
   final MapController mapController = MapController();
@@ -41,14 +41,9 @@ class MapScreenState extends State<MapScreen> {
     final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
 
-    String appBarTitle() => Intl.message(
-          'Mapa nejbližších míst',
-          name: 'MapScreenState_appBarTitle',
-        );
-
     return EasySearchBar(
       title: Center(
-        child: Text(appBarTitle()),
+        child: Text(AppLocalizations.of(context)!.mapAppBarTitle),
       ),
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => onSearch(value),

@@ -1,0 +1,10 @@
+{
+    "@@locale": "cs",
+    "appTitle": "Euroklíčenka",
+    "mapAppBarTitle": "Mapa nejbližších míst",
+    "listAppBarTitle": "Seznam nejbližších míst",
+    "settingsAppBarTitle": "Nastavení",
+    "mapLabel": "Mapa",
+    "listLabel": "Seznam",
+    "settingsLabel": "Nastavení"
+}

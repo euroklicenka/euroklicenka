@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ListScreen extends StatelessWidget {
   const ListScreen({super.key});
@@ -23,16 +24,9 @@ class ListScreen extends StatelessWidget {
     final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
 
-    String appBarMessage() => Intl.message(
-          'Seznam nejbližších míst',
-          name: 'ListScreen_appBarMessage',
-          args: [],
-          desc: 'An appBar title for the list screen',
-        );
-
     return EasySearchBar(
       title: Center(
-        child: Text(appBarMessage()),
+        child: Text(AppLocalizations.of(context)!.mapAppBarTitle),
       ),
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => eurolockProvider.onSearch(value),

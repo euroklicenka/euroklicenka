@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "appTitle": "Eurokeyring",
+  "@appTitle": {
+    "description": "Application title"
+  },
+  "mapAppBarTitle": "Map of nearest places",
+  "@mapAppBarTitle": {
+   "description": "appBar title for the map screen" 
+  },
+  "listAppBarTitle": "List of nearest places",
+  "@listAppBarTitle": {
+    "description": "appBar title for the the list screen"
+  },
+  "settingsAppBarTitle": "Settings",
+  "@settingsAppBarTitle": {
+    "description": "appBar title for the the settings screen"
+  },
+  "mapLabel": "Map",
+  "@mapLabel": {
+    "description": "IndexedStack label for the map screen"
+  },
+  "listLabel": "List",
+  "@listLabel": {
+    "description": "IndexedStack label for the list screen"
+  },
+  "settingsLabel": "Settings",
+  "@settingsLabel": {
+    "description": "IndexedStack label for the settings screen"
+  }
+}
