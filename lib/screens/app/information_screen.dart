@@ -9,7 +9,6 @@ import 'package:eurokey2/widgets/information_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -23,31 +22,14 @@ class InformationScreen extends StatefulWidget {
 }
 
 class InformationScreenState extends State<InformationScreen> {
-  PackageInfo _packageInfo = PackageInfo(
-    appName: 'Unknown',
-    packageName: 'Unknown',
-    version: 'Unknown',
-    buildNumber: 'Unknown',
-    buildSignature: 'Unknown',
-    installerStore: 'Unknown',
-  );
-
   @override
   void initState() {
     super.initState();
-    _initPackageInfo();
     _initIntl();
   }
 
   Future<void> _initIntl() async {
     await initializeDateFormatting('cs_CZ');
-  }
-
-  Future<void> _initPackageInfo() async {
-    final info = await PackageInfo.fromPlatform();
-    setState(() {
-      _packageInfo = info;
-    });
   }
 
   @override
