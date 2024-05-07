@@ -28,7 +28,7 @@ class SplashScreen extends StatelessWidget {
                 ),
               SizedBox(height: screenHeight * 0.02),
               const Text(
-                'EuroKlíčenka',
+                'EuroKlíčenka', // FIXME
                 textScaler: TextScaler.linear(2),
               ),
               SizedBox(height: screenHeight * 0.1),

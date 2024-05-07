@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/providers/location_provider.dart';
@@ -250,8 +249,6 @@ class EurolockProvider extends ChangeNotifier {
     for (String country in countries) {
       final url = getUrl(country);
 
-      showSnackBar(message: "Loading $url");
-
       final cachedFile = await DefaultCacheManager().getSingleFile(url);
 
       final fileData = await cachedFile.readAsString();
@@ -282,8 +279,6 @@ class EurolockProvider extends ChangeNotifier {
       final name = 'assets/data-$country.json';
       final fileData = await rootBundle.load(name);
       final fileList = Uint8List.view(fileData.buffer);
-
-      showSnackBar(message: "Storing $name to $url");
 
       DefaultCacheManager()
           .putFile(url, fileList, maxAge: const Duration(days: 1));

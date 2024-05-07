@@ -26,6 +26,18 @@
   },
   "settingsLabel": "Settings",
   "@settingsLabel": {
-    "description": "IndexedStack label for the settings screen"
+    "description": "label for the settings screen"
+  },
+  "generalSectionLabel": "General",
+  "@generalSectionLabel": {
+    "description": "label for the General settings section"
+  },
+  "languageSettingsTileLabel": "Language",
+  "@languageSettingsTileLabel": {
+    "description": "label for the Language settings tile"
+  },
+  "darkModeSettingsTileLabel": "Dark mode",
+  "@darkModeSettingsTileLabel": {
+    "description": "label for the Dark Mode settings tile"
   }
 }
