@@ -73,6 +73,7 @@ class EurolockProvider extends ChangeNotifier {
       l.add(Text(loc.street));
     }
     l.add(Text('${loc.zip} ${loc.city}'));
+    l.add(Text(distanceToString(loc.distanceFromUser)));
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,27 +103,9 @@ class EurolockProvider extends ChangeNotifier {
     );
   }
 
-  String distanceTextMessage() => Intl.message(
-        'Vzdálenost: ',
-        name: 'EurolockProvider_distanceText',
-      );
-
   Widget mapItemBuilder(BuildContext context, EUKLocationData loc) {
-    final String distanceText = distanceToString(loc.distanceFromUser);
-
     return ListTile(
       title: placeText(loc),
-      subtitle: RichText(
-        text: TextSpan(
-          style: const TextStyle(color: Colors.black),
-          children: <TextSpan>[
-            TextSpan(
-                text: distanceTextMessage(),
-                style: const TextStyle(fontWeight: FontWeight.bold)),
-            TextSpan(text: distanceText),
-          ],
-        ),
-      ),
       leading: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

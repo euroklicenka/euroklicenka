@@ -11,6 +11,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///The information screen, that shows general info about the app as well as
 ///it's version.
@@ -73,9 +74,7 @@ class InformationScreenState extends State<InformationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text(
-            '${_packageInfo.appName} ${_packageInfo.version}',
-          ),
+          child: Text(AppLocalizations.of(context)!.settingsAppBarTitle),
         ),
         actions: <Widget>[
           IconButton(

@@ -16,6 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   Intl.defaultLocale = 'cs_CZ';
@@ -70,8 +71,12 @@ class MyApp extends StatelessWidget {
         return FutureBuilder<bool>(
           future: initialize(context),
           builder: (context, snapshot) {
-            Widget returnWidget = const MaterialApp(
-              home: SplashScreen(),
+            Widget returnWidget = MaterialApp(
+              onGenerateTitle: (context) =>
+                  AppLocalizations.of(context)!.appTitle,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: const SplashScreen(),
             ); //
 
             if (snapshot.hasData) {
@@ -80,8 +85,6 @@ class MyApp extends StatelessWidget {
               returnWidget = Consumer<PreferencesProvider>(
                 builder: (context, sharedPreferencesProvider, child) {
                   final Widget homeWidget;
-
-                  print(sharedPreferencesProvider.mainScreenState);
 
                   switch (sharedPreferencesProvider.mainScreenState) {
                     case MainScreenStates.initialState:
@@ -98,6 +101,11 @@ class MyApp extends StatelessWidget {
                   }
 
                   return MaterialApp(
+                    onGenerateTitle: (context) =>
+                        AppLocalizations.of(context)!.appTitle,
+                    localizationsDelegates:
+                        AppLocalizations.localizationsDelegates,
+                    supportedLocales: AppLocalizations.supportedLocales,
                     debugShowCheckedModeBanner: false,
                     theme: defaultLightTheme,
                     darkTheme: defaultDarkTheme,
