@@ -6,5 +6,8 @@
     "settingsAppBarTitle": "Nastavení",
     "mapLabel": "Mapa",
     "listLabel": "Seznam",
-    "settingsLabel": "Nastavení"
+    "settingsLabel": "Nastavení",
+    "generalSectionLabel": "Obecné",
+    "languageSettingsTileLabel": "Jazyk",
+    "darkModeSettingsTileLabel": "Tmavý režim"
 }

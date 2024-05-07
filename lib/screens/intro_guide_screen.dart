@@ -89,9 +89,10 @@ class _OnBoardScreenState extends State<GuideScreen> {
     );
   }
 
-  void _gotoHome(BuildContext context) =>
-      Provider.of<PreferencesProvider>(context, listen: false)
-          .guideScreenDone();
+  void _gotoHome(BuildContext context) {
+    Provider.of<PreferencesProvider>(context, listen: false).guideScreenDone();
+    Navigator.of(context).pop();
+  }
 
   Widget? _buildImage(String path, BuildContext context) {
     final bool isTooSmall = MediaQuery.of(context).size.height < 490;

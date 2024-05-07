@@ -7,30 +7,14 @@ import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
 import 'package:eurokey2/widgets/information_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 ///The information screen, that shows general info about the app as well as
 ///it's version.
-class InformationScreen extends StatefulWidget {
+class InformationScreen extends StatelessWidget {
   const InformationScreen({super.key});
-
-  @override
-  State<InformationScreen> createState() => InformationScreenState();
-}
-
-class InformationScreenState extends State<InformationScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _initIntl();
-  }
-
-  Future<void> _initIntl() async {
-    await initializeDateFormatting('cs_CZ');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -158,19 +142,6 @@ class InformationScreenState extends State<InformationScreen> {
                 thickness: 0.5,
               ),
               const SizedBox(height: 1),
-              Consumer<EurolockProvider>(
-                builder: (
-                  context,
-                  eurolockProvider,
-                  child,
-                ) {
-                  final lastModified =
-                      DateFormat('d.M.y').format(eurolockProvider.lastModified);
-                  return Text(
-                    '.\n\nDatum poslední aktualizace dat: $lastModified',
-                  );
-                },
-              ),
               const Text(
                 'Copyright © Ostravská univerzita',
                 textAlign: TextAlign.left,
