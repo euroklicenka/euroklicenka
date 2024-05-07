@@ -84,23 +84,8 @@ class MyApp extends StatelessWidget {
 
               returnWidget = Consumer<PreferencesProvider>(
                 builder: (context, sharedPreferencesProvider, child) {
-                  final Widget homeWidget;
-
-                  switch (sharedPreferencesProvider.mainScreenState) {
-                    case MainScreenStates.initialState:
-                      throw ("We should not be in initialState");
-                    case MainScreenStates.guideState:
-                      homeWidget = const GuideScreen();
-                    case MainScreenStates.listScreenState:
-                    case MainScreenStates.mapScreenState:
-                    case MainScreenStates.aboutScreenState:
-                      homeWidget = const MainAppScreen();
-                    default:
-                      print(sharedPreferencesProvider.mainScreenState);
-                      throw ("invalid state ${sharedPreferencesProvider.mainScreenState}");
-                  }
-
                   return MaterialApp(
+                    locale: sharedPreferencesProvider.locale,
                     onGenerateTitle: (context) =>
                         AppLocalizations.of(context)!.appTitle,
                     localizationsDelegates:
@@ -111,7 +96,11 @@ class MyApp extends StatelessWidget {
                     darkTheme: defaultDarkTheme,
                     themeMode: sharedPreferencesProvider.themeMode,
                     scaffoldMessengerKey: snackBarKey,
-                    home: homeWidget,
+                    initialRoute: '/',
+                    routes: {
+                      '/': (context) => const MainAppScreen(),
+                      '/guide': (context) => const GuideScreen(),
+                    },
                   );
                 },
               );

@@ -22,6 +22,8 @@ dependencies:
   flutter_map_location_marker: ^8.1.0
   flutter_map_tile_caching: ^9.0.1
   flutter_native_splash: ^2.4.0
+  flutter_settings_screens: ^0.3.4
+  flutter_settings_ui: ^3.0.1
   geolocator: ^11.0.0
   http: ^1.1.0
   internet_connection_checker: ^1.0.0+1
@@ -33,6 +35,7 @@ dependencies:
   osm_nominatim: ^3.0.0
   package_info_plus: ^8.0.0
   provider: ^6.1.1
+  settings_ui: ^2.0.2
   shared_preferences: ^2.2.2
   test: ^1.24.9
   url_launcher: ^6.1.10
