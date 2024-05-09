@@ -1,0 +1,12 @@
+/*
+  Localizable.strings
+  Runner
+
+  Created by Ondřej Surý on 09.05.2024.
+  
+*/
+
+
+"NSLocationWhenInUseUsageDescription"="Vaša poloha vám umožní nájsť najbližšie miesta vybavené Eurozámkem.";
+"CFBundleDisplayName"="EuroKľúčenka";
+"CFBundleName"="EuroKľúčenka";

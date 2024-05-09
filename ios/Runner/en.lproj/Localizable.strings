@@ -1,0 +1,12 @@
+/* 
+  Localizable.strings
+  Runner
+
+  Created by Ondřej Surý on 09.05.2024.
+  
+*/
+
+
+"NSLocationWhenInUseUsageDescription"="Your location allows you to find nearest places equiped with Eurolock.";
+"CFBundleDisplayName"="EuroKeyring";
+"CFBundleName"="EuroKeyring";
