@@ -19,13 +19,13 @@ class SplashScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               if (MediaQuery.of(context).size.height > 310)
-              Padding(
-                padding: const EdgeInsets.only(right: 21),
-                child: Image.asset(
-                  'assets/images/logo_key.png',
-                  height: screenHeight * 0.25,
+                Padding(
+                  padding: const EdgeInsets.only(right: 21),
+                  child: Image.asset(
+                    'assets/images/logo_key.png',
+                    height: screenHeight * 0.25,
+                  ),
                 ),
-              ),
               SizedBox(height: screenHeight * 0.02),
               const Text(
                 'EuroKlíčenka',
