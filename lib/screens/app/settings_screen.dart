@@ -50,10 +50,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return SettingsList(
           sections: [
             SettingsSection(
-              title: Text(AppLocalizations.of(context)!.generalSectionLabel),
+              title: Text(
+                AppLocalizations.of(context)!.generalSectionLabel,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  color: Color.fromARGB(245, 43, 43, 43),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
-                  leading: const Icon(Icons.language),
+                  leading: const Icon(Icons.language,
+                      color: Color.fromARGB(245, 228, 132, 87)),
                   title: Text(
                       AppLocalizations.of(context)!.languageSettingsTileLabel),
                   trailing: const Icon(Icons.chevron_right),
@@ -76,7 +85,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   value: Text(languagesMap[selectedLanguage] ?? "undefined"),
                 ),
                 SettingsTile.switchTile(
-                  leading: const Icon(Icons.dark_mode),
+                  leading: const Icon(Icons.dark_mode,
+                      color: Color.fromARGB(245, 228, 132, 87)),
                   title: Text(
                       AppLocalizations.of(context)!.darkModeSettingsTileLabel),
                   initialValue: false,
@@ -85,9 +95,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             SettingsSection(
-              title: Text(AppLocalizations.of(context)!.applicationLabel),
+              title: Text(
+                AppLocalizations.of(context)!.applicationLabel,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  color: Color.fromARGB(245, 43, 43, 43),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               tiles: [
                 SettingsTile.navigation(
+                  leading: const Icon(Icons.auto_fix_high,
+                      color: Color.fromARGB(245, 228, 132, 87)),
                   title:
                       Text(AppLocalizations.of(context)!.applicationGuideLabel),
                   onPressed: (context) async {
@@ -95,6 +115,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
                 SettingsTile.navigation(
+                  leading: const Icon(Icons.info_outline,
+                      color: Color.fromARGB(245, 228, 132, 87)),
                   title:
                       Text(AppLocalizations.of(context)!.aboutApplicationLabel),
                   onPressed: (context) async {
@@ -108,10 +130,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             SettingsSection(
-              title: Text(AppLocalizations.of(context)!.dataSourceLabel),
+              title: Text(
+                AppLocalizations.of(context)!.dataSourceLabel,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  color: Color.fromARGB(245, 43, 43, 43),
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
               tiles: [
                 SettingsTile.navigation(
-                  title: Text(AppLocalizations.of(context)!.dateOfUpdate),
+                  title: const SizedBox.shrink(),
                   value: Consumer<EurolockProvider>(
                     builder: (
                       context,
@@ -121,10 +151,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       final lastModified = DateFormat('d.M.y')
                           .format(eurolockProvider.lastModified);
                       return Text(
-                        lastModified,
+                        "${AppLocalizations.of(context)!.dateOfUpdate}: $lastModified",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 16,
+                          color: Color.fromARGB(245, 0, 0, 0),
                         ),
                       );
                     },
