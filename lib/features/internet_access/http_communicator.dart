@@ -8,6 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 ///Open the [url] in an external browser.
 Future<void> openURL({required String url}) async {
   if (!await launchUrl(Uri.parse(url))) {
-    showSnackBar(message: "'$url' nemohla být otevřena.");
+    showSnackBar(message: "'$url' nemohla být otevřena."); // FIXME I18N
   }
 }

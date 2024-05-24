@@ -6,6 +6,7 @@ import 'package:eurokey2/features/internet_access/allowed_urls.dart';
 import 'package:eurokey2/features/internet_access/http_communicator.dart';
 import 'package:eurokey2/providers/preferences_provider.dart';
 import 'package:eurokey2/utils/build_context_extensions.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
@@ -24,46 +25,42 @@ class _OnBoardScreenState extends State<GuideScreen> {
       child: IntroductionScreen(
         pages: [
           PageViewModel(
-            title: 'VÍTEJTE V EUROKLÍČENCE',
+            title: AppLocalizations.of(context)!.welcomeGuidLabel,
             image: _buildImage('assets/images/logo_key.png', context),
-            body:
-                'Díky této aplikace máte možnost najít \nv České republice všechna eurozámkem osazená sociální zařízení.',
+            body: AppLocalizations.of(context)!.body1GuidLabel,
             footer: _buildButton(
               onPressed: () => openURL(url: aboutEuroKeyURL),
-              text: 'Co je to eurozámek?',
+              text: AppLocalizations.of(context)!.whatIsEurokeyringGuidLabel,
             ),
             decoration: _getDecoration(),
           ),
           PageViewModel(
-            title: 'MAPA',
+            title: AppLocalizations.of(context)!.mapTitleGuid,
             image: _buildImage(
               context.isAppInDarkMode
                   ? 'assets/images/img_guide_map_dark.jpg'
                   : 'assets/images/img_guide_map_light.jpg',
               context,
             ),
-            body:
-                'Po spuštění aplikace se zobrazí mapa nejbližšího okolí, na němž jsou vyznačena místa pro Euroklíč.',
+            body: AppLocalizations.of(context)!.body2GuidLabel,
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
           PageViewModel(
-            title: 'INFORMACE O MÍSTĚ',
+            title: AppLocalizations.of(context)!.infoGuidLabel,
             image: _buildImage(
               context.isAppInDarkMode
                   ? 'assets/images/img_guide_popup_dark.jpg'
                   : 'assets/images/img_guide_popup_light.jpg',
               context,
             ),
-            body:
-                'Po kliknutí na jeden z bodů se zobrazí informační okno s možností navigovat\nk danému místu.',
+            body: AppLocalizations.of(context)!.body3GuidLabel,
             footer: _buildButton(onPressed: null, text: ''),
             decoration: _getDecoration(),
           ),
           PageViewModel(
-            title: 'NEJBLIŽŠÍ MÍSTA',
-            body:
-                'Na listě lokací se zobrazují nejbližší místa \nk aktuální poloze uživatele. Volbou položky dojde k jejímu zobrazení na mapě.',
+            title: AppLocalizations.of(context)!.nearplacesGuidTitle,
+            body: AppLocalizations.of(context)!.body4GuidLabel,
             image: _buildImage(
               context.isAppInDarkMode
                   ? 'assets/images/img_guide_list_dark.jpg'
@@ -75,13 +72,17 @@ class _OnBoardScreenState extends State<GuideScreen> {
           ),
         ],
         animationDuration: 150,
-        done: const Text("Start"),
+        done: Text(
+          AppLocalizations.of(context)!.startLabel,
+        ),
         onDone: () => _gotoHome(context),
         next: const Icon(Icons.arrow_forward),
 
         // showing skip button
         showSkipButton: true,
-        skip: const Text("Skip"),
+        skip: Text(
+          AppLocalizations.of(context)!.skipLabel,
+        ),
         onSkip: () => _gotoHome(context),
         dotsDecorator: _getDotDecoration(context),
         isProgressTap: false,

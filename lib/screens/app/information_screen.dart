@@ -26,13 +26,14 @@ class InformationScreen extends StatelessWidget {
         theme.textTheme.titleLarge!.copyWith(color: foregroundColor);
 
     String tooltipMessage() => Intl.message(
-          'Obnovit seznam míst',
+          AppLocalizations.of(context)!.languageSettingsTileLabel,
           name: 'InformationScreenState_tooltipMessage',
           args: [],
           desc: 'A tooltip for refresh button',
         );
 
-    String refreshDatabaseMessage() => Intl.message('Obnovuji databázi',
+    String refreshDatabaseMessage() => Intl.message(
+        AppLocalizations.of(context)!.refreshDatabaseMessage,
         name: 'InformationScreenState_refreshDatabaseMessage',
         args: [],
         desc: 'A snackbar message that informs user about database refresh');
@@ -40,7 +41,7 @@ class InformationScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text(AppLocalizations.of(context)!.settingsAppBarTitle),
+          child: Text(AppLocalizations.of(context)!.aboutApplicationLabel),
         ),
         actions: <Widget>[
           IconButton(
@@ -81,9 +82,11 @@ class InformationScreen extends StatelessWidget {
                               infoTile(
                                 context: context,
                                 leadingText:
-                                    'EuroKlíčenka je majetkem Přírodovědecké fakulty ',
-                                hyperText: 'Ostravské univerzity',
-                                trailingText: ' v\u{00A0}Ostravě.',
+                                    AppLocalizations.of(context)!.leadingText1,
+                                hyperText:
+                                    AppLocalizations.of(context)!.hyperText1,
+                                trailingText:
+                                    '${AppLocalizations.of(context)!.trailingText1a}${'\u{00A0}'}${AppLocalizations.of(context)!.trailingText1b}',
                                 imageFilePath: context.isAppInDarkMode
                                     ? 'assets/images/logo_prf_dark.png'
                                     : 'assets/images/logo_prf_light.png',
@@ -98,11 +101,11 @@ class InformationScreen extends StatelessWidget {
                               infoTile(
                                 context: context,
                                 leadingText:
-                                    'Vývoj nové aplikace provedl tým studentů z\u{00A0}',
+                                    '${AppLocalizations.of(context)!.leadingText2}${'\u{00A0}'}',
                                 hyperText:
-                                    'katedry informatiky a\u{00A0}počítačů',
+                                    '${'\u{00A0}'}${AppLocalizations.of(context)!.hyperText2}',
                                 trailingText:
-                                    ' OU, do kterého patří Barbora Hajíčková a\u{00A0}Ondřej Surý.  Vývoj původní aplikace provedl Jan Sonnek, Jan Kunetka a\u{00A0}Ondřej Sládek.',
+                                    '${AppLocalizations.of(context)!.trailingText2a}${'\u{00A0}'}${AppLocalizations.of(context)!.trailingText2b}${'\u{00A0}'}${AppLocalizations.of(context)!.trailingText2c}',
                                 imageFilePath: 'assets/images/logo_kip.png',
                                 launchURL: universityOfOstravaKIPURL,
                               ),
@@ -120,9 +123,10 @@ class InformationScreen extends StatelessWidget {
                                 ) =>
                                     infoTile(
                                   context: context,
-                                  leadingText:
-                                      'Data o umístění eurozámků jsou veřejně dostupná na ',
-                                  hyperText: 'oficiálních stránkách Euroklíče',
+                                  leadingText: AppLocalizations.of(context)!
+                                      .leadingText3,
+                                  hyperText:
+                                      AppLocalizations.of(context)!.hyperText3,
                                   imageFilePath:
                                       'assets/images/logo_eurokey.png',
                                   launchURL: aboutEuroKeyWebURL,
@@ -142,10 +146,10 @@ class InformationScreen extends StatelessWidget {
                 thickness: 0.5,
               ),
               const SizedBox(height: 1),
-              const Text(
-                'Copyright © Ostravská univerzita',
+              Text(
+                AppLocalizations.of(context)!.copyrightLabel,
                 textAlign: TextAlign.left,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),

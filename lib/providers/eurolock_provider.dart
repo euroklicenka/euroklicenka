@@ -81,7 +81,7 @@ class EurolockProvider extends ChangeNotifier {
   }
 
   String navigateButtonText() => Intl.message(
-        'NAVIGOVAT',
+        'NAVIGOVAT', // FIXME I18N
         name: 'EurolockProvider_navigateButtonText',
       );
 
