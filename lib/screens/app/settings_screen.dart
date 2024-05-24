@@ -28,6 +28,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // _initIntl();
   }
 
+  // ignore: unused_element
   Future<void> _initIntl() async {
     final Locale appLocale = Localizations.localeOf(context);
     await initializeDateFormatting(appLocale.toString());
@@ -84,16 +85,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             SettingsSection(
-              title: const Text("Aplikace"), // FIXME i18n
+              title: Text(AppLocalizations.of(context)!.applicationLabel),
               tiles: [
                 SettingsTile.navigation(
-                  title: const Text("Průvodce aplikací"), // FIXME i18n
+                  title:
+                      Text(AppLocalizations.of(context)!.applicationGuideLabel),
                   onPressed: (context) async {
                     await Navigator.of(context).pushNamed("/guide");
                   },
                 ),
                 SettingsTile.navigation(
-                  title: const Text("O aplikaci"), // FIXME i18n
+                  title:
+                      Text(AppLocalizations.of(context)!.aboutApplicationLabel),
                   onPressed: (context) async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
@@ -105,11 +108,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ],
             ),
             SettingsSection(
-              title: const Text("Zdroj dat"),
+              title: Text(AppLocalizations.of(context)!.dataSourceLabel),
               tiles: [
                 SettingsTile.navigation(
-                  title: const Text(
-                      "Datum poslední aktualizace databáze"), // FIXME i18n
+                  title: Text(AppLocalizations.of(context)!.dateOfUpdate),
                   value: Consumer<EurolockProvider>(
                     builder: (
                       context,
@@ -120,6 +122,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           .format(eurolockProvider.lastModified);
                       return Text(
                         lastModified,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 12,
+                        ),
                       );
                     },
                   ),
@@ -138,8 +144,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settingsLabel,
-            textAlign: TextAlign.center),
+        title: Text(AppLocalizations.of(context)!.settingsLabel),
+        backgroundColor: const Color.fromARGB(245, 255, 107, 38),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        elevation: 5.5,
+        shadowColor: const Color.fromARGB(255, 209, 209, 209),
+        centerTitle: true,
       ),
       body: settingsList(),
     );
@@ -159,14 +169,19 @@ class LanguagePickerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Languages')), // FIXME i18n
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.languagesLabel),
+        backgroundColor: const Color.fromARGB(245, 255, 107, 38),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        elevation: 5.5,
+        shadowColor: const Color.fromARGB(255, 209, 209, 209),
+        centerTitle: true,
+      ),
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: const Text('Select the language you want'), // FIXME i18n
             tiles: languages.keys.map((e) {
               final language = languages[e];
-
               return SettingsTile(
                 title: Text(language!),
                 onPressed: (_) {

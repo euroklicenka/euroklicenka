@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: MPL-2.0
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -27,10 +28,8 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ),
               SizedBox(height: screenHeight * 0.02),
-              const Text(
-                'EuroKlíčenka', // FIXME
-                textScaler: TextScaler.linear(2),
-              ),
+              Text(AppLocalizations.of(context)!.eurokeyLabel,
+                  textScaler: const TextScaler.linear(2)),
               SizedBox(height: screenHeight * 0.1),
               const CircularProgressIndicator(),
               const SizedBox(height: 16),

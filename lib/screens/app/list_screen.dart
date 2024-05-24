@@ -95,7 +95,7 @@ class _ListScreenState extends State<ListScreenBody> {
   }
 
   String loadingDataMessage() => Intl.message(
-        'Nahrávám data',
+        AppLocalizations.of(context)!.uploadingdataMessage,
         name: 'ListScreen_loadingDataMessage',
         args: [],
         desc: 'Simple indicator that we are loading data',

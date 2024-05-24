@@ -50,17 +50,17 @@ class LocationProvider with ChangeNotifier {
   }
 
   String disabledLocationServicesMessage() => Intl.message(
-        'Polohové služby jsou vypnuty.',
+        'Polohové služby jsou vypnuty.', // FIXME I18N
         name: 'LocationProvider_disabledLocationServicesMessage',
       );
 
   String deniedLocationServicesMessage() => Intl.message(
-        'Přístup k polohovým službám byl odmítnut.',
+        'Přístup k polohovým službám byl odmítnut.', // FIXME I18N
         name: 'LocationProvider_deniedLocationServicesMessage',
       );
 
   String permanentlyDeniedLocationServicesMessage() => Intl.message(
-        'Přístup k polohovým službám byl natrvalo odmítnut.',
+        'Přístup k polohovým službám byl natrvalo odmítnut.', // FIXME I18N
         name: 'LocationProvider_permanentlyDeniedLocationServicesMessage',
       );
 
