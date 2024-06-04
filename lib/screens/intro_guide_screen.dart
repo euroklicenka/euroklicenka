@@ -115,7 +115,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
         onPressed: onPressed,
         style: (onPressed == null)
             ? const ButtonStyle(
-                side: MaterialStatePropertyAll(BorderSide.none),
+                side: WidgetStatePropertyAll(BorderSide.none),
               )
             : OutlinedButton.styleFrom(
                 shape: RoundedRectangleBorder(

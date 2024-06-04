@@ -9,21 +9,24 @@ environment:
 dependencies:
   cupertino_icons: ^1.0.6
   diacritic: ^0.1.5
-  easy_search_bar: ^2.5.0
+  easy_search_bar:
+    git:
+      url: https://github.com/4inka/flutter_easy_search_bar
+      ref: 34efd0b3d1d8c465e1aa30470c6c49607b762983
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.1
   flutter_localizations:
     sdk: flutter
-  flutter_map: any
-  flutter_map_location_marker: any
-  flutter_map_tile_caching: ^9.0.0-dev.7
+  flutter_map: ^6.2.0
+  flutter_map_location_marker: ^8.1.0
+  flutter_map_tile_caching: ^9.0.1
   flutter_native_splash: ^2.4.0
   geolocator: ^11.0.0
   http: ^1.1.0
   internet_connection_checker: ^1.0.0+1
-  intl: any
-  intl_translation: ^0.19.0
+  intl: ^0.19.0
+  intl_translation: ^0.20.0
   introduction_screen: ^3.1.14
   latlong2: ^0.9.0
   maps_launcher: ^2.2.0
@@ -36,7 +39,7 @@ dependencies:
   yaml: ^3.1.2
 
 dev_dependencies:
-  dependency_validator: ^3.0.0
+  dependency_validator: ^4.1.0
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
