@@ -84,7 +84,7 @@ class MapScreenState extends State<MapScreen> {
 
   Map<String, Place> lastSuggestions = {};
 
-  String? _onSuggestionTap(String? value) {
+  dynamic _onSuggestionTap(dynamic value) {
     if (lastSuggestions.containsKey(value)) {
       final place = lastSuggestions[value]!;
       widget.mapController.move(LatLng(place.lat, place.lon), 15);
@@ -258,19 +258,6 @@ class _MapScreenState extends State<MapScreenBody> {
                   userAgentPackageName: 'cz.osu.euroklicenka',
                   tileProvider: widget.tileProvider,
                   maxZoom: 19,
-                ),
-                CurrentLocationLayer(
-                  positionStream: const LocationMarkerDataStreamFactory()
-                      .fromGeolocatorPositionStream(
-                    stream: Geolocator.getPositionStream(
-                      locationSettings: const LocationSettings(),
-                    ),
-                  ),
-                  alignPositionStream: locationProvider
-                      .followCurrentLocationStreamController.stream,
-                  alignPositionOnUpdate: (eurolockProvider.currentEUK == null)
-                      ? locationProvider.followOnLocationUpdate
-                      : AlignOnUpdate.never,
                 ),
                 MarkerLayer(markers: eurolockProvider.markers),
                 RichAttributionWidget(

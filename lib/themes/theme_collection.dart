@@ -32,13 +32,13 @@ ThemeData defaultLightTheme = ThemeData(
   ),
   iconButtonTheme: const IconButtonThemeData(
     style: ButtonStyle(
-      foregroundColor: MaterialStatePropertyAll(
+      foregroundColor: WidgetStatePropertyAll(
         Colors.white,
       ),
-      backgroundColor: MaterialStatePropertyAll(
+      backgroundColor: WidgetStatePropertyAll(
         Color.fromARGB(245, 255, 107, 38),
       ),
-      iconColor: MaterialStatePropertyAll(
+      iconColor: WidgetStatePropertyAll(
         Colors.white,
       ),
     ),
