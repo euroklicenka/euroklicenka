@@ -23,10 +23,11 @@ class ListScreen extends StatelessWidget {
     final Color? foregroundColor = appBarTheme.foregroundColor;
     final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
+    final appLocalizations = AppLocalizations.of(context)!;
 
     return EasySearchBar(
       title: Center(
-        child: Text(AppLocalizations.of(context)!.mapAppBarTitle),
+        child: Text(appLocalizations.mapAppBarTitle),
       ),
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => eurolockProvider.onSearch(value),
@@ -44,9 +45,7 @@ class ListScreen extends StatelessWidget {
                 final locationProvider =
                     Provider.of<LocationProvider>(context, listen: false);
 
-                await locationProvider
-                    .getCurrentPosition(context)
-                    .catchError((e) {
+                await locationProvider.getCurrentPosition().catchError((e) {
                   showSnackBar(message: e.toString());
                   return null;
                 });
