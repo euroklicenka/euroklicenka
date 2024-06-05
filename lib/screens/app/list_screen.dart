@@ -44,7 +44,9 @@ class ListScreen extends StatelessWidget {
                 final locationProvider =
                     Provider.of<LocationProvider>(context, listen: false);
 
-                await locationProvider.getCurrentPosition().catchError((e) {
+                await locationProvider
+                    .getCurrentPosition(context)
+                    .catchError((e) {
                   showSnackBar(message: e.toString());
                   return null;
                 });

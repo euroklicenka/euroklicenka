@@ -70,7 +70,9 @@ class MapScreenState extends State<MapScreen> {
                 locationProvider.followCurrentLocationStreamController
                     .add(locationProvider.currentMapZoom);
 
-                await locationProvider.getCurrentPosition().catchError((e) {
+                await locationProvider
+                    .getCurrentPosition(context)
+                    .catchError((e) {
                   showSnackBar(message: e.toString());
                   return null;
                 });
@@ -295,7 +297,8 @@ class _MapScreenState extends State<MapScreenBody> {
                                   bottom: 8,
                                   right: 8,
                                 ),
-                                child: eurolockProvider.navigateButton(euk),
+                                child: eurolockProvider.navigateButton(
+                                    context, euk),
                               ),
                             ],
                           ),

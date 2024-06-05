@@ -34,14 +34,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     await initializeDateFormatting(appLocale.toString());
   }
 
-  final languagesMap = <String, String>{
-    "_": "Systémový", // FIXME I18N
-    "en": "English",
-    "cs": "Čeština",
-    "sk": "Slovenčina",
-  };
-
   Widget settingsList() {
+    final languagesMap = <String, String>{
+      "_": AppLocalizations.of(context)!.systemLanguage,
+      "en": "English",
+      "cs": "Čeština",
+      "sk": "Slovenčina",
+    };
+
     return Consumer<PreferencesProvider>(
       builder: (context, sharedPreferencesProvider, child) {
         Locale? locale = sharedPreferencesProvider.locale;

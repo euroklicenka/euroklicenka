@@ -14,12 +14,12 @@ import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
-import 'package:intl/intl.dart';
 
 const List<String> countries = ["cz", "sk"];
 
@@ -80,16 +80,11 @@ class EurolockProvider extends ChangeNotifier {
     );
   }
 
-  String navigateButtonText() => Intl.message(
-        'NAVIGOVAT', // FIXME I18N
-        name: 'EurolockProvider_navigateButtonText',
-      );
-
-  Widget navigateButton(EUKLocationData loc) {
+  Widget navigateButton(BuildContext context, EUKLocationData loc) {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          child: Text(navigateButtonText()),
+          child: Text(AppLocalizations.of(context)!.navigateButton),
           onPressed: () async {
             MapsLauncher.launchCoordinates(
               loc.lat,

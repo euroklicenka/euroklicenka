@@ -43,5 +43,11 @@
     "leadingText3": "Data o umístění eurozámků jsou veřejně dostupná na ",
     "hyperText3": "oficiálních stránkách Euroklíče",
     "copyrightLabel": "Copyright © Ostravská univerzita",
-    "uploadingdataMessage": "Nahrávám data"
+    "uploadingdataMessage": "Nahrávám data",
+    "systemLanguage": "Systémový",
+    "navigateButton": "Naviguj", 
+    "disabledLocationServicesMessage": "Polohové služby jsou vypnuty.",
+    "deniedLocationServicesMessage": "Přístup k polohovým službám byl odmítnut.",
+    "permanentlyDeniedLocationServicesMessage": "Přístup k polohovým službám byl natrvalo odmítnut.",
+    "cannotOpenUrl": "Nelze otevřít adresu {url}."
 }

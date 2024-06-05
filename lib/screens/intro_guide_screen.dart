@@ -29,7 +29,7 @@ class _OnBoardScreenState extends State<GuideScreen> {
             image: _buildImage('assets/images/logo_key.png', context),
             body: AppLocalizations.of(context)!.body1GuidLabel,
             footer: _buildButton(
-              onPressed: () => openURL(url: aboutEuroKeyURL),
+              onPressed: () => openURL(context, aboutEuroKeyURL),
               text: AppLocalizations.of(context)!.whatIsEurokeyringGuidLabel,
             ),
             decoration: _getDecoration(),
