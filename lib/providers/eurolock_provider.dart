@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:diacritic/diacritic.dart';
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:eurokey2/features/icon_management/icon_manager.dart';
 import 'package:eurokey2/features/location_data/euk_location_data.dart';
 import 'package:eurokey2/providers/location_provider.dart';
@@ -15,12 +14,12 @@ import 'package:eurokey2/utils/general_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import "package:provider/provider.dart";
-import 'package:intl/intl.dart';
 
 const List<String> countries = ["cz", "sk"];
 
@@ -81,16 +80,11 @@ class EurolockProvider extends ChangeNotifier {
     );
   }
 
-  String navigateButtonText() => Intl.message(
-        'NAVIGOVAT',
-        name: 'EurolockProvider_navigateButtonText',
-      );
-
-  Widget navigateButton(EUKLocationData loc) {
+  Widget navigateButton(BuildContext context, EUKLocationData loc) {
     return Column(
       children: <Widget>[
         ElevatedButton(
-          child: Text(navigateButtonText()),
+          child: Text(AppLocalizations.of(context)!.navigateButton),
           onPressed: () async {
             MapsLauncher.launchCoordinates(
               loc.lat,
@@ -250,8 +244,6 @@ class EurolockProvider extends ChangeNotifier {
     for (String country in countries) {
       final url = getUrl(country);
 
-      showSnackBar(message: "Loading $url");
-
       final cachedFile = await DefaultCacheManager().getSingleFile(url);
 
       final fileData = await cachedFile.readAsString();
@@ -282,8 +274,6 @@ class EurolockProvider extends ChangeNotifier {
       final name = 'assets/data-$country.json';
       final fileData = await rootBundle.load(name);
       final fileList = Uint8List.view(fileData.buffer);
-
-      showSnackBar(message: "Storing $name to $url");
 
       DefaultCacheManager()
           .putFile(url, fileList, maxAge: const Duration(days: 1));

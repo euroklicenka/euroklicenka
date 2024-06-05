@@ -4,12 +4,10 @@
 
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:intl/intl.dart';
 
 class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
@@ -49,27 +47,18 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  String disabledLocationServicesMessage() => Intl.message(
-        'Polohové služby jsou vypnuty.',
-        name: 'LocationProvider_disabledLocationServicesMessage',
-      );
-
-  String deniedLocationServicesMessage() => Intl.message(
-        'Přístup k polohovým službám byl odmítnut.',
-        name: 'LocationProvider_deniedLocationServicesMessage',
-      );
-
-  String permanentlyDeniedLocationServicesMessage() => Intl.message(
-        'Přístup k polohovým službám byl natrvalo odmítnut.',
-        name: 'LocationProvider_permanentlyDeniedLocationServicesMessage',
-      );
-
   Future<void> handlePermissions() async {
     // Test if location services are enabled.
 
+    // FIXME: I18N - we don't have AppLocalization object yet
+    String disabledLocationServicesMessage = "Location services are disabled.";
+    String deniedLocationServicesMessage = "Location permissions are denied.";
+    String permanentlyDeniedLocationServicesMessage =
+        "Location permissions are permanently denied, we cannot request permissions.";
+
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error(disabledLocationServicesMessage());
+      return Future.error(disabledLocationServicesMessage);
     }
 
     LocationPermission permission = await Geolocator.checkPermission();
@@ -82,7 +71,7 @@ class LocationProvider with ChangeNotifier {
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
         return Future.error(
-          deniedLocationServicesMessage(),
+          deniedLocationServicesMessage,
         );
       }
     }
@@ -90,7 +79,7 @@ class LocationProvider with ChangeNotifier {
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
       return Future.error(
-        permanentlyDeniedLocationServicesMessage(),
+        permanentlyDeniedLocationServicesMessage,
       );
     }
 

@@ -4,7 +4,7 @@
 
 import 'package:eurokey2/providers/eurolock_provider.dart';
 import 'package:eurokey2/providers/preferences_provider.dart';
-import 'package:eurokey2/screens/app/information_screen.dart';
+import 'package:eurokey2/screens/app/settings_screen.dart';
 import 'package:eurokey2/screens/app/list_screen.dart';
 import 'package:eurokey2/screens/app/map_screen.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +27,6 @@ class MainAppScreen extends StatelessWidget {
           index = 1;
         case MainScreenStates.aboutScreenState:
           index = 2;
-        default:
-          index = 1;
       }
 
       return Scaffold(
@@ -38,7 +36,7 @@ class MainAppScreen extends StatelessWidget {
           children: <Widget>[
             const ListScreen(),
             MapScreen(),
-            const InformationScreen(),
+            const SettingsScreen(),
           ],
         ),
         bottomNavigationBar: NavigationBar(

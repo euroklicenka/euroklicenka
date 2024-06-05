@@ -23,10 +23,11 @@ class ListScreen extends StatelessWidget {
     final Color? foregroundColor = appBarTheme.foregroundColor;
     final IconThemeData iconTheme = appBarTheme.iconTheme ??
         theme.iconTheme.copyWith(color: foregroundColor);
+    final appLocalizations = AppLocalizations.of(context)!;
 
     return EasySearchBar(
       title: Center(
-        child: Text(AppLocalizations.of(context)!.mapAppBarTitle),
+        child: Text(appLocalizations.mapAppBarTitle),
       ),
       animationDuration: const Duration(milliseconds: 260),
       onSearch: (value) => eurolockProvider.onSearch(value),
@@ -95,7 +96,7 @@ class _ListScreenState extends State<ListScreenBody> {
   }
 
   String loadingDataMessage() => Intl.message(
-        'Nahrávám data',
+        AppLocalizations.of(context)!.uploadingdataMessage,
         name: 'ListScreen_loadingDataMessage',
         args: [],
         desc: 'Simple indicator that we are loading data',

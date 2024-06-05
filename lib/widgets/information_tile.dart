@@ -42,7 +42,7 @@ Widget infoTile({
   return InkWell(
     onTap: () {
       if (launchURL.isEmpty) return;
-      openURL(url: launchURL);
+      openURL(context, launchURL);
     },
     child: Row(
       children: [
