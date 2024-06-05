@@ -1,7 +1,7 @@
 name: eurokey2
 description: Project files for the second version of the Eurokey app.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 3.0.30+40
+version: 3.0.31+41
 
 environment:
   sdk: '>=3.2.4 <4.0.0'
