@@ -42,10 +42,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       "sk": "Slovenčina",
     };
 
+    final themeModesMap = <ThemeMode, String>{
+      ThemeMode.system: AppLocalizations.of(context)!.systemMode,
+      ThemeMode.dark: AppLocalizations.of(context)!.darkMode,
+      ThemeMode.light: AppLocalizations.of(context)!.lightMode,
+    };
+
     return Consumer<PreferencesProvider>(
       builder: (context, sharedPreferencesProvider, child) {
         Locale? locale = sharedPreferencesProvider.locale;
         String selectedLanguage = (locale != null) ? locale.languageCode : "_";
+        ThemeMode selectedThemeMode = sharedPreferencesProvider.themeMode;
 
         return SettingsList(
           sections: [
@@ -84,13 +91,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                   value: Text(languagesMap[selectedLanguage] ?? "undefined"),
                 ),
-                SettingsTile.switchTile(
+                SettingsTile.navigation(
                   leading: const Icon(Icons.dark_mode,
                       color: Color.fromARGB(245, 228, 132, 87)),
                   title: Text(
                       AppLocalizations.of(context)!.darkModeSettingsTileLabel),
-                  initialValue: false,
-                  onToggle: (bool value) {},
+                  trailing: const Icon(Icons.chevron_right),
+                  onPressed: (context) async {
+                    final ThemeMode? themeMode =
+                        await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ThemeModePickerScreen(
+                          themeMode: selectedThemeMode,
+                          themeModes: themeModesMap,
+                        ),
+                      ),
+                    );
+
+                    if (themeMode != null) {
+                      sharedPreferencesProvider.themeMode = themeMode;
+                    }
+                  },
+                  value: Text(themeModesMap[selectedThemeMode] ?? "undefined"),
                 ),
               ],
             ),
@@ -215,6 +237,46 @@ class LanguagePickerScreen extends StatelessWidget {
               final language = languages[e];
               return SettingsTile(
                 title: Text(language!),
+                onPressed: (_) {
+                  Navigator.of(context).pop(e);
+                },
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ThemeModePickerScreen extends StatelessWidget {
+  const ThemeModePickerScreen({
+    super.key,
+    required this.themeMode,
+    required this.themeModes,
+  });
+
+  final ThemeMode themeMode;
+  final Map<ThemeMode, String> themeModes;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.modesLabel),
+        backgroundColor: const Color.fromARGB(245, 255, 107, 38),
+        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
+        elevation: 5.5,
+        shadowColor: const Color.fromARGB(255, 209, 209, 209),
+        centerTitle: true,
+      ),
+      body: SettingsList(
+        sections: [
+          SettingsSection(
+            tiles: themeModes.keys.map((e) {
+              final mode = themeModes[e];
+              return SettingsTile(
+                title: Text(mode!),
                 onPressed: (_) {
                   Navigator.of(context).pop(e);
                 },

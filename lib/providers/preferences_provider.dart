@@ -22,6 +22,18 @@ class PreferencesProvider extends ChangeNotifier {
   ThemeMode get themeMode => _themeMode;
   set themeMode(ThemeMode mode) {
     _themeMode = mode;
+
+    switch (mode) {
+      case ThemeMode.light:
+        _sharedPreferences.setString('themeMode', "light");
+      case ThemeMode.dark:
+        _sharedPreferences.setString('themeMode', "dark");
+      case ThemeMode.system:
+        _sharedPreferences.setString('themeMode', "system");
+      default:
+        _sharedPreferences.setString('themeMode', "system");
+    }
+
     notifyListeners();
   }
 
@@ -54,6 +66,18 @@ class PreferencesProvider extends ChangeNotifier {
     final String? languageCode = _sharedPreferences.getString('language');
     if (languageCode != null) {
       _locale = Locale(languageCode);
+    }
+
+    final String? themeModeString = _sharedPreferences.getString('themeMode');
+    switch (themeModeString) {
+      case "dark":
+        _themeMode = ThemeMode.dark;
+      case "light":
+        _themeMode = ThemeMode.light;
+      case "system":
+        _themeMode = ThemeMode.system;
+      default:
+        _themeMode = ThemeMode.system;
     }
   }
 
