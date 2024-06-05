@@ -46,14 +46,18 @@ class MyApp extends StatelessWidget {
       showSnackBar(message: e.toString());
     });
 
-    await locationProvider.handlePermissions().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
+    if (context.mounted) {
+      await locationProvider.handlePermissions(context).catchError((e) {
+        showSnackBar(message: e.toString());
+      });
+    }
 
-    await locationProvider.getCurrentPosition().catchError((e) {
-      showSnackBar(message: e.toString());
-      return null;
-    });
+    if (context.mounted) {
+      await locationProvider.getCurrentPosition(context).catchError((e) {
+        showSnackBar(message: e.toString());
+        return null;
+      });
+    }
 
     return true;
   }

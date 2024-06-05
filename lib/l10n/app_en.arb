@@ -73,5 +73,20 @@
   "leadingText3": "Data on the location of the Euroframes are publicly available at ",
   "hyperText3": "oficiálna webová stránka spoločnosti EuroKey",
   "copyrightLabel": "Copyright © University of Ostrava",
-  "uploadingdataMessage": "Uploading data"
+  "uploadingdataMessage": "Uploading data",
+  "systemLanguage": "System",
+  "navigateButton": "NAVIGATE", 
+  "disabledLocationServicesMessage": "Location services are disabled.",
+  "deniedLocationServicesMessage": "Location permissions are denied.",
+  "permanentlyDeniedLocationServicesMessage": "Location permissions are permanently denied, we cannot request permissions.",
+  "cannotOpenUrl": "Cannot open {url}.",
+  "@cannotOpenUrl": {
+      "description": "An error message when URL cannot be open",
+      "placeholders": {
+        "url": {
+          "type": "String",
+          "example": "http://..."
+        }
+      }
+    }
 }

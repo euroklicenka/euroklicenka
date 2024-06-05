@@ -43,5 +43,11 @@
     "leadingText3": "Údaje o umiestnení eurorámcov sú verejne dostupné na ",
     "hyperText3": "oficiálnej webovej stránke Eurokľúče",
     "copyrightLabel": "Copyright © Ostravská univerzita",
-    "uploadingdataMessage": "Nahrávanie dát"
+    "uploadingdataMessage": "Nahrávanie dát",
+    "systemLanguage": "Systémový",
+    "navigateButton": "Naviguj",
+    "disabledLocationServicesMessage": "Služby určovania polohy sú vypnuté.",
+    "deniedLocationServicesMessage": "Oprávnenia na umiestnenie sú zamietnuté.",
+    "permanentlyDeniedLocationServicesMessage": "Oprávnenia na umiestnenie sú trvalo zamietnuté, nemôžeme požiadať o oprávnenia.",
+    "cannotOpenUrl": "Nie je možné otvoriť adresu {url}."
 }
