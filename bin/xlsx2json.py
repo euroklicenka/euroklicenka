@@ -21,7 +21,7 @@ for row in data:
     id += 1
     region = row['KRAJ']
     city = row['MĚSTO']
-    full_address = row['ORIGINÁLNÍ ZÁZNAM']
+    full_address = row['OSAZENÉ MÍSTO']
     latlng = row['GPS']
 
     if latlng is None:
@@ -34,8 +34,12 @@ for row in data:
     if (len(_) == 8):
         _ = _[0:3] + _[4:7]
 
-    lat = float(_[0]) + float(_[1]) / 60 + float(_[2]) / 3600;
-    lng = float(_[3]) + float(_[4]) / 60 + float(_[5]) / 3600;
+    try:
+        lat = float(_[0]) + float(_[1]) / 60 + float(_[2]) / 3600;
+        lng = float(_[3]) + float(_[4]) / 60 + float(_[5]) / 3600;
+    except:
+        print(f"SKIP: {row}")
+        continue
 
     # WC (1E). Městský úřad Zlín, L. Váchy 602, 761 40 Zlín
     r = re.compile("[^.]*[.]")
