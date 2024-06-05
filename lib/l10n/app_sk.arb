@@ -49,5 +49,9 @@
     "disabledLocationServicesMessage": "Služby určovania polohy sú vypnuté.",
     "deniedLocationServicesMessage": "Oprávnenia na umiestnenie sú zamietnuté.",
     "permanentlyDeniedLocationServicesMessage": "Oprávnenia na umiestnenie sú trvalo zamietnuté, nemôžeme požiadať o oprávnenia.",
-    "cannotOpenUrl": "Nie je možné otvoriť adresu {url}."
+    "cannotOpenUrl": "Nie je možné otvoriť adresu {url}.",
+    "systemMode": "Podľa systému",
+    "darkMode": "Tmavý",
+    "lightMode": "Svetlý",
+    "modesLabel": "Nastavenia tmavého režimu"
 }

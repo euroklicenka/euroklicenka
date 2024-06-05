@@ -49,5 +49,9 @@
     "disabledLocationServicesMessage": "Polohové služby jsou vypnuty.",
     "deniedLocationServicesMessage": "Přístup k polohovým službám byl odmítnut.",
     "permanentlyDeniedLocationServicesMessage": "Přístup k polohovým službám byl natrvalo odmítnut.",
-    "cannotOpenUrl": "Nelze otevřít adresu {url}."
+    "cannotOpenUrl": "Nelze otevřít adresu {url}.",
+    "systemMode": "Dle systému",
+    "darkMode": "Tmavý",
+    "lightMode": "Světlý",
+    "modesLabel": "Nastavení tmavého režimu"
 }

@@ -87,6 +87,10 @@
           "type": "String",
           "example": "http://..."
         }
-      }
     }
+  },
+  "systemMode": "Use system settings",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "modesLabel": "Dark Mode settings"
 }
