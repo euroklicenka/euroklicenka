@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
@@ -48,15 +47,14 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> handlePermissions(BuildContext context) async {
+  Future<void> handlePermissions() async {
     // Test if location services are enabled.
 
-    String disabledLocationServicesMessage =
-        AppLocalizations.of(context)!.disabledLocationServicesMessage;
-    String deniedLocationServicesMessage =
-        AppLocalizations.of(context)!.deniedLocationServicesMessage;
+    // FIXME: I18N - we don't have AppLocalization object yet
+    String disabledLocationServicesMessage = "Location services are disabled.";
+    String deniedLocationServicesMessage = "Location permissions are denied.";
     String permanentlyDeniedLocationServicesMessage =
-        AppLocalizations.of(context)!.permanentlyDeniedLocationServicesMessage;
+        "Location permissions are permanently denied, we cannot request permissions.";
 
     final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -89,8 +87,8 @@ class LocationProvider with ChangeNotifier {
     // continue accessing the position of the device.
   }
 
-  Future<void> getCurrentPosition(BuildContext context) async {
-    await handlePermissions(context);
+  Future<void> getCurrentPosition() async {
+    await handlePermissions();
 
     final Position position = await Geolocator.getCurrentPosition();
 

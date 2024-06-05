@@ -69,7 +69,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   leading: const Icon(Icons.language,
-                      color: Color.fromARGB(245, 228, 132, 87)),
+                      color: Color.fromARGB(245, 228, 132,
+                          87)), // FIXME: Barvičky z Theme místo statické barvy
                   title: Text(
                       AppLocalizations.of(context)!.languageSettingsTileLabel),
                   trailing: const Icon(Icons.chevron_right),
@@ -93,7 +94,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SettingsTile.navigation(
                   leading: const Icon(Icons.dark_mode,
-                      color: Color.fromARGB(245, 228, 132, 87)),
+                      color: Color.fromARGB(245, 228, 132,
+                          87)), // FIXME: Barvičky z Theme místo statické barvy
                   title: Text(
                       AppLocalizations.of(context)!.darkModeSettingsTileLabel),
                   trailing: const Icon(Icons.chevron_right),
@@ -129,7 +131,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               tiles: [
                 SettingsTile.navigation(
                   leading: const Icon(Icons.auto_fix_high,
-                      color: Color.fromARGB(245, 228, 132, 87)),
+                      color: Color.fromARGB(245, 228, 132,
+                          87)), // FIXME: Barvičky z Theme místo statické barvy
                   title:
                       Text(AppLocalizations.of(context)!.applicationGuideLabel),
                   onPressed: (context) async {
@@ -138,7 +141,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SettingsTile.navigation(
                   leading: const Icon(Icons.info_outline,
-                      color: Color.fromARGB(245, 228, 132, 87)),
+                      color: Color.fromARGB(245, 228, 132,
+                          87)), // FIXME: Barvičky z Theme místo statické barvy
                   title:
                       Text(AppLocalizations.of(context)!.aboutApplicationLabel),
                   onPressed: (context) async {
@@ -198,6 +202,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.settingsLabel),
+        // FIXME: Barvičky z Theme místo statické barvy
         backgroundColor: const Color.fromARGB(245, 255, 107, 38),
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 5.5,
@@ -224,6 +229,7 @@ class LanguagePickerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.languagesLabel),
+        // FIXME: Barvičky z Theme místo statické barvy
         backgroundColor: const Color.fromARGB(245, 255, 107, 38),
         foregroundColor: const Color.fromARGB(255, 255, 255, 255),
         elevation: 5.5,
@@ -274,7 +280,7 @@ class ThemeModePickerScreen extends StatelessWidget {
         sections: [
           SettingsSection(
             tiles: themeModes.keys.map((e) {
-              final mode = themeModes[e];
+              final String? mode = themeModes[e];
               return SettingsTile(
                 title: Text(mode!),
                 onPressed: (_) {
