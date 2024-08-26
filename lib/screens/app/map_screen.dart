@@ -206,7 +206,7 @@ class _MapScreenState extends State<MapScreenBody> {
     super.dispose();
   }
 
-  void _onPositionChanged(MapPosition mapPosition, bool hasGesture) {
+  void _onPositionChanged(MapCamera mapCamera, bool hasGesture) {
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
 
@@ -224,8 +224,8 @@ class _MapScreenState extends State<MapScreenBody> {
     //   locationProvider.currentUserPosition = mapPosition.center!;
     //}
 
-    locationProvider.currentMapPosition = mapPosition.center!;
-    locationProvider.currentMapZoom = mapPosition.zoom!;
+    locationProvider.currentMapPosition = mapCamera.center;
+    locationProvider.currentMapZoom = mapCamera.zoom;
   }
 
   @override
