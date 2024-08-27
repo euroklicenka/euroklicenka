@@ -51,6 +51,8 @@
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location allows you to find nearest places equiped with Eurolock.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Your location allows you to find nearest places equiped with Eurolock.</string>
 	<key>UIStatusBarHidden</key>
 	<false/>
 </dict>
