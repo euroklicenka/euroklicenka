@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
@@ -12,7 +13,7 @@ import 'package:latlong2/latlong.dart';
 class LocationProvider with ChangeNotifier {
   LatLng? _currentUserPosition;
   double _currentMapZoom = 14.5;
-  LatLng _currentMapPosition = const LatLng(0, 0);
+  LatLng _currentMapPosition = const LatLng(49.840281, 18.288796);
 
   AlignOnUpdate _followOnLocationUpdate = AlignOnUpdate.once;
   final StreamController<double?> followCurrentLocationStreamController =
@@ -47,52 +48,26 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> handlePermissions() async {
-    // Test if location services are enabled.
-
-    // FIXME: I18N - we don't have AppLocalization object yet
-    String disabledLocationServicesMessage = "Location services are disabled.";
-    String deniedLocationServicesMessage = "Location permissions are denied.";
-    String permanentlyDeniedLocationServicesMessage =
-        "Location permissions are permanently denied, we cannot request permissions.";
-
-    final bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error(disabledLocationServicesMessage);
-    }
-
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied, next time you could try
-        // requesting permissions again (this is also where
-        // Android's shouldShowRequestPermissionRationale
-        // returned true. According to Android guidelines
-        // your App should show an explanatory UI now.
-        return Future.error(
-          deniedLocationServicesMessage,
-        );
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      return Future.error(
-        permanentlyDeniedLocationServicesMessage,
-      );
-    }
-
-    // When we reach here, permissions are granted and we can
-    // continue accessing the position of the device.
-  }
-
   Future<void> getCurrentPosition() async {
-    await handlePermissions();
+    if (!await Geolocator.isLocationServiceEnabled()) {
+      // showSnackBar(message: "Location services disabled.");
+      return;
+    }
 
-    final Position position = await Geolocator.getCurrentPosition();
+    switch (await Geolocator.checkPermission()) {
+      case LocationPermission.deniedForever:
+        // showSnackBar(message: "Location services denied forever.");
+        return;
+      case LocationPermission.denied:
+        // showSnackBar(message: "Location services denied.");
+        return;
+      default:
+        final Position position = await Geolocator.getCurrentPosition();
 
-    _currentUserPosition = LatLng(position.latitude, position.longitude);
-    _currentMapPosition = LatLng(position.latitude, position.longitude);
+        // showSnackBar(message: "Location: ${position.latitude}, ${position.longitude}.");
+
+        _currentUserPosition = LatLng(position.latitude, position.longitude);
+        _currentMapPosition = LatLng(position.latitude, position.longitude);
+    }
   }
 }

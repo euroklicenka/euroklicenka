@@ -22,7 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MapScreen extends StatefulWidget {
-  final MapController mapController = MapController();
+  late final tileProvider = const FMTCStore('mapStore').getTileProvider();
 
   MapScreen({super.key});
 
@@ -33,6 +33,15 @@ class MapScreen extends StatefulWidget {
 class MapScreenState extends State<MapScreen> {
   DateTime onSearchlastSearch = DateTime.now();
   DateTime asyncSuggestionsLastSearch = DateTime.now();
+  final _mapController = MapController();
+
+  @override
+  void dispose() {
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
+    locationProvider.followCurrentLocationStreamController.close();
+    super.dispose();
+  }
 
   EasySearchBar appBar(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -73,8 +82,13 @@ class MapScreenState extends State<MapScreen> {
 
                 await locationProvider.getCurrentPosition().catchError((e) {
                   showSnackBar(message: e.toString());
-                  return null;
                 });
+
+                LatLng? position = locationProvider.currentUserPosition;
+                if (position != null) {
+                  _mapController.move(
+                      position, locationProvider.currentMapZoom);
+                }
               },
             ),
           ),
@@ -88,7 +102,7 @@ class MapScreenState extends State<MapScreen> {
   dynamic _onSuggestionTap(dynamic value) {
     if (lastSuggestions.containsKey(value)) {
       final place = lastSuggestions[value]!;
-      widget.mapController.move(LatLng(place.lat, place.lon), 15);
+      _mapController.move(LatLng(place.lat, place.lon), 15);
     }
 
     hideVirtualKeyboard();
@@ -123,14 +137,14 @@ class MapScreenState extends State<MapScreen> {
 
     searchResult.sort(
       (a, b) => Geolocator.distanceBetween(
-        widget.mapController.camera.center.latitude,
-        widget.mapController.camera.center.longitude,
+        _mapController.camera.center.latitude,
+        _mapController.camera.center.longitude,
         a.lat,
         a.lon,
       ).compareTo(
         Geolocator.distanceBetween(
-          widget.mapController.camera.center.latitude,
-          widget.mapController.camera.center.longitude,
+          _mapController.camera.center.latitude,
+          _mapController.camera.center.longitude,
           b.lat,
           b.lon,
         ),
@@ -173,37 +187,29 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> onSearch(String value) async {}
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: appBar(context),
-      body: MapScreenBody(mapController: widget.mapController),
-    );
-  }
-}
-
-///Screen that shows the primary map with EUK locations.
-class MapScreenBody extends StatefulWidget {
-  final MapController? mapController;
-  late final tileProvider = const FMTCStore('mapStore').getTileProvider();
-
-  MapScreenBody({
-    super.key,
-    required this.mapController,
-  });
-
-  @override
-  State<MapScreenBody> createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreenBody> {
-  @override
-  void dispose() {
+  Future<bool> initialize(BuildContext context) async {
     final locationProvider =
         Provider.of<LocationProvider>(context, listen: false);
-    locationProvider.followCurrentLocationStreamController.close();
-    super.dispose();
+
+    await locationProvider.getCurrentPosition().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
+
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: initialize(context),
+      builder: (context, snapshot) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: appBar(context),
+          body: mapScreenBody(),
+        );
+      },
+    );
   }
 
   void _onPositionChanged(MapCamera mapCamera, bool hasGesture) {
@@ -228,8 +234,7 @@ class _MapScreenState extends State<MapScreenBody> {
     locationProvider.currentMapZoom = mapCamera.zoom;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget mapScreenBody() {
     return Consumer3<LocationProvider, PreferencesProvider, EurolockProvider>(
       builder: (
         context,
@@ -238,12 +243,24 @@ class _MapScreenState extends State<MapScreenBody> {
         eurolockProvider,
         child,
       ) {
-        eurolockProvider.mapController = widget.mapController;
         return Stack(
           children: <Widget>[
             FlutterMap(
-              mapController: widget.mapController,
+              mapController: _mapController,
               options: MapOptions(
+                onMapReady: () async {
+                  eurolockProvider.mapController = _mapController;
+
+                  await locationProvider.getCurrentPosition().catchError((e) {
+                    showSnackBar(message: e.toString());
+                  });
+
+                  LatLng? position = locationProvider.currentUserPosition;
+                  if (position != null) {
+                    _mapController.move(
+                        position, locationProvider.currentMapZoom);
+                  }
+                },
                 initialCenter: locationProvider.currentMapPosition,
                 initialZoom: 15,
                 interactionOptions: const InteractionOptions(
@@ -261,6 +278,7 @@ class _MapScreenState extends State<MapScreenBody> {
                   maxZoom: 19,
                 ),
                 MarkerLayer(markers: eurolockProvider.markers),
+                CurrentLocationLayer(),
                 RichAttributionWidget(
                   attributions: [
                     TextSourceAttribution(

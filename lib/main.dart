@@ -30,11 +30,9 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<void> initialize(BuildContext context) async {
+  Future<bool> initialize(BuildContext context) async {
     final eurolockProvider = context.read<EurolockProvider>();
     final preferencesProvider = context.read<PreferencesProvider>();
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
 
     await precacheMarkerIcon(context);
 
@@ -46,13 +44,7 @@ class MyApp extends StatelessWidget {
       showSnackBar(message: e.toString());
     });
 
-    await locationProvider.handlePermissions().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
-    await locationProvider.getCurrentPosition().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
+    return (true);
   }
 
   @override
@@ -65,7 +57,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EurolockProvider()),
       ],
       builder: (context, child) {
-        return FutureBuilder<void>(
+        return FutureBuilder<bool>(
           future: initialize(context),
           builder: (context, snapshot) {
             Widget returnWidget; //
@@ -96,7 +88,11 @@ class MyApp extends StatelessWidget {
                 },
               );
             } else if (snapshot.hasError) {
-              throw snapshot.error.toString();
+              if (snapshot.error != null) {
+                throw snapshot.error.toString();
+              } else {
+                throw "Unknown error has occured";
+              }
             } else {
               returnWidget = MaterialApp(
                 onGenerateTitle: (context) =>

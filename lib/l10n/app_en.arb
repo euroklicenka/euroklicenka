@@ -77,7 +77,10 @@
   "systemLanguage": "System",
   "navigateButton": "NAVIGATE", 
   "disabledLocationServicesMessage": "Location services are disabled.",
-  "deniedLocationServicesMessage": "Location permissions are denied.",
+  "deniedLocationServicesMessage": "Location permissions were denied.",
+  "restrictedLocationServicesMessage": "Location services are restricted.",
+  "limitedLocationServicesMessage": "Location permissions are limited.",
+  "provisionalLocationServicesMessage": "Location permissions are provisional.",
   "permanentlyDeniedLocationServicesMessage": "Location permissions are permanently denied, we cannot request permissions.",
   "cannotOpenUrl": "Cannot open {url}.",
   "@cannotOpenUrl": {
