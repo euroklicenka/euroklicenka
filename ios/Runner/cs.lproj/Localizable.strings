@@ -8,5 +8,6 @@
 
 
 "NSLocationWhenInUseUsageDescription"="Vaše poloha vám umožní najít nejbližší místa vybavená Eurozámkem.";
+"NSLocationAlwaysAndWhenInUseUsageDescription"="Vaše poloha vám umožní najít nejbližší místa vybavená Eurozámkem.";
 "CFBundleDisplayName"="EuroKlíčenka";
 "CFBundleName"="EuroKlíčenka";
