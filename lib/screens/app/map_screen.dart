@@ -173,32 +173,12 @@ class MapScreenState extends State<MapScreen> {
 
   Future<void> onSearch(String value) async {}
 
-  Future<bool> initialize(BuildContext context) async {
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
-
-    await locationProvider.handlePermissions().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
-    await locationProvider.getCurrentPosition().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: initialize(context),
-      builder: (context, snapshot) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: appBar(context),
-          body: MapScreenBody(mapController: widget.mapController),
-        );
-      },
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: appBar(context),
+      body: MapScreenBody(mapController: widget.mapController),
     );
   }
 }

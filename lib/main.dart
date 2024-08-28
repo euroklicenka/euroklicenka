@@ -33,6 +33,8 @@ class MyApp extends StatelessWidget {
   Future<bool> initialize(BuildContext context) async {
     final eurolockProvider = context.read<EurolockProvider>();
     final preferencesProvider = context.read<PreferencesProvider>();
+    final locationProvider =
+        Provider.of<LocationProvider>(context, listen: false);
 
     await precacheMarkerIcon(context);
 
@@ -42,6 +44,15 @@ class MyApp extends StatelessWidget {
 
     await preferencesProvider.initialize().catchError((e) {
       showSnackBar(message: e.toString());
+    });
+
+    await locationProvider.handlePermissions().catchError((e) {
+      showSnackBar(message: e.toString());
+    });
+
+    await locationProvider.getCurrentPosition().catchError((e) {
+      showSnackBar(message: e.toString());
+      return null;
     });
 
     return true;

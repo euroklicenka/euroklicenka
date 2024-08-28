@@ -87,23 +87,11 @@ class _ListScreenState extends State<ListScreenBody> {
     EurolockProvider eukProvider,
     LocationProvider locationProvider,
   ) async {
-    final locationProvider =
-        Provider.of<LocationProvider>(context, listen: false);
-
     final list = await eukProvider.getList(
       context,
       locationProvider.currentUserPosition,
       locationProvider.currentMapPosition,
     );
-
-    await locationProvider.handlePermissions().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
-    await locationProvider.getCurrentPosition().catchError((e) {
-      showSnackBar(message: e.toString());
-    });
-
     return list;
   }
 
