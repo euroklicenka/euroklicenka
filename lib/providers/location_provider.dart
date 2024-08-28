@@ -4,7 +4,6 @@
 
 import 'dart:async';
 
-import 'package:eurokey2/features/snack_bars/snack_bar_management.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
