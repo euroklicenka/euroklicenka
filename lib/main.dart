@@ -30,7 +30,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  Future<bool> initialize(BuildContext context) async {
+  Future<void> initialize(BuildContext context) async {
     final eurolockProvider = context.read<EurolockProvider>();
     final preferencesProvider = context.read<PreferencesProvider>();
     final locationProvider =
@@ -52,10 +52,7 @@ class MyApp extends StatelessWidget {
 
     await locationProvider.getCurrentPosition().catchError((e) {
       showSnackBar(message: e.toString());
-      return null;
     });
-
-    return true;
   }
 
   @override
@@ -68,16 +65,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => EurolockProvider()),
       ],
       builder: (context, child) {
-        return FutureBuilder<bool>(
+        return FutureBuilder<void>(
           future: initialize(context),
           builder: (context, snapshot) {
-            Widget returnWidget = MaterialApp(
-              onGenerateTitle: (context) =>
-                  AppLocalizations.of(context)!.appTitle,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              home: const SplashScreen(),
-            ); //
+            Widget returnWidget; //
 
             if (snapshot.hasData) {
               // FlutterNativeSplash.remove();
@@ -106,6 +97,14 @@ class MyApp extends StatelessWidget {
               );
             } else if (snapshot.hasError) {
               throw snapshot.error.toString();
+            } else {
+              returnWidget = MaterialApp(
+                onGenerateTitle: (context) =>
+                    AppLocalizations.of(context)!.appTitle,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                home: const SplashScreen(),
+              );
             }
             return returnWidget;
           },
