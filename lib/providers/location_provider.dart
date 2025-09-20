@@ -67,6 +67,7 @@ class LocationProvider with ChangeNotifier {
 
         _currentUserPosition = LatLng(position.latitude, position.longitude);
         _currentMapPosition = LatLng(position.latitude, position.longitude);
+        notifyListeners();
     }
   }
 }
